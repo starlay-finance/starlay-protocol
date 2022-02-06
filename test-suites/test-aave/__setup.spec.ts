@@ -92,7 +92,6 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  console.log('setup');
   const aaveAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Aave);
 

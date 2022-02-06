@@ -59,6 +59,7 @@ import {
   UiPoolDataProviderV2V3Factory,
   UiIncentiveDataProviderV2V3,
   UiIncentiveDataProviderV2Factory,
+  MockAggregatorDIAFactory,
 } from '../types';
 import {
   withSaveAndVerify,
@@ -803,6 +804,14 @@ export const deployPriceAggregatorDiaImpl = async (args: [string, string], verif
   withSaveAndVerify(
     await new PriceAggregatorDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
     eContractid.PriceAggregatorDiaImpl,
+    args,
+    verify
+  );
+
+export const deployMockAggregatorDIA = async (args: [string[], string[]], verify?: boolean) =>
+  withSaveAndVerify(
+    await new MockAggregatorDIAFactory(await getFirstSigner()).deploy(args[0], args[1]),
+    eContractid.MockAggregatorDIA,
     args,
     verify
   );

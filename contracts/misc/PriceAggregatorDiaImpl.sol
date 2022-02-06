@@ -15,7 +15,7 @@ contract PriceAggregatorDiaImpl is IPriceAggregator, Ownable {
   using SafeMath for uint256;
   string private DELIMITER = '/';
   string private _baseTokenSymbol;
-  mapping(address => string) private symbols;
+  mapping(address => string) public symbols;
 
   constructor(address aggregator, string memory baseTokenSymbol) public {
     _aggregator = IDiaAggregator(aggregator);
@@ -42,20 +42,18 @@ contract PriceAggregatorDiaImpl is IPriceAggregator, Ownable {
     }
   }
 
+  /// @dev Get current price of the asset
+  /// @param asset The address of the asset
+  /// @return The price of the asset
   function currentPrice(address asset) external view override returns (int256) {
-    string memory symbol = tokenSymbol(asset);
-    if (keccak256(abi.encodePacked((symbol))) == keccak256(abi.encodePacked(('')))) {
+    if (bytes(symbols[asset]).length == 0) {
       return 0;
     }
-    (uint128 price, ) = _aggregator.getValue(feedKey(symbol));
+    (uint128 price, ) = _aggregator.getValue(toCurPair(symbols[asset]));
     return int256(price);
   }
 
-  function feedKey(string memory symbol) internal view returns (string memory) {
+  function toCurPair(string memory symbol) internal view returns (string memory) {
     return string(abi.encodePacked(symbol, DELIMITER, _baseTokenSymbol));
-  }
-
-  function tokenSymbol(address asset) internal view returns (string memory) {
-    return symbols[asset];
   }
 }

@@ -47,6 +47,7 @@ export enum eContractid {
   PriceOracle = 'PriceOracle',
   Proxy = 'Proxy',
   MockAggregator = 'MockAggregator',
+  MockAggregatorDIA = 'MockAggregatorDIA',
   LendingRateOracle = 'LendingRateOracle',
   AaveOracle = 'AaveOracle',
   DefaultReserveInterestRateStrategy = 'DefaultReserveInterestRateStrategy',
