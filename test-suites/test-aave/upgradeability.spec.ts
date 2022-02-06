@@ -32,27 +32,27 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       dai.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
-      'Aave Interest bearing DAI updated',
+      'Starley Interest bearing DAI updated',
       'aDAI',
-      '0x10'
+      '0x10',
     ]);
 
     const stableDebtTokenInstance = await deployMockStableDebtToken([
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Aave stable debt bearing DAI updated',
-      'stableDebtDAI',
-      '0x10'
+      'Starley stable debt bearing DAI updated',
+      'sdDAI',
+      '0x10',
     ]);
 
     const variableDebtTokenInstance = await deployMockVariableDebtToken([
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Aave variable debt bearing DAI updated',
-      'variableDebtDAI',
-      '0x10'
+      'Starley variable debt bearing DAI updated',
+      'vdDAI',
+      '0x10',
     ]);
 
     newATokenAddress = aTokenInstance.address;
@@ -73,7 +73,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: string;
       symbol: string;
       implementation: string;
-      params: string
+      params: string;
     } = {
       asset: dai.address,
       treasury: ZERO_ADDRESS,
@@ -81,7 +81,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newATokenAddress,
-      params: "0x10"
+      params: '0x10',
     };
     await expect(
       configurator.connect(users[1].signer).updateAToken(updateATokenInputParams)
@@ -101,7 +101,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: string;
       symbol: string;
       implementation: string;
-      params: string
+      params: string;
     } = {
       asset: dai.address,
       treasury: ZERO_ADDRESS,
@@ -109,13 +109,13 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newATokenAddress,
-      params: "0x10"
+      params: '0x10',
     };
     await configurator.updateAToken(updateATokenInputParams);
 
     const tokenName = await aDai.name();
 
-    expect(tokenName).to.be.eq('Aave Interest bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starley Interest bearing DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI Stable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -124,7 +124,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
 
-    
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -138,13 +137,11 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newStableTokenAddress,
-      params: '0x10'
-    }
+      params: '0x10',
+    };
 
     await expect(
-      configurator
-        .connect(users[1].signer)
-        .updateStableDebtToken(updateDebtTokenInput)
+      configurator.connect(users[1].signer).updateStableDebtToken(updateDebtTokenInput)
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
@@ -154,7 +151,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
 
-    
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -168,8 +164,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newStableTokenAddress,
-      params: '0x10'
-    }
+      params: '0x10',
+    };
 
     await configurator.updateStableDebtToken(updateDebtTokenInput);
 
@@ -179,15 +175,15 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Aave stable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starley stable debt bearing DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI variable debt token implementation with a different address than the lendingPoolManager', async () => {
-    const {dai, configurator, users} = testEnv;
-    
+    const { dai, configurator, users } = testEnv;
+
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -201,22 +197,20 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newVariableTokenAddress,
-      params: '0x10'
-    }
+      params: '0x10',
+    };
 
     await expect(
-      configurator
-        .connect(users[1].signer)
-        .updateVariableDebtToken(updateDebtTokenInput)
+      configurator.connect(users[1].signer).updateVariableDebtToken(updateDebtTokenInput)
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Upgrades the DAI variable debt token implementation ', async () => {
-    const {dai, configurator, pool, helpersContract} = testEnv;
-    
+    const { dai, configurator, pool, helpersContract } = testEnv;
+
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -230,8 +224,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       name: name,
       symbol: symbol,
       implementation: newVariableTokenAddress,
-      params: '0x10'
-    }
+      params: '0x10',
+    };
     //const name = await (await getAToken(newATokenAddress)).name();
 
     await configurator.updateVariableDebtToken(updateDebtTokenInput);
@@ -244,6 +238,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Aave variable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starley variable debt bearing DAI updated', 'Invalid token name');
   });
 });
