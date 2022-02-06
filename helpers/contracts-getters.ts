@@ -1,4 +1,3 @@
-import { PriceAggregatorDiaImplFactory } from './../types/PriceAggregatorDiaImplFactory';
 import {
   AaveProtocolDataProviderFactory,
   ATokenFactory,
@@ -34,6 +33,7 @@ import {
   WETH9MockedFactory,
   WETHGatewayFactory,
   FlashLiquidationAdapterFactory,
+  PriceAggregatorAdapterDiaImplFactory,
 } from '../types';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
 import { getEthersSigners, MockTokenMap } from './contracts-helpers';
@@ -387,7 +387,7 @@ export const getAaveOracle = async (address?: tEthereumAddress) =>
   );
 
 export const getPriceAggregator = async (address: tEthereumAddress) =>
-  await PriceAggregatorDiaImplFactory.connect(address, await getFirstSigner());
+  await PriceAggregatorAdapterDiaImplFactory.connect(address, await getFirstSigner());
 
 export const getMockUniswapRouter = async (address?: tEthereumAddress) =>
   await MockUniswapV2Router02Factory.connect(

@@ -1,6 +1,6 @@
 import { BigNumberish } from 'ethers';
 import { PriceAggregatorChainlinkImpl } from './../types/PriceAggregatorChainlinkImpl.d';
-import { PriceAggregatorDiaImplFactory } from './../types/PriceAggregatorDiaImplFactory';
+import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
 import { Contract } from 'ethers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
@@ -802,7 +802,7 @@ export const deployParaSwapLiquiditySwapAdapter = async (
 
 export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
   withSaveAndVerify(
-    await new PriceAggregatorDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
+    await new PriceAggregatorAdapterDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
     eContractid.PriceAggregatorDiaImpl,
     args,
     verify
