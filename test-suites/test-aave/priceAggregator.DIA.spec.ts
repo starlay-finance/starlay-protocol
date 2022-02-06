@@ -4,7 +4,7 @@ import {
   deployPriceAggregatorDiaImpl,
 } from './../../helpers/contracts-deployments';
 import { makeSuite, TestEnv } from './helpers/make-suite';
-import { PriceAggregatorDiaImpl } from '../../types';
+import { PriceAggregatorAdapterDiaImpl } from '../../types';
 import BigNumber from 'bignumber.js';
 import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 
@@ -86,7 +86,7 @@ makeSuite('Price Aggregator Implementation for DIA', (testEnv: TestEnv) => {
       });
     });
     describe('currentPrice', () => {
-      let target: PriceAggregatorDiaImpl;
+      let target: PriceAggregatorAdapterDiaImpl;
       before(async () => {
         target = await deployPriceAggregatorDiaImpl([mockAggregatorDIA.address, 'USD']);
         await target.setAssetSources(
