@@ -1,19 +1,15 @@
-import { BigNumberish } from 'ethers';
-import { PriceAggregatorChainlinkImpl } from './../types/PriceAggregatorChainlinkImpl.d';
 import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
 import { Contract } from 'ethers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
   tEthereumAddress,
   eContractid,
-  tStringTokenSmallUnits,
   AavePools,
   TokenContractId,
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
   eEthereumNetwork,
-  tBigNumberTokenSmallUnits,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { MockContract } from 'ethereum-waffle';
@@ -803,7 +799,7 @@ export const deployParaSwapLiquiditySwapAdapter = async (
 export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
   withSaveAndVerify(
     await new PriceAggregatorAdapterDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
-    eContractid.PriceAggregatorDiaImpl,
+    eContractid.PriceAggregatorAdapterDiaImpl,
     args,
     verify
   );

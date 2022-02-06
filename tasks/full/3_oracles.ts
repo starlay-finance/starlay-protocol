@@ -1,4 +1,4 @@
-import { PriceAggregatorDiaImpl } from './../../types/PriceAggregatorDiaImpl.d';
+import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 import { task } from 'hardhat/config';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import {
@@ -55,24 +55,27 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         USD: UsdAddress,
       };
 
-      let priceAggregator: PriceAggregatorDiaImpl;
+      let priceAggregatorAdapter: PriceAggregatorAdapterDiaImpl;
       let aaveOracle: AaveOracle;
       let lendingRateOracle: LendingRateOracle;
 
-      priceAggregator = notFalsyOrZeroAddress(priceAggregatorAddress)
+      priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
         ? await await getPriceAggregator(priceAggregatorAddress)
         : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
       await waitForTx(
-        await priceAggregator.setAssetSources(Object.keys(feedTokens), Object.values(feedTokens))
+        await priceAggregatorAdapter.setAssetSources(
+          Object.keys(feedTokens),
+          Object.values(feedTokens)
+        )
       );
 
       if (notFalsyOrZeroAddress(aaveOracleAddress)) {
         aaveOracle = await await getAaveOracle(aaveOracleAddress);
-        await waitForTx(await aaveOracle.setPriceAggregator(priceAggregator.address));
+        await waitForTx(await aaveOracle.setPriceAggregator(priceAggregatorAdapter.address));
       } else {
         aaveOracle = await deployAaveOracle(
           [
-            priceAggregator.address,
+            priceAggregatorAdapter.address,
             fallbackOracleAddress,
             await getQuoteCurrency(poolConfig),
             poolConfig.OracleQuoteUnit,
