@@ -1,3 +1,4 @@
+import { BigNumberish } from 'ethers';
 import { PriceAggregatorChainlinkImpl } from './../types/PriceAggregatorChainlinkImpl.d';
 import { PriceAggregatorDiaImplFactory } from './../types/PriceAggregatorDiaImplFactory';
 import { Contract } from 'ethers';
@@ -12,6 +13,7 @@ import {
   IReserveParams,
   PoolConfiguration,
   eEthereumNetwork,
+  tBigNumberTokenSmallUnits,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { MockContract } from 'ethereum-waffle';
@@ -108,17 +110,17 @@ export const deployUiPoolDataProviderV2 = async (
   );
 
 export const deployUiPoolDataProviderV2V3 = async (
-  chainlinkAggregatorProxy: string,
-  chainlinkEthUsdAggregatorProxy: string,
+  aggregatorProxy: string,
+  ethUsdAggregatorProxy: string,
   verify?: boolean
 ) =>
   withSaveAndVerify(
     await new UiPoolDataProviderV2V3Factory(await getFirstSigner()).deploy(
-      chainlinkAggregatorProxy,
-      chainlinkEthUsdAggregatorProxy
+      aggregatorProxy,
+      ethUsdAggregatorProxy
     ),
     eContractid.UiPoolDataProvider,
-    [chainlinkAggregatorProxy, chainlinkEthUsdAggregatorProxy],
+    [aggregatorProxy, ethUsdAggregatorProxy],
     verify
   );
 
@@ -271,11 +273,14 @@ export const deployLendingRateOracle = async (verify?: boolean) =>
     verify
   );
 
-export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify?: boolean) =>
+export const deployMockAggregator = async (
+  args: [tEthereumAddress[], string[]],
+  verify?: boolean
+) =>
   withSaveAndVerify(
-    await new MockAggregatorFactory(await getFirstSigner()).deploy(price),
+    await new MockAggregatorFactory(await getFirstSigner()).deploy(args[0], args[1]),
     eContractid.MockAggregator,
-    [price],
+    args,
     verify
   );
 

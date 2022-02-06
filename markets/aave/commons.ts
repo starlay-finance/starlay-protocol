@@ -28,6 +28,13 @@ export const CommonsConfig: ICommonConfiguration = {
     OneAddress: '0x0000000000000000000000000000000000000001',
     AaveReferral: '0',
   },
+  AaveOracle: {
+    hardhat: '',
+    main: '',
+    shibuya: '',
+    kovan: '',
+    tenderly: '',
+  },
 
   // ----------------
   // COMMON PROTOCOL PARAMS ACROSS POOLS AND NETWORKS

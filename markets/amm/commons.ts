@@ -1,6 +1,8 @@
 import {
-  MOCK_CHAINLINK_AGGREGATORS_PRICES, oneEther,
-  oneRay, ZERO_ADDRESS
+  MOCK_CHAINLINK_AGGREGATORS_PRICES,
+  oneEther,
+  oneRay,
+  ZERO_ADDRESS,
 } from '../../helpers/constants';
 import { eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
 
@@ -24,6 +26,30 @@ export const CommonsConfig: ICommonConfiguration = {
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
     AaveReferral: '0',
+  },
+  PriceAggregator: {
+    [eEthereumNetwork.coverage]: '',
+    [eEthereumNetwork.hardhat]: '',
+    [eEthereumNetwork.buidlerevm]: '',
+    [eEthereumNetwork.kovan]: '',
+    [eEthereumNetwork.main]: '',
+    [eEthereumNetwork.tenderly]: '',
+  },
+  DIAAggregator: {
+    [eEthereumNetwork.coverage]: {},
+    [eEthereumNetwork.hardhat]: {},
+    [eEthereumNetwork.buidlerevm]: {},
+    [eEthereumNetwork.kovan]: {},
+    [eEthereumNetwork.main]: {},
+    [eEthereumNetwork.tenderly]: {},
+  },
+  DIAAggregatorAddress: {
+    [eEthereumNetwork.coverage]: '',
+    [eEthereumNetwork.hardhat]: '',
+    [eEthereumNetwork.buidlerevm]: '',
+    [eEthereumNetwork.kovan]: '',
+    [eEthereumNetwork.main]: '',
+    [eEthereumNetwork.tenderly]: '',
   },
 
   // ----------------

@@ -67,7 +67,6 @@ export const rawInsertContractAddressInDb = async (id: string, address: tEthereu
 
 export const getEthersSigners = async (): Promise<Signer[]> => {
   const ethersSigners = await Promise.all(await DRE.ethers.getSigners());
-
   if (usingDefender()) {
     const [, ...users] = ethersSigners;
     return [await getDefenderRelaySigner(), ...users];
@@ -103,12 +102,8 @@ export const withSaveAndVerify = async <ContractType extends Contract>(
   args: (string | string[])[],
   verify?: boolean
 ): Promise<ContractType> => {
-  console.log(instance);
   await waitForTx(instance.deployTransaction);
-  console.log('wait');
-
   await registerContractInJsonDb(id, instance);
-  console.log('register');
   if (verify) {
     await verifyContract(id, instance, args);
   }
@@ -363,12 +358,8 @@ export const verifyContract = async (
   args: (string | string[])[]
 ) => {
   if (usingTenderly()) {
-    console.log('instance.address');
-    console.log(instance.address);
     await verifyAtTenderly(id, instance);
   }
-  console.log('instance.address');
-  console.log(instance.address);
   await verifyEtherscanContract(instance.address, args);
   return instance;
 };
