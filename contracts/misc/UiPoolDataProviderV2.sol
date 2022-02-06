@@ -14,8 +14,10 @@ import {WadRayMath} from '../protocol/libraries/math/WadRayMath.sol';
 import {ReserveConfiguration} from '../protocol/libraries/configuration/ReserveConfiguration.sol';
 import {UserConfiguration} from '../protocol/libraries/configuration/UserConfiguration.sol';
 import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
-import {IChainlinkAggregator} from '../interfaces/IChainlinkAggregator.sol';
-import {DefaultReserveInterestRateStrategy} from '../protocol/lendingpool/DefaultReserveInterestRateStrategy.sol';
+import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol';
+import {
+  DefaultReserveInterestRateStrategy
+} from '../protocol/lendingpool/DefaultReserveInterestRateStrategy.sol';
 import {IERC20DetailedBytes} from './interfaces/IERC20DetailedBytes.sol';
 
 contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
@@ -23,17 +25,17 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
   using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
-  IChainlinkAggregator public immutable networkBaseTokenPriceInUsdProxyAggregator;
-  IChainlinkAggregator public immutable marketReferenceCurrencyPriceInUsdProxyAggregator;
+  IPriceAggregatorAdapter public immutable networkBaseTokenPriceInUsdProxyAggregatorAdapter;
   uint256 public constant ETH_CURRENCY_UNIT = 1 ether;
   address public constant MKRAddress = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
+  address public immutable baseTokenAddress;
 
   constructor(
-    IChainlinkAggregator _networkBaseTokenPriceInUsdProxyAggregator,
-    IChainlinkAggregator _marketReferenceCurrencyPriceInUsdProxyAggregator
+    IPriceAggregatorAdapter _networkBaseTokenPriceInUsdProxyAggregatorAdapter,
+    address _baseTokenAddress
   ) public {
-    networkBaseTokenPriceInUsdProxyAggregator = _networkBaseTokenPriceInUsdProxyAggregator;
-    marketReferenceCurrencyPriceInUsdProxyAggregator = _marketReferenceCurrencyPriceInUsdProxyAggregator;
+    networkBaseTokenPriceInUsdProxyAggregatorAdapter = _networkBaseTokenPriceInUsdProxyAggregatorAdapter;
+    baseTokenAddress = _baseTokenAddress;
   }
 
   function getInterestRateStrategySlopes(DefaultReserveInterestRateStrategy interestRateStrategy)
@@ -80,9 +82,8 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
       reserveData.underlyingAsset = reserves[i];
 
       // reserve current state
-      DataTypes.ReserveData memory baseData = lendingPool.getReserveData(
-        reserveData.underlyingAsset
-      );
+      DataTypes.ReserveData memory baseData =
+        lendingPool.getReserveData(reserveData.underlyingAsset);
       reserveData.liquidityIndex = baseData.liquidityIndex;
       reserveData.variableBorrowIndex = baseData.variableBorrowIndex;
       reserveData.liquidityRate = baseData.currentLiquidityRate;
@@ -141,29 +142,11 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     }
 
     BaseCurrencyInfo memory baseCurrencyInfo;
-    baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregator
-      .latestAnswer();
-    baseCurrencyInfo.networkBaseTokenPriceDecimals = networkBaseTokenPriceInUsdProxyAggregator
-      .decimals();
-
-    try oracle.BASE_CURRENCY_UNIT() returns (uint256 baseCurrencyUnit) {
-      if (ETH_CURRENCY_UNIT == baseCurrencyUnit) {
-        baseCurrencyInfo.marketReferenceCurrencyUnit = ETH_CURRENCY_UNIT;
-        baseCurrencyInfo
-        .marketReferenceCurrencyPriceInUsd = marketReferenceCurrencyPriceInUsdProxyAggregator
-        .latestAnswer();
-      } else {
-        baseCurrencyInfo.marketReferenceCurrencyUnit = baseCurrencyUnit;
-        baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = int256(baseCurrencyUnit);
-      }
-    } catch (
-      bytes memory /*lowLevelData*/
-    ) {
-      baseCurrencyInfo.marketReferenceCurrencyUnit = ETH_CURRENCY_UNIT;
-      baseCurrencyInfo
-        .marketReferenceCurrencyPriceInUsd = marketReferenceCurrencyPriceInUsdProxyAggregator
-        .latestAnswer();
-    }
+    baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregatorAdapter
+      .currentPrice(baseTokenAddress);
+    baseCurrencyInfo.networkBaseTokenPriceDecimals = 8;
+    baseCurrencyInfo.marketReferenceCurrencyUnit = 100000000; // only in case quote currency is fiat
+    baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 100000000;
 
     return (reservesData, baseCurrencyInfo);
   }
@@ -178,9 +161,8 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     address[] memory reserves = lendingPool.getReservesList();
     DataTypes.UserConfigurationMap memory userConfig = lendingPool.getUserConfiguration(user);
 
-    UserReserveData[] memory userReservesData = new UserReserveData[](
-      user != address(0) ? reserves.length : 0
-    );
+    UserReserveData[] memory userReservesData =
+      new UserReserveData[](user != address(0) ? reserves.length : 0);
 
     for (uint256 i = 0; i < reserves.length; i++) {
       DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserves[i]);
@@ -194,16 +176,20 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
 
       if (userConfig.isBorrowing(i)) {
         userReservesData[i].scaledVariableDebt = IVariableDebtToken(
-          baseData.variableDebtTokenAddress
-        ).scaledBalanceOf(user);
+          baseData
+            .variableDebtTokenAddress
+        )
+          .scaledBalanceOf(user);
         userReservesData[i].principalStableDebt = IStableDebtToken(baseData.stableDebtTokenAddress)
           .principalBalanceOf(user);
         if (userReservesData[i].principalStableDebt != 0) {
           userReservesData[i].stableBorrowRate = IStableDebtToken(baseData.stableDebtTokenAddress)
             .getUserStableRate(user);
           userReservesData[i].stableBorrowLastUpdateTimestamp = IStableDebtToken(
-            baseData.stableDebtTokenAddress
-          ).getUserLastUpdated(user);
+            baseData
+              .stableDebtTokenAddress
+          )
+            .getUserLastUpdated(user);
         }
       }
     }

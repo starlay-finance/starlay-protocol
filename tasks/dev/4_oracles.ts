@@ -5,8 +5,8 @@ import {
   deployLendingRateOracle,
 } from '../../helpers/contracts-deployments';
 import {
+  deployMockAggregators,
   setInitialAssetPricesInOracle,
-  deployAllMockAggregators,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { ICommonConfiguration, iAssetBase, TokenContractId } from '../../helpers/types';
@@ -16,7 +16,6 @@ import { ConfigNames, loadPoolConfig, getQuoteCurrency } from '../../helpers/con
 import {
   getAllMockedTokens,
   getLendingPoolAddressesProvider,
-  getPairsTokenAggregator,
 } from '../../helpers/contracts-getters';
 
 task('dev:deploy-oracles', 'Deploy oracles for dev environment')
@@ -49,21 +48,14 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
     await waitForTx(await fallbackOracle.setEthUsdPrice(MockUsdPriceInWei));
     await setInitialAssetPricesInOracle(AllAssetsInitialPrices, mockTokensAddress, fallbackOracle);
 
-    const mockAggregators = await deployAllMockAggregators(AllAssetsInitialPrices, verify);
+    const mockAggregators = await deployMockAggregators(AllAssetsInitialPrices, verify);
 
     const allTokenAddresses = getAllTokenAddresses(mockTokens);
     const allAggregatorsAddresses = getAllAggregatorsAddresses(mockAggregators);
 
-    const [tokens, aggregators] = getPairsTokenAggregator(
-      allTokenAddresses,
-      allAggregatorsAddresses,
-      OracleQuoteCurrency
-    );
-
     await deployAaveOracle(
       [
-        tokens,
-        aggregators,
+        mockAggregators.address,
         fallbackOracle.address,
         await getQuoteCurrency(poolConfig),
         OracleQuoteUnit,

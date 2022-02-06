@@ -77,16 +77,11 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   VEIN: oneEther.multipliedBy('0.003620948469').toFixed(),
 };
 
-export const chainlinkAggregatorProxy = {
+export const aggregatorProxy = {
   main: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   kovan: '0x9326BFA02ADD2366b30bacB125260Af641031331',
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   shibuya: ZERO_ADDRESS, //TODO:
 };
 
-export const chainlinkEthUsdAggregatorProxy = {
-  main: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  kovan: '0x9326BFA02ADD2366b30bacB125260Af641031331',
-  tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  shibuya: ZERO_ADDRESS, //TODO:
-};
+export const ethUsdAggregatorProxy = aggregatorProxy;
