@@ -47,11 +47,6 @@ contract PriceAggregatorDiaImpl is IPriceAggregator, Ownable {
     if (keccak256(abi.encodePacked((symbol))) == keccak256(abi.encodePacked(('')))) {
       return 0;
     }
-    if (
-      (keccak256(abi.encodePacked((symbol))) == keccak256(abi.encodePacked((_baseTokenSymbol))))
-    ) {
-      return 1;
-    }
     (uint128 price, ) = _aggregator.getValue(feedKey(symbol));
     return int256(price);
   }
