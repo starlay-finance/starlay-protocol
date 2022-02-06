@@ -146,7 +146,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
       .currentPrice(baseTokenAddress);
     baseCurrencyInfo.networkBaseTokenPriceDecimals = 8;
     baseCurrencyInfo.marketReferenceCurrencyUnit = ETH_CURRENCY_UNIT;
-    baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 1;
+    baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 100000000;
 
     return (reservesData, baseCurrencyInfo);
   }
