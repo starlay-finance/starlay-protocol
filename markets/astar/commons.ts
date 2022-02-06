@@ -2,7 +2,7 @@ import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
   oneRay,
   oneUsd,
-  ZERO_ADDRESS
+  ZERO_ADDRESS,
 } from '../../helpers/constants';
 import { eAstarNetwork, ICommonConfiguration } from '../../helpers/types';
 
@@ -27,7 +27,24 @@ export const CommonsConfig: ICommonConfiguration = {
     OneAddress: '0x0000000000000000000000000000000000000001',
     AaveReferral: '0',
   },
-
+  DIAAggregator: {
+    [eAstarNetwork.shibuya]: {
+      SBY: '0xCD233fBd0D45C3C3bcdcE8543529290166790DD0', //created through dev:migration
+      ETH: '0x6905e3e220c33E38379C5255185f4946f9433504', //created through dev:migration
+      BTC: '0x5eC0E19eBAf29D6Abd042D00981F982844c93134', //created through dev:migration
+      SDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
+      USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
+      USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
+      ARSW: '0x42b9a112CdB5955af31BB41C5571d4f71FC39274', //created through dev:migration
+      VEIN: '0x8d3aB269290542307AD86Ff579Ae38d05617ce8a', //created through dev:migration
+    },
+  },
+  DIAAggregatorAddress: {
+    [eAstarNetwork.shibuya]: '',
+  },
+  PriceAggregator: {
+    [eAstarNetwork.shibuya]: '',
+  },
   // ----------------
   // COMMON PROTOCOL PARAMS ACROSS POOLS AND NETWORKS
   // ----------------

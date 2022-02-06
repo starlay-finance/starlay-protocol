@@ -1,9 +1,9 @@
+import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
 import { Contract } from 'ethers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
   tEthereumAddress,
   eContractid,
-  tStringTokenSmallUnits,
   AavePools,
   TokenContractId,
   iMultiPoolsAssets,
@@ -55,6 +55,7 @@ import {
   UiPoolDataProviderV2V3Factory,
   UiIncentiveDataProviderV2V3,
   UiIncentiveDataProviderV2Factory,
+  MockAggregatorDIAFactory,
 } from '../types';
 import {
   withSaveAndVerify,
@@ -106,17 +107,17 @@ export const deployUiPoolDataProviderV2 = async (
   );
 
 export const deployUiPoolDataProviderV2V3 = async (
-  chainlinkAggregatorProxy: string,
-  chainlinkEthUsdAggregatorProxy: string,
+  aggregatorProxy: string,
+  ethUsdAggregatorProxy: string,
   verify?: boolean
 ) =>
   withSaveAndVerify(
     await new UiPoolDataProviderV2V3Factory(await getFirstSigner()).deploy(
-      chainlinkAggregatorProxy,
-      chainlinkEthUsdAggregatorProxy
+      aggregatorProxy,
+      ethUsdAggregatorProxy
     ),
     eContractid.UiPoolDataProvider,
-    [chainlinkAggregatorProxy, chainlinkEthUsdAggregatorProxy],
+    [aggregatorProxy, ethUsdAggregatorProxy],
     verify
   );
 
@@ -269,20 +270,23 @@ export const deployLendingRateOracle = async (verify?: boolean) =>
     verify
   );
 
-export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify?: boolean) =>
+export const deployMockAggregator = async (
+  args: [tEthereumAddress[], string[]],
+  verify?: boolean
+) =>
   withSaveAndVerify(
-    await new MockAggregatorFactory(await getFirstSigner()).deploy(price),
+    await new MockAggregatorFactory(await getFirstSigner()).deploy(args[0], args[1]),
     eContractid.MockAggregator,
-    [price],
+    args,
     verify
   );
 
 export const deployAaveOracle = async (
-  args: [tEthereumAddress[], tEthereumAddress[], tEthereumAddress, tEthereumAddress, string],
+  args: [tEthereumAddress, tEthereumAddress, string, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new AaveOracleFactory(await getFirstSigner()).deploy(...args),
+    await new AaveOracleFactory(await getFirstSigner()).deploy(args[0], args[1], args[2], args[3]),
     eContractid.AaveOracle,
     args,
     verify
@@ -788,6 +792,22 @@ export const deployParaSwapLiquiditySwapAdapter = async (
   withSaveAndVerify(
     await new ParaSwapLiquiditySwapAdapterFactory(await getFirstSigner()).deploy(...args),
     eContractid.ParaSwapLiquiditySwapAdapter,
+    args,
+    verify
+  );
+
+export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
+  withSaveAndVerify(
+    await new PriceAggregatorAdapterDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
+    eContractid.PriceAggregatorAdapterDiaImpl,
+    args,
+    verify
+  );
+
+export const deployMockAggregatorDIA = async (args: [string[], string[]], verify?: boolean) =>
+  withSaveAndVerify(
+    await new MockAggregatorDIAFactory(await getFirstSigner()).deploy(args[0], args[1]),
+    eContractid.MockAggregatorDIA,
     args,
     verify
   );

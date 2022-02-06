@@ -35,11 +35,7 @@ import {
   deployWETHGateway,
   deployWETHMocked,
 } from '../../helpers/contracts-deployments';
-import {
-  getLendingPool,
-  getLendingPoolConfiguratorProxy,
-  getPairsTokenAggregator,
-} from '../../helpers/contracts-getters';
+import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
   getEthersSigners,
   getEthersSignersAddresses,
@@ -49,7 +45,7 @@ import {
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { waitForTx } from '../../helpers/misc-utils';
 import {
-  deployAllMockAggregators,
+  deployMockAggregators,
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
@@ -147,63 +143,60 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   ]);
 
   const fallbackOracle = await deployPriceOracle();
-  await waitForTx(await fallbackOracle.setEthUsdPrice(MOCK_USD_PRICE_IN_WEI));
-  await setInitialAssetPricesInOracle(
-    ALL_ASSETS_INITIAL_PRICES,
-    {
-      WETH: mockTokens.WETH.address,
-      DAI: mockTokens.DAI.address,
-      TUSD: mockTokens.TUSD.address,
-      USDC: mockTokens.USDC.address,
-      USDT: mockTokens.USDT.address,
-      SUSD: mockTokens.SUSD.address,
-      AAVE: mockTokens.AAVE.address,
-      BAT: mockTokens.BAT.address,
-      MKR: mockTokens.MKR.address,
-      LINK: mockTokens.LINK.address,
-      KNC: mockTokens.KNC.address,
-      WBTC: mockTokens.WBTC.address,
-      MANA: mockTokens.MANA.address,
-      ZRX: mockTokens.ZRX.address,
-      SNX: mockTokens.SNX.address,
-      BUSD: mockTokens.BUSD.address,
-      YFI: mockTokens.BUSD.address,
-      REN: mockTokens.REN.address,
-      UNI: mockTokens.UNI.address,
-      ENJ: mockTokens.ENJ.address,
-      // DAI: mockTokens.LpDAI.address,
-      // USDC: mockTokens.LpUSDC.address,
-      // USDT: mockTokens.LpUSDT.address,
-      // WBTC: mockTokens.LpWBTC.address,
-      // WETH: mockTokens.LpWETH.address,
-      UniDAIWETH: mockTokens.UniDAIWETH.address,
-      UniWBTCWETH: mockTokens.UniWBTCWETH.address,
-      UniAAVEWETH: mockTokens.UniAAVEWETH.address,
-      UniBATWETH: mockTokens.UniBATWETH.address,
-      UniDAIUSDC: mockTokens.UniDAIUSDC.address,
-      UniCRVWETH: mockTokens.UniCRVWETH.address,
-      UniLINKWETH: mockTokens.UniLINKWETH.address,
-      UniMKRWETH: mockTokens.UniMKRWETH.address,
-      UniRENWETH: mockTokens.UniRENWETH.address,
-      UniSNXWETH: mockTokens.UniSNXWETH.address,
-      UniUNIWETH: mockTokens.UniUNIWETH.address,
-      UniUSDCWETH: mockTokens.UniUSDCWETH.address,
-      UniWBTCUSDC: mockTokens.UniWBTCUSDC.address,
-      UniYFIWETH: mockTokens.UniYFIWETH.address,
-      BptWBTCWETH: mockTokens.BptWBTCWETH.address,
-      BptBALWETH: mockTokens.BptBALWETH.address,
-      USD: USD_ADDRESS,
-      STAKE: mockTokens.STAKE.address,
-      xSUSHI: mockTokens.xSUSHI.address,
-      WSBY: mockTokens.WSBY.address,
-      WSDN: mockTokens.WSDN.address,
-      ARSW: mockTokens.ARSW.address,
-      VEIN: mockTokens.VEIN.address,
-    },
-    fallbackOracle
-  );
 
-  const mockAggregators = await deployAllMockAggregators(ALL_ASSETS_INITIAL_PRICES);
+  await waitForTx(await fallbackOracle.setEthUsdPrice(MOCK_USD_PRICE_IN_WEI));
+  const addresses = {
+    WETH: mockTokens.WETH.address,
+    DAI: mockTokens.DAI.address,
+    TUSD: mockTokens.TUSD.address,
+    USDC: mockTokens.USDC.address,
+    USDT: mockTokens.USDT.address,
+    SUSD: mockTokens.SUSD.address,
+    AAVE: mockTokens.AAVE.address,
+    BAT: mockTokens.BAT.address,
+    MKR: mockTokens.MKR.address,
+    LINK: mockTokens.LINK.address,
+    KNC: mockTokens.KNC.address,
+    WBTC: mockTokens.WBTC.address,
+    MANA: mockTokens.MANA.address,
+    ZRX: mockTokens.ZRX.address,
+    SNX: mockTokens.SNX.address,
+    BUSD: mockTokens.BUSD.address,
+    YFI: mockTokens.BUSD.address,
+    REN: mockTokens.REN.address,
+    UNI: mockTokens.UNI.address,
+    ENJ: mockTokens.ENJ.address,
+    // DAI: mockTokens.LpDAI.address,
+    // USDC: mockTokens.LpUSDC.address,
+    // USDT: mockTokens.LpUSDT.address,
+    // WBTC: mockTokens.LpWBTC.address,
+    // WETH: mockTokens.LpWETH.address,
+    UniDAIWETH: mockTokens.UniDAIWETH.address,
+    UniWBTCWETH: mockTokens.UniWBTCWETH.address,
+    UniAAVEWETH: mockTokens.UniAAVEWETH.address,
+    UniBATWETH: mockTokens.UniBATWETH.address,
+    UniDAIUSDC: mockTokens.UniDAIUSDC.address,
+    UniCRVWETH: mockTokens.UniCRVWETH.address,
+    UniLINKWETH: mockTokens.UniLINKWETH.address,
+    UniMKRWETH: mockTokens.UniMKRWETH.address,
+    UniRENWETH: mockTokens.UniRENWETH.address,
+    UniSNXWETH: mockTokens.UniSNXWETH.address,
+    UniUNIWETH: mockTokens.UniUNIWETH.address,
+    UniUSDCWETH: mockTokens.UniUSDCWETH.address,
+    UniWBTCUSDC: mockTokens.UniWBTCUSDC.address,
+    UniYFIWETH: mockTokens.UniYFIWETH.address,
+    BptWBTCWETH: mockTokens.BptWBTCWETH.address,
+    BptBALWETH: mockTokens.BptBALWETH.address,
+    USD: USD_ADDRESS,
+    STAKE: mockTokens.STAKE.address,
+    xSUSHI: mockTokens.xSUSHI.address,
+    WSBY: mockTokens.WSBY.address,
+    WSDN: mockTokens.WSDN.address,
+    ARSW: mockTokens.ARSW.address,
+    VEIN: mockTokens.VEIN.address,
+  };
+  await setInitialAssetPricesInOracle(ALL_ASSETS_INITIAL_PRICES, addresses, fallbackOracle);
+
   const allTokenAddresses = Object.entries(mockTokens).reduce(
     (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, tokenContract]) => ({
       ...accum,
@@ -211,23 +204,11 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     }),
     {}
   );
-  const allAggregatorsAddresses = Object.entries(mockAggregators).reduce(
-    (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, aggregator]) => ({
-      ...accum,
-      [tokenSymbol]: aggregator.address,
-    }),
-    {}
-  );
 
-  const [tokens, aggregators] = getPairsTokenAggregator(
-    allTokenAddresses,
-    allAggregatorsAddresses,
-    config.OracleQuoteCurrency
-  );
+  const priceAggregator = await deployMockAggregators(ALL_ASSETS_INITIAL_PRICES, addresses);
 
   await deployAaveOracle([
-    tokens,
-    aggregators,
+    priceAggregator.address,
     fallbackOracle.address,
     mockTokens.WETH.address,
     oneEther.toString(),

@@ -83,7 +83,7 @@ export const setInitialAssetPricesInOracle = async (
 };
 
 export const setAssetPricesInOracle = async (
-  prices: SymbolMap<string>,
+  prices: iAssetBase<tEthereumAddress>,
   assetsAddresses: SymbolMap<tEthereumAddress>,
   priceOracleInstance: PriceOracle
 ) => {
@@ -98,33 +98,22 @@ export const setAssetPricesInOracle = async (
   }
 };
 
-export const deployMockAggregators = async (initialPrices: SymbolMap<string>, verify?: boolean) => {
-  const aggregators: { [tokenSymbol: string]: MockAggregator } = {};
-  for (const tokenContractName of Object.keys(initialPrices)) {
-    if (tokenContractName !== 'ETH') {
-      const priceIndex = Object.keys(initialPrices).findIndex(
-        (value) => value === tokenContractName
-      );
-      const [, price] = (Object.entries(initialPrices) as [string, string][])[priceIndex];
-      aggregators[tokenContractName] = await deployMockAggregator(price, verify);
-    }
-  }
-  return aggregators;
-};
-
-export const deployAllMockAggregators = async (
-  initialPrices: iAssetAggregatorBase<string>,
+export const deployMockAggregators = async (
+  prices: iAssetBase<tEthereumAddress>,
+  assetsAddresses: iAssetBase<tEthereumAddress>,
   verify?: boolean
 ) => {
-  const aggregators: { [tokenSymbol: string]: MockAggregator } = {};
-  for (const tokenContractName of Object.keys(initialPrices)) {
-    if (tokenContractName !== 'ETH') {
-      const priceIndex = Object.keys(initialPrices).findIndex(
-        (value) => value === tokenContractName
-      );
-      const [, price] = (Object.entries(initialPrices) as [string, string][])[priceIndex];
-      aggregators[tokenContractName] = await deployMockAggregator(price, verify);
-    }
+  let addresses: string[] = [];
+  let assetPrices: string[] = [];
+  for (const [assetSymbol, price] of Object.entries(prices) as [string, string][]) {
+    const assetAddressIndex = Object.keys(assetsAddresses).findIndex(
+      (value) => value === assetSymbol
+    );
+    const [, assetAddress] = (Object.entries(assetsAddresses) as [string, string][])[
+      assetAddressIndex
+    ];
+    addresses.push(assetAddress);
+    assetPrices.push(price);
   }
-  return aggregators;
+  return deployMockAggregator([addresses, assetPrices], verify);
 };

@@ -13,8 +13,17 @@ import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import {
-  AavePools, eAstarNetwork, eContractid, eEthereumNetwork, eNetwork, iAstarParamsPerNetwork, iEthereumParamsPerNetwork, iParamsPerNetwork,
-  iParamsPerPool, tEthereumAddress, tStringTokenSmallUnits
+  AavePools,
+  eAstarNetwork,
+  eContractid,
+  eEthereumNetwork,
+  eNetwork,
+  iAstarParamsPerNetwork,
+  iEthereumParamsPerNetwork,
+  iParamsPerNetwork,
+  iParamsPerPool,
+  tEthereumAddress,
+  tStringTokenSmallUnits,
 } from './types';
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
@@ -58,7 +67,6 @@ export const rawInsertContractAddressInDb = async (id: string, address: tEthereu
 
 export const getEthersSigners = async (): Promise<Signer[]> => {
   const ethersSigners = await Promise.all(await DRE.ethers.getSigners());
-
   if (usingDefender()) {
     const [, ...users] = ethersSigners;
     return [await getDefenderRelaySigner(), ...users];
@@ -131,8 +139,7 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 };
 
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
-  const { main, kovan, coverage, buidlerevm, tenderly } =
-    param as iEthereumParamsPerNetwork<T>;
+  const { main, kovan, coverage, buidlerevm, tenderly } = param as iEthereumParamsPerNetwork<T>;
   const { shibuya } = param as iAstarParamsPerNetwork<T>;
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
@@ -152,7 +159,7 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
     case eEthereumNetwork.tenderly:
       return tenderly;
     case eAstarNetwork.shibuya:
-        return shibuya;
+      return shibuya;
   }
 };
 
@@ -166,10 +173,7 @@ export const getOptionalParamAddressPerNetwork = (
   return getParamPerNetwork(param, network);
 };
 
-export const getParamPerPool = <T>(
-  { proto, amm, astar }: iParamsPerPool<T>,
-  pool: AavePools
-) => {
+export const getParamPerPool = <T>({ proto, amm, astar }: iParamsPerPool<T>, pool: AavePools) => {
   switch (pool) {
     case AavePools.proto:
       return proto;

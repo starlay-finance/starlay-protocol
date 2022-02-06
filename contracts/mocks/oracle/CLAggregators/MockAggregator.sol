@@ -2,25 +2,18 @@
 pragma solidity 0.6.12;
 
 contract MockAggregator {
-  int256 private _latestAnswer;
+  mapping(address => int256) private _prices;
 
-  event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);
+  event AnswerUpdated(address[] assets, int256[] indexed prices);
 
-  constructor(int256 _initialAnswer) public {
-    _latestAnswer = _initialAnswer;
-    emit AnswerUpdated(_initialAnswer, 0, now);
+  constructor(address[] memory assets, int256[] memory prices) public {
+    require(assets.length == prices.length);
+    for (uint256 i = 0; i < assets.length; i++) {
+      _prices[assets[i]] = 1;
+    }
   }
 
-  function latestAnswer() external view returns (int256) {
-    return _latestAnswer;
+  function currentPrice(address asset) external view returns (int256) {
+    return _prices[asset];
   }
-
-  function getTokenType() external view returns (uint256) {
-    return 1;
-  }
-
-  // function getSubTokens() external view returns (address[] memory) {
-  // TODO: implement mock for when multiple subtokens. Maybe we need to create diff mock contract
-  // to call it from the migration for this case??
-  // }
 }
