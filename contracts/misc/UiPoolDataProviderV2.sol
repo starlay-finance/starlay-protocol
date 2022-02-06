@@ -145,7 +145,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregator
       .currentPrice(baseTokenAddress);
     baseCurrencyInfo.networkBaseTokenPriceDecimals = 8;
-    baseCurrencyInfo.marketReferenceCurrencyUnit = ETH_CURRENCY_UNIT;
+    baseCurrencyInfo.marketReferenceCurrencyUnit = 100000000; // only in case quote currency is fiat
     baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 100000000;
 
     return (reservesData, baseCurrencyInfo);
