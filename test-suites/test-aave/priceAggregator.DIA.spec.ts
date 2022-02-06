@@ -6,6 +6,7 @@ import {
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { PriceAggregatorDiaImpl } from '../../types';
 import BigNumber from 'bignumber.js';
+import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 
 const { expect } = require('chai');
 const oneEther = new BigNumber(Math.pow(10, 18));
@@ -39,6 +40,15 @@ makeSuite('Price Aggregator Implementation for DIA', (testEnv: TestEnv) => {
   let mockAggregatorDIA: MockAggregatorDIA;
   const quoteCurrency = 'USD';
   const prices = mockPrices();
+  let evmSnapshotId;
+  beforeEach(async () => {
+    evmSnapshotId = await evmSnapshot();
+  });
+
+  afterEach(async () => {
+    await evmRevert(evmSnapshotId);
+  });
+
   before(async () => {
     mockAggregatorDIA = await deployMockAggregatorDIA([
       prices.map((m) => `${m.symbol}/${quoteCurrency}`),
