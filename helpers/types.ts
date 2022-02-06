@@ -77,6 +77,7 @@ export enum eContractid {
   LendingPoolImpl = 'LendingPoolImpl',
   LendingPoolConfiguratorImpl = 'LendingPoolConfiguratorImpl',
   LendingPoolCollateralManagerImpl = 'LendingPoolCollateralManagerImpl',
+  PriceAggregatorDiaImpl = 'PriceAggregatorDiaImpl',
   MockUniswapV2Router02 = 'MockUniswapV2Router02',
   UniswapLiquiditySwapAdapter = 'UniswapLiquiditySwapAdapter',
   UniswapRepayAdapter = 'UniswapRepayAdapter',
@@ -391,11 +392,9 @@ export interface IMarketRates {
   borrowRate: string;
 }
 
-export type iParamsPerNetwork<T> =
-  | iEthereumParamsPerNetwork<T> | iAstarParamsPerNetwork<T>;
+export type iParamsPerNetwork<T> = iEthereumParamsPerNetwork<T> | iAstarParamsPerNetwork<T>;
 
-export interface iParamsPerNetworkAll<T>
-  extends iEthereumParamsPerNetwork<T>{}
+export interface iParamsPerNetworkAll<T> extends iEthereumParamsPerNetwork<T> {}
 
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
@@ -470,8 +469,11 @@ export interface IBaseConfiguration {
   LendingRateOracle: iParamsPerNetwork<tEthereumAddress>;
   TokenDistributor: iParamsPerNetwork<tEthereumAddress>;
   AaveOracle: iParamsPerNetwork<tEthereumAddress>;
+  PriceAggregator: iParamsPerNetwork<tEthereumAddress>;
   FallbackOracle: iParamsPerNetwork<tEthereumAddress>;
   ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
+  DIAAggregator: iParamsPerNetwork<ITokenAddress>;
+  DIAAggregatorAddress: iParamsPerNetwork<tEthereumAddress>;
   PoolAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;
   PoolAdminIndex: number;
   EmergencyAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;

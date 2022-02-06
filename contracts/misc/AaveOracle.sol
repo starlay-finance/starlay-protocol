@@ -3,9 +3,9 @@ pragma solidity 0.6.12;
 
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
+import {IPriceAggregator} from '../interfaces/IPriceAggregator.sol';
 
 import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
-import {IChainlinkAggregator} from '../interfaces/IChainlinkAggregator.sol';
 import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
 
 /// @title AaveOracle
@@ -19,43 +19,35 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
   using SafeERC20 for IERC20;
 
   event BaseCurrencySet(address indexed baseCurrency, uint256 baseCurrencyUnit);
-  event AssetSourceUpdated(address indexed asset, address indexed source);
+  event AssetSourceUpdated(address indexed priceAggregator);
   event FallbackOracleUpdated(address indexed fallbackOracle);
 
-  mapping(address => IChainlinkAggregator) private assetsSources;
   IPriceOracleGetter private _fallbackOracle;
+  IPriceAggregator private _priceAggregator;
   address public immutable BASE_CURRENCY;
   uint256 public immutable BASE_CURRENCY_UNIT;
 
   /// @notice Constructor
-  /// @param assets The addresses of the assets
-  /// @param sources The address of the source of each asset
+  /// @param priceAggregator The address of the price aggregator to use feed prices
   /// @param fallbackOracle The address of the fallback oracle to use if the data of an
   ///        aggregator is not consistent
   /// @param baseCurrency the base currency used for the price quotes. If USD is used, base currency is 0x0
   /// @param baseCurrencyUnit the unit of the base currency
   constructor(
-    address[] memory assets,
-    address[] memory sources,
+    address priceAggregator,
     address fallbackOracle,
     address baseCurrency,
     uint256 baseCurrencyUnit
   ) public {
     _setFallbackOracle(fallbackOracle);
-    _setAssetsSources(assets, sources);
+    _setPriceAggregator(priceAggregator);
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
   }
 
-  /// @notice External function called by the Aave governance to set or replace sources of assets
-  /// @param assets The addresses of the assets
-  /// @param sources The address of the source of each asset
-  function setAssetSources(address[] calldata assets, address[] calldata sources)
-    external
-    onlyOwner
-  {
-    _setAssetsSources(assets, sources);
+  function setPriceAggregator(address priceAggregator) external onlyOwner {
+    _setPriceAggregator(priceAggregator);
   }
 
   /// @notice Sets the fallbackOracle
@@ -65,17 +57,6 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
     _setFallbackOracle(fallbackOracle);
   }
 
-  /// @notice Internal function to set the sources for each asset
-  /// @param assets The addresses of the assets
-  /// @param sources The address of the source of each asset
-  function _setAssetsSources(address[] memory assets, address[] memory sources) internal {
-    require(assets.length == sources.length, 'INCONSISTENT_PARAMS_LENGTH');
-    for (uint256 i = 0; i < assets.length; i++) {
-      assetsSources[assets[i]] = IChainlinkAggregator(sources[i]);
-      emit AssetSourceUpdated(assets[i], sources[i]);
-    }
-  }
-
   /// @notice Internal function to set the fallbackOracle
   /// @param fallbackOracle The address of the fallbackOracle
   function _setFallbackOracle(address fallbackOracle) internal {
@@ -83,17 +64,18 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
     emit FallbackOracleUpdated(fallbackOracle);
   }
 
+  function _setPriceAggregator(address priceAggregator) internal {
+    _priceAggregator = IPriceAggregator(priceAggregator);
+    emit AssetSourceUpdated(priceAggregator);
+  }
+
   /// @notice Gets an asset price by address
   /// @param asset The asset address
   function getAssetPrice(address asset) public view override returns (uint256) {
-    IChainlinkAggregator source = assetsSources[asset];
-
     if (asset == BASE_CURRENCY) {
       return BASE_CURRENCY_UNIT;
-    } else if (address(source) == address(0)) {
-      return _fallbackOracle.getAssetPrice(asset);
     } else {
-      int256 price = IChainlinkAggregator(source).latestAnswer();
+      int256 price = _priceAggregator.currentPrice(asset);
       if (price > 0) {
         return uint256(price);
       } else {
@@ -110,13 +92,6 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
       prices[i] = getAssetPrice(assets[i]);
     }
     return prices;
-  }
-
-  /// @notice Gets the address of the source for an asset address
-  /// @param asset The address of the asset
-  /// @return address The address of the source
-  function getSourceOfAsset(address asset) external view returns (address) {
-    return address(assetsSources[asset]);
   }
 
   /// @notice Gets the address of the fallback oracle

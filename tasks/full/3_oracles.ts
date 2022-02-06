@@ -1,6 +1,11 @@
+import { PriceAggregatorDiaImpl } from './../../types/PriceAggregatorDiaImpl.d';
 import { task } from 'hardhat/config';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { deployAaveOracle, deployLendingRateOracle } from '../../helpers/contracts-deployments';
+import {
+  deployAaveOracle,
+  deployLendingRateOracle,
+  deployPriceAggregatorDiaImpl,
+} from '../../helpers/contracts-deployments';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { ICommonConfiguration, eNetwork, SymbolMap } from '../../helpers/types';
 import { waitForTx, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -15,7 +20,7 @@ import {
   getAaveOracle,
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
-  getPairsTokenAggregator,
+  getPriceAggregator,
 } from '../../helpers/contracts-getters';
 import { AaveOracle, LendingRateOracle } from '../../types';
 
@@ -31,45 +36,49 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         ProtocolGlobalParams: { UsdAddress },
         ReserveAssets,
         FallbackOracle,
-        ChainlinkAggregator,
+        DIAAggregator,
+        DIAAggregatorAddress,
+        OracleQuoteCurrency,
       } = poolConfig as ICommonConfiguration;
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
       const aaveOracleAddress = getParamPerNetwork(poolConfig.AaveOracle, network);
+      const priceAggregatorAddress = getParamPerNetwork(poolConfig.PriceAggregator, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
-      const chainlinkAggregators = await getParamPerNetwork(ChainlinkAggregator, network);
-
+      const feedTokens = await getParamPerNetwork(DIAAggregator, network);
+      const diaAggregatorAddress = await getParamPerNetwork(DIAAggregatorAddress, network);
       const tokensToWatch: SymbolMap<string> = {
         ...reserveAssets,
         USD: UsdAddress,
       };
-      const [tokens, aggregators] = getPairsTokenAggregator(
-        tokensToWatch,
-        chainlinkAggregators,
-        poolConfig.OracleQuoteCurrency
-      );
 
+      let priceAggregator: PriceAggregatorDiaImpl;
       let aaveOracle: AaveOracle;
       let lendingRateOracle: LendingRateOracle;
 
+      priceAggregator = notFalsyOrZeroAddress(priceAggregatorAddress)
+        ? await await getPriceAggregator(priceAggregatorAddress)
+        : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
+      await waitForTx(
+        await priceAggregator.setAssetSources(Object.keys(feedTokens), Object.values(feedTokens))
+      );
+
       if (notFalsyOrZeroAddress(aaveOracleAddress)) {
         aaveOracle = await await getAaveOracle(aaveOracleAddress);
-        await waitForTx(await aaveOracle.setAssetSources(tokens, aggregators));
+        await waitForTx(await aaveOracle.setPriceAggregator(priceAggregator.address));
       } else {
         aaveOracle = await deployAaveOracle(
           [
-            tokens,
-            aggregators,
+            priceAggregator.address,
             fallbackOracleAddress,
             await getQuoteCurrency(poolConfig),
             poolConfig.OracleQuoteUnit,
           ],
           verify
         );
-        await waitForTx(await aaveOracle.setAssetSources(tokens, aggregators));
       }
 
       if (notFalsyOrZeroAddress(lendingRateOracleAddress)) {

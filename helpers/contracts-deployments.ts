@@ -1,3 +1,5 @@
+import { PriceAggregatorChainlinkImpl } from './../types/PriceAggregatorChainlinkImpl.d';
+import { PriceAggregatorDiaImplFactory } from './../types/PriceAggregatorDiaImplFactory';
 import { Contract } from 'ethers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
@@ -278,11 +280,11 @@ export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify
   );
 
 export const deployAaveOracle = async (
-  args: [tEthereumAddress[], tEthereumAddress[], tEthereumAddress, tEthereumAddress, string],
+  args: [tEthereumAddress, tEthereumAddress, string, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new AaveOracleFactory(await getFirstSigner()).deploy(...args),
+    await new AaveOracleFactory(await getFirstSigner()).deploy(args[0], args[1], args[2], args[3]),
     eContractid.AaveOracle,
     args,
     verify
@@ -788,6 +790,14 @@ export const deployParaSwapLiquiditySwapAdapter = async (
   withSaveAndVerify(
     await new ParaSwapLiquiditySwapAdapterFactory(await getFirstSigner()).deploy(...args),
     eContractid.ParaSwapLiquiditySwapAdapter,
+    args,
+    verify
+  );
+
+export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
+  withSaveAndVerify(
+    await new PriceAggregatorDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
+    eContractid.PriceAggregatorDiaImpl,
     args,
     verify
   );

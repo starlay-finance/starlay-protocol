@@ -1,7 +1,9 @@
+import { eAstarNetwork } from './../../helpers/types';
 import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
-  oneEther, oneRay,
-  ZERO_ADDRESS
+  oneEther,
+  oneRay,
+  ZERO_ADDRESS,
 } from '../../helpers/constants';
 import { eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
 
@@ -187,10 +189,14 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.main]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
     [eEthereumNetwork.tenderly]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
   },
-  AaveOracle: {
+  DIAAggregatorAddress: {
+    [eAstarNetwork.shibuya]: '',
+  },
+  PriceAggregator: {
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.buidlerevm]: '',
+    [eAstarNetwork.shibuya]: '',
     [eEthereumNetwork.kovan]: '', //'0xB8bE51E6563BB312Cbb2aa26e352516c25c26ac1',
     [eEthereumNetwork.main]: '', //'0xA50ba011c48153De246E5192C8f9258A2ba79Ca9',
     [eEthereumNetwork.tenderly]: '0xA50ba011c48153De246E5192C8f9258A2ba79Ca9',
@@ -207,74 +213,29 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.coverage]: {},
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.buidlerevm]: {},
-    [eEthereumNetwork.kovan]: {
-      AAVE: '0xd04647B7CB523bb9f26730E9B6dE1174db7591Ad',
-      BAT: '0x0e4fcEC26c9f85c3D714370c98f43C4E02Fc35Ae',
-      BUSD: '0xbF7A18ea5DE0501f7559144e702b29c55b055CcB',
-      DAI: '0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541',
-      ENJ: '0xfaDbe2ee798889F02d1d39eDaD98Eff4c7fe95D4',
-      KNC: '0xb8E8130d244CFd13a75D6B9Aee029B1C33c808A7',
-      LINK: '0x3Af8C569ab77af5230596Acf0E8c2F9351d24C38',
-      MANA: '0x1b93D8E109cfeDcBb3Cc74eD761DE286d5771511',
-      MKR: '0x0B156192e04bAD92B6C1C13cf8739d14D78D5701',
-      REN: '0xF1939BECE7708382b5fb5e559f630CB8B39a10ee',
-      SNX: '0xF9A76ae7a1075Fe7d646b06fF05Bd48b9FA5582e',
-      SUSD: '0xb343e7a1aF578FA35632435243D814e7497622f7',
-      TUSD: '0x7aeCF1c19661d12E962b69eBC8f6b2E63a55C660',
-      UNI: '0x17756515f112429471F86f98D5052aCB6C47f6ee',
-      USDC: '0x64EaC61A2DFda2c3Fa04eED49AA33D021AeC8838',
-      USDT: '0x0bF499444525a23E7Bb61997539725cA2e928138',
-      WBTC: '0xF7904a295A029a3aBDFFB6F12755974a958C7C25',
-      YFI: '0xC5d1B1DEb2992738C0273408ac43e1e906086B6C',
-      ZRX: '0xBc3f28Ccc21E9b5856E81E6372aFf57307E2E883',
-      USD: '0x9326BFA02ADD2366b30bacB125260Af641031331',
+    [eEthereumNetwork.kovan]: {},
+    [eEthereumNetwork.main]: {},
+    [eEthereumNetwork.tenderly]: {},
+  },
+  DIAAggregator: {
+    [eEthereumNetwork.coverage]: {},
+    [eEthereumNetwork.hardhat]: {},
+    [eEthereumNetwork.buidlerevm]: {},
+    [eEthereumNetwork.kovan]: {},
+    [eEthereumNetwork.main]: {},
+    [eEthereumNetwork.tenderly]: {},
+    [eAstarNetwork.shibuya]: {
+      SBY: '0xCD233fBd0D45C3C3bcdcE8543529290166790DD0', //created through dev:migration
+      ETH: '0x6905e3e220c33E38379C5255185f4946f9433504', //created through dev:migration
+      BTC: '0x5eC0E19eBAf29D6Abd042D00981F982844c93134', //created through dev:migration
+      SDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
+      USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
+      USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
+      ARSW: '0x42b9a112CdB5955af31BB41C5571d4f71FC39274', //created through dev:migration
+      VEIN: '0x8d3aB269290542307AD86Ff579Ae38d05617ce8a', //created through dev:migration
     },
-    [eEthereumNetwork.main]: {
-      AAVE: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
-      BAT: '0x0d16d4528239e9ee52fa531af613AcdB23D88c94',
-      BUSD: '0x614715d2Af89E6EC99A233818275142cE88d1Cfd',
-      DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
-      ENJ: '0x24D9aB51950F3d62E9144fdC2f3135DAA6Ce8D1B',
-      KNC: '0x656c0544eF4C98A6a98491833A89204Abb045d6b',
-      LINK: '0xDC530D9457755926550b59e8ECcdaE7624181557',
-      MANA: '0x82A44D92D6c329826dc557c5E1Be6ebeC5D5FeB9',
-      MKR: '0x24551a8Fb2A7211A25a17B1481f043A8a8adC7f2',
-      REN: '0x3147D7203354Dc06D9fd350c7a2437bcA92387a4',
-      SNX: '0x79291A9d692Df95334B1a0B3B4AE6bC606782f8c',
-      SUSD: '0x8e0b7e6062272B5eF4524250bFFF8e5Bd3497757',
-      TUSD: '0x3886BA987236181D98F2401c507Fb8BeA7871dF2',
-      UNI: '0xD6aA3D25116d8dA79Ea0246c4826EB951872e02e',
-      USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
-      USDT: '0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46',
-      WBTC: '0xdeb288F737066589598e9214E782fa5A8eD689e8',
-      YFI: '0x7c5d4F8345e66f68099581Db340cd65B078C41f4',
-      ZRX: '0x2Da4983a622a8498bb1a21FaE9D8F6C664939962',
-      USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-      xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
-    },
-    [eEthereumNetwork.tenderly]: {
-      AAVE: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
-      BAT: '0x0d16d4528239e9ee52fa531af613AcdB23D88c94',
-      BUSD: '0x614715d2Af89E6EC99A233818275142cE88d1Cfd',
-      DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
-      ENJ: '0x24D9aB51950F3d62E9144fdC2f3135DAA6Ce8D1B',
-      KNC: '0x656c0544eF4C98A6a98491833A89204Abb045d6b',
-      LINK: '0xDC530D9457755926550b59e8ECcdaE7624181557',
-      MANA: '0x82A44D92D6c329826dc557c5E1Be6ebeC5D5FeB9',
-      MKR: '0x24551a8Fb2A7211A25a17B1481f043A8a8adC7f2',
-      REN: '0x3147D7203354Dc06D9fd350c7a2437bcA92387a4',
-      SNX: '0x79291A9d692Df95334B1a0B3B4AE6bC606782f8c',
-      SUSD: '0x8e0b7e6062272B5eF4524250bFFF8e5Bd3497757',
-      TUSD: '0x3886BA987236181D98F2401c507Fb8BeA7871dF2',
-      UNI: '0xD6aA3D25116d8dA79Ea0246c4826EB951872e02e',
-      USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
-      USDT: '0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46',
-      WBTC: '0xdeb288F737066589598e9214E782fa5A8eD689e8',
-      YFI: '0x7c5d4F8345e66f68099581Db340cd65B078C41f4',
-      ZRX: '0x2Da4983a622a8498bb1a21FaE9D8F6C664939962',
-      USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-      xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
-    },
+    [eEthereumNetwork.main]: {},
+    [eEthereumNetwork.tenderly]: {},
   },
   ReserveAssets: {
     [eEthereumNetwork.coverage]: {},

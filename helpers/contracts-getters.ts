@@ -1,3 +1,4 @@
+import { PriceAggregatorDiaImplFactory } from './../types/PriceAggregatorDiaImplFactory';
 import {
   AaveProtocolDataProviderFactory,
   ATokenFactory,
@@ -385,6 +386,9 @@ export const getAaveOracle = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
+export const getPriceAggregator = async (address: tEthereumAddress) =>
+  await PriceAggregatorDiaImplFactory.connect(address, await getFirstSigner());
+
 export const getMockUniswapRouter = async (address?: tEthereumAddress) =>
   await MockUniswapV2Router02Factory.connect(
     address ||
@@ -424,23 +428,26 @@ export const getFlashLiquidationAdapter = async (address?: tEthereumAddress) =>
 export const getMockParaSwapAugustus = async (address?: tEthereumAddress) =>
   await MockParaSwapAugustusFactory.connect(
     address ||
-      (await getDb().get(`${eContractid.MockParaSwapAugustus}.${DRE.network.name}`).value())
-        .address,
+      (
+        await getDb().get(`${eContractid.MockParaSwapAugustus}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
 
 export const getMockParaSwapAugustusRegistry = async (address?: tEthereumAddress) =>
   await MockParaSwapAugustusRegistryFactory.connect(
     address ||
-      (await getDb().get(`${eContractid.MockParaSwapAugustusRegistry}.${DRE.network.name}`).value())
-        .address,
+      (
+        await getDb().get(`${eContractid.MockParaSwapAugustusRegistry}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
 
 export const getParaSwapLiquiditySwapAdapter = async (address?: tEthereumAddress) =>
   await ParaSwapLiquiditySwapAdapterFactory.connect(
     address ||
-      (await getDb().get(`${eContractid.ParaSwapLiquiditySwapAdapter}.${DRE.network.name}`).value())
-        .address,
+      (
+        await getDb().get(`${eContractid.ParaSwapLiquiditySwapAdapter}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
