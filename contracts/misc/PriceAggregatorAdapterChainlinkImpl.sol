@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.6.12;
-import {IPriceAggregator} from '../interfaces/IPriceAggregator.sol';
+import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol';
 import {IChainlinkAggregator} from '../interfaces/IChainlinkAggregator.sol';
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 
 /// @title PriceAggregatorChainlinkImpl
 /// @author Starley
 /// @notice Price aggregator Chainlink implementation
-contract PriceAggregatorChainlinkImpl is IPriceAggregator, Ownable {
+contract PriceAggregatorAdapterChainlinkImpl is IPriceAggregatorAdapter, Ownable {
   mapping(address => IChainlinkAggregator) private assetsSources;
 
   function currentPrice(address asset) external view override returns (int256) {

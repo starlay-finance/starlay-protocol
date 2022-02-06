@@ -14,7 +14,7 @@ import {WadRayMath} from '../protocol/libraries/math/WadRayMath.sol';
 import {ReserveConfiguration} from '../protocol/libraries/configuration/ReserveConfiguration.sol';
 import {UserConfiguration} from '../protocol/libraries/configuration/UserConfiguration.sol';
 import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
-import {IPriceAggregator} from '../interfaces/IPriceAggregator.sol';
+import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol';
 import {
   DefaultReserveInterestRateStrategy
 } from '../protocol/lendingpool/DefaultReserveInterestRateStrategy.sol';
@@ -25,16 +25,16 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
   using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
-  IPriceAggregator public immutable networkBaseTokenPriceInUsdProxyAggregator;
+  IPriceAggregatorAdapter public immutable networkBaseTokenPriceInUsdProxyAggregatorAdapter;
   uint256 public constant ETH_CURRENCY_UNIT = 1 ether;
   address public constant MKRAddress = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
   address public immutable baseTokenAddress;
 
   constructor(
-    IPriceAggregator _networkBaseTokenPriceInUsdProxyAggregator,
+    IPriceAggregatorAdapter _networkBaseTokenPriceInUsdProxyAggregatorAdapter,
     address _baseTokenAddress
   ) public {
-    networkBaseTokenPriceInUsdProxyAggregator = _networkBaseTokenPriceInUsdProxyAggregator;
+    networkBaseTokenPriceInUsdProxyAggregatorAdapter = _networkBaseTokenPriceInUsdProxyAggregatorAdapter;
     baseTokenAddress = _baseTokenAddress;
   }
 
@@ -142,7 +142,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     }
 
     BaseCurrencyInfo memory baseCurrencyInfo;
-    baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregator
+    baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregatorAdapter
       .currentPrice(baseTokenAddress);
     baseCurrencyInfo.networkBaseTokenPriceDecimals = 8;
     baseCurrencyInfo.marketReferenceCurrencyUnit = 100000000; // only in case quote currency is fiat

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
-import {IPriceAggregator} from '../interfaces/IPriceAggregator.sol';
+import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol';
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IDiaAggregator} from '../interfaces/IDiaAggregator.sol';
 import {IERC20Detailed} from '../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
@@ -10,7 +10,7 @@ import {SafeMath} from '../dependencies/openzeppelin/contracts/SafeMath.sol';
 /// @title PriceAggregatorDiaImpl
 /// @author Starley
 /// @notice Price aggregator Dia implementation
-contract PriceAggregatorDiaImpl is IPriceAggregator, Ownable {
+contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
   IDiaAggregator private _aggregator;
   using SafeMath for uint256;
   string private DELIMITER = '/';

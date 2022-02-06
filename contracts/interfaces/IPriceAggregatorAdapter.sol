@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 /************
 @title IPriceAggregator interface
 @notice Interface for price oracle.*/
-interface IPriceAggregator {
+interface IPriceAggregatorAdapter {
   /**
    * @dev returns the asset price
    * @param asset The asset address

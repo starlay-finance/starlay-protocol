@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
-import {IPriceAggregator} from '../interfaces/IPriceAggregator.sol';
+import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol';
 
 import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
 import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
@@ -23,31 +23,31 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
   event FallbackOracleUpdated(address indexed fallbackOracle);
 
   IPriceOracleGetter private _fallbackOracle;
-  IPriceAggregator private _priceAggregator;
+  IPriceAggregatorAdapter private _adapter;
   address public immutable BASE_CURRENCY;
   uint256 public immutable BASE_CURRENCY_UNIT;
 
   /// @notice Constructor
-  /// @param priceAggregator The address of the price aggregator to use feed prices
+  /// @param priceAggregatorAdapter The address of the price aggregator adapter to use feed prices
   /// @param fallbackOracle The address of the fallback oracle to use if the data of an
   ///        aggregator is not consistent
   /// @param baseCurrency the base currency used for the price quotes. If USD is used, base currency is 0x0
   /// @param baseCurrencyUnit the unit of the base currency
   constructor(
-    address priceAggregator,
+    address priceAggregatorAdapter,
     address fallbackOracle,
     address baseCurrency,
     uint256 baseCurrencyUnit
   ) public {
     _setFallbackOracle(fallbackOracle);
-    _setPriceAggregator(priceAggregator);
+    _setPriceAggregatorAdapter(priceAggregatorAdapter);
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
   }
 
   function setPriceAggregator(address priceAggregator) external onlyOwner {
-    _setPriceAggregator(priceAggregator);
+    _setPriceAggregatorAdapter(priceAggregator);
   }
 
   /// @notice Sets the fallbackOracle
@@ -64,9 +64,9 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
     emit FallbackOracleUpdated(fallbackOracle);
   }
 
-  function _setPriceAggregator(address priceAggregator) internal {
-    _priceAggregator = IPriceAggregator(priceAggregator);
-    emit AssetSourceUpdated(priceAggregator);
+  function _setPriceAggregatorAdapter(address priceAggregatorAdapter) internal {
+    _adapter = IPriceAggregatorAdapter(priceAggregatorAdapter);
+    emit AssetSourceUpdated(priceAggregatorAdapter);
   }
 
   /// @notice Gets an asset price by address
@@ -75,7 +75,7 @@ contract AaveOracle is IPriceOracleGetter, Ownable {
     if (asset == BASE_CURRENCY) {
       return BASE_CURRENCY_UNIT;
     } else {
-      int256 price = _priceAggregator.currentPrice(asset);
+      int256 price = _adapter.currentPrice(asset);
       if (price > 0) {
         return uint256(price);
       } else {
