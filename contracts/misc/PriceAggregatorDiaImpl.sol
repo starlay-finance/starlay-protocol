@@ -22,6 +22,10 @@ contract PriceAggregatorDiaImpl is IPriceAggregator, Ownable {
     _baseTokenSymbol = baseTokenSymbol;
   }
 
+  function setAggregator(address aggregator) external onlyOwner {
+    _aggregator = IDiaAggregator(aggregator);
+  }
+
   /// @notice External function called by the Aave governance to set or replace sources of assets
   /// @param assets The addresses of the assets
   /// @param tokenSymbols The symbol of the source of each asset
