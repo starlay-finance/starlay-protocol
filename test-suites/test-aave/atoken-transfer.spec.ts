@@ -1,4 +1,8 @@
-import { APPROVAL_AMOUNT_LENDING_POOL, MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../../helpers/constants';
+import {
+  APPROVAL_AMOUNT_LENDING_POOL,
+  MAX_UINT_AMOUNT,
+  ZERO_ADDRESS,
+} from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
@@ -33,7 +37,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave interest bearing DAI');
+    expect(name).to.be.equal('Starley interest bearing DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);
