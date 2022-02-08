@@ -13,7 +13,7 @@ import {Errors} from '../libraries/helpers/Errors.sol';
  * @title StableDebtToken
  * @notice Implements a stable debt token to track the borrowing positions of users
  * at stable rate mode
- * @author Aave
+ * @author Starlay
  **/
 contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   using WadRayMath for uint256;

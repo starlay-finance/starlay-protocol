@@ -8,7 +8,7 @@ import {IAaveIncentivesController} from './IAaveIncentivesController.sol';
  * @title IStableDebtToken
  * @notice Defines the interface for the stable debt token
  * @dev It does not inherit from IERC20 to save in code size
- * @author Aave
+ * @author Starlay
  **/
 
 interface IStableDebtToken is IInitializableDebtToken {

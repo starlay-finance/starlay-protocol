@@ -1,14 +1,13 @@
-import { configuration as actionsConfiguration } from './helpers/actions';
-import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
-
-import fs from 'fs';
 import BigNumber from 'bignumber.js';
-import { makeSuite } from './helpers/make-suite';
+import fs from 'fs';
 import { getReservesConfigByPool } from '../../helpers/configuration';
 import { AavePools, iAavePoolAssets, IReserveParams } from '../../helpers/types';
+import { configuration as actionsConfiguration } from './helpers/actions';
+import { makeSuite } from './helpers/make-suite';
 import { executeStory } from './helpers/scenario-engine';
+import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
 
-const scenarioFolder = './test-suites/test-aave/helpers/scenarios/';
+const scenarioFolder = './test-suites/test-starlay/helpers/scenarios/';
 
 const selectedScenarios: string[] = [];
 
@@ -35,7 +34,7 @@ fs.readdirSync(scenarioFolder).forEach((file) => {
 
     for (const story of scenario.stories) {
       it(story.description, async function () {
-        // Retry the test scenarios up to 4 times if an error happens, due erratic HEVM network errors 
+        // Retry the test scenarios up to 4 times if an error happens, due erratic HEVM network errors
         this.retries(4);
         await executeStory(story, testEnv);
       });

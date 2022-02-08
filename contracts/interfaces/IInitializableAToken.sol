@@ -7,7 +7,7 @@ import {IAaveIncentivesController} from './IAaveIncentivesController.sol';
 /**
  * @title IInitializableAToken
  * @notice Interface for the initialize function on AToken
- * @author Aave
+ * @author Starlay
  **/
 interface IInitializableAToken {
   /**

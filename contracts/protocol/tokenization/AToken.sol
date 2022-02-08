@@ -14,7 +14,7 @@ import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesControl
 /**
  * @title Aave ERC20 AToken
  * @dev Implementation of the interest bearing token for the Aave protocol
- * @author Aave
+ * @author Starlay
  */
 contract AToken is
   VersionedInitializable,
@@ -273,7 +273,7 @@ contract AToken is
   /**
    * @dev Returns the address of the underlying asset of this aToken (E.g. WETH for aWETH)
    **/
-  function UNDERLYING_ASSET_ADDRESS() public override view returns (address) {
+  function UNDERLYING_ASSET_ADDRESS() public view override returns (address) {
     return _underlyingAsset;
   }
 

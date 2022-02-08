@@ -13,7 +13,7 @@ import {Errors} from '../libraries/helpers/Errors.sol';
  * - Used for indexing purposes of Aave protocol's markets
  * - The id assigned to a LendingPoolAddressesProvider refers to the market it is connected with,
  *   for example with `0` for the Aave main market and `1` for the next created
- * @author Aave
+ * @author Starlay
  **/
 contract LendingPoolAddressesProviderRegistry is Ownable, ILendingPoolAddressesProviderRegistry {
   mapping(address => uint256) private _addressesProviders;

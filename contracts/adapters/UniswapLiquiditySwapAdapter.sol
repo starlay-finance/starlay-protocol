@@ -10,7 +10,7 @@ import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
 /**
  * @title UniswapLiquiditySwapAdapter
  * @notice Uniswap V2 Adapter to swap liquidity.
- * @author Aave
+ * @author Starlay
  **/
 contract UniswapLiquiditySwapAdapter is BaseUniswapAdapter {
   struct PermitParams {
