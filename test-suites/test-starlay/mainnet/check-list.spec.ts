@@ -17,7 +17,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   const depositSize = parseEther('5');
   const daiSize = parseEther('10000');
   it('Deposit WETH', async () => {
-    const { users, wethGateway, aWETH, pool } = testEnv;
+    const { users, wethGateway, aWETH } = testEnv;
 
     const user = users[1];
 
@@ -31,7 +31,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Withdraw WETH - Partial', async () => {
-    const { users, wethGateway, aWETH, pool } = testEnv;
+    const { users, wethGateway, aWETH } = testEnv;
 
     const user = users[1];
     const priorEthersBalance = await user.signer.getBalance();
@@ -68,7 +68,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Withdraw WETH - Full', async () => {
-    const { users, aWETH, wethGateway, pool } = testEnv;
+    const { users, aWETH, wethGateway } = testEnv;
 
     const user = users[1];
     const priorEthersBalance = await user.signer.getBalance();
@@ -99,7 +99,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Borrow stable WETH and Full Repay with ETH', async () => {
-    const { users, wethGateway, aWETH, dai, aDai, weth, pool, helpersContract } = testEnv;
+    const { users, wethGateway, dai, lDai, weth, pool, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
@@ -115,7 +115,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     await dai.connect(user.signer).approve(pool.address, daiSize);
     await pool.connect(user.signer).deposit(dai.address, daiSize, user.address, '0');
 
-    const lTokensBalance = await aDai.balanceOf(user.address);
+    const lTokensBalance = await lDai.balanceOf(user.address);
 
     expect(lTokensBalance).to.be.gt(zero);
     expect(lTokensBalance).to.be.gte(daiSize);

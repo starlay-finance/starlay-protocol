@@ -759,7 +759,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly repay debt via flash loan using the same asset as collateral', async () => {
-        const { users, pool, aDai, dai, uniswapRepayAdapter, helpersContract } = testEnv;
+        const { users, pool, lDai, dai, uniswapRepayAdapter, helpersContract } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -791,8 +791,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           .multipliedBy(1.0009)
           .toFixed(0);
 
-        await aDai.connect(user).approve(uniswapRepayAdapter.address, flashLoanDebt);
-        const userADaiBalanceBefore = await aDai.balanceOf(userAddress);
+        await lDai.connect(user).approve(uniswapRepayAdapter.address, flashLoanDebt);
+        const userLDaiBalanceBefore = await lDai.balanceOf(userAddress);
         const userDaiBalanceBefore = await dai.balanceOf(userAddress);
 
         const params = buildRepayAdapterParams(
@@ -821,11 +821,11 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         const adapterDaiBalance = await dai.balanceOf(uniswapRepayAdapter.address);
         const userDaiVariableDebtAmount = await daiVariableDebtContract.balanceOf(userAddress);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
-        const adapterADaiBalance = await aDai.balanceOf(uniswapRepayAdapter.address);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
+        const adapterLDaiBalance = await lDai.balanceOf(uniswapRepayAdapter.address);
         const userDaiBalance = await dai.balanceOf(userAddress);
 
-        expect(adapterADaiBalance).to.be.eq(Zero, 'adapter aDAI balance should be zero');
+        expect(adapterLDaiBalance).to.be.eq(Zero, 'adapter lDai balance should be zero');
         expect(adapterDaiBalance).to.be.eq(Zero, 'adapter DAI balance should be zero');
         expect(userDaiVariableDebtAmountBefore).to.be.gte(
           debtAmount,
@@ -835,13 +835,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           debtAmount,
           'user dai variable debt amount should be lt debt amount'
         );
-        expect(userADaiBalance).to.be.lt(
-          userADaiBalanceBefore,
-          'user aDAI balance should be lt aDAI prior balance'
+        expect(userLDaiBalance).to.be.lt(
+          userLDaiBalanceBefore,
+          'user lDai balance should be lt lDai prior balance'
         );
-        expect(userADaiBalance).to.be.gte(
-          userADaiBalanceBefore.sub(flashLoanDebt),
-          'user aDAI balance should be gte aDAI prior balance sub flash loan debt'
+        expect(userLDaiBalance).to.be.gte(
+          userLDaiBalanceBefore.sub(flashLoanDebt),
+          'user lDai balance should be gte lDai prior balance sub flash loan debt'
         );
         expect(userDaiBalance).to.be.eq(userDaiBalanceBefore, 'user dai balance eq prior balance');
       });
@@ -1306,7 +1306,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly repay debt using the same asset as collateral', async () => {
-        const { users, pool, dai, uniswapRepayAdapter, helpersContract, aDai } = testEnv;
+        const { users, pool, dai, uniswapRepayAdapter, helpersContract, lDai } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1335,8 +1335,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
 
-        await aDai.connect(user).approve(uniswapRepayAdapter.address, amountCollateralToSwap);
-        const userADaiBalanceBefore = await aDai.balanceOf(userAddress);
+        await lDai.connect(user).approve(uniswapRepayAdapter.address, amountCollateralToSwap);
+        const userLDaiBalanceBefore = await lDai.balanceOf(userAddress);
         const userDaiBalanceBefore = await dai.balanceOf(userAddress);
 
         await uniswapRepayAdapter.connect(user).swapAndRepay(
@@ -1357,11 +1357,11 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         const adapterDaiBalance = await dai.balanceOf(uniswapRepayAdapter.address);
         const userDaiVariableDebtAmount = await daiVariableDebtContract.balanceOf(userAddress);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
-        const adapterADaiBalance = await aDai.balanceOf(uniswapRepayAdapter.address);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
+        const adapterLDaiBalance = await lDai.balanceOf(uniswapRepayAdapter.address);
         const userDaiBalance = await dai.balanceOf(userAddress);
 
-        expect(adapterADaiBalance).to.be.eq(Zero, 'adapter aADAI should be zero');
+        expect(adapterLDaiBalance).to.be.eq(Zero, 'adapter aLDAI should be zero');
         expect(adapterDaiBalance).to.be.eq(Zero, 'adapter DAI should be zero');
         expect(userDaiVariableDebtAmountBefore).to.be.gte(
           debtAmount,
@@ -1371,13 +1371,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           debtAmount,
           'current user dai variable debt amount should be less than debtAmount'
         );
-        expect(userADaiBalance).to.be.lt(
-          userADaiBalanceBefore,
-          'current user aDAI balance should be less than prior balance'
+        expect(userLDaiBalance).to.be.lt(
+          userLDaiBalanceBefore,
+          'current user lDai balance should be less than prior balance'
         );
-        expect(userADaiBalance).to.be.gte(
-          userADaiBalanceBefore.sub(amountCollateralToSwap),
-          'current user aDAI balance should be gte user balance sub swapped collateral'
+        expect(userLDaiBalance).to.be.gte(
+          userLDaiBalanceBefore.sub(amountCollateralToSwap),
+          'current user lDai balance should be gte user balance sub swapped collateral'
         );
         expect(userDaiBalance).to.be.eq(
           userDaiBalanceBefore,

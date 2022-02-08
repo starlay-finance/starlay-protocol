@@ -96,7 +96,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -117,7 +117,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -157,13 +157,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
@@ -174,7 +174,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -195,7 +195,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -256,13 +256,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
@@ -292,7 +292,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -332,7 +332,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           usdc,
           oracle,
           dai,
-          aDai,
+          lDai,
           paraswapLiquiditySwapAdapter,
           pool,
           deployer,
@@ -380,7 +380,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const aUsdcData = await pool.getReserveData(usdc.address);
         const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
-        // User will swap liquidity aUsdc to aDai
+        // User will swap liquidity aUsdc to lDai
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
         await aUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -420,13 +420,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterUsdcBalance = await usdc.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterUsdcBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(flashloanTotal));
         expect(userAUsdcBalance).to.be.lte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -459,7 +459,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -550,7 +550,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const aUsdcData = await pool.getReserveData(usdc.address);
         const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
-        // User will swap liquidity aUsdc to aDai
+        // User will swap liquidity aUsdc to lDai
         await aUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -592,7 +592,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -617,7 +617,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90').sub(flashloanPremium));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
 
@@ -659,12 +659,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
@@ -674,7 +674,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -699,7 +699,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90').sub(flashloanPremium));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
 
@@ -761,12 +761,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
@@ -800,7 +800,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90').sub(flashloanPremium));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
 
@@ -865,7 +865,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -907,7 +907,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -936,7 +936,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -976,13 +976,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterWethBalance).to.be.eq(adapterWethBalanceBefore);
         expect(adapterDaiBalance).to.be.eq(adapterDaiBalanceBefore);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
@@ -1023,7 +1023,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -1044,7 +1044,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -1084,13 +1084,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap));
       });
@@ -1101,7 +1101,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -1122,7 +1122,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
         const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -1183,13 +1183,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap));
       });
@@ -1200,7 +1200,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -1225,7 +1225,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90').sub(flashloanPremium));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1262,12 +1262,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
@@ -1277,7 +1277,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           weth,
           oracle,
           dai,
-          aDai,
+          lDai,
           aWETH,
           pool,
           paraswapLiquiditySwapAdapter,
@@ -1302,7 +1302,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90').sub(flashloanPremium));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
         const nonce = (await aWETH._nonces(userAddress)).toNumber();
@@ -1359,12 +1359,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
     });
@@ -1390,7 +1390,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and deposit the out tokens in the pool', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1404,7 +1404,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
@@ -1436,17 +1436,17 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
 
       it('should correctly swap tokens using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1460,7 +1460,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -1513,12 +1513,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
 
@@ -1537,7 +1537,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1580,7 +1580,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap.sub(1));
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1624,7 +1624,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1667,7 +1667,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1709,7 +1709,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         // Add 1 to expected amount so it will fail
@@ -1754,7 +1754,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, actualDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1799,7 +1799,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, augustusSwapAmount, augustusSwapAmount, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData(
@@ -1828,7 +1828,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap all the balance when using a bigger amount', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1845,7 +1845,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
 
@@ -1880,17 +1880,17 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
       it('should correctly swap all the balance when using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1907,7 +1907,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
 
@@ -1963,12 +1963,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
@@ -1990,7 +1990,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
 
@@ -2023,7 +2023,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
       });
 
       it('should not touch any token balance already in the adapter', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -2045,7 +2045,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
@@ -2077,12 +2077,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(adapterWethBalanceBefore);
         expect(adapterDaiBalance).to.be.eq(adapterDaiBalanceBefore);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
       });
     });
@@ -2117,7 +2117,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and deposit the out tokens in the pool', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -2131,7 +2131,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
 
@@ -2163,18 +2163,18 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap));
       });
 
       it('should correctly swap tokens using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -2188,7 +2188,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         await mockAugustus.expectSwap(weth.address, dai.address, amountWETHtoSwap, amountWETHtoSwap, expectedDaiAmount);
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -2241,18 +2241,18 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap));
       });
 
       it('should correctly swap all the balance when using a bigger amount', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -2269,7 +2269,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const bigAmountToSwap = parseEther('11');
         await aWETH.connect(user).approve(paraswapLiquiditySwapAdapter.address, bigAmountToSwap);
 
@@ -2299,17 +2299,17 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
 
       it('should correctly swap all the balance when using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, lDai, aWETH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -2326,7 +2326,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
 
-        // User will swap liquidity aEth to aDai
+        // User will swap liquidity aEth to lDai
         const bigAmountToSwap = parseEther('11');
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -2377,12 +2377,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const adapterWethBalance = await weth.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
-        const userADaiBalance = await aDai.balanceOf(userAddress);
+        const userLDaiBalance = await lDai.balanceOf(userAddress);
         const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
-        expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+        expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
         expect(userAEthBalance).to.be.eq(Zero);
       });
     });

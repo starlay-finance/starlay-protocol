@@ -108,7 +108,7 @@ makeSuite('Use native ETH at LendingPool via WETHGateway', (testEnv: TestEnv) =>
   });
 
   it('Borrow stable WETH and Full Repay with ETH', async () => {
-    const { users, wethGateway, aDai, weth, dai, pool, helpersContract } = testEnv;
+    const { users, wethGateway, lDai, weth, dai, pool, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
@@ -130,7 +130,7 @@ makeSuite('Use native ETH at LendingPool via WETHGateway', (testEnv: TestEnv) =>
     await dai.connect(user.signer).approve(pool.address, daiSize);
     await pool.connect(user.signer).deposit(dai.address, daiSize, user.address, '0');
 
-    const lTokensBalance = await aDai.balanceOf(user.address);
+    const lTokensBalance = await lDai.balanceOf(user.address);
 
     expect(lTokensBalance).to.be.gt(zero);
     expect(lTokensBalance).to.be.gte(daiSize);
@@ -155,7 +155,7 @@ makeSuite('Use native ETH at LendingPool via WETHGateway', (testEnv: TestEnv) =>
     expect(debtBalanceAfterRepay).to.be.eq(zero);
 
     // Withdraw DAI
-    await aDai.connect(user.signer).approve(pool.address, MAX_UINT_AMOUNT);
+    await lDai.connect(user.signer).approve(pool.address, MAX_UINT_AMOUNT);
     await pool.connect(user.signer).withdraw(dai.address, MAX_UINT_AMOUNT, user.address);
   });
 

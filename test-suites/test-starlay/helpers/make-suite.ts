@@ -59,7 +59,7 @@ export interface TestEnv {
   weth: WETH9Mocked;
   aWETH: LToken;
   dai: MintableERC20;
-  aDai: LToken;
+  lDai: LToken;
   usdc: MintableERC20;
   aave: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
@@ -86,7 +86,7 @@ const testEnv: TestEnv = {
   weth: {} as WETH9Mocked,
   aWETH: {} as LToken,
   dai: {} as MintableERC20,
-  aDai: {} as LToken,
+  lDai: {} as LToken,
   usdc: {} as MintableERC20,
   aave: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
@@ -130,7 +130,7 @@ export async function initializeMakeSuite() {
   testEnv.helpersContract = await getStarlayProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllLTokens();
-  const aDaiAddress = allTokens.find((lToken) => lToken.symbol === 'aDAI')?.tokenAddress;
+  const lDaiAddress = allTokens.find((lToken) => lToken.symbol === 'lDai')?.tokenAddress;
 
   const aWEthAddress = allTokens.find((lToken) => lToken.symbol === 'aWETH')?.tokenAddress;
 
@@ -141,14 +141,14 @@ export async function initializeMakeSuite() {
   const aaveAddress = reservesTokens.find((token) => token.symbol === 'AAVE')?.tokenAddress;
   const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
 
-  if (!aDaiAddress || !aWEthAddress) {
+  if (!lDaiAddress || !aWEthAddress) {
     process.exit(1);
   }
   if (!daiAddress || !usdcAddress || !aaveAddress || !wethAddress) {
     process.exit(1);
   }
 
-  testEnv.aDai = await getLToken(aDaiAddress);
+  testEnv.lDai = await getLToken(lDaiAddress);
   testEnv.aWETH = await getLToken(aWEthAddress);
 
   testEnv.dai = await getMintableERC20(daiAddress);
