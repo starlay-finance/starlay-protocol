@@ -130,8 +130,7 @@ export async function initializeMakeSuite() {
   testEnv.helpersContract = await getStarlayProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllLTokens();
-  const lDaiAddress = allTokens.find((lToken) => lToken.symbol === 'lDai')?.tokenAddress;
-
+  const lDaiAddress = allTokens.find((lToken) => lToken.symbol === 'lDAI')?.tokenAddress;
   const lWETHAddress = allTokens.find((lToken) => lToken.symbol === 'lWETH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
