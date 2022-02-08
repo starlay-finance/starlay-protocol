@@ -1,23 +1,29 @@
-import AaveConfig from '../markets/aave';
-import { CommonsConfig } from '../markets/aave/commons';
 import AmmConfig from '../markets/amm';
 import AstarConfig from '../markets/astar';
+import AaveConfig from '../markets/starlay';
+import { CommonsConfig } from '../markets/starlay/commons';
 import { deployWETHMocked } from './contracts-deployments';
-import { getEthersSignersAddresses, getParamPerNetwork, getParamPerPool } from './contracts-helpers';
+import {
+  getEthersSignersAddresses,
+  getParamPerNetwork,
+  getParamPerPool,
+} from './contracts-helpers';
 import { DRE, filterMapBy } from './misc-utils';
 import {
-  AavePools, eNetwork,
-  IBaseConfiguration, iMultiPoolsAssets,
+  AavePools,
+  eNetwork,
+  IBaseConfiguration,
+  iMultiPoolsAssets,
   IReserveParams,
-  PoolConfiguration, tEthereumAddress
+  PoolConfiguration,
+  tEthereumAddress,
 } from './types';
-
 
 export enum ConfigNames {
   Commons = 'Commons',
   Aave = 'Aave',
   Amm = 'Amm',
-  Astar = 'Astar'
+  Astar = 'Astar',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
@@ -54,7 +60,7 @@ export const getReservesConfigByPool = (pool: AavePools): iMultiPoolsAssets<IRes
       },
       [AavePools.astar]: {
         ...AstarConfig.ReservesConfig,
-      }
+      },
     },
     pool
   );

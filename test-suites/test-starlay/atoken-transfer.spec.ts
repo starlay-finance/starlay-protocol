@@ -1,14 +1,10 @@
-import {
-  APPROVAL_AMOUNT_LENDING_POOL,
-  MAX_UINT_AMOUNT,
-  ZERO_ADDRESS,
-} from '../../helpers/constants';
-import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
-import { RateMode, ProtocolErrors } from '../../helpers/types';
+import { APPROVAL_AMOUNT_LENDING_POOL } from '../../helpers/constants';
+import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
+import { ProtocolErrors, RateMode } from '../../helpers/types';
+import { CommonsConfig } from '../../markets/starlay/commons';
 import { makeSuite, TestEnv } from './helpers/make-suite';
-import { CommonsConfig } from '../../markets/aave/commons';
 
 const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
 

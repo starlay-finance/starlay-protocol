@@ -1,17 +1,16 @@
 import { task } from 'hardhat/config';
+import { setDRE } from '../../helpers/misc-utils';
 import { eEthereumNetwork } from '../../helpers/types';
-import { getTreasuryAddress } from '../../helpers/configuration';
-import * as marketConfigs from '../../markets/aave';
-import * as reserveConfigs from '../../markets/aave/reservesConfigs';
-import { getLendingPoolAddressesProvider } from './../../helpers/contracts-getters';
+import * as marketConfigs from '../../markets/starlay';
+import * as reserveConfigs from '../../markets/starlay/reservesConfigs';
+import { ZERO_ADDRESS } from './../../helpers/constants';
 import {
   chooseATokenDeployment,
   deployDefaultReserveInterestRateStrategy,
   deployStableDebtToken,
   deployVariableDebtToken,
 } from './../../helpers/contracts-deployments';
-import { setDRE } from '../../helpers/misc-utils';
-import { ZERO_ADDRESS } from './../../helpers/constants';
+import { getLendingPoolAddressesProvider } from './../../helpers/contracts-getters';
 
 const LENDING_POOL_ADDRESS_PROVIDER = {
   main: '0xb53c1a33016b2dc2ff3653530bff1848a515c8c5',
@@ -33,8 +32,8 @@ task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters'
         `
 WRONG RESERVE ASSET SETUP:
         The symbol ${symbol} has no reserve Config and/or reserve Asset setup.
-        update /markets/aave/index.ts and add the asset address for ${network} network
-        update /markets/aave/reservesConfigs.ts and add parameters for ${symbol}
+        update /markets/starlay/index.ts and add the asset address for ${network} network
+        update /markets/starlay/reservesConfigs.ts and add parameters for ${symbol}
         `
       );
     }

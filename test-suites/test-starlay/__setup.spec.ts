@@ -50,7 +50,7 @@ import {
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
-import AaveConfig from '../../markets/aave';
+import AaveConfig from '../../markets/starlay';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
