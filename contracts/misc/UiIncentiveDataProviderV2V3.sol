@@ -121,62 +121,62 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
       }
 
       try IStableDebtToken(baseData.stableDebtTokenAddress).getIncentivesController() returns (
-        IStarlayIncentivesController sTokenIncentiveController
+        IStarlayIncentivesController sdTokenIncentiveController
       ) {
-        RewardInfo[] memory sRewardsInformation = new RewardInfo[](1);
-        if (address(sTokenIncentiveController) != address(0)) {
-          address sRewardToken = sTokenIncentiveController.REWARD_TOKEN();
-          try sTokenIncentiveController.getAssetData(baseData.stableDebtTokenAddress) returns (
-            uint256 sTokenIncentivesIndex,
-            uint256 sEmissionPerSecond,
-            uint256 sIncentivesLastUpdateTimestamp
+        RewardInfo[] memory sdRewardsInformation = new RewardInfo[](1);
+        if (address(sdTokenIncentiveController) != address(0)) {
+          address sdRewardToken = sdTokenIncentiveController.REWARD_TOKEN();
+          try sdTokenIncentiveController.getAssetData(baseData.stableDebtTokenAddress) returns (
+            uint256 sdTokenIncentivesIndex,
+            uint256 sdEmissionPerSecond,
+            uint256 sdIncentivesLastUpdateTimestamp
           ) {
-            sRewardsInformation[0] = RewardInfo(
-              getSymbol(sRewardToken),
-              sRewardToken,
+            sdRewardsInformation[0] = RewardInfo(
+              getSymbol(sdRewardToken),
+              sdRewardToken,
               address(0),
-              sEmissionPerSecond,
-              sIncentivesLastUpdateTimestamp,
-              sTokenIncentivesIndex,
-              sTokenIncentiveController.DISTRIBUTION_END(),
+              sdEmissionPerSecond,
+              sdIncentivesLastUpdateTimestamp,
+              sdTokenIncentivesIndex,
+              sdTokenIncentiveController.DISTRIBUTION_END(),
               0,
-              IERC20Detailed(sRewardToken).decimals(),
-              sTokenIncentiveController.PRECISION(),
+              IERC20Detailed(sdRewardToken).decimals(),
+              sdTokenIncentiveController.PRECISION(),
               0
             );
 
             reserveIncentiveData.sdIncentiveData = IncentiveData(
               baseData.stableDebtTokenAddress,
-              address(sTokenIncentiveController),
-              sRewardsInformation
+              address(sdTokenIncentiveController),
+              sdRewardsInformation
             );
           } catch (
             bytes memory /*lowLevelData*/
           ) {
             (
-              uint256 sEmissionPerSecond,
-              uint256 sIncentivesLastUpdateTimestamp,
-              uint256 sTokenIncentivesIndex
-            ) = sTokenIncentiveController.assets(baseData.stableDebtTokenAddress);
+              uint256 sdEmissionPerSecond,
+              uint256 sdIncentivesLastUpdateTimestamp,
+              uint256 sdTokenIncentivesIndex
+            ) = sdTokenIncentiveController.assets(baseData.stableDebtTokenAddress);
 
-            sRewardsInformation[0] = RewardInfo(
-              getSymbol(sRewardToken),
-              sRewardToken,
+            sdRewardsInformation[0] = RewardInfo(
+              getSymbol(sdRewardToken),
+              sdRewardToken,
               address(0),
-              sEmissionPerSecond,
-              sIncentivesLastUpdateTimestamp,
-              sTokenIncentivesIndex,
-              sTokenIncentiveController.DISTRIBUTION_END(),
+              sdEmissionPerSecond,
+              sdIncentivesLastUpdateTimestamp,
+              sdTokenIncentivesIndex,
+              sdTokenIncentiveController.DISTRIBUTION_END(),
               0,
-              IERC20Detailed(sRewardToken).decimals(),
-              sTokenIncentiveController.PRECISION(),
+              IERC20Detailed(sdRewardToken).decimals(),
+              sdTokenIncentiveController.PRECISION(),
               0
             );
 
             reserveIncentiveData.sdIncentiveData = IncentiveData(
               baseData.stableDebtTokenAddress,
-              address(sTokenIncentiveController),
-              sRewardsInformation
+              address(sdTokenIncentiveController),
+              sdRewardsInformation
             );
           }
         }
@@ -341,28 +341,28 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
       ) {}
 
       try IStableDebtToken(baseData.stableDebtTokenAddress).getIncentivesController() returns (
-        IStarlayIncentivesController sTokenIncentiveController
+        IStarlayIncentivesController sdTokenIncentiveController
       ) {
-        if (address(sTokenIncentiveController) != address(0)) {
-          UserRewardInfo[] memory sUserRewardsInformation = new UserRewardInfo[](1);
+        if (address(sdTokenIncentiveController) != address(0)) {
+          UserRewardInfo[] memory sdUserRewardsInformation = new UserRewardInfo[](1);
 
-          address sRewardToken = sTokenIncentiveController.REWARD_TOKEN();
+          address sdRewardToken = sdTokenIncentiveController.REWARD_TOKEN();
 
-          sUserRewardsInformation[0] = UserRewardInfo(
-            getSymbol(sRewardToken),
+          sdUserRewardsInformation[0] = UserRewardInfo(
+            getSymbol(sdRewardToken),
             address(0),
-            sRewardToken,
-            sTokenIncentiveController.getUserUnclaimedRewards(user),
-            sTokenIncentiveController.getUserAssetData(user, baseData.stableDebtTokenAddress),
+            sdRewardToken,
+            sdTokenIncentiveController.getUserUnclaimedRewards(user),
+            sdTokenIncentiveController.getUserAssetData(user, baseData.stableDebtTokenAddress),
             0,
             0,
-            IERC20Detailed(sRewardToken).decimals()
+            IERC20Detailed(sdRewardToken).decimals()
           );
 
           userReservesIncentivesData[i].sdTokenIncentivesUserData = UserIncentiveData(
             baseData.stableDebtTokenAddress,
-            address(sTokenIncentiveController),
-            sUserRewardsInformation
+            address(sdTokenIncentiveController),
+            sdUserRewardsInformation
           );
         }
       } catch (
