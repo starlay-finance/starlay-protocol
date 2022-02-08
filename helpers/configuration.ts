@@ -1,4 +1,3 @@
-import AmmConfig from '../markets/amm';
 import AstarConfig from '../markets/astar';
 import StarlayConfig from '../markets/starlay';
 import { CommonsConfig } from '../markets/starlay/commons';
@@ -22,7 +21,6 @@ import {
 export enum ConfigNames {
   Commons = 'Commons',
   Starlay = 'Starlay',
-  Amm = 'Amm',
   Astar = 'Astar',
 }
 
@@ -30,8 +28,6 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Starlay:
       return StarlayConfig;
-    case ConfigNames.Amm:
-      return AmmConfig;
     case ConfigNames.Astar:
       return AstarConfig;
     case ConfigNames.Commons:
@@ -54,9 +50,6 @@ export const getReservesConfigByPool = (pool: StarlayPools): iMultiPoolsAssets<I
     {
       [StarlayPools.proto]: {
         ...StarlayConfig.ReservesConfig,
-      },
-      [StarlayPools.amm]: {
-        ...AmmConfig.ReservesConfig,
       },
       [StarlayPools.astar]: {
         ...AstarConfig.ReservesConfig,

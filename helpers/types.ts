@@ -28,7 +28,6 @@ export enum eAstarNetwork {
 
 export enum StarlayPools {
   proto = 'proto',
-  amm = 'amm',
   astar = 'astar',
 }
 
@@ -274,31 +273,6 @@ export type iStarlayPoolAssets<T> = Pick<
   | 'xSUSHI'
 >;
 
-export type iLpPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'USDC'
-  | 'USDT'
-  | 'WBTC'
-  | 'WETH'
-  | 'UniDAIWETH'
-  | 'UniWBTCWETH'
-  | 'UniAAVEWETH'
-  | 'UniBATWETH'
-  | 'UniDAIUSDC'
-  | 'UniCRVWETH'
-  | 'UniLINKWETH'
-  | 'UniMKRWETH'
-  | 'UniRENWETH'
-  | 'UniSNXWETH'
-  | 'UniUNIWETH'
-  | 'UniUSDCWETH'
-  | 'UniWBTCUSDC'
-  | 'UniYFIWETH'
-  | 'BptWBTCWETH'
-  | 'BptBALWETH'
->;
-
 export type iAstarPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
   'WSBY' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC' | 'ARSW' | 'VEIN'
@@ -413,7 +387,6 @@ export interface iAstarParamsPerNetwork<T> {
 }
 export interface iParamsPerPool<T> {
   [StarlayPools.proto]: T;
-  [StarlayPools.amm]: T;
   [StarlayPools.astar]: T;
 }
 
@@ -499,10 +472,6 @@ export interface ICommonConfiguration extends IBaseConfiguration {
 
 export interface IStarlayConfiguration extends ICommonConfiguration {
   ReservesConfig: iStarlayPoolAssets<IReserveParams>;
-}
-
-export interface IAmmConfiguration extends ICommonConfiguration {
-  ReservesConfig: iLpPoolAssets<IReserveParams>;
 }
 
 export interface IAstarConfiguration extends ICommonConfiguration {
