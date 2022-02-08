@@ -6,7 +6,7 @@ import { ProtocolErrors, RateMode } from '../../helpers/types';
 import { CommonsConfig } from '../../markets/starlay/commons';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 
-const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -62,7 +62,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
         weth.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Stable,
-        AAVE_REFERRAL,
+        STARLAY_REFERRAL,
         users[1].address
       );
 

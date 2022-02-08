@@ -229,7 +229,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     starlayAdmin
   );
 
-  // Reserve params from AAVE pool + mocked tokens
+  // Reserve params from STARLAY pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
   };
