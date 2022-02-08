@@ -45,13 +45,13 @@ interface IUiPoolDataProvider {
     // incentives
     uint256 aEmissionPerSecond;
     uint256 vEmissionPerSecond;
-    uint256 sEmissionPerSecond;
+    uint256 sdEmissionPerSecond;
     uint256 aIncentivesLastUpdateTimestamp;
     uint256 vIncentivesLastUpdateTimestamp;
-    uint256 sIncentivesLastUpdateTimestamp;
+    uint256 sdIncentivesLastUpdateTimestamp;
     uint256 aTokenIncentivesIndex;
     uint256 vTokenIncentivesIndex;
-    uint256 sTokenIncentivesIndex;
+    uint256 sdTokenIncentivesIndex;
   }
 
   struct UserReserveData {
@@ -65,7 +65,7 @@ interface IUiPoolDataProvider {
     // incentives
     uint256 aTokenincentivesUserIndex;
     uint256 vTokenincentivesUserIndex;
-    uint256 sTokenincentivesUserIndex;
+    uint256 sdTokenincentivesUserIndex;
   }
 
   struct IncentivesControllerData {
