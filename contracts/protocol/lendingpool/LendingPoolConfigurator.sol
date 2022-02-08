@@ -24,7 +24,7 @@ import {ILendingPoolConfigurator} from '../../interfaces/ILendingPoolConfigurato
 /**
  * @title LendingPoolConfigurator contract
  * @author Starlay
- * @dev Implements the configuration methods for the Aave protocol
+ * @dev Implements the configuration methods for the Starlay protocol
  **/
 
 contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigurator {

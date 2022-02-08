@@ -1,13 +1,27 @@
 import { eEthereumNetwork, IAmmConfiguration } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
-  strategyAAVEWETH, strategyBALWETH, strategyBATWETH, strategyCRVWETH, strategyDAI, strategyDAIUSDC, strategyDAIWETH, strategyLINKWETH,
+  strategyAAVEWETH,
+  strategyBALWETH,
+  strategyBATWETH,
+  strategyCRVWETH,
+  strategyDAI,
+  strategyDAIUSDC,
+  strategyDAIWETH,
+  strategyLINKWETH,
   strategyMKRWETH,
   strategyRENWETH,
   strategySNXWETH,
-  strategyUNIWETH, strategyUSDC, strategyUSDCWETH, strategyUSDT, strategyWBTC, strategyWBTCUSDC, strategyWBTCWETH, strategyWETH, strategyYFIWETH
+  strategyUNIWETH,
+  strategyUSDC,
+  strategyUSDCWETH,
+  strategyUSDT,
+  strategyWBTC,
+  strategyWBTCUSDC,
+  strategyWBTCWETH,
+  strategyWETH,
+  strategyYFIWETH,
 } from './reservesConfigs';
-
 
 // ----------------
 // POOL--SPECIFIC PARAMS
@@ -15,7 +29,7 @@ import {
 
 export const AmmConfig: IAmmConfiguration = {
   ...CommonsConfig,
-  MarketId: 'Aave AMM market',
+  MarketId: 'Starlay AMM market',
   ProviderId: 2,
   ReservesConfig: {
     WETH: strategyWETH,

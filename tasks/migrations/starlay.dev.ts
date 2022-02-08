@@ -6,7 +6,7 @@ import { printContracts } from '../../helpers/misc-utils';
 task('starlay:dev', 'Deploy development enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
   .setAction(async ({ verify }, localBRE) => {
-    const POOL_NAME = ConfigNames.Aave;
+    const POOL_NAME = ConfigNames.Starlay;
 
     await localBRE.run('set-DRE');
 

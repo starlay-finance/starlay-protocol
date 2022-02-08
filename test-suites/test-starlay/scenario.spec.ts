@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import fs from 'fs';
 import { getReservesConfigByPool } from '../../helpers/configuration';
-import { AavePools, iAavePoolAssets, IReserveParams } from '../../helpers/types';
+import { IReserveParams, iStarlayPoolAssets, StarlayPools } from '../../helpers/types';
 import { configuration as actionsConfiguration } from './helpers/actions';
 import { makeSuite } from './helpers/make-suite';
 import { executeStory } from './helpers/scenario-engine';
@@ -23,8 +23,8 @@ fs.readdirSync(scenarioFolder).forEach((file) => {
 
       actionsConfiguration.skipIntegrityCheck = false; //set this to true to execute solidity-coverage
 
-      calculationsConfiguration.reservesParams = <iAavePoolAssets<IReserveParams>>(
-        getReservesConfigByPool(AavePools.proto)
+      calculationsConfiguration.reservesParams = <iStarlayPoolAssets<IReserveParams>>(
+        getReservesConfigByPool(StarlayPools.proto)
       );
     });
     after('Reset', () => {

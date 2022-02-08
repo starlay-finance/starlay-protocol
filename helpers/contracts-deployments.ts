@@ -63,13 +63,13 @@ import {
 } from './contracts-helpers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
-  AavePools,
   eContractid,
   eEthereumNetwork,
   eNetwork,
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
+  StarlayPools,
   tEthereumAddress,
   TokenContractId,
 } from './types';
@@ -223,7 +223,7 @@ export const deployValidationLogic = async (
   return withSaveAndVerify(validationLogic, eContractid.ValidationLogic, [], verify);
 };
 
-export const deployAaveLibraries = async (
+export const deployStarlayLibraries = async (
   verify?: boolean
 ): Promise<LendingPoolLibraryAddresses> => {
   const reserveLogic = await deployReserveLogicLibrary(verify);
@@ -248,7 +248,7 @@ export const deployAaveLibraries = async (
 };
 
 export const deployLendingPool = async (verify?: boolean) => {
-  const libraries = await deployAaveLibraries(verify);
+  const libraries = await deployStarlayLibraries(verify);
   const lendingPoolImpl = await new LendingPoolFactory(libraries, await getFirstSigner()).deploy();
   await insertContractAddressInDb(eContractid.LendingPoolImpl, lendingPoolImpl.address);
   return withSaveAndVerify(lendingPoolImpl, eContractid.LendingPool, [], verify);
@@ -514,7 +514,7 @@ export const deployDelegationAwareATokenImpl = async (verify: boolean) =>
 export const deployAllMockTokens = async (verify?: boolean) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
 
-  const protoConfigData = getReservesConfigByPool(AavePools.proto);
+  const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     let decimals = '18';

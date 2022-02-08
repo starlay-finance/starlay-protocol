@@ -7,7 +7,7 @@ import {Errors} from '../libraries/helpers/Errors.sol';
 import {AToken} from './AToken.sol';
 
 /**
- * @title Aave AToken enabled to delegate voting power of the underlying asset to a different address
+ * @title Starlay AToken enabled to delegate voting power of the underlying asset to a different address
  * @dev The underlying asset needs to be compatible with the COMP delegation interface
  * @author Starlay
  */

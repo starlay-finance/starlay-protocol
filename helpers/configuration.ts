@@ -10,25 +10,25 @@ import {
 } from './contracts-helpers';
 import { DRE, filterMapBy } from './misc-utils';
 import {
-  AavePools,
   eNetwork,
   IBaseConfiguration,
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
+  StarlayPools,
   tEthereumAddress,
 } from './types';
 
 export enum ConfigNames {
   Commons = 'Commons',
-  Aave = 'Aave',
+  Starlay = 'Starlay',
   Amm = 'Amm',
   Astar = 'Astar',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.Aave:
+    case ConfigNames.Starlay:
       return StarlayConfig;
     case ConfigNames.Amm:
       return AmmConfig;
@@ -49,16 +49,16 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
 // PROTOCOL PARAMS PER POOL
 // ----------------
 
-export const getReservesConfigByPool = (pool: AavePools): iMultiPoolsAssets<IReserveParams> =>
+export const getReservesConfigByPool = (pool: StarlayPools): iMultiPoolsAssets<IReserveParams> =>
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
-      [AavePools.proto]: {
+      [StarlayPools.proto]: {
         ...StarlayConfig.ReservesConfig,
       },
-      [AavePools.amm]: {
+      [StarlayPools.amm]: {
         ...AmmConfig.ReservesConfig,
       },
-      [AavePools.astar]: {
+      [StarlayPools.astar]: {
         ...AstarConfig.ReservesConfig,
       },
     },

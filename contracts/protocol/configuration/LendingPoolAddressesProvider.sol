@@ -13,7 +13,7 @@ import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddres
  * @title LendingPoolAddressesProvider contract
  * @dev Main registry of addresses part of or connected to the protocol, including permissioned roles
  * - Acting also as factory of proxies and admin of those, so with right to change its implementations
- * - Owned by the Aave Governance
+ * - Owned by the Starlay Governance
  * @author Starlay
  **/
 contract LendingPoolAddressesProvider is Ownable, ILendingPoolAddressesProvider {
@@ -33,7 +33,7 @@ contract LendingPoolAddressesProvider is Ownable, ILendingPoolAddressesProvider 
   }
 
   /**
-   * @dev Returns the id of the Aave market to which this contracts points to
+   * @dev Returns the id of the Starlay market to which this contracts points to
    * @return The market id
    **/
   function getMarketId() external view override returns (string memory) {

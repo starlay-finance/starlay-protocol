@@ -26,7 +26,7 @@ contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
     _aggregator = IDiaAggregator(aggregator);
   }
 
-  /// @notice External function called by the Aave governance to set or replace sources of assets
+  /// @notice External function called by the Starlay governance to set or replace sources of assets
   /// @param assets The addresses of the assets
   /// @param tokenSymbols The symbol of the source of each asset
   function setAssetSources(address[] calldata assets, string[] calldata tokenSymbols)

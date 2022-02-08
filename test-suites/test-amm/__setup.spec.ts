@@ -46,7 +46,7 @@ import {
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
-import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
+import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import AmmConfig from '../../markets/amm';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
@@ -61,7 +61,7 @@ const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const ammConfigData = getReservesConfigByPool(AavePools.amm);
+  const ammConfigData = getReservesConfigByPool(StarlayPools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {

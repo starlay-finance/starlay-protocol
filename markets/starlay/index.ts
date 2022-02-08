@@ -1,4 +1,4 @@
-import { eEthereumNetwork, IAaveConfiguration } from '../../helpers/types';
+import { eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
   strategyAAVE,
@@ -28,7 +28,7 @@ import {
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const StarlayConfig: IAaveConfiguration = {
+export const StarlayConfig: IStarlayConfiguration = {
   ...CommonsConfig,
   MarketId: 'Starlay genesis market',
   ProviderId: 1,

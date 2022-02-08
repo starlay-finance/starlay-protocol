@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { ProtocolErrors } from '../../helpers/types';
 import { getStableDebtToken } from '../../helpers/contracts-getters';
+import { ProtocolErrors } from '../../helpers/types';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
 makeSuite('Stable debt token tests', (testEnv: TestEnv) => {
   const { CT_CALLER_MUST_BE_LENDING_POOL } = ProtocolErrors;
@@ -29,7 +29,7 @@ makeSuite('Stable debt token tests', (testEnv: TestEnv) => {
 
     const name = await stableDebtContract.name();
 
-    expect(name).to.be.equal('Aave AMM Market stable debt DAI');
+    expect(name).to.be.equal('Starlay AMM Market stable debt DAI');
     await expect(stableDebtContract.burn(deployer.address, '1')).to.be.revertedWith(
       CT_CALLER_MUST_BE_LENDING_POOL
     );

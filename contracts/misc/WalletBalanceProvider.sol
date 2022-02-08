@@ -17,7 +17,7 @@ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
  * @author Starlay, influenced by https://github.com/wbobeirne/eth-balance-checker/blob/master/contracts/BalanceChecker.sol
  * @notice Implements a logic of getting multiple tokens balance for one user address
  * @dev NOTE: THIS CONTRACT IS NOT USED WITHIN THE STARLAY PROTOCOL. It's an accessory contract used to reduce the number of calls
- * towards the blockchain from the Aave backend.
+ * towards the blockchain from the Starlay backend.
  **/
 contract WalletBalanceProvider {
   using Address for address payable;

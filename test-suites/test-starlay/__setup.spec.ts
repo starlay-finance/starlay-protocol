@@ -49,7 +49,7 @@ import {
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
-import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
+import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import StarlayConfig from '../../markets/starlay';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
@@ -63,7 +63,7 @@ const LENDING_RATE_ORACLE_RATES_COMMON = StarlayConfig.LendingRateOracleRatesCom
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const protoConfigData = getReservesConfigByPool(AavePools.proto);
+  const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -93,7 +93,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
   const starlayAdmin = await deployer.getAddress();
-  const config = loadPoolConfig(ConfigNames.Aave);
+  const config = loadPoolConfig(ConfigNames.Starlay);
 
   const mockTokens: {
     [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
@@ -236,7 +236,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);
 
-  await deployATokenImplementations(ConfigNames.Aave, reservesParams, false);
+  await deployATokenImplementations(ConfigNames.Starlay, reservesParams, false);
 
   const admin = await deployer.getAddress();
 
@@ -254,7 +254,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     admin,
     treasuryAddress,
     ZERO_ADDRESS,
-    ConfigNames.Aave,
+    ConfigNames.Starlay,
     false
   );
 

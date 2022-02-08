@@ -26,7 +26,7 @@ export enum eAstarNetwork {
   shibuya = 'shibuya',
 }
 
-export enum AavePools {
+export enum StarlayPools {
   proto = 'proto',
   amm = 'amm',
   astar = 'astar',
@@ -249,7 +249,7 @@ export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iAavePoolAssets<T> = Pick<
+export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
   | 'DAI'
   | 'TUSD'
@@ -304,9 +304,9 @@ export type iAstarPoolAssets<T> = Pick<
   'WSBY' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC' | 'ARSW' | 'VEIN'
 >;
 
-export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
+export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
 
-export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, 'ETH'>;
+export type iStarlayPoolTokens<T> = Omit<iStarlayPoolAssets<T>, 'ETH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
@@ -412,9 +412,9 @@ export interface iAstarParamsPerNetwork<T> {
   [eAstarNetwork.shibuya]: T;
 }
 export interface iParamsPerPool<T> {
-  [AavePools.proto]: T;
-  [AavePools.amm]: T;
-  [AavePools.astar]: T;
+  [StarlayPools.proto]: T;
+  [StarlayPools.amm]: T;
+  [StarlayPools.astar]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -438,7 +438,7 @@ export interface IProtocolGlobalConfig {
   UsdAddress: tEthereumAddress;
   NilAddress: tEthereumAddress;
   OneAddress: tEthereumAddress;
-  AaveReferral: string;
+  StarlayReferral: string;
 }
 
 export interface IMocksConfig {
@@ -497,8 +497,8 @@ export interface ICommonConfiguration extends IBaseConfiguration {
   Mocks: IMocksConfig;
 }
 
-export interface IAaveConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAavePoolAssets<IReserveParams>;
+export interface IStarlayConfiguration extends ICommonConfiguration {
+  ReservesConfig: iStarlayPoolAssets<IReserveParams>;
 }
 
 export interface IAmmConfiguration extends ICommonConfiguration {
@@ -513,4 +513,4 @@ export interface ITokenAddress {
   [token: string]: tEthereumAddress;
 }
 
-export type PoolConfiguration = ICommonConfiguration | IAaveConfiguration;
+export type PoolConfiguration = ICommonConfiguration | IStarlayConfiguration;

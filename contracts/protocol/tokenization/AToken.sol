@@ -14,8 +14,8 @@ import {IncentivizedERC20} from './IncentivizedERC20.sol';
 import {IStarlayIncentivesController} from '../../interfaces/IStarlayIncentivesController.sol';
 
 /**
- * @title Aave ERC20 AToken
- * @dev Implementation of the interest bearing token for the Aave protocol
+ * @title Starlay ERC20 AToken
+ * @dev Implementation of the interest bearing token for the Starlay protocol
  * @author Starlay
  */
 contract AToken is
@@ -56,7 +56,7 @@ contract AToken is
   /**
    * @dev Initializes the aToken
    * @param pool The address of the lending pool where this aToken will be used
-   * @param treasury The address of the Aave treasury, receiving the fees on this aToken
+   * @param treasury The address of the Starlay treasury, receiving the fees on this aToken
    * @param underlyingAsset The address of the underlying asset of this aToken (E.g. WETH for aWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
    * @param aTokenDecimals The decimals of the aToken, same as the underlying asset's
@@ -266,7 +266,7 @@ contract AToken is
   }
 
   /**
-   * @dev Returns the address of the Aave treasury, receiving the fees on this aToken
+   * @dev Returns the address of the Starlay treasury, receiving the fees on this aToken
    **/
   function RESERVE_TREASURY_ADDRESS() public view returns (address) {
     return _treasury;

@@ -114,7 +114,7 @@ task('verify:general', 'Verify contracts at Etherscan')
       );
 
       // Test helpers
-      console.log('\n- Verifying  Aave  Provider Helpers...\n');
+      console.log('\n- Verifying  Starlay  Provider Helpers...\n');
       await verifyContract(eContractid.StarlayProtocolDataProvider, dataProvider, [
         addressesProvider.address,
       ]);

@@ -6,7 +6,7 @@ import { ProtocolErrors, RateMode } from '../../helpers/types';
 import { CommonsConfig } from '../../markets/starlay/commons';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 
-const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.StarlayReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {

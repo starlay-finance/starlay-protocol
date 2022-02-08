@@ -13,7 +13,9 @@ import {IFlashLoanReceiver} from '../../flashloan/interfaces/IFlashLoanReceiver.
 import {IPriceOracleGetter} from '../../interfaces/IPriceOracleGetter.sol';
 import {IStableDebtToken} from '../../interfaces/IStableDebtToken.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
-import {VersionedInitializable} from '../libraries/starlay-upgradeability/VersionedInitializable.sol';
+import {
+  VersionedInitializable
+} from '../libraries/starlay-upgradeability/VersionedInitializable.sol';
 import {Helpers} from '../libraries/helpers/Helpers.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 import {WadRayMath} from '../libraries/math/WadRayMath.sol';
@@ -28,7 +30,7 @@ import {LendingPoolStorage} from './LendingPoolStorage.sol';
 
 /**
  * @title LendingPool contract
- * @dev Main point of interaction with an Aave protocol's market
+ * @dev Main point of interaction with an Starlay protocol's market
  * - Users can:
  *   # Deposit
  *   # Withdraw

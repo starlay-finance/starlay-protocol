@@ -6,7 +6,7 @@ import { ProtocolErrors, RateMode } from '../../helpers/types';
 import { CommonsConfig } from '../../markets/amm/commons';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 
-const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.StarlayReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -33,7 +33,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave AMM Market DAI');
+    expect(name).to.be.equal('Starlay AMM Market DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);
