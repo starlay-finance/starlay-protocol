@@ -110,7 +110,7 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
    **/
   function calculateInterestRates(
     address reserve,
-    address aToken,
+    address lToken,
     uint256 liquidityAdded,
     uint256 liquidityTaken,
     uint256 totalStableDebt,
@@ -127,7 +127,7 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
       uint256
     )
   {
-    uint256 availableLiquidity = IERC20(reserve).balanceOf(aToken);
+    uint256 availableLiquidity = IERC20(reserve).balanceOf(lToken);
     //avoid stack too deep
     availableLiquidity = availableLiquidity.add(liquidityAdded).sub(liquidityTaken);
 
@@ -155,7 +155,7 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
    * NOTE This function is kept for compatibility with the previous DefaultInterestRateStrategy interface.
    * New protocol implementation uses the new calculateInterestRates() interface
    * @param reserve The address of the reserve
-   * @param availableLiquidity The liquidity available in the corresponding aToken
+   * @param availableLiquidity The liquidity available in the corresponding lToken
    * @param totalStableDebt The total borrowed from the reserve a stable rate
    * @param totalVariableDebt The total borrowed from the reserve at a variable rate
    * @param averageStableBorrowRate The weighted average of all the stable rate loans

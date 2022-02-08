@@ -1,6 +1,4 @@
 import {
-  ATokenFactory,
-  ATokensAndRatesHelperFactory,
   DefaultReserveInterestRateStrategyFactory,
   FlashLiquidationAdapterFactory,
   GenericLogicFactory,
@@ -11,9 +9,11 @@ import {
   LendingPoolConfiguratorFactory,
   LendingPoolFactory,
   LendingRateOracleFactory,
+  LTokenFactory,
+  LTokensAndRatesHelperFactory,
   MintableERC20Factory,
-  MockATokenFactory,
   MockFlashLoanReceiverFactory,
+  MockLTokenFactory,
   MockParaSwapAugustusFactory,
   MockParaSwapAugustusRegistryFactory,
   MockStableDebtTokenFactory,
@@ -79,9 +79,9 @@ export const getPriceOracle = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getAToken = async (address?: tEthereumAddress) =>
-  await ATokenFactory.connect(
-    address || (await getDb().get(`${eContractid.AToken}.${DRE.network.name}`).value()).address,
+export const getLToken = async (address?: tEthereumAddress) =>
+  await LTokenFactory.connect(
+    address || (await getDb().get(`${eContractid.LToken}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );
 
@@ -270,11 +270,11 @@ export const getStableAndVariableTokensHelper = async (address?: tEthereumAddres
     await getFirstSigner()
   );
 
-export const getATokensAndRatesHelper = async (address?: tEthereumAddress) =>
-  await ATokensAndRatesHelperFactory.connect(
+export const getLTokensAndRatesHelper = async (address?: tEthereumAddress) =>
+  await LTokensAndRatesHelperFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.ATokensAndRatesHelper}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.LTokensAndRatesHelper}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
@@ -294,9 +294,9 @@ export const getWETHMocked = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getMockAToken = async (address?: tEthereumAddress) =>
-  await MockATokenFactory.connect(
-    address || (await getDb().get(`${eContractid.MockAToken}.${DRE.network.name}`).value()).address,
+export const getMockLToken = async (address?: tEthereumAddress) =>
+  await MockLTokenFactory.connect(
+    address || (await getDb().get(`${eContractid.MockLToken}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );
 

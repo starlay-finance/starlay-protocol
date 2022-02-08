@@ -5,12 +5,12 @@ import { solidity } from 'ethereum-waffle';
 import { Signer } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  getAToken,
   getFlashLiquidationAdapter,
   getLendingPool,
   getLendingPoolAddressesProvider,
   getLendingPoolAddressesProviderRegistry,
   getLendingPoolConfiguratorProxy,
+  getLToken,
   getMintableERC20,
   getParaSwapLiquiditySwapAdapter,
   getPriceOracle,
@@ -26,11 +26,11 @@ import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { StarlayConfig } from '../../../markets/starlay';
 import { FlashLiquidationAdapter } from '../../../types';
-import { AToken } from '../../../types/AToken';
 import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
 import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPoolAddressesProviderRegistry';
 import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
+import { LToken } from '../../../types/LToken';
 import { MintableERC20 } from '../../../types/MintableERC20';
 import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
 import { PriceOracle } from '../../../types/PriceOracle';
@@ -57,9 +57,9 @@ export interface TestEnv {
   oracle: PriceOracle;
   helpersContract: StarlayProtocolDataProvider;
   weth: WETH9Mocked;
-  aWETH: AToken;
+  aWETH: LToken;
   dai: MintableERC20;
-  aDai: AToken;
+  aDai: LToken;
   usdc: MintableERC20;
   aave: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
@@ -84,9 +84,9 @@ const testEnv: TestEnv = {
   helpersContract: {} as StarlayProtocolDataProvider,
   oracle: {} as PriceOracle,
   weth: {} as WETH9Mocked,
-  aWETH: {} as AToken,
+  aWETH: {} as LToken,
   dai: {} as MintableERC20,
-  aDai: {} as AToken,
+  aDai: {} as LToken,
   usdc: {} as MintableERC20,
   aave: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
@@ -129,10 +129,10 @@ export async function initializeMakeSuite() {
 
   testEnv.helpersContract = await getStarlayProtocolDataProvider();
 
-  const allTokens = await testEnv.helpersContract.getAllATokens();
-  const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aDAI')?.tokenAddress;
+  const allTokens = await testEnv.helpersContract.getAllLTokens();
+  const aDaiAddress = allTokens.find((lToken) => lToken.symbol === 'aDAI')?.tokenAddress;
 
-  const aWEthAddress = allTokens.find((aToken) => aToken.symbol === 'aWETH')?.tokenAddress;
+  const aWEthAddress = allTokens.find((lToken) => lToken.symbol === 'aWETH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
@@ -148,8 +148,8 @@ export async function initializeMakeSuite() {
     process.exit(1);
   }
 
-  testEnv.aDai = await getAToken(aDaiAddress);
-  testEnv.aWETH = await getAToken(aWEthAddress);
+  testEnv.aDai = await getLToken(aDaiAddress);
+  testEnv.aWETH = await getLToken(aWEthAddress);
 
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.usdc = await getMintableERC20(usdcAddress);

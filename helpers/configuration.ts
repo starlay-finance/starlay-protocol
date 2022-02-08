@@ -87,10 +87,10 @@ export const getTreasuryAddress = async (config: IBaseConfiguration): Promise<tE
   return getParamPerNetwork(config.ReserveFactorTreasuryAddress, <eNetwork>currentNetwork);
 };
 
-export const getATokenDomainSeparatorPerNetwork = (
+export const getLTokenDomainSeparatorPerNetwork = (
   network: eNetwork,
   config: IBaseConfiguration
-): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(config.ATokenDomainSeparator, network);
+): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(config.LTokenDomainSeparator, network);
 
 export const getWethAddress = async (config: IBaseConfiguration) => {
   const currentNetwork = process.env.FORK ? process.env.FORK : DRE.network.name;

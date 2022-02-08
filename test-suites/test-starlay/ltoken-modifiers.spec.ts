@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { makeSuite, TestEnv } from './helpers/make-suite';
 import { ProtocolErrors } from '../../helpers/types';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
-makeSuite('AToken: Modifiers', (testEnv: TestEnv) => {
+makeSuite('LToken: Modifiers', (testEnv: TestEnv) => {
   const { CT_CALLER_MUST_BE_LENDING_POOL } = ProtocolErrors;
 
   it('Tries to invoke mint not being the LendingPool', async () => {

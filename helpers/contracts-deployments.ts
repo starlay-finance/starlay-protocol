@@ -3,10 +3,8 @@ import { MockContract } from 'ethereum-waffle';
 import { Contract } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  ATokenFactory,
-  ATokensAndRatesHelperFactory,
   DefaultReserveInterestRateStrategyFactory,
-  DelegationAwareATokenFactory,
+  DelegationAwareLTokenFactory,
   FlashLiquidationAdapterFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
@@ -15,12 +13,14 @@ import {
   LendingPoolConfiguratorFactory,
   LendingPoolFactory,
   LendingRateOracleFactory,
+  LTokenFactory,
+  LTokensAndRatesHelperFactory,
   MintableDelegationERC20Factory,
   MintableERC20Factory,
   MockAggregatorDIAFactory,
   MockAggregatorFactory,
-  MockATokenFactory,
   MockFlashLoanReceiverFactory,
+  MockLTokenFactory,
   MockParaSwapAugustusFactory,
   MockParaSwapAugustusRegistryFactory,
   MockStableDebtTokenFactory,
@@ -431,7 +431,7 @@ export const deployGenericVariableDebtToken = async (verify?: boolean) =>
     verify
   );
 
-export const deployGenericAToken = async (
+export const deployGenericLToken = async (
   [poolAddress, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
     tEthereumAddress,
     tEthereumAddress,
@@ -443,8 +443,8 @@ export const deployGenericAToken = async (
   verify: boolean
 ) => {
   const instance = await withSaveAndVerify(
-    await new ATokenFactory(await getFirstSigner()).deploy(),
-    eContractid.AToken,
+    await new LTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.LToken,
     [],
     verify
   );
@@ -463,15 +463,15 @@ export const deployGenericAToken = async (
   return instance;
 };
 
-export const deployGenericATokenImpl = async (verify: boolean) =>
+export const deployGenericLTokenImpl = async (verify: boolean) =>
   withSaveAndVerify(
-    await new ATokenFactory(await getFirstSigner()).deploy(),
-    eContractid.AToken,
+    await new LTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.LToken,
     [],
     verify
   );
 
-export const deployDelegationAwareAToken = async (
+export const deployDelegationAwareLToken = async (
   [pool, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
     tEthereumAddress,
     tEthereumAddress,
@@ -483,8 +483,8 @@ export const deployDelegationAwareAToken = async (
   verify: boolean
 ) => {
   const instance = await withSaveAndVerify(
-    await new DelegationAwareATokenFactory(await getFirstSigner()).deploy(),
-    eContractid.DelegationAwareAToken,
+    await new DelegationAwareLTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.DelegationAwareLToken,
     [],
     verify
   );
@@ -503,10 +503,10 @@ export const deployDelegationAwareAToken = async (
   return instance;
 };
 
-export const deployDelegationAwareATokenImpl = async (verify: boolean) =>
+export const deployDelegationAwareLTokenImpl = async (verify: boolean) =>
   withSaveAndVerify(
-    await new DelegationAwareATokenFactory(await getFirstSigner()).deploy(),
-    eContractid.DelegationAwareAToken,
+    await new DelegationAwareLTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.DelegationAwareLToken,
     [],
     verify
   );
@@ -562,13 +562,13 @@ export const deployStableAndVariableTokensHelper = async (
     verify
   );
 
-export const deployATokensAndRatesHelper = async (
+export const deployLTokensAndRatesHelper = async (
   args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new ATokensAndRatesHelperFactory(await getFirstSigner()).deploy(...args),
-    eContractid.ATokensAndRatesHelper,
+    await new LTokensAndRatesHelperFactory(await getFirstSigner()).deploy(...args),
+    eContractid.LTokensAndRatesHelper,
     args,
     verify
   );
@@ -629,7 +629,7 @@ export const deployMockVariableDebtToken = async (
   return instance;
 };
 
-export const deployMockAToken = async (
+export const deployMockLToken = async (
   args: [
     tEthereumAddress,
     tEthereumAddress,
@@ -642,8 +642,8 @@ export const deployMockAToken = async (
   verify?: boolean
 ) => {
   const instance = await withSaveAndVerify(
-    await new MockATokenFactory(await getFirstSigner()).deploy(),
-    eContractid.MockAToken,
+    await new MockLTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.MockLToken,
     [],
     verify
   );
@@ -702,18 +702,18 @@ export const deployFlashLiquidationAdapter = async (
     verify
   );
 
-export const chooseATokenDeployment = (id: eContractid) => {
+export const chooseLTokenDeployment = (id: eContractid) => {
   switch (id) {
-    case eContractid.AToken:
-      return deployGenericATokenImpl;
-    case eContractid.DelegationAwareAToken:
-      return deployDelegationAwareATokenImpl;
+    case eContractid.LToken:
+      return deployGenericLTokenImpl;
+    case eContractid.DelegationAwareLToken:
+      return deployDelegationAwareLTokenImpl;
     default:
-      throw Error(`Missing aToken implementation deployment script for: ${id}`);
+      throw Error(`Missing lToken implementation deployment script for: ${id}`);
   }
 };
 
-export const deployATokenImplementations = async (
+export const deployLTokenImplementations = async (
   pool: ConfigNames,
   reservesConfig: { [key: string]: IReserveParams },
   verify = false
@@ -721,22 +721,22 @@ export const deployATokenImplementations = async (
   const poolConfig = loadPoolConfig(pool);
   const network = <eNetwork>DRE.network.name;
 
-  // Obtain the different AToken implementations of all reserves inside the Market config
-  const aTokenImplementations = [
+  // Obtain the different LToken implementations of all reserves inside the Market config
+  const lTokenImplementations = [
     ...Object.entries(reservesConfig).reduce<Set<eContractid>>((acc, [, entry]) => {
-      acc.add(entry.aTokenImpl);
+      acc.add(entry.lTokenImpl);
       return acc;
     }, new Set<eContractid>()),
   ];
 
-  for (let x = 0; x < aTokenImplementations.length; x++) {
-    const aTokenAddress = getOptionalParamAddressPerNetwork(
-      poolConfig[aTokenImplementations[x].toString()],
+  for (let x = 0; x < lTokenImplementations.length; x++) {
+    const lTokenAddress = getOptionalParamAddressPerNetwork(
+      poolConfig[lTokenImplementations[x].toString()],
       network
     );
-    if (!notFalsyOrZeroAddress(aTokenAddress)) {
-      const deployImplementationMethod = chooseATokenDeployment(aTokenImplementations[x]);
-      console.log(`Deploying implementation`, aTokenImplementations[x]);
+    if (!notFalsyOrZeroAddress(lTokenAddress)) {
+      const deployImplementationMethod = chooseLTokenDeployment(lTokenImplementations[x]);
+      console.log(`Deploying implementation`, lTokenImplementations[x]);
       await deployImplementationMethod(verify);
     }
   }

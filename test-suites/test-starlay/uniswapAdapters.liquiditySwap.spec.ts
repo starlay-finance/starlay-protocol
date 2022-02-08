@@ -1,22 +1,19 @@
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import {
-  convertToCurrencyDecimals,
-  getContract,
-  buildPermitParams,
-  getSignatureFromTypedData,
-  buildLiquiditySwapParams,
-} from '../../helpers/contracts-helpers';
-import { getMockUniswapRouter } from '../../helpers/contracts-getters';
-import { deployUniswapLiquiditySwapAdapter } from '../../helpers/contracts-deployments';
-import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
 import { Zero } from '@ethersproject/constants';
 import BigNumber from 'bignumber.js';
-import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 import { ethers } from 'ethers';
-import { eContractid } from '../../helpers/types';
-import { AToken } from '../../types/AToken';
 import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
 import { MAX_UINT_AMOUNT } from '../../helpers/constants';
+import { deployUniswapLiquiditySwapAdapter } from '../../helpers/contracts-deployments';
+import { getMockUniswapRouter } from '../../helpers/contracts-getters';
+import {
+  buildLiquiditySwapParams, buildPermitParams, convertToCurrencyDecimals,
+  getContract, getSignatureFromTypedData
+} from '../../helpers/contracts-helpers';
+import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
+import { eContractid } from '../../helpers/types';
+import { LToken } from '../../types/LToken';
+import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 const { parseEther } = ethers.utils;
 
 const { expect } = require('chai');
@@ -206,7 +203,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await pool.connect(user).deposit(usdc.address, amountUSDCtoSwap, userAddress, 0);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
@@ -329,7 +326,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await pool.connect(user).deposit(usdc.address, amountUSDCtoSwap, userAddress, 0);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
@@ -880,7 +877,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.connect(user).setAmountToReturn(usdc.address, expectedDaiAmount);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
         const aUsdcBalance = await aUsdc.balanceOf(userAddress);
         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, aUsdcBalance);
         // Subtract the FL fee from the amount to be swapped 0,09%
@@ -1023,7 +1020,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           [false]
         );
 
-        // Flashloan + premium > aToken balance. Then it will only swap the balance - premium
+        // Flashloan + premium > lToken balance. Then it will only swap the balance - premium
         const flashloanFee = liquidityToSwap.mul(9).div(10000);
         const swappedAmount = liquidityToSwap.sub(flashloanFee);
 
@@ -1126,7 +1123,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           [false]
         );
 
-        // Flashloan + premium > aToken balance. Then it will only swap the balance - premium
+        // Flashloan + premium > lToken balance. Then it will only swap the balance - premium
         const flashloanFee = liquidityToSwap.mul(9).div(10000);
         const swappedAmount = liquidityToSwap.sub(flashloanFee);
 
@@ -1506,7 +1503,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await pool.connect(user).deposit(usdc.address, amountUSDCtoSwap, userAddress, 0);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
@@ -1615,7 +1612,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await pool.connect(user).deposit(usdc.address, amountUSDCtoSwap, userAddress, 0);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
@@ -1727,7 +1724,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         // User will swap liquidity 10 aEth to aDai
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
-        // Only has 10 atokens, so all the balance will be swapped
+        // Only has 10 ltokens, so all the balance will be swapped
         const bigAmountToSwap = parseEther('100');
 
         await expect(
@@ -1792,7 +1789,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         const liquidityToSwap = parseEther('10');
         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
-        // Only has 10 atokens, so all the balance will be swapped
+        // Only has 10 ltokens, so all the balance will be swapped
         const bigAmountToSwap = parseEther('100');
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;

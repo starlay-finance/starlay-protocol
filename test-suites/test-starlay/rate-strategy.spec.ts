@@ -3,7 +3,7 @@ import { PERCENTAGE_FACTOR, RAY } from '../../helpers/constants';
 import { deployDefaultReserveInterestRateStrategy } from '../../helpers/contracts-deployments';
 import { rateStrategyStableOne } from '../../markets/starlay/rateStrategies';
 import { strategyDAI } from '../../markets/starlay/reservesConfigs';
-import { AToken, DefaultReserveInterestRateStrategy, MintableERC20 } from '../../types';
+import { DefaultReserveInterestRateStrategy, LToken, MintableERC20 } from '../../types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import './helpers/utils/math';
 
@@ -12,7 +12,7 @@ const { expect } = require('chai');
 makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
   let strategyInstance: DefaultReserveInterestRateStrategy;
   let dai: MintableERC20;
-  let aDai: AToken;
+  let aDai: LToken;
 
   before(async () => {
     dai = testEnv.dai;

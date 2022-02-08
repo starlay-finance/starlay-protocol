@@ -1,33 +1,29 @@
 import { expect } from 'chai';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { ProtocolErrors, eContractid } from '../../helpers/types';
-import { deployContract, getContract } from '../../helpers/contracts-helpers';
-import { MockAToken } from '../../types/MockAToken';
-import { MockStableDebtToken } from '../../types/MockStableDebtToken';
-import { MockVariableDebtToken } from '../../types/MockVariableDebtToken';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  getAToken,
+  deployMockLToken,
+  deployMockStableDebtToken,
+  deployMockVariableDebtToken,
+} from '../../helpers/contracts-deployments';
+import {
+  getLToken,
   getMockStableDebtToken,
   getMockVariableDebtToken,
   getStableDebtToken,
   getVariableDebtToken,
 } from '../../helpers/contracts-getters';
-import {
-  deployMockAToken,
-  deployMockStableDebtToken,
-  deployMockVariableDebtToken,
-} from '../../helpers/contracts-deployments';
+import { ProtocolErrors } from '../../helpers/types';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
 makeSuite('Upgradeability', (testEnv: TestEnv) => {
   const { CALLER_NOT_POOL_ADMIN } = ProtocolErrors;
-  let newATokenAddress: string;
+  let newLTokenAddress: string;
   let newStableTokenAddress: string;
   let newVariableTokenAddress: string;
 
   before('deploying instances', async () => {
     const { dai, pool } = testEnv;
-    const aTokenInstance = await deployMockAToken([
+    const lTokenInstance = await deployMockLToken([
       pool.address,
       dai.address,
       ZERO_ADDRESS,
@@ -55,18 +51,18 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       '0x10',
     ]);
 
-    newATokenAddress = aTokenInstance.address;
+    newLTokenAddress = lTokenInstance.address;
     newVariableTokenAddress = variableDebtTokenInstance.address;
     newStableTokenAddress = stableDebtTokenInstance.address;
   });
 
-  it('Tries to update the DAI Atoken implementation with a different address than the lendingPoolManager', async () => {
+  it('Tries to update the DAI LToken implementation with a different address than the lendingPoolManager', async () => {
     const { dai, configurator, users } = testEnv;
 
-    const name = await (await getAToken(newATokenAddress)).name();
-    const symbol = await (await getAToken(newATokenAddress)).symbol();
+    const name = await (await getLToken(newLTokenAddress)).name();
+    const symbol = await (await getLToken(newLTokenAddress)).symbol();
 
-    const updateATokenInputParams: {
+    const updateLTokenInputParams: {
       asset: string;
       treasury: string;
       incentivesController: string;
@@ -80,21 +76,21 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
-      implementation: newATokenAddress,
+      implementation: newLTokenAddress,
       params: '0x10',
     };
     await expect(
-      configurator.connect(users[1].signer).updateAToken(updateATokenInputParams)
+      configurator.connect(users[1].signer).updateLToken(updateLTokenInputParams)
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Upgrades the DAI Atoken implementation ', async () => {
+  it('Upgrades the DAI LToken implementation ', async () => {
     const { dai, configurator, aDai } = testEnv;
 
-    const name = await (await getAToken(newATokenAddress)).name();
-    const symbol = await (await getAToken(newATokenAddress)).symbol();
+    const name = await (await getLToken(newLTokenAddress)).name();
+    const symbol = await (await getLToken(newLTokenAddress)).symbol();
 
-    const updateATokenInputParams: {
+    const updateLTokenInputParams: {
       asset: string;
       treasury: string;
       incentivesController: string;
@@ -108,10 +104,10 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
-      implementation: newATokenAddress,
+      implementation: newLTokenAddress,
       params: '0x10',
     };
-    await configurator.updateAToken(updateATokenInputParams);
+    await configurator.updateLToken(updateLTokenInputParams);
 
     const tokenName = await aDai.name();
 
@@ -226,7 +222,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: newVariableTokenAddress,
       params: '0x10',
     };
-    //const name = await (await getAToken(newATokenAddress)).name();
+    //const name = await (await getLToken(newLTokenAddress)).name();
 
     await configurator.updateVariableDebtToken(updateDebtTokenInput);
 

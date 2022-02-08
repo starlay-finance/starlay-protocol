@@ -1,12 +1,12 @@
 import { task } from 'hardhat/config';
-import { loadPoolConfig, ConfigNames, getTreasuryAddress } from '../../helpers/configuration';
+import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getAddressById,
-  getAToken,
   getFirstSigner,
   getInterestRateStrategy,
   getLendingPoolAddressesProvider,
+  getLToken,
   getProxy,
   getStableDebtToken,
   getVariableDebtToken,
@@ -42,7 +42,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
       const {
         stableDebtTokenAddress,
         variableDebtTokenAddress,
-        aTokenAddress,
+        lTokenAddress,
         interestRateStrategyAddress,
       } = await lendingPoolProxy.getReserveData(tokenAddress);
 
@@ -77,11 +77,11 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
         [lendingPoolConfigurator.address]
       );
 
-      // Proxy aToken
-      console.log('\n- Verifying aToken proxy...\n');
+      // Proxy lToken
+      console.log('\n- Verifying lToken proxy...\n');
       await verifyContract(
         eContractid.InitializableAdminUpgradeabilityProxy,
-        await getProxy(aTokenAddress),
+        await getProxy(lTokenAddress),
         [lendingPoolConfigurator.address]
       );
 
@@ -103,11 +103,11 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
 
       const stableDebt = await getAddressById(`stableDebt${token}`);
       const variableDebt = await getAddressById(`variableDebt${token}`);
-      const aToken = await getAddressById(`a${token}`);
+      const lToken = await getAddressById(`a${token}`);
 
-      if (aToken) {
-        console.log('\n- Verifying aToken...\n');
-        await verifyContract(eContractid.AToken, await getAToken(aToken), [
+      if (lToken) {
+        console.log('\n- Verifying lToken...\n');
+        await verifyContract(eContractid.LToken, await getLToken(lToken), [
           lendingPoolProxy.address,
           tokenAddress,
           treasuryAddress,
@@ -116,7 +116,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           ZERO_ADDRESS,
         ]);
       } else {
-        console.error(`Skipping aToken verify for ${token}. Missing address at JSON DB.`);
+        console.error(`Skipping lToken verify for ${token}. Missing address at JSON DB.`);
       }
       if (stableDebt) {
         console.log('\n- Verifying StableDebtToken...\n');

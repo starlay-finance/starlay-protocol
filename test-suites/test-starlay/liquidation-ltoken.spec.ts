@@ -1,17 +1,16 @@
 import BigNumber from 'bignumber.js';
-
-import { DRE } from '../../helpers/misc-utils';
 import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
-import { makeSuite } from './helpers/make-suite';
+import { DRE } from '../../helpers/misc-utils';
 import { ProtocolErrors, RateMode } from '../../helpers/types';
+import { makeSuite } from './helpers/make-suite';
 import { calcExpectedVariableDebtTokenBalance } from './helpers/utils/calculations';
-import { getUserData, getReserveData } from './helpers/utils/helpers';
+import { getReserveData, getUserData } from './helpers/utils/helpers';
 
 const chai = require('chai');
 const { expect } = chai;
 
-makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => {
+makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => {
   const {
     LPCM_HEALTH_FACTOR_NOT_BELOW_THRESHOLD,
     INVALID_HF,

@@ -8,7 +8,7 @@ import { makeSuite, TestEnv } from './helpers/make-suite';
 
 const STARLAY_REFERRAL = CommonsConfig.ProtocolGlobalParams.StarlayReferral;
 
-makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
+makeSuite('LToken: Transfer', (testEnv: TestEnv) => {
   const {
     INVALID_FROM_BALANCE_AFTER_TRANSFER,
     INVALID_TO_BALANCE_AFTER_TRANSFER,

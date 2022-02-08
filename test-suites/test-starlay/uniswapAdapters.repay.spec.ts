@@ -1,23 +1,23 @@
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import {
-  convertToCurrencyDecimals,
-  getContract,
-  buildPermitParams,
-  getSignatureFromTypedData,
-  buildRepayAdapterParams,
-} from '../../helpers/contracts-helpers';
-import { getMockUniswapRouter } from '../../helpers/contracts-getters';
-import { deployUniswapRepayAdapter } from '../../helpers/contracts-deployments';
-import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
 import { Zero } from '@ethersproject/constants';
 import BigNumber from 'bignumber.js';
-import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 import { ethers } from 'ethers';
-import { eContractid } from '../../helpers/types';
-import { StableDebtToken } from '../../types/StableDebtToken';
 import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
 import { MAX_UINT_AMOUNT } from '../../helpers/constants';
+import { deployUniswapRepayAdapter } from '../../helpers/contracts-deployments';
+import { getMockUniswapRouter } from '../../helpers/contracts-getters';
+import {
+  buildPermitParams,
+  buildRepayAdapterParams,
+  convertToCurrencyDecimals,
+  getContract,
+  getSignatureFromTypedData,
+} from '../../helpers/contracts-helpers';
+import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
+import { eContractid } from '../../helpers/types';
 import { VariableDebtToken } from '../../types';
+import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
+import { StableDebtToken } from '../../types/StableDebtToken';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 const { parseEther } = ethers.utils;
 
 const { expect } = require('chai');
@@ -99,16 +99,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
     describe('executeOperation', () => {
       it('should correctly swap tokens and repay debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -193,16 +185,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay debt with permit', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -511,17 +495,9 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         ).to.be.revertedWith('maxAmountToSwap exceed max slippage');
       });
 
-      it('should swap, repay debt and pull the needed ATokens leaving no leftovers', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+      it('should swap, repay debt and pull the needed LTokens leaving no leftovers', async () => {
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -615,16 +591,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay the whole stable debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -706,16 +674,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay the whole variable debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -889,16 +849,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
     describe('swapAndRepay', () => {
       it('should correctly swap tokens and repay debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -962,16 +914,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay debt with permit', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1135,17 +1079,9 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         ).to.be.revertedWith('maxAmountToSwap exceed max slippage');
       });
 
-      it('should swap, repay debt and pull the needed ATokens leaving no leftovers', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+      it('should swap, repay debt and pull the needed LTokens leaving no leftovers', async () => {
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1218,16 +1154,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay the whole stable debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
@@ -1301,16 +1229,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and repay the whole variable debt', async () => {
-        const {
-          users,
-          pool,
-          weth,
-          aWETH,
-          oracle,
-          dai,
-          uniswapRepayAdapter,
-          helpersContract,
-        } = testEnv;
+        const { users, pool, weth, aWETH, oracle, dai, uniswapRepayAdapter, helpersContract } =
+          testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 

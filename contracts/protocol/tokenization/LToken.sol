@@ -4,7 +4,7 @@ pragma solidity 0.6.12;
 import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
 import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
-import {IAToken} from '../../interfaces/IAToken.sol';
+import {ILToken} from '../../interfaces/ILToken.sol';
 import {WadRayMath} from '../libraries/math/WadRayMath.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 import {
@@ -14,14 +14,14 @@ import {IncentivizedERC20} from './IncentivizedERC20.sol';
 import {IStarlayIncentivesController} from '../../interfaces/IStarlayIncentivesController.sol';
 
 /**
- * @title Starlay ERC20 AToken
+ * @title Starlay ERC20 LToken
  * @dev Implementation of the interest bearing token for the Starlay protocol
  * @author Starlay
  */
-contract AToken is
+contract LToken is
   VersionedInitializable,
-  IncentivizedERC20('ATOKEN_IMPL', 'ATOKEN_IMPL', 0),
-  IAToken
+  IncentivizedERC20('LTOKEN_IMPL', 'LTOKEN_IMPL', 0),
+  ILToken
 {
   using WadRayMath for uint256;
   using SafeERC20 for IERC20;
@@ -32,7 +32,7 @@ contract AToken is
   bytes32 public constant PERMIT_TYPEHASH =
     keccak256('Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)');
 
-  uint256 public constant ATOKEN_REVISION = 0x1;
+  uint256 public constant LTOKEN_REVISION = 0x1;
 
   /// @dev owner => next valid nonce to submit with permit()
   mapping(address => uint256) public _nonces;
@@ -50,27 +50,27 @@ contract AToken is
   }
 
   function getRevision() internal pure virtual override returns (uint256) {
-    return ATOKEN_REVISION;
+    return LTOKEN_REVISION;
   }
 
   /**
-   * @dev Initializes the aToken
-   * @param pool The address of the lending pool where this aToken will be used
-   * @param treasury The address of the Starlay treasury, receiving the fees on this aToken
-   * @param underlyingAsset The address of the underlying asset of this aToken (E.g. WETH for aWETH)
+   * @dev Initializes the lToken
+   * @param pool The address of the lending pool where this lToken will be used
+   * @param treasury The address of the Starlay treasury, receiving the fees on this lToken
+   * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for aWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
-   * @param aTokenDecimals The decimals of the aToken, same as the underlying asset's
-   * @param aTokenName The name of the aToken
-   * @param aTokenSymbol The symbol of the aToken
+   * @param lTokenDecimals The decimals of the lToken, same as the underlying asset's
+   * @param lTokenName The name of the lToken
+   * @param lTokenSymbol The symbol of the lToken
    */
   function initialize(
     ILendingPool pool,
     address treasury,
     address underlyingAsset,
     IStarlayIncentivesController incentivesController,
-    uint8 aTokenDecimals,
-    string calldata aTokenName,
-    string calldata aTokenSymbol,
+    uint8 lTokenDecimals,
+    string calldata lTokenName,
+    string calldata lTokenSymbol,
     bytes calldata params
   ) external override initializer {
     uint256 chainId;
@@ -83,16 +83,16 @@ contract AToken is
     DOMAIN_SEPARATOR = keccak256(
       abi.encode(
         EIP712_DOMAIN,
-        keccak256(bytes(aTokenName)),
+        keccak256(bytes(lTokenName)),
         keccak256(EIP712_REVISION),
         chainId,
         address(this)
       )
     );
 
-    _setName(aTokenName);
-    _setSymbol(aTokenSymbol);
-    _setDecimals(aTokenDecimals);
+    _setName(lTokenName);
+    _setSymbol(lTokenSymbol);
+    _setDecimals(lTokenDecimals);
 
     _pool = pool;
     _treasury = treasury;
@@ -104,17 +104,17 @@ contract AToken is
       address(pool),
       treasury,
       address(incentivesController),
-      aTokenDecimals,
-      aTokenName,
-      aTokenSymbol,
+      lTokenDecimals,
+      lTokenName,
+      lTokenSymbol,
       params
     );
   }
 
   /**
-   * @dev Burns aTokens from `user` and sends the equivalent amount of underlying to `receiverOfUnderlying`
+   * @dev Burns lTokens from `user` and sends the equivalent amount of underlying to `receiverOfUnderlying`
    * - Only callable by the LendingPool, as extra state updates there need to be managed
-   * @param user The owner of the aTokens, getting them burned
+   * @param user The owner of the lTokens, getting them burned
    * @param receiverOfUnderlying The address that will receive the underlying
    * @param amount The amount being burned
    * @param index The new liquidity index of the reserve
@@ -136,7 +136,7 @@ contract AToken is
   }
 
   /**
-   * @dev Mints `amount` aTokens to `user`
+   * @dev Mints `amount` lTokens to `user`
    * - Only callable by the LendingPool, as extra state updates there need to be managed
    * @param user The address receiving the minted tokens
    * @param amount The amount of tokens getting minted
@@ -161,7 +161,7 @@ contract AToken is
   }
 
   /**
-   * @dev Mints aTokens to the reserve treasury
+   * @dev Mints lTokens to the reserve treasury
    * - Only callable by the LendingPool
    * @param amount The amount of tokens getting minted
    * @param index The new liquidity index of the reserve
@@ -184,9 +184,9 @@ contract AToken is
   }
 
   /**
-   * @dev Transfers aTokens in the event of a borrow being liquidated, in case the liquidators reclaims the aToken
+   * @dev Transfers lTokens in the event of a borrow being liquidated, in case the liquidators reclaims the lToken
    * - Only callable by the LendingPool
-   * @param from The address getting liquidated, current owner of the aTokens
+   * @param from The address getting liquidated, current owner of the lTokens
    * @param to The recipient
    * @param value The amount of tokens getting transferred
    **/
@@ -242,7 +242,7 @@ contract AToken is
   }
 
   /**
-   * @dev calculates the total supply of the specific aToken
+   * @dev calculates the total supply of the specific lToken
    * since the balance of every single user increases over time, the total supply
    * does that too.
    * @return the current total supply
@@ -266,21 +266,21 @@ contract AToken is
   }
 
   /**
-   * @dev Returns the address of the Starlay treasury, receiving the fees on this aToken
+   * @dev Returns the address of the Starlay treasury, receiving the fees on this lToken
    **/
   function RESERVE_TREASURY_ADDRESS() public view returns (address) {
     return _treasury;
   }
 
   /**
-   * @dev Returns the address of the underlying asset of this aToken (E.g. WETH for aWETH)
+   * @dev Returns the address of the underlying asset of this lToken (E.g. WETH for aWETH)
    **/
   function UNDERLYING_ASSET_ADDRESS() public view override returns (address) {
     return _underlyingAsset;
   }
 
   /**
-   * @dev Returns the address of the lending pool where this aToken is used
+   * @dev Returns the address of the lending pool where this lToken is used
    **/
   function POOL() public view returns (ILendingPool) {
     return _pool;
@@ -308,7 +308,7 @@ contract AToken is
   /**
    * @dev Transfers the underlying asset to `target`. Used by the LendingPool to transfer
    * assets in borrow(), withdraw() and flashLoan()
-   * @param target The recipient of the aTokens
+   * @param target The recipient of the lTokens
    * @param amount The amount getting transferred
    * @return The amount transferred
    **/
@@ -323,7 +323,7 @@ contract AToken is
   }
 
   /**
-   * @dev Invoked to execute actions on the aToken side after a repayment.
+   * @dev Invoked to execute actions on the lToken side after a repayment.
    * @param user The user executing the repayment
    * @param amount The amount getting repaid
    **/
@@ -367,7 +367,7 @@ contract AToken is
   }
 
   /**
-   * @dev Transfers the aTokens between two users. Validates the transfer
+   * @dev Transfers the lTokens between two users. Validates the transfer
    * (ie checks for valid HF after the transfer) if required
    * @param from The source address
    * @param to The destination address

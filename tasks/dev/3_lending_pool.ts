@@ -1,20 +1,20 @@
 import { task } from 'hardhat/config';
+import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
 import {
-  deployATokenImplementations,
-  deployATokensAndRatesHelper,
   deployLendingPool,
   deployLendingPoolConfigurator,
+  deployLTokenImplementations,
+  deployLTokensAndRatesHelper,
   deployStableAndVariableTokensHelper,
 } from '../../helpers/contracts-deployments';
-import { eContractid } from '../../helpers/types';
-import { waitForTx } from '../../helpers/misc-utils';
 import {
-  getLendingPoolAddressesProvider,
   getLendingPool,
+  getLendingPoolAddressesProvider,
   getLendingPoolConfiguratorProxy,
 } from '../../helpers/contracts-getters';
 import { insertContractAddressInDb } from '../../helpers/contracts-helpers';
-import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
+import { waitForTx } from '../../helpers/misc-utils';
+import { eContractid } from '../../helpers/types';
 
 task('dev:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -54,9 +54,9 @@ task('dev:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
       [lendingPoolProxy.address, addressesProvider.address],
       verify
     );
-    await deployATokensAndRatesHelper(
+    await deployLTokensAndRatesHelper(
       [lendingPoolProxy.address, addressesProvider.address, lendingPoolConfiguratorProxy.address],
       verify
     );
-    await deployATokenImplementations(pool, poolConfig.ReservesConfig, verify);
+    await deployLTokenImplementations(pool, poolConfig.ReservesConfig, verify);
   });

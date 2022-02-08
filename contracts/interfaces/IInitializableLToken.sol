@@ -5,47 +5,51 @@ import {ILendingPool} from './ILendingPool.sol';
 import {IStarlayIncentivesController} from './IStarlayIncentivesController.sol';
 
 /**
- * @title IInitializableDebtToken
- * @notice Interface for the initialize function common between debt tokens
+ * @title IInitializableLToken
+ * @notice Interface for the initialize function on LToken
  * @author Starlay
  **/
-interface IInitializableDebtToken {
+interface IInitializableLToken {
   /**
-   * @dev Emitted when a debt token is initialized
+   * @dev Emitted when an lToken is initialized
    * @param underlyingAsset The address of the underlying asset
    * @param pool The address of the associated lending pool
+   * @param treasury The address of the treasury
    * @param incentivesController The address of the incentives controller for this lToken
-   * @param debtTokenDecimals the decimals of the debt token
-   * @param debtTokenName the name of the debt token
-   * @param debtTokenSymbol the symbol of the debt token
+   * @param lTokenDecimals the decimals of the underlying
+   * @param lTokenName the name of the lToken
+   * @param lTokenSymbol the symbol of the lToken
    * @param params A set of encoded parameters for additional initialization
    **/
   event Initialized(
     address indexed underlyingAsset,
     address indexed pool,
+    address treasury,
     address incentivesController,
-    uint8 debtTokenDecimals,
-    string debtTokenName,
-    string debtTokenSymbol,
+    uint8 lTokenDecimals,
+    string lTokenName,
+    string lTokenSymbol,
     bytes params
   );
 
   /**
-   * @dev Initializes the debt token.
+   * @dev Initializes the lToken
    * @param pool The address of the lending pool where this lToken will be used
+   * @param treasury The address of the Starlay treasury, receiving the fees on this lToken
    * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for aWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
-   * @param debtTokenDecimals The decimals of the debtToken, same as the underlying asset's
-   * @param debtTokenName The name of the token
-   * @param debtTokenSymbol The symbol of the token
+   * @param lTokenDecimals The decimals of the lToken, same as the underlying asset's
+   * @param lTokenName The name of the lToken
+   * @param lTokenSymbol The symbol of the lToken
    */
   function initialize(
     ILendingPool pool,
+    address treasury,
     address underlyingAsset,
     IStarlayIncentivesController incentivesController,
-    uint8 debtTokenDecimals,
-    string memory debtTokenName,
-    string memory debtTokenSymbol,
+    uint8 lTokenDecimals,
+    string calldata lTokenName,
+    string calldata lTokenSymbol,
     bytes calldata params
   ) external;
 }

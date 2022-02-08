@@ -1,5 +1,18 @@
 import BigNumber from 'bignumber.js';
-
+import chai from 'chai';
+import { ContractReceipt } from 'ethers';
+import { MAX_UINT_AMOUNT, ONE_YEAR } from '../../../helpers/constants';
+import {
+  getLToken,
+  getMintableERC20,
+  getStableDebtToken,
+  getVariableDebtToken,
+} from '../../../helpers/contracts-getters';
+import { convertToCurrencyDecimals } from '../../../helpers/contracts-helpers';
+import { advanceTimeAndBlock, DRE, timeLatest, waitForTx } from '../../../helpers/misc-utils';
+import { RateMode, tEthereumAddress } from '../../../helpers/types';
+import { LToken } from '../../../types/LToken';
+import { SignerWithAddress, TestEnv } from './make-suite';
 import {
   calcExpectedReserveDataAfterBorrow,
   calcExpectedReserveDataAfterDeposit,
@@ -16,23 +29,7 @@ import {
   calcExpectedUserDataAfterWithdraw,
 } from './utils/calculations';
 import { getReserveAddressFromSymbol, getReserveData, getUserData } from './utils/helpers';
-
-import { convertToCurrencyDecimals } from '../../../helpers/contracts-helpers';
-import {
-  getAToken,
-  getMintableERC20,
-  getStableDebtToken,
-  getVariableDebtToken,
-} from '../../../helpers/contracts-getters';
-import { MAX_UINT_AMOUNT, ONE_YEAR } from '../../../helpers/constants';
-import { SignerWithAddress, TestEnv } from './make-suite';
-import { advanceTimeAndBlock, DRE, timeLatest, waitForTx } from '../../../helpers/misc-utils';
-
-import chai from 'chai';
 import { ReserveData, UserReserveData } from './utils/interfaces';
-import { ContractReceipt } from 'ethers';
-import { AToken } from '../../../types/AToken';
-import { RateMode, tEthereumAddress } from '../../../helpers/types';
 
 const { expect } = chai;
 
@@ -48,7 +45,7 @@ const almostEqualOrEqual = function (
       key === 'lastUpdateTimestamp' ||
       key === 'marketStableRate' ||
       key === 'symbol' ||
-      key === 'aTokenAddress' ||
+      key === 'lTokenAddress' ||
       key === 'decimals' ||
       key === 'totalStableDebtLastUpdated'
     ) {
@@ -223,7 +220,7 @@ export const withdraw = async (
   const { pool } = testEnv;
 
   const {
-    aTokenInstance,
+    lTokenInstance,
     reserve,
     userData: userDataBefore,
     reserveData: reserveDataBefore,
@@ -349,7 +346,7 @@ export const borrow = async (
   );
 
   const amountToBorrow = await convertToCurrencyDecimals(reserve, amount);
-  
+
   if (expectedResult === 'success') {
     const txResult = await waitForTx(
       await pool
@@ -714,7 +711,7 @@ interface ActionData {
   reserve: string;
   reserveData: ReserveData;
   userData: UserReserveData;
-  aTokenInstance: AToken;
+  lTokenInstance: LToken;
 }
 
 const getDataBeforeAction = async (
@@ -725,12 +722,12 @@ const getDataBeforeAction = async (
   const reserve = await getReserveAddressFromSymbol(reserveSymbol);
 
   const { reserveData, userData } = await getContractsData(reserve, user, testEnv);
-  const aTokenInstance = await getAToken(reserveData.aTokenAddress);
+  const lTokenInstance = await getLToken(reserveData.lTokenAddress);
   return {
     reserve,
     reserveData,
     userData,
-    aTokenInstance,
+    lTokenInstance,
   };
 };
 

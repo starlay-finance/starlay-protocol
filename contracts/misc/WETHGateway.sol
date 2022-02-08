@@ -7,7 +7,7 @@ import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
 import {IWETH} from './interfaces/IWETH.sol';
 import {IWETHGateway} from './interfaces/IWETHGateway.sol';
 import {ILendingPool} from '../interfaces/ILendingPool.sol';
-import {IAToken} from '../interfaces/IAToken.sol';
+import {ILToken} from '../interfaces/ILToken.sol';
 import {ReserveConfiguration} from '../protocol/libraries/configuration/ReserveConfiguration.sol';
 import {UserConfiguration} from '../protocol/libraries/configuration/UserConfiguration.sol';
 import {Helpers} from '../protocol/libraries/helpers/Helpers.sol';
@@ -32,10 +32,10 @@ contract WETHGateway is IWETHGateway, Ownable {
   }
 
   /**
-   * @dev deposits WETH into the reserve, using native ETH. A corresponding amount of the overlying asset (aTokens)
+   * @dev deposits WETH into the reserve, using native ETH. A corresponding amount of the overlying asset (lTokens)
    * is minted.
    * @param lendingPool address of the targeted underlying lending pool
-   * @param onBehalfOf address of the user who will receive the aTokens representing the deposit
+   * @param onBehalfOf address of the user who will receive the lTokens representing the deposit
    * @param referralCode integrators are assigned a referral code and can potentially receive rewards.
    **/
   function depositETH(
@@ -58,7 +58,7 @@ contract WETHGateway is IWETHGateway, Ownable {
     uint256 amount,
     address to
   ) external override {
-    IAToken aWETH = IAToken(ILendingPool(lendingPool).getReserveData(address(WETH)).aTokenAddress);
+    ILToken aWETH = ILToken(ILendingPool(lendingPool).getReserveData(address(WETH)).lTokenAddress);
     uint256 userBalance = aWETH.balanceOf(msg.sender);
     uint256 amountToWithdraw = amount;
 

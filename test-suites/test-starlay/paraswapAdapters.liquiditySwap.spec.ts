@@ -1,26 +1,23 @@
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import {
-  convertToCurrencyDecimals,
-  getContract,
-  buildPermitParams,
-  getSignatureFromTypedData,
-  buildParaSwapLiquiditySwapParams,
-} from '../../helpers/contracts-helpers';
-import {
-  getMockParaSwapAugustus,
-  getMockParaSwapAugustusRegistry,
-} from '../../helpers/contracts-getters';
-import { deployParaSwapLiquiditySwapAdapter } from '../../helpers/contracts-deployments';
-import { MockParaSwapAugustus } from '../../types/MockParaSwapAugustus';
-import { MockParaSwapAugustusRegistry } from '../../types/MockParaSwapAugustusRegistry';
 import { Zero } from '@ethersproject/constants';
 import BigNumber from 'bignumber.js';
-import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 import { ethers } from 'ethers';
-import { eContractid } from '../../helpers/types';
-import { AToken } from '../../types/AToken';
 import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
 import { MAX_UINT_AMOUNT } from '../../helpers/constants';
+import { deployParaSwapLiquiditySwapAdapter } from '../../helpers/contracts-deployments';
+import {
+  getMockParaSwapAugustus,
+  getMockParaSwapAugustusRegistry
+} from '../../helpers/contracts-getters';
+import {
+  buildParaSwapLiquiditySwapParams, buildPermitParams, convertToCurrencyDecimals,
+  getContract, getSignatureFromTypedData
+} from '../../helpers/contracts-helpers';
+import { DRE, evmRevert, evmSnapshot } from '../../helpers/misc-utils';
+import { eContractid } from '../../helpers/types';
+import { LToken } from '../../types/LToken';
+import { MockParaSwapAugustus } from '../../types/MockParaSwapAugustus';
+import { MockParaSwapAugustusRegistry } from '../../types/MockParaSwapAugustusRegistry';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 const { parseEther } = ethers.utils;
 
 const { expect } = require('chai');
@@ -381,7 +378,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         await mockAugustus.expectSwap(usdc.address, dai.address, amountUSDCtoSwap, amountUSDCtoSwap, expectedDaiAmount);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         // User will swap liquidity aUsdc to aDai
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
@@ -551,7 +548,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
 
         const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
+        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
 
         // User will swap liquidity aUsdc to aDai
         await aUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
@@ -901,7 +898,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
               params,
               0
             )
-        ).to.be.revertedWith('INSUFFICIENT_ATOKEN_BALANCE');
+        ).to.be.revertedWith('INSUFFICIENT_LTOKEN_BALANCE');
       });
 
       it('should not touch any token balance already in the adapter', async () => {

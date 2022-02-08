@@ -1,26 +1,21 @@
 import { task } from 'hardhat/config';
-import { getParamPerNetwork, insertContractAddressInDb } from '../../helpers/contracts-helpers';
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import { ConfigNames, getEmergencyAdmin, loadPoolConfig } from '../../helpers/configuration';
 import {
-  deployATokenImplementations,
-  deployATokensAndRatesHelper,
   deployLendingPool,
   deployLendingPoolConfigurator,
+  deployLTokenImplementations,
+  deployLTokensAndRatesHelper,
   deployStableAndVariableTokensHelper,
 } from '../../helpers/contracts-deployments';
-import { eContractid, eNetwork } from '../../helpers/types';
-import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import {
-  getLendingPoolAddressesProvider,
   getLendingPool,
+  getLendingPoolAddressesProvider,
   getLendingPoolConfiguratorProxy,
 } from '../../helpers/contracts-getters';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import {
-  loadPoolConfig,
-  ConfigNames,
-  getGenesisPoolAdmin,
-  getEmergencyAdmin,
-} from '../../helpers/configuration';
+import { getParamPerNetwork, insertContractAddressInDb } from '../../helpers/contracts-helpers';
+import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
+import { eContractid, eNetwork } from '../../helpers/types';
 
 task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -84,11 +79,11 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         [lendingPoolProxy.address, addressesProvider.address],
         verify
       );
-      await deployATokensAndRatesHelper(
+      await deployLTokensAndRatesHelper(
         [lendingPoolProxy.address, addressesProvider.address, lendingPoolConfiguratorProxy.address],
         verify
       );
-      await deployATokenImplementations(pool, poolConfig.ReservesConfig, verify);
+      await deployLTokenImplementations(pool, poolConfig.ReservesConfig, verify);
     } catch (error) {
       if (DRE.network.name.includes('tenderly')) {
         const transactionLink = `https://dashboard.tenderly.co/${DRE.config.tenderly.username}/${
