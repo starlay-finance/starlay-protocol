@@ -5,7 +5,7 @@ import {Context} from '../../dependencies/openzeppelin/contracts/Context.sol';
 import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
 import {IERC20Detailed} from '../../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
 import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
-import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesController.sol';
+import {IStarlayIncentivesController} from '../../interfaces/IStarlayIncentivesController.sol';
 
 /**
  * @title ERC20
@@ -72,7 +72,7 @@ abstract contract IncentivizedERC20 is Context, IERC20, IERC20Detailed {
    * @return Abstract function implemented by the child aToken/debtToken.
    * Done this way in order to not break compatibility with previous versions of aTokens/debtTokens
    **/
-  function _getIncentivesController() internal view virtual returns (IAaveIncentivesController);
+  function _getIncentivesController() internal view virtual returns (IStarlayIncentivesController);
 
   /**
    * @dev Executes a transfer of tokens from _msgSender() to recipient

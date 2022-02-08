@@ -1,15 +1,12 @@
 import BigNumber from 'bignumber.js';
-
-import { DRE, increaseTime } from '../../helpers/misc-utils';
+import { parseEther } from 'ethers/lib/utils';
 import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
-import { makeSuite } from './helpers/make-suite';
+import { DRE, increaseTime } from '../../helpers/misc-utils';
 import { ProtocolErrors, RateMode } from '../../helpers/types';
+import { makeSuite } from './helpers/make-suite';
 import { calcExpectedStableDebtTokenBalance } from './helpers/utils/calculations';
 import { getUserData } from './helpers/utils/helpers';
-import { CommonsConfig } from '../../markets/aave/commons';
-
-import { parseEther } from 'ethers/lib/utils';
 
 const chai = require('chai');
 

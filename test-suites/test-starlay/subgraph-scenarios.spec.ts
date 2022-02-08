@@ -1,11 +1,10 @@
-import { configuration as actionsConfiguration } from './helpers/actions';
-import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
-
 import BigNumber from 'bignumber.js';
-import { makeSuite } from './helpers/make-suite';
 import { getReservesConfigByPool } from '../../helpers/configuration';
-import { AavePools, iAavePoolAssets, IReserveParams } from '../../helpers/types';
+import { IReserveParams, iStarlayPoolAssets, StarlayPools } from '../../helpers/types';
+import { configuration as actionsConfiguration } from './helpers/actions';
+import { makeSuite } from './helpers/make-suite';
 import { executeStory } from './helpers/scenario-engine';
+import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
 
 makeSuite('Subgraph scenario tests', async (testEnv) => {
   let story: any;
@@ -18,8 +17,8 @@ makeSuite('Subgraph scenario tests', async (testEnv) => {
 
     actionsConfiguration.skipIntegrityCheck = false; //set this to true to execute solidity-coverage
 
-    calculationsConfiguration.reservesParams = <iAavePoolAssets<IReserveParams>>(
-      getReservesConfigByPool(AavePools.proto)
+    calculationsConfiguration.reservesParams = <iStarlayPoolAssets<IReserveParams>>(
+      getReservesConfigByPool(StarlayPools.proto)
     );
   });
   after('Reset', () => {

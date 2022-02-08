@@ -6,7 +6,7 @@ import {MathUtils} from '../libraries/math/MathUtils.sol';
 import {WadRayMath} from '../libraries/math/WadRayMath.sol';
 import {IStableDebtToken} from '../../interfaces/IStableDebtToken.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
-import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesController.sol';
+import {IStarlayIncentivesController} from '../../interfaces/IStarlayIncentivesController.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 
 /**
@@ -27,7 +27,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
 
   ILendingPool internal _pool;
   address internal _underlyingAsset;
-  IAaveIncentivesController internal _incentivesController;
+  IStarlayIncentivesController internal _incentivesController;
 
   /**
    * @dev Initializes the debt token.
@@ -41,7 +41,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   function initialize(
     ILendingPool pool,
     address underlyingAsset,
-    IAaveIncentivesController incentivesController,
+    IStarlayIncentivesController incentivesController,
     uint8 debtTokenDecimals,
     string memory debtTokenName,
     string memory debtTokenSymbol,
@@ -352,14 +352,19 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   /**
    * @dev Returns the address of the incentives controller contract
    **/
-  function getIncentivesController() external view override returns (IAaveIncentivesController) {
+  function getIncentivesController() external view override returns (IStarlayIncentivesController) {
     return _getIncentivesController();
   }
 
   /**
    * @dev For internal usage in the logic of the parent contracts
    **/
-  function _getIncentivesController() internal view override returns (IAaveIncentivesController) {
+  function _getIncentivesController()
+    internal
+    view
+    override
+    returns (IStarlayIncentivesController)
+  {
     return _incentivesController;
   }
 

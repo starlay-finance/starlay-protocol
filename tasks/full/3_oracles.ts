@@ -1,28 +1,28 @@
-import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 import { task } from 'hardhat/config';
-import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import {
-  deployAaveOracle,
-  deployLendingRateOracle,
-  deployPriceAggregatorDiaImpl,
-} from '../../helpers/contracts-deployments';
-import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
-import { ICommonConfiguration, eNetwork, SymbolMap } from '../../helpers/types';
-import { waitForTx, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import {
   ConfigNames,
-  loadPoolConfig,
   getGenesisPoolAdmin,
   getLendingRateOracles,
   getQuoteCurrency,
+  loadPoolConfig,
 } from '../../helpers/configuration';
 import {
-  getAaveOracle,
+  deployLendingRateOracle,
+  deployPriceAggregatorDiaImpl,
+  deployStarlayOracle,
+} from '../../helpers/contracts-deployments';
+import {
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
   getPriceAggregator,
+  getStarlayOracle,
 } from '../../helpers/contracts-getters';
-import { AaveOracle, LendingRateOracle } from '../../types';
+import { getParamPerNetwork } from '../../helpers/contracts-helpers';
+import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
+import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
+import { eNetwork, ICommonConfiguration, SymbolMap } from '../../helpers/types';
+import { LendingRateOracle, StarlayOracle } from '../../types';
+import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -43,7 +43,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
-      const aaveOracleAddress = getParamPerNetwork(poolConfig.AaveOracle, network);
+      const starlayOracleAddress = getParamPerNetwork(poolConfig.StarlayOracle, network);
       const priceAggregatorAddress = getParamPerNetwork(poolConfig.PriceAggregator, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
@@ -56,7 +56,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       };
 
       let priceAggregatorAdapter: PriceAggregatorAdapterDiaImpl;
-      let aaveOracle: AaveOracle;
+      let starlayOracle: StarlayOracle;
       let lendingRateOracle: LendingRateOracle;
 
       priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
@@ -69,11 +69,11 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         )
       );
 
-      if (notFalsyOrZeroAddress(aaveOracleAddress)) {
-        aaveOracle = await await getAaveOracle(aaveOracleAddress);
-        await waitForTx(await aaveOracle.setPriceAggregator(priceAggregatorAdapter.address));
+      if (notFalsyOrZeroAddress(starlayOracleAddress)) {
+        starlayOracle = await await getStarlayOracle(starlayOracleAddress);
+        await waitForTx(await starlayOracle.setPriceAggregator(priceAggregatorAdapter.address));
       } else {
-        aaveOracle = await deployAaveOracle(
+        starlayOracle = await deployStarlayOracle(
           [
             priceAggregatorAdapter.address,
             fallbackOracleAddress,
@@ -97,11 +97,11 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         );
       }
 
-      console.log('Aave Oracle: %s', aaveOracle.address);
+      console.log('Starlay Oracle: %s', starlayOracle.address);
       console.log('Lending Rate Oracle: %s', lendingRateOracle.address);
 
       // Register the proxy price provider on the addressesProvider
-      await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
+      await waitForTx(await addressesProvider.setPriceOracle(starlayOracle.address));
       await waitForTx(await addressesProvider.setLendingRateOracle(lendingRateOracle.address));
     } catch (error) {
       if (DRE.network.name.includes('tenderly')) {

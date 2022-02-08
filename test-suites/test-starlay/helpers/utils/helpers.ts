@@ -1,20 +1,20 @@
-import { LendingPool } from '../../../../types/LendingPool';
-import { ReserveData, UserReserveData } from './interfaces';
+import BigNumber from 'bignumber.js';
 import {
-  getLendingRateOracle,
-  getIErc20Detailed,
-  getMintableERC20,
   getAToken,
+  getIErc20Detailed,
+  getLendingRateOracle,
+  getMintableERC20,
   getStableDebtToken,
   getVariableDebtToken,
 } from '../../../../helpers/contracts-getters';
+import { DRE, getDb } from '../../../../helpers/misc-utils';
 import { tEthereumAddress } from '../../../../helpers/types';
-import BigNumber from 'bignumber.js';
-import { getDb, DRE } from '../../../../helpers/misc-utils';
-import { AaveProtocolDataProvider } from '../../../../types/AaveProtocolDataProvider';
+import { LendingPool } from '../../../../types/LendingPool';
+import { StarlayProtocolDataProvider } from '../../../../types/StarlayProtocolDataProvider';
+import { ReserveData, UserReserveData } from './interfaces';
 
 export const getReserveData = async (
-  helper: AaveProtocolDataProvider,
+  helper: StarlayProtocolDataProvider,
   reserve: tEthereumAddress
 ): Promise<ReserveData> => {
   const [reserveData, tokenAddresses, rateOracle, token] = await Promise.all([
@@ -74,7 +74,7 @@ export const getReserveData = async (
 
 export const getUserData = async (
   pool: LendingPool,
-  helper: AaveProtocolDataProvider,
+  helper: StarlayProtocolDataProvider,
   reserve: string,
   user: tEthereumAddress,
   sender?: tEthereumAddress
@@ -104,7 +104,9 @@ export const getUserData = async (
 
 export const getReserveAddressFromSymbol = async (symbol: string) => {
   const token = await getMintableERC20(
-    (await getDb().get(`${symbol}.${DRE.network.name}`).value()).address
+    (
+      await getDb().get(`${symbol}.${DRE.network.name}`).value()
+    ).address
   );
 
   if (!token) {
@@ -116,7 +118,7 @@ export const getReserveAddressFromSymbol = async (symbol: string) => {
 const getATokenUserData = async (
   reserve: string,
   user: string,
-  helpersContract: AaveProtocolDataProvider
+  helpersContract: StarlayProtocolDataProvider
 ) => {
   const aTokenAddress: string = (await helpersContract.getReserveTokensAddresses(reserve))
     .aTokenAddress;

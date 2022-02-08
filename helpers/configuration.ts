@@ -1,29 +1,35 @@
-import AaveConfig from '../markets/aave';
-import { CommonsConfig } from '../markets/aave/commons';
 import AmmConfig from '../markets/amm';
 import AstarConfig from '../markets/astar';
+import StarlayConfig from '../markets/starlay';
+import { CommonsConfig } from '../markets/starlay/commons';
 import { deployWETHMocked } from './contracts-deployments';
-import { getEthersSignersAddresses, getParamPerNetwork, getParamPerPool } from './contracts-helpers';
+import {
+  getEthersSignersAddresses,
+  getParamPerNetwork,
+  getParamPerPool,
+} from './contracts-helpers';
 import { DRE, filterMapBy } from './misc-utils';
 import {
-  AavePools, eNetwork,
-  IBaseConfiguration, iMultiPoolsAssets,
+  eNetwork,
+  IBaseConfiguration,
+  iMultiPoolsAssets,
   IReserveParams,
-  PoolConfiguration, tEthereumAddress
+  PoolConfiguration,
+  StarlayPools,
+  tEthereumAddress,
 } from './types';
-
 
 export enum ConfigNames {
   Commons = 'Commons',
-  Aave = 'Aave',
+  Starlay = 'Starlay',
   Amm = 'Amm',
-  Astar = 'Astar'
+  Astar = 'Astar',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.Aave:
-      return AaveConfig;
+    case ConfigNames.Starlay:
+      return StarlayConfig;
     case ConfigNames.Amm:
       return AmmConfig;
     case ConfigNames.Astar:
@@ -43,18 +49,18 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
 // PROTOCOL PARAMS PER POOL
 // ----------------
 
-export const getReservesConfigByPool = (pool: AavePools): iMultiPoolsAssets<IReserveParams> =>
+export const getReservesConfigByPool = (pool: StarlayPools): iMultiPoolsAssets<IReserveParams> =>
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
-      [AavePools.proto]: {
-        ...AaveConfig.ReservesConfig,
+      [StarlayPools.proto]: {
+        ...StarlayConfig.ReservesConfig,
       },
-      [AavePools.amm]: {
+      [StarlayPools.amm]: {
         ...AmmConfig.ReservesConfig,
       },
-      [AavePools.astar]: {
+      [StarlayPools.astar]: {
         ...AstarConfig.ReservesConfig,
-      }
+      },
     },
     pool
   );

@@ -1,9 +1,8 @@
 import {
-  AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
-  AaveOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
+  FlashLiquidationAdapterFactory,
   GenericLogicFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
@@ -15,25 +14,26 @@ import {
   MintableERC20Factory,
   MockATokenFactory,
   MockFlashLoanReceiverFactory,
-  MockStableDebtTokenFactory,
-  MockVariableDebtTokenFactory,
-  MockUniswapV2Router02Factory,
   MockParaSwapAugustusFactory,
   MockParaSwapAugustusRegistryFactory,
+  MockStableDebtTokenFactory,
+  MockUniswapV2Router02Factory,
+  MockVariableDebtTokenFactory,
   ParaSwapLiquiditySwapAdapterFactory,
+  PriceAggregatorAdapterDiaImplFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableAndVariableTokensHelperFactory,
   StableDebtTokenFactory,
+  StarlayOracleFactory,
+  StarlayProtocolDataProviderFactory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
   WETH9MockedFactory,
   WETHGatewayFactory,
-  FlashLiquidationAdapterFactory,
-  PriceAggregatorAdapterDiaImplFactory,
 } from '../types';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
 import { getEthersSigners, MockTokenMap } from './contracts-helpers';
@@ -121,11 +121,11 @@ export const getIErc20Detailed = async (address: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getAaveProtocolDataProvider = async (address?: tEthereumAddress) =>
-  await AaveProtocolDataProviderFactory.connect(
+export const getStarlayProtocolDataProvider = async (address?: tEthereumAddress) =>
+  await StarlayProtocolDataProviderFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.AaveProtocolDataProvider}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.StarlayProtocolDataProvider}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
@@ -380,9 +380,12 @@ export const getLendingPoolCollateralManager = async (address?: tEthereumAddress
 export const getAddressById = async (id: string): Promise<tEthereumAddress | undefined> =>
   (await getDb().get(`${id}.${DRE.network.name}`).value())?.address || undefined;
 
-export const getAaveOracle = async (address?: tEthereumAddress) =>
-  await AaveOracleFactory.connect(
-    address || (await getDb().get(`${eContractid.AaveOracle}.${DRE.network.name}`).value()).address,
+export const getStarlayOracle = async (address?: tEthereumAddress) =>
+  await StarlayOracleFactory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.StarlayOracle}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
 

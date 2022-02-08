@@ -1,27 +1,36 @@
-import { eEthereumNetwork, IAaveConfiguration } from '../../helpers/types';
+import { eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
   strategyAAVE,
-  strategyBAT, strategyBUSD,
-  strategyDAI, strategyENJ, strategyKNC,
+  strategyBAT,
+  strategyBUSD,
+  strategyDAI,
+  strategyENJ,
+  strategyKNC,
   strategyLINK,
   strategyMANA,
   strategyMKR,
   strategyREN,
-  strategySNX, strategySUSD,
-  strategyTUSD, strategyUNI, strategyUSDC,
-  strategyUSDT, strategyWBTC,
-  strategyWETH, strategyXSUSHI, strategyYFI, strategyZRX
+  strategySNX,
+  strategySUSD,
+  strategyTUSD,
+  strategyUNI,
+  strategyUSDC,
+  strategyUSDT,
+  strategyWBTC,
+  strategyWETH,
+  strategyXSUSHI,
+  strategyYFI,
+  strategyZRX,
 } from './reservesConfigs';
-
 
 // ----------------
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const AaveConfig: IAaveConfiguration = {
+export const StarlayConfig: IStarlayConfiguration = {
   ...CommonsConfig,
-  MarketId: 'Aave genesis market',
+  MarketId: 'Starlay genesis market',
   ProviderId: 1,
   ReservesConfig: {
     AAVE: strategyAAVE,
@@ -121,4 +130,4 @@ export const AaveConfig: IAaveConfiguration = {
   },
 };
 
-export default AaveConfig;
+export default StarlayConfig;

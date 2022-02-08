@@ -10,8 +10,6 @@ import {
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployAaveOracle,
-  deployAaveProtocolDataProvider,
   deployATokenImplementations,
   deployATokensAndRatesHelper,
   deployFlashLiquidationAdapter,
@@ -26,17 +24,15 @@ import {
   deployMockUniswapRouter,
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
+  deployStarlayOracle,
+  deployStarlayProtocolDataProvider,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
   deployWETHGateway,
   deployWETHMocked,
 } from '../../helpers/contracts-deployments';
-import {
-  getLendingPool,
-  getLendingPoolConfiguratorProxy,
-  getPairsTokenAggregator,
-} from '../../helpers/contracts-getters';
+import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
   getEthersSigners,
   getEthersSignersAddresses,
@@ -50,7 +46,7 @@ import {
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
-import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
+import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import AmmConfig from '../../markets/amm';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
@@ -65,7 +61,7 @@ const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const ammConfigData = getReservesConfigByPool(AavePools.amm);
+  const ammConfigData = getReservesConfigByPool(StarlayPools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -94,7 +90,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
+  const starlayAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Amm);
   const {
     ATokenNamePrefix,
@@ -107,7 +103,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(AmmConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(starlayAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -261,7 +257,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     {}
   );
 
-  await deployAaveOracle([
+  await deployStarlayOracle([
     mockAggregators.address,
     fallbackOracle.address,
     mockTokens.WETH.address,
@@ -280,13 +276,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    starlayAdmin
   );
   await deployATokenImplementations(ConfigNames.Amm, ReservesConfig);
 
-  const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);
 
-  await insertContractAddressInDb(eContractid.AaveProtocolDataProvider, testHelpers.address);
+  await insertContractAddressInDb(eContractid.StarlayProtocolDataProvider, testHelpers.address);
   const admin = await deployer.getAddress();
 
   console.log('Initialize configuration');

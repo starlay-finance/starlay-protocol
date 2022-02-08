@@ -1,47 +1,45 @@
-import { evmRevert, evmSnapshot, DRE } from '../../../helpers/misc-utils';
-import { Signer } from 'ethers';
-import {
-  getLendingPool,
-  getLendingPoolAddressesProvider,
-  getAaveProtocolDataProvider,
-  getAToken,
-  getMintableERC20,
-  getLendingPoolConfiguratorProxy,
-  getPriceOracle,
-  getLendingPoolAddressesProviderRegistry,
-  getWETHMocked,
-  getWETHGateway,
-  getUniswapLiquiditySwapAdapter,
-  getUniswapRepayAdapter,
-  getFlashLiquidationAdapter,
-  getParaSwapLiquiditySwapAdapter,
-} from '../../../helpers/contracts-getters';
-import { eEthereumNetwork, eNetwork, tEthereumAddress } from '../../../helpers/types';
-import { LendingPool } from '../../../types/LendingPool';
-import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
-import { MintableERC20 } from '../../../types/MintableERC20';
-import { AToken } from '../../../types/AToken';
-import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
-
 import chai from 'chai';
 // @ts-ignore
 import bignumberChai from 'chai-bignumber';
-import { almostEqual } from './almost-equal';
-import { PriceOracle } from '../../../types/PriceOracle';
+import { solidity } from 'ethereum-waffle';
+import { Signer } from 'ethers';
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {
+  getAToken,
+  getFlashLiquidationAdapter,
+  getLendingPool,
+  getLendingPoolAddressesProvider,
+  getLendingPoolAddressesProviderRegistry,
+  getLendingPoolConfiguratorProxy,
+  getMintableERC20,
+  getParaSwapLiquiditySwapAdapter,
+  getPriceOracle,
+  getStarlayProtocolDataProvider,
+  getUniswapLiquiditySwapAdapter,
+  getUniswapRepayAdapter,
+  getWETHGateway,
+  getWETHMocked,
+} from '../../../helpers/contracts-getters';
+import { getEthersSigners, getParamPerNetwork } from '../../../helpers/contracts-helpers';
+import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
+import { usingTenderly } from '../../../helpers/tenderly-utils';
+import { eNetwork, tEthereumAddress } from '../../../helpers/types';
+import { StarlayConfig } from '../../../markets/starlay';
+import { FlashLiquidationAdapter } from '../../../types';
+import { AToken } from '../../../types/AToken';
+import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
 import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPoolAddressesProviderRegistry';
-import { getEthersSigners } from '../../../helpers/contracts-helpers';
+import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
+import { MintableERC20 } from '../../../types/MintableERC20';
+import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
+import { PriceOracle } from '../../../types/PriceOracle';
+import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
 import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
 import { UniswapRepayAdapter } from '../../../types/UniswapRepayAdapter';
-import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
-import { getParamPerNetwork } from '../../../helpers/contracts-helpers';
 import { WETH9Mocked } from '../../../types/WETH9Mocked';
 import { WETHGateway } from '../../../types/WETHGateway';
-import { solidity } from 'ethereum-waffle';
-import { AaveConfig } from '../../../markets/aave';
-import { FlashLiquidationAdapter } from '../../../types';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { usingTenderly } from '../../../helpers/tenderly-utils';
+import { almostEqual } from './almost-equal';
 
 chai.use(bignumberChai());
 chai.use(almostEqual());
@@ -57,7 +55,7 @@ export interface TestEnv {
   pool: LendingPool;
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
-  helpersContract: AaveProtocolDataProvider;
+  helpersContract: StarlayProtocolDataProvider;
   weth: WETH9Mocked;
   aWETH: AToken;
   dai: MintableERC20;
@@ -83,7 +81,7 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   pool: {} as LendingPool,
   configurator: {} as LendingPoolConfigurator,
-  helpersContract: {} as AaveProtocolDataProvider,
+  helpersContract: {} as StarlayProtocolDataProvider,
   oracle: {} as PriceOracle,
   weth: {} as WETH9Mocked,
   aWETH: {} as AToken,
@@ -122,14 +120,14 @@ export async function initializeMakeSuite() {
 
   if (process.env.FORK) {
     testEnv.registry = await getLendingPoolAddressesProviderRegistry(
-      getParamPerNetwork(AaveConfig.ProviderRegistry, process.env.FORK as eNetwork)
+      getParamPerNetwork(StarlayConfig.ProviderRegistry, process.env.FORK as eNetwork)
     );
   } else {
     testEnv.registry = await getLendingPoolAddressesProviderRegistry();
     testEnv.oracle = await getPriceOracle();
   }
 
-  testEnv.helpersContract = await getAaveProtocolDataProvider();
+  testEnv.helpersContract = await getStarlayProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aDAI')?.tokenAddress;

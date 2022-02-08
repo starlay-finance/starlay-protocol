@@ -1,27 +1,13 @@
-import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
-import { Contract } from 'ethers';
-import { DRE, notFalsyOrZeroAddress } from './misc-utils';
-import {
-  tEthereumAddress,
-  eContractid,
-  AavePools,
-  TokenContractId,
-  iMultiPoolsAssets,
-  IReserveParams,
-  PoolConfiguration,
-  eEthereumNetwork,
-} from './types';
-import { MintableERC20 } from '../types/MintableERC20';
+import { readArtifact as buidlerReadArtifact } from '@nomiclabs/buidler/plugins';
 import { MockContract } from 'ethereum-waffle';
-import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
-import { getFirstSigner } from './contracts-getters';
+import { Contract } from 'ethers';
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
-  AaveOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
   DelegationAwareATokenFactory,
+  FlashLiquidationAdapterFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
   LendingPoolAddressesProviderRegistryFactory,
@@ -31,48 +17,62 @@ import {
   LendingRateOracleFactory,
   MintableDelegationERC20Factory,
   MintableERC20Factory,
+  MockAggregatorDIAFactory,
   MockAggregatorFactory,
   MockATokenFactory,
   MockFlashLoanReceiverFactory,
   MockParaSwapAugustusFactory,
   MockParaSwapAugustusRegistryFactory,
   MockStableDebtTokenFactory,
-  MockVariableDebtTokenFactory,
   MockUniswapV2Router02Factory,
+  MockVariableDebtTokenFactory,
   ParaSwapLiquiditySwapAdapterFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
+  StarlayOracleFactory,
+  StarlayProtocolDataProviderFactory,
+  UiIncentiveDataProviderV2Factory,
+  UiIncentiveDataProviderV2V3,
+  UiPoolDataProvider,
+  UiPoolDataProviderV2Factory,
+  UiPoolDataProviderV2V3Factory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
   WETH9MockedFactory,
   WETHGatewayFactory,
-  FlashLiquidationAdapterFactory,
-  UiPoolDataProviderV2Factory,
-  UiPoolDataProviderV2V3Factory,
-  UiIncentiveDataProviderV2V3,
-  UiIncentiveDataProviderV2Factory,
-  MockAggregatorDIAFactory,
 } from '../types';
-import {
-  withSaveAndVerify,
-  registerContractInJsonDb,
-  linkBytecode,
-  insertContractAddressInDb,
-  deployContract,
-  verifyContract,
-  getOptionalParamAddressPerNetwork,
-} from './contracts-helpers';
-import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
-import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
-import { readArtifact as buidlerReadArtifact } from '@nomiclabs/buidler/plugins';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
-import { UiPoolDataProvider } from '../types';
-import { eNetwork } from './types';
+import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
+import { MintableERC20 } from '../types/MintableERC20';
+import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
+import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
+import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
+import { getFirstSigner } from './contracts-getters';
+import {
+  deployContract,
+  getOptionalParamAddressPerNetwork,
+  insertContractAddressInDb,
+  linkBytecode,
+  registerContractInJsonDb,
+  verifyContract,
+  withSaveAndVerify,
+} from './contracts-helpers';
+import { DRE, notFalsyOrZeroAddress } from './misc-utils';
+import {
+  eContractid,
+  eEthereumNetwork,
+  eNetwork,
+  iMultiPoolsAssets,
+  IReserveParams,
+  PoolConfiguration,
+  StarlayPools,
+  tEthereumAddress,
+  TokenContractId,
+} from './types';
 
 export const deployUiIncentiveDataProviderV2 = async (verify?: boolean) =>
   withSaveAndVerify(
@@ -122,11 +122,11 @@ export const deployUiPoolDataProviderV2V3 = async (
   );
 
 export const deployUiPoolDataProvider = async (
-  [incentivesController, aaveOracle]: [tEthereumAddress, tEthereumAddress],
+  [incentivesController, starlayOracle]: [tEthereumAddress, tEthereumAddress],
   verify?: boolean
 ) => {
   const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, aaveOracle];
+  const args: string[] = [incentivesController, starlayOracle];
   const instance = await deployContract<UiPoolDataProvider>(id, args);
   if (verify) {
     await verifyContract(id, instance, args);
@@ -223,7 +223,7 @@ export const deployValidationLogic = async (
   return withSaveAndVerify(validationLogic, eContractid.ValidationLogic, [], verify);
 };
 
-export const deployAaveLibraries = async (
+export const deployStarlayLibraries = async (
   verify?: boolean
 ): Promise<LendingPoolLibraryAddresses> => {
   const reserveLogic = await deployReserveLogicLibrary(verify);
@@ -248,7 +248,7 @@ export const deployAaveLibraries = async (
 };
 
 export const deployLendingPool = async (verify?: boolean) => {
-  const libraries = await deployAaveLibraries(verify);
+  const libraries = await deployStarlayLibraries(verify);
   const lendingPoolImpl = await new LendingPoolFactory(libraries, await getFirstSigner()).deploy();
   await insertContractAddressInDb(eContractid.LendingPoolImpl, lendingPoolImpl.address);
   return withSaveAndVerify(lendingPoolImpl, eContractid.LendingPool, [], verify);
@@ -281,13 +281,18 @@ export const deployMockAggregator = async (
     verify
   );
 
-export const deployAaveOracle = async (
+export const deployStarlayOracle = async (
   args: [tEthereumAddress, tEthereumAddress, string, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new AaveOracleFactory(await getFirstSigner()).deploy(args[0], args[1], args[2], args[3]),
-    eContractid.AaveOracle,
+    await new StarlayOracleFactory(await getFirstSigner()).deploy(
+      args[0],
+      args[1],
+      args[2],
+      args[3]
+    ),
+    eContractid.StarlayOracle,
     args,
     verify
   );
@@ -335,13 +340,13 @@ export const deployWalletBalancerProvider = async (verify?: boolean) =>
     verify
   );
 
-export const deployAaveProtocolDataProvider = async (
+export const deployStarlayProtocolDataProvider = async (
   addressesProvider: tEthereumAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new AaveProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
-    eContractid.AaveProtocolDataProvider,
+    await new StarlayProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
+    eContractid.StarlayProtocolDataProvider,
     [addressesProvider],
     verify
   );
@@ -509,7 +514,7 @@ export const deployDelegationAwareATokenImpl = async (verify: boolean) =>
 export const deployAllMockTokens = async (verify?: boolean) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
 
-  const protoConfigData = getReservesConfigByPool(AavePools.proto);
+  const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     let decimals = '18';

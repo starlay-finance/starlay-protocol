@@ -10,8 +10,6 @@ import {
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployAaveOracle,
-  deployAaveProtocolDataProvider,
   deployATokenImplementations,
   deployATokensAndRatesHelper,
   deployFlashLiquidationAdapter,
@@ -29,6 +27,8 @@ import {
   deployParaSwapLiquiditySwapAdapter,
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
+  deployStarlayOracle,
+  deployStarlayProtocolDataProvider,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
@@ -49,21 +49,21 @@ import {
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
-import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
-import AaveConfig from '../../markets/aave';
+import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
+import StarlayConfig from '../../markets/starlay';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
 
-const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
-const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = AaveConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
+const ALL_ASSETS_INITIAL_PRICES = StarlayConfig.Mocks.AllAssetsInitialPrices;
+const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
+const LENDING_RATE_ORACLE_RATES_COMMON = StarlayConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const protoConfigData = getReservesConfigByPool(AavePools.proto);
+  const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -92,16 +92,16 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
-  const config = loadPoolConfig(ConfigNames.Aave);
+  const starlayAdmin = await deployer.getAddress();
+  const config = loadPoolConfig(ConfigNames.Starlay);
 
   const mockTokens: {
     [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
   } = {
     ...(await deployAllMockTokens(deployer)),
   };
-  const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  const addressesProvider = await deployLendingPoolAddressesProvider(StarlayConfig.MarketId);
+  await waitForTx(await addressesProvider.setPoolAdmin(starlayAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -207,7 +207,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const priceAggregator = await deployMockAggregators(ALL_ASSETS_INITIAL_PRICES, addresses);
 
-  await deployAaveOracle([
+  await deployStarlayOracle([
     priceAggregator.address,
     fallbackOracle.address,
     mockTokens.WETH.address,
@@ -226,17 +226,17 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    starlayAdmin
   );
 
-  // Reserve params from AAVE pool + mocked tokens
+  // Reserve params from STARLAY pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
   };
 
-  const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);
 
-  await deployATokenImplementations(ConfigNames.Aave, reservesParams, false);
+  await deployATokenImplementations(ConfigNames.Starlay, reservesParams, false);
 
   const admin = await deployer.getAddress();
 
@@ -254,7 +254,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     admin,
     treasuryAddress,
     ZERO_ADDRESS,
-    ConfigNames.Aave,
+    ConfigNames.Starlay,
     false
   );
 
@@ -298,7 +298,7 @@ before(async () => {
   const FORK = process.env.FORK;
 
   if (FORK) {
-    await rawBRE.run('aave:mainnet', { skipRegistry: true });
+    await rawBRE.run('starlay:mainnet', { skipRegistry: true });
   } else {
     console.log('-> Deploying test environment...');
     await buildTestEnv(deployer, secondaryWallet);

@@ -12,9 +12,9 @@ import { eAstarNetwork, ICommonConfiguration } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Aave Astar Market',
-  StableDebtTokenNamePrefix: 'Aave Astar Market stable debt',
-  VariableDebtTokenNamePrefix: 'Aave Astar Market variable debt',
+  ATokenNamePrefix: 'Starlay Astar Market',
+  StableDebtTokenNamePrefix: 'Starlay Astar Market stable debt',
+  VariableDebtTokenNamePrefix: 'Starlay Astar Market variable debt',
   SymbolPrefix: '',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'USD',
@@ -25,7 +25,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    AaveReferral: '0',
+    StarlayReferral: '0',
   },
   DIAAggregator: {
     [eAstarNetwork.shibuya]: {
@@ -118,7 +118,7 @@ export const CommonsConfig: ICommonConfiguration = {
   TokenDistributor: {
     [eAstarNetwork.shibuya]: '',
   },
-  AaveOracle: {
+  StarlayOracle: {
     [eAstarNetwork.shibuya]: '',
   },
   FallbackOracle: {

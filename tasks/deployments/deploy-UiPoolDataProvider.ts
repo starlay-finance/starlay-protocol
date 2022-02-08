@@ -2,11 +2,7 @@ import { task } from 'hardhat/config';
 import { exit } from 'process';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import { deployUiPoolDataProvider } from '../../helpers/contracts-deployments';
-import {
-  eAstarNetwork,
-  eContractid,
-  eEthereumNetwork
-} from '../../helpers/types';
+import { eAstarNetwork, eContractid, eEthereumNetwork } from '../../helpers/types';
 
 task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider contract`)
   .addFlag('verify', 'Verify UiPoolDataProvider contract via Etherscan API.')
@@ -18,19 +14,19 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
     const network = localBRE.network.name;
 
     const addressesByNetwork: {
-      [key: string]: { incentivesController: string; aaveOracle: string };
+      [key: string]: { incentivesController: string; starlayOracle: string };
     } = {
       [eEthereumNetwork.kovan]: {
         incentivesController: '0x0000000000000000000000000000000000000000',
-        aaveOracle: '0x8fb777d67e9945e2c01936e319057f9d41d559e6',
+        starlayOracle: '0x8fb777d67e9945e2c01936e319057f9d41d559e6',
       },
       [eEthereumNetwork.main]: {
         incentivesController: '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
-        aaveOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
+        starlayOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
       },
       [eAstarNetwork.shibuya]: {
         incentivesController: ZERO_ADDRESS, // TODO: only for v1
-        aaveOracle: ZERO_ADDRESS, //TODO: only for v1
+        starlayOracle: ZERO_ADDRESS, //TODO: only for v1
       },
     };
     const supportedNetworks = Object.keys(addressesByNetwork);
@@ -42,7 +38,7 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
       exit(2);
     }
 
-    const oracle = addressesByNetwork[network].aaveOracle;
+    const oracle = addressesByNetwork[network].starlayOracle;
     const incentivesController = addressesByNetwork[network].incentivesController;
 
     console.log(`\n- UiPoolDataProvider deployment`);

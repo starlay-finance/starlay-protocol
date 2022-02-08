@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
-import { deployAaveProtocolDataProvider } from '../../helpers/contracts-deployments';
 import { exit } from 'process';
+import { deployStarlayProtocolDataProvider } from '../../helpers/contracts-deployments';
 import { getLendingPoolAddressesProvider } from '../../helpers/contracts-getters';
 
 task('full:data-provider', 'Initialize lending pool configuration.')
@@ -11,7 +11,7 @@ task('full:data-provider', 'Initialize lending pool configuration.')
 
       const addressesProvider = await getLendingPoolAddressesProvider();
 
-      await deployAaveProtocolDataProvider(addressesProvider.address, verify);
+      await deployStarlayProtocolDataProvider(addressesProvider.address, verify);
     } catch (err) {
       console.error(err);
       exit(1);

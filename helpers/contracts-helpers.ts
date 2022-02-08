@@ -13,7 +13,6 @@ import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import {
-  AavePools,
   eAstarNetwork,
   eContractid,
   eEthereumNetwork,
@@ -22,6 +21,7 @@ import {
   iEthereumParamsPerNetwork,
   iParamsPerNetwork,
   iParamsPerPool,
+  StarlayPools,
   tEthereumAddress,
   tStringTokenSmallUnits,
 } from './types';
@@ -173,13 +173,16 @@ export const getOptionalParamAddressPerNetwork = (
   return getParamPerNetwork(param, network);
 };
 
-export const getParamPerPool = <T>({ proto, amm, astar }: iParamsPerPool<T>, pool: AavePools) => {
+export const getParamPerPool = <T>(
+  { proto, amm, astar }: iParamsPerPool<T>,
+  pool: StarlayPools
+) => {
   switch (pool) {
-    case AavePools.proto:
+    case StarlayPools.proto:
       return proto;
-    case AavePools.amm:
+    case StarlayPools.amm:
       return amm;
-    case AavePools.astar:
+    case StarlayPools.astar:
       return astar;
     default:
       return proto;
