@@ -18,7 +18,7 @@ import {PercentageMath} from '../libraries/math/PercentageMath.sol';
 import {DataTypes} from '../libraries/types/DataTypes.sol';
 import {IInitializableDebtToken} from '../../interfaces/IInitializableDebtToken.sol';
 import {IInitializableAToken} from '../../interfaces/IInitializableAToken.sol';
-import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesController.sol';
+import {IStarlayIncentivesController} from '../../interfaces/IStarlayIncentivesController.sol';
 import {ILendingPoolConfigurator} from '../../interfaces/ILendingPoolConfigurator.sol';
 
 /**
@@ -78,7 +78,7 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
           pool,
           input.treasury,
           input.underlyingAsset,
-          IAaveIncentivesController(input.incentivesController),
+          IStarlayIncentivesController(input.incentivesController),
           input.underlyingAssetDecimals,
           input.aTokenName,
           input.aTokenSymbol,
@@ -93,7 +93,7 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
           IInitializableDebtToken.initialize.selector,
           pool,
           input.underlyingAsset,
-          IAaveIncentivesController(input.incentivesController),
+          IStarlayIncentivesController(input.incentivesController),
           input.underlyingAssetDecimals,
           input.stableDebtTokenName,
           input.stableDebtTokenSymbol,
@@ -108,7 +108,7 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
           IInitializableDebtToken.initialize.selector,
           pool,
           input.underlyingAsset,
-          IAaveIncentivesController(input.incentivesController),
+          IStarlayIncentivesController(input.incentivesController),
           input.underlyingAssetDecimals,
           input.variableDebtTokenName,
           input.variableDebtTokenSymbol,

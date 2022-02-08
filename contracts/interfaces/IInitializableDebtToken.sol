@@ -2,7 +2,7 @@
 pragma solidity 0.6.12;
 
 import {ILendingPool} from './ILendingPool.sol';
-import {IAaveIncentivesController} from './IAaveIncentivesController.sol';
+import {IStarlayIncentivesController} from './IStarlayIncentivesController.sol';
 
 /**
  * @title IInitializableDebtToken
@@ -42,7 +42,7 @@ interface IInitializableDebtToken {
   function initialize(
     ILendingPool pool,
     address underlyingAsset,
-    IAaveIncentivesController incentivesController,
+    IStarlayIncentivesController incentivesController,
     uint8 debtTokenDecimals,
     string memory debtTokenName,
     string memory debtTokenSymbol,
