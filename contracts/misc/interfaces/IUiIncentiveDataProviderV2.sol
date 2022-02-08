@@ -8,8 +8,8 @@ interface IUiIncentiveDataProviderV2 {
   struct AggregatedReserveIncentiveData {
     address underlyingAsset;
     IncentiveData aIncentiveData;
-    IncentiveData vIncentiveData;
-    IncentiveData sIncentiveData;
+    IncentiveData vdIncentiveData;
+    IncentiveData sdIncentiveData;
   }
 
   struct IncentiveData {
@@ -27,8 +27,8 @@ interface IUiIncentiveDataProviderV2 {
   struct UserReserveIncentiveData {
     address underlyingAsset;
     UserIncentiveData aTokenIncentivesUserData;
-    UserIncentiveData vTokenIncentivesUserData;
-    UserIncentiveData sTokenIncentivesUserData;
+    UserIncentiveData vdTokenIncentivesUserData;
+    UserIncentiveData sdTokenIncentivesUserData;
   }
 
   struct UserIncentiveData {

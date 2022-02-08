@@ -8,8 +8,8 @@ interface IUiIncentiveDataProviderV3 {
   struct AggregatedReserveIncentiveData {
     address underlyingAsset;
     IncentiveData aIncentiveData;
-    IncentiveData vIncentiveData;
-    IncentiveData sIncentiveData;
+    IncentiveData vdIncentiveData;
+    IncentiveData sdIncentiveData;
   }
 
   struct IncentiveData {
@@ -35,16 +35,16 @@ interface IUiIncentiveDataProviderV3 {
   struct UserReserveIncentiveData {
     address underlyingAsset;
     UserIncentiveData aTokenIncentivesUserData;
-    UserIncentiveData vTokenIncentivesUserData;
-    UserIncentiveData sTokenIncentivesUserData;
+    UserIncentiveData vdTokenIncentivesUserData;
+    UserIncentiveData sdTokenIncentivesUserData;
   }
-  
+
   struct UserIncentiveData {
     address tokenAddress;
     address incentiveControllerAddress;
     UserRewardInfo[] userRewardsInformation;
   }
-  
+
   struct UserRewardInfo {
     string rewardTokenSymbol;
     address rewardOracleAddress;
@@ -54,7 +54,6 @@ interface IUiIncentiveDataProviderV3 {
     int256 rewardPriceFeed;
     uint8 priceFeedDecimals;
     uint8 rewardTokenDecimals;
-
   }
 
   function getReservesIncentivesData(ILendingPoolAddressesProvider provider)
@@ -72,4 +71,4 @@ interface IUiIncentiveDataProviderV3 {
     external
     view
     returns (AggregatedReserveIncentiveData[] memory, UserReserveIncentiveData[] memory);
-} 
+}

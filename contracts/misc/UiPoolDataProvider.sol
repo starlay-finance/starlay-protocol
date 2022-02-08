@@ -146,15 +146,15 @@ contract UiPoolDataProvider is IUiPoolDataProvider {
         ) = incentivesController.getAssetData(reserveData.aTokenAddress);
 
         (
-          reserveData.sTokenIncentivesIndex,
-          reserveData.sEmissionPerSecond,
-          reserveData.sIncentivesLastUpdateTimestamp
+          reserveData.sdTokenIncentivesIndex,
+          reserveData.sdEmissionPerSecond,
+          reserveData.sdIncentivesLastUpdateTimestamp
         ) = incentivesController.getAssetData(reserveData.stableDebtTokenAddress);
 
         (
-          reserveData.vTokenIncentivesIndex,
-          reserveData.vEmissionPerSecond,
-          reserveData.vIncentivesLastUpdateTimestamp
+          reserveData.vdTokenIncentivesIndex,
+          reserveData.vdEmissionPerSecond,
+          reserveData.vdIncentivesLastUpdateTimestamp
         ) = incentivesController.getAssetData(reserveData.variableDebtTokenAddress);
       }
     }
@@ -188,11 +188,11 @@ contract UiPoolDataProvider is IUiPoolDataProvider {
           user,
           baseData.aTokenAddress
         );
-        userReservesData[i].vTokenincentivesUserIndex = incentivesController.getUserAssetData(
+        userReservesData[i].vdTokenincentivesUserIndex = incentivesController.getUserAssetData(
           user,
           baseData.variableDebtTokenAddress
         );
-        userReservesData[i].sTokenincentivesUserIndex = incentivesController.getUserAssetData(
+        userReservesData[i].sdTokenincentivesUserIndex = incentivesController.getUserAssetData(
           user,
           baseData.stableDebtTokenAddress
         );
@@ -320,15 +320,15 @@ contract UiPoolDataProvider is IUiPoolDataProvider {
         ) = incentivesController.getAssetData(reserveData.aTokenAddress);
 
         (
-          reserveData.sTokenIncentivesIndex,
-          reserveData.sEmissionPerSecond,
-          reserveData.sIncentivesLastUpdateTimestamp
+          reserveData.sdTokenIncentivesIndex,
+          reserveData.sdEmissionPerSecond,
+          reserveData.sdIncentivesLastUpdateTimestamp
         ) = incentivesController.getAssetData(reserveData.stableDebtTokenAddress);
 
         (
-          reserveData.vTokenIncentivesIndex,
-          reserveData.vEmissionPerSecond,
-          reserveData.vIncentivesLastUpdateTimestamp
+          reserveData.vdTokenIncentivesIndex,
+          reserveData.vdEmissionPerSecond,
+          reserveData.vdIncentivesLastUpdateTimestamp
         ) = incentivesController.getAssetData(reserveData.variableDebtTokenAddress);
       }
 
@@ -339,11 +339,11 @@ contract UiPoolDataProvider is IUiPoolDataProvider {
             user,
             reserveData.aTokenAddress
           );
-          userReservesData[i].vTokenincentivesUserIndex = incentivesController.getUserAssetData(
+          userReservesData[i].vdTokenincentivesUserIndex = incentivesController.getUserAssetData(
             user,
             reserveData.variableDebtTokenAddress
           );
-          userReservesData[i].sTokenincentivesUserIndex = incentivesController.getUserAssetData(
+          userReservesData[i].sdTokenincentivesUserIndex = incentivesController.getUserAssetData(
             user,
             reserveData.stableDebtTokenAddress
           );
