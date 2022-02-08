@@ -5,7 +5,7 @@ import * as marketConfigs from '../../markets/starlay';
 import * as reserveConfigs from '../../markets/starlay/reservesConfigs';
 import { ZERO_ADDRESS } from './../../helpers/constants';
 import {
-  chooseATokenDeployment,
+  chooseLTokenDeployment,
   deployDefaultReserveInterestRateStrategy,
   deployStableDebtToken,
   deployVariableDebtToken,
@@ -41,12 +41,12 @@ WRONG RESERVE ASSET SETUP:
     const strategyParams = reserveConfigs['strategy' + symbol];
     const reserveAssetAddress =
       marketConfigs.StarlayConfig.ReserveAssets[localBRE.network.name][symbol];
-    const deployCustomAToken = chooseATokenDeployment(strategyParams.aTokenImpl);
+    const deployCustomLToken = chooseLTokenDeployment(strategyParams.lTokenImpl);
     const addressProvider = await getLendingPoolAddressesProvider(
       LENDING_POOL_ADDRESS_PROVIDER[network]
     );
     const poolAddress = await addressProvider.getLendingPool();
-    const aToken = await deployCustomAToken(verify);
+    const lToken = await deployCustomLToken(verify);
     const stableDebt = await deployStableDebtToken(
       [
         poolAddress,
@@ -81,7 +81,7 @@ WRONG RESERVE ASSET SETUP:
     );
     console.log(`
     New interest bearing asset deployed on ${network}:
-    Interest bearing ib${symbol} address: ${aToken.address}
+    Interest bearing ib${symbol} address: ${lToken.address}
     Variable Debt vd${symbol} address: ${variableDebt.address}
     Stable Debt sd${symbol} address: ${stableDebt.address}
     Strategy Implementation for ${symbol} address: ${rates.address}

@@ -10,8 +10,6 @@ import {
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployATokenImplementations,
-  deployATokensAndRatesHelper,
   deployFlashLiquidationAdapter,
   deployLendingPool,
   deployLendingPoolAddressesProvider,
@@ -19,6 +17,8 @@ import {
   deployLendingPoolCollateralManager,
   deployLendingPoolConfigurator,
   deployLendingRateOracle,
+  deployLTokenImplementations,
+  deployLTokensAndRatesHelper,
   deployMintableERC20,
   deployMockFlashLoanReceiver,
   deployMockParaSwapAugustus,
@@ -136,7 +136,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   // Deploy deployment helpers
   await deployStableAndVariableTokensHelper([lendingPoolProxy.address, addressesProvider.address]);
-  await deployATokensAndRatesHelper([
+  await deployLTokensAndRatesHelper([
     lendingPoolProxy.address,
     addressesProvider.address,
     lendingPoolConfiguratorProxy.address,
@@ -214,18 +214,18 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);
 
-  await deployATokenImplementations(ConfigNames.Starlay, reservesParams, false);
+  await deployLTokenImplementations(ConfigNames.Starlay, reservesParams, false);
 
   const admin = await deployer.getAddress();
 
-  const { ATokenNamePrefix, StableDebtTokenNamePrefix, VariableDebtTokenNamePrefix, SymbolPrefix } =
+  const { LTokenNamePrefix, StableDebtTokenNamePrefix, VariableDebtTokenNamePrefix, SymbolPrefix } =
     config;
   const treasuryAddress = await getTreasuryAddress(config);
 
   await initReservesByHelper(
     reservesParams,
     allReservesAddresses,
-    ATokenNamePrefix,
+    LTokenNamePrefix,
     StableDebtTokenNamePrefix,
     VariableDebtTokenNamePrefix,
     SymbolPrefix,

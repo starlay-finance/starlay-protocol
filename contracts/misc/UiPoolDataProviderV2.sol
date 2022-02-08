@@ -7,7 +7,7 @@ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddresses
 import {IUiPoolDataProviderV2} from './interfaces/IUiPoolDataProviderV2.sol';
 import {ILendingPool} from '../interfaces/ILendingPool.sol';
 import {IStarlayOracle} from './interfaces/IStarlayOracle.sol';
-import {IAToken} from '../interfaces/IAToken.sol';
+import {ILToken} from '../interfaces/ILToken.sol';
 import {IVariableDebtToken} from '../interfaces/IVariableDebtToken.sol';
 import {IStableDebtToken} from '../interfaces/IStableDebtToken.sol';
 import {WadRayMath} from '../protocol/libraries/math/WadRayMath.sol';
@@ -90,7 +90,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
       reserveData.variableBorrowRate = baseData.currentVariableBorrowRate;
       reserveData.stableBorrowRate = baseData.currentStableBorrowRate;
       reserveData.lastUpdateTimestamp = baseData.lastUpdateTimestamp;
-      reserveData.aTokenAddress = baseData.aTokenAddress;
+      reserveData.lTokenAddress = baseData.lTokenAddress;
       reserveData.stableDebtTokenAddress = baseData.stableDebtTokenAddress;
       reserveData.variableDebtTokenAddress = baseData.variableDebtTokenAddress;
       reserveData.interestRateStrategyAddress = baseData.interestRateStrategyAddress;
@@ -99,7 +99,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
       );
 
       reserveData.availableLiquidity = IERC20Detailed(reserveData.underlyingAsset).balanceOf(
-        reserveData.aTokenAddress
+        reserveData.lTokenAddress
       );
       (
         reserveData.totalPrincipalStableDebt,
@@ -169,7 +169,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
 
       // user reserve data
       userReservesData[i].underlyingAsset = reserves[i];
-      userReservesData[i].scaledATokenBalance = IAToken(baseData.aTokenAddress).scaledBalanceOf(
+      userReservesData[i].scaledLTokenBalance = ILToken(baseData.lTokenAddress).scaledBalanceOf(
         user
       );
       userReservesData[i].usageAsCollateralEnabledOnUser = userConfig.isUsingAsCollateral(i);

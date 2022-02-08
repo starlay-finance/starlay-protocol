@@ -12,7 +12,7 @@ import { eAstarNetwork, ICommonConfiguration } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Starlay Astar Market',
+  LTokenNamePrefix: 'Starlay Astar Market',
   StableDebtTokenNamePrefix: 'Starlay Astar Market stable debt',
   VariableDebtTokenNamePrefix: 'Starlay Astar Market variable debt',
   SymbolPrefix: '',
@@ -140,7 +140,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: {},
   },
   ReservesConfig: {},
-  ATokenDomainSeparator: {
+  LTokenDomainSeparator: {
     [eAstarNetwork.shibuya]: '',
   },
   WETH: {

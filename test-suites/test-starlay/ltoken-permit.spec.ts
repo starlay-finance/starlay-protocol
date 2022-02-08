@@ -1,16 +1,15 @@
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../../helpers/constants';
-import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
-import { buildPermitParams, getSignatureFromTypedData } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { DRE } from '../../helpers/misc-utils';
-import { waitForTx } from '../../helpers/misc-utils';
 import { _TypedDataEncoder } from 'ethers/lib/utils';
+import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
+import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../../helpers/constants';
+import { buildPermitParams, getSignatureFromTypedData } from '../../helpers/contracts-helpers';
+import { DRE, waitForTx } from '../../helpers/misc-utils';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
 const { parseEther } = ethers.utils;
 
-makeSuite('AToken: Permit', (testEnv: TestEnv) => {
+makeSuite('LToken: Permit', (testEnv: TestEnv) => {
   it('Checks the domain separator', async () => {
     const { aDai } = testEnv;
     const separator = await aDai.DOMAIN_SEPARATOR();

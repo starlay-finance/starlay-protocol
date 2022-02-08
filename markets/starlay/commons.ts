@@ -13,7 +13,7 @@ import { eAstarNetwork } from './../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Starley interest bearing',
+  LTokenNamePrefix: 'Starley interest bearing',
   StableDebtTokenNamePrefix: 'Starley stable debt bearing',
   VariableDebtTokenNamePrefix: 'Starley variable debt bearing',
   SymbolPrefix: '',
@@ -253,7 +253,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: {},
   },
   ReservesConfig: {},
-  ATokenDomainSeparator: {
+  LTokenDomainSeparator: {
     [eEthereumNetwork.coverage]:
       '0x95b73a72c6ecf4ccbbba5178800023260bad8e75cdccdb8e4827a2977a37c820',
     [eEthereumNetwork.hardhat]:

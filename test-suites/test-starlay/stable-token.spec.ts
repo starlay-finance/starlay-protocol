@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { ProtocolErrors } from '../../helpers/types';
 import { getStableDebtToken } from '../../helpers/contracts-getters';
+import { ProtocolErrors } from '../../helpers/types';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
 makeSuite('Stable debt token tests', (testEnv: TestEnv) => {
   const { CT_CALLER_MUST_BE_LENDING_POOL } = ProtocolErrors;

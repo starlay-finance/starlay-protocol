@@ -4,7 +4,7 @@ pragma solidity 0.6.12;
 import {SafeMath} from '../../../dependencies/openzeppelin/contracts/SafeMath.sol';
 import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
 import {SafeERC20} from '../../../dependencies/openzeppelin/contracts/SafeERC20.sol';
-import {IAToken} from '../../../interfaces/IAToken.sol';
+import {ILToken} from '../../../interfaces/ILToken.sol';
 import {IStableDebtToken} from '../../../interfaces/IStableDebtToken.sol';
 import {IVariableDebtToken} from '../../../interfaces/IVariableDebtToken.sol';
 import {IReserveInterestRateStrategy} from '../../../interfaces/IReserveInterestRateStrategy.sol';
@@ -158,21 +158,21 @@ library ReserveLogic {
   /**
    * @dev Initializes a reserve
    * @param reserve The reserve object
-   * @param aTokenAddress The address of the overlying atoken contract
+   * @param lTokenAddress The address of the overlying ltoken contract
    * @param interestRateStrategyAddress The address of the interest rate strategy contract
    **/
   function init(
     DataTypes.ReserveData storage reserve,
-    address aTokenAddress,
+    address lTokenAddress,
     address stableDebtTokenAddress,
     address variableDebtTokenAddress,
     address interestRateStrategyAddress
   ) external {
-    require(reserve.aTokenAddress == address(0), Errors.RL_RESERVE_ALREADY_INITIALIZED);
+    require(reserve.lTokenAddress == address(0), Errors.RL_RESERVE_ALREADY_INITIALIZED);
 
     reserve.liquidityIndex = uint128(WadRayMath.ray());
     reserve.variableBorrowIndex = uint128(WadRayMath.ray());
-    reserve.aTokenAddress = aTokenAddress;
+    reserve.lTokenAddress = lTokenAddress;
     reserve.stableDebtTokenAddress = stableDebtTokenAddress;
     reserve.variableDebtTokenAddress = variableDebtTokenAddress;
     reserve.interestRateStrategyAddress = interestRateStrategyAddress;
@@ -198,7 +198,7 @@ library ReserveLogic {
   function updateInterestRates(
     DataTypes.ReserveData storage reserve,
     address reserveAddress,
-    address aTokenAddress,
+    address lTokenAddress,
     uint256 liquidityAdded,
     uint256 liquidityTaken
   ) internal {
@@ -222,7 +222,7 @@ library ReserveLogic {
       vars.newVariableRate
     ) = IReserveInterestRateStrategy(reserve.interestRateStrategyAddress).calculateInterestRates(
       reserveAddress,
-      aTokenAddress,
+      lTokenAddress,
       liquidityAdded,
       liquidityTaken,
       vars.totalStableDebt,
@@ -320,7 +320,7 @@ library ReserveLogic {
     vars.amountToMint = vars.totalDebtAccrued.percentMul(vars.reserveFactor);
 
     if (vars.amountToMint != 0) {
-      IAToken(reserve.aTokenAddress).mintToTreasury(vars.amountToMint, newLiquidityIndex);
+      ILToken(reserve.lTokenAddress).mintToTreasury(vars.amountToMint, newLiquidityIndex);
     }
   }
 
