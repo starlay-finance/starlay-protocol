@@ -1,22 +1,22 @@
 import { task } from 'hardhat/config';
-import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import {
-  deployLendingPoolCollateralManager,
-  deployWalletBalancerProvider,
-  authorizeWETHGateway,
-  deployUiPoolDataProviderV2,
-} from '../../helpers/contracts-deployments';
-import { loadPoolConfig, ConfigNames, getTreasuryAddress } from '../../helpers/configuration';
-import { getWETHGateway } from '../../helpers/contracts-getters';
-import { eNetwork, ICommonConfiguration } from '../../helpers/types';
-import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
-import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
 import { exit } from 'process';
-import {
-  getAaveProtocolDataProvider,
-  getLendingPoolAddressesProvider,
-} from '../../helpers/contracts-getters';
+import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
 import { aggregatorProxy } from '../../helpers/constants';
+import {
+  authorizeWETHGateway,
+  deployLendingPoolCollateralManager,
+  deployUiPoolDataProviderV2,
+  deployWalletBalancerProvider,
+} from '../../helpers/contracts-deployments';
+import {
+  getLendingPoolAddressesProvider,
+  getStarlayProtocolDataProvider,
+  getWETHGateway,
+} from '../../helpers/contracts-getters';
+import { getParamPerNetwork } from '../../helpers/contracts-helpers';
+import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
+import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
+import { eNetwork, ICommonConfiguration } from '../../helpers/types';
 
 task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -42,7 +42,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
       const incentivesController = await getParamPerNetwork(IncentivesController, network);
       const addressesProvider = await getLendingPoolAddressesProvider();
 
-      const testHelpers = await getAaveProtocolDataProvider();
+      const testHelpers = await getStarlayProtocolDataProvider();
 
       const admin = await addressesProvider.getPoolAdmin();
       const oracle = await addressesProvider.getPriceOracle();
@@ -87,14 +87,14 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
       );
 
       console.log(
-        '\tSetting AaveProtocolDataProvider at AddressesProvider at id: 0x01',
+        '\tSetting StarlayProtocolDataProvider at AddressesProvider at id: 0x01',
         collateralManagerAddress
       );
-      const aaveProtocolDataProvider = await getAaveProtocolDataProvider();
+      const starlayProtocolDataProvider = await getStarlayProtocolDataProvider();
       await waitForTx(
         await addressesProvider.setAddress(
           '0x0100000000000000000000000000000000000000000000000000000000000000',
-          aaveProtocolDataProvider.address
+          starlayProtocolDataProvider.address
         )
       );
 

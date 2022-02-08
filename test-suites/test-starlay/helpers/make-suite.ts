@@ -5,7 +5,6 @@ import { solidity } from 'ethereum-waffle';
 import { Signer } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  getAaveProtocolDataProvider,
   getAToken,
   getFlashLiquidationAdapter,
   getLendingPool,
@@ -15,6 +14,7 @@ import {
   getMintableERC20,
   getParaSwapLiquiditySwapAdapter,
   getPriceOracle,
+  getStarlayProtocolDataProvider,
   getUniswapLiquiditySwapAdapter,
   getUniswapRepayAdapter,
   getWETHGateway,
@@ -26,7 +26,6 @@ import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { StarlayConfig } from '../../../markets/starlay';
 import { FlashLiquidationAdapter } from '../../../types';
-import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
 import { AToken } from '../../../types/AToken';
 import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
@@ -35,6 +34,7 @@ import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator'
 import { MintableERC20 } from '../../../types/MintableERC20';
 import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
 import { PriceOracle } from '../../../types/PriceOracle';
+import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
 import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
 import { UniswapRepayAdapter } from '../../../types/UniswapRepayAdapter';
 import { WETH9Mocked } from '../../../types/WETH9Mocked';
@@ -55,7 +55,7 @@ export interface TestEnv {
   pool: LendingPool;
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
-  helpersContract: AaveProtocolDataProvider;
+  helpersContract: StarlayProtocolDataProvider;
   weth: WETH9Mocked;
   aWETH: AToken;
   dai: MintableERC20;
@@ -81,7 +81,7 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   pool: {} as LendingPool,
   configurator: {} as LendingPoolConfigurator,
-  helpersContract: {} as AaveProtocolDataProvider,
+  helpersContract: {} as StarlayProtocolDataProvider,
   oracle: {} as PriceOracle,
   weth: {} as WETH9Mocked,
   aWETH: {} as AToken,
@@ -127,7 +127,7 @@ export async function initializeMakeSuite() {
     testEnv.oracle = await getPriceOracle();
   }
 
-  testEnv.helpersContract = await getAaveProtocolDataProvider();
+  testEnv.helpersContract = await getStarlayProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aDAI')?.tokenAddress;

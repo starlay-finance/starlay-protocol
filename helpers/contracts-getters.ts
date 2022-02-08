@@ -1,5 +1,4 @@
 import {
-  AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
   DefaultReserveInterestRateStrategyFactory,
@@ -28,6 +27,7 @@ import {
   StableAndVariableTokensHelperFactory,
   StableDebtTokenFactory,
   StarlayOracleFactory,
+  StarlayProtocolDataProviderFactory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
@@ -121,11 +121,11 @@ export const getIErc20Detailed = async (address: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getAaveProtocolDataProvider = async (address?: tEthereumAddress) =>
-  await AaveProtocolDataProviderFactory.connect(
+export const getStarlayProtocolDataProvider = async (address?: tEthereumAddress) =>
+  await StarlayProtocolDataProviderFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.AaveProtocolDataProvider}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.StarlayProtocolDataProvider}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );

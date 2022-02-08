@@ -10,7 +10,6 @@ import {
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployAaveProtocolDataProvider,
   deployATokenImplementations,
   deployATokensAndRatesHelper,
   deployFlashLiquidationAdapter,
@@ -29,6 +28,7 @@ import {
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
   deployStarlayOracle,
+  deployStarlayProtocolDataProvider,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
@@ -234,7 +234,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     ...config.ReservesConfig,
   };
 
-  const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);
 
   await deployATokenImplementations(ConfigNames.Aave, reservesParams, false);
 

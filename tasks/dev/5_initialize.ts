@@ -1,31 +1,23 @@
 import { task } from 'hardhat/config';
+import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
+import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
+  authorizeWETHGateway,
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
+  deployStarlayProtocolDataProvider,
   deployWalletBalancerProvider,
-  deployAaveProtocolDataProvider,
-  authorizeWETHGateway,
 } from '../../helpers/contracts-deployments';
-import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { eNetwork } from '../../helpers/types';
-import {
-  ConfigNames,
-  getReservesConfigByPool,
-  getTreasuryAddress,
-  loadPoolConfig,
-} from '../../helpers/configuration';
-
-import { tEthereumAddress, AavePools, eContractid } from '../../helpers/types';
-import { waitForTx, filterMapBy, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
-import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
-import { getAllTokenAddresses } from '../../helpers/mock-helpers';
-import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getAllMockedTokens,
   getLendingPoolAddressesProvider,
   getWETHGateway,
 } from '../../helpers/contracts-getters';
-import { insertContractAddressInDb } from '../../helpers/contracts-helpers';
+import { getParamPerNetwork, insertContractAddressInDb } from '../../helpers/contracts-helpers';
+import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
+import { filterMapBy, notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
+import { getAllTokenAddresses } from '../../helpers/mock-helpers';
+import { eContractid, eNetwork, tEthereumAddress } from '../../helpers/types';
 
 task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -51,7 +43,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
       filterMapBy(allTokenAddresses, (key: string) => !key.includes('UNI_'))
     );
 
-    const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address, verify);
+    const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address, verify);
 
     const admin = await addressesProvider.getPoolAdmin();
 
@@ -88,7 +80,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     await deployWalletBalancerProvider(verify);
 
-    await insertContractAddressInDb(eContractid.AaveProtocolDataProvider, testHelpers.address);
+    await insertContractAddressInDb(eContractid.StarlayProtocolDataProvider, testHelpers.address);
 
     const lendingPoolAddress = await addressesProvider.getLendingPool();
 

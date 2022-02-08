@@ -3,7 +3,6 @@ import { MockContract } from 'ethereum-waffle';
 import { Contract } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
   DefaultReserveInterestRateStrategyFactory,
@@ -33,6 +32,7 @@ import {
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
   StarlayOracleFactory,
+  StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
   UiIncentiveDataProviderV2V3,
   UiPoolDataProvider,
@@ -340,13 +340,13 @@ export const deployWalletBalancerProvider = async (verify?: boolean) =>
     verify
   );
 
-export const deployAaveProtocolDataProvider = async (
+export const deployStarlayProtocolDataProvider = async (
   addressesProvider: tEthereumAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new AaveProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
-    eContractid.AaveProtocolDataProvider,
+    await new StarlayProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
+    eContractid.StarlayProtocolDataProvider,
     [addressesProvider],
     verify
   );

@@ -1,12 +1,7 @@
-import {
-  eContractid,
-  eNetwork,
-  iMultiPoolsAssets,
-  IReserveParams,
-  tEthereumAddress,
-} from './types';
-import { AaveProtocolDataProvider } from '../types/AaveProtocolDataProvider';
-import { chunk, getDb, waitForTx } from './misc-utils';
+import { BigNumberish } from 'ethers';
+import { StarlayProtocolDataProvider } from '../types/StarlayProtocolDataProvider';
+import { ConfigNames } from './configuration';
+import { deployRateStrategy } from './contracts-deployments';
 import {
   getAToken,
   getATokensAndRatesHelper,
@@ -17,9 +12,14 @@ import {
   getContractAddressWithJsonFallback,
   rawInsertContractAddressInDb,
 } from './contracts-helpers';
-import { BigNumberish } from 'ethers';
-import { ConfigNames } from './configuration';
-import { deployRateStrategy } from './contracts-deployments';
+import { chunk, getDb, waitForTx } from './misc-utils';
+import {
+  eContractid,
+  eNetwork,
+  iMultiPoolsAssets,
+  IReserveParams,
+  tEthereumAddress,
+} from './types';
 
 export const getATokenExtraParams = async (aTokenName: string, tokenAddress: tEthereumAddress) => {
   console.log(aTokenName);
@@ -192,7 +192,7 @@ export const getPairsTokenAggregator = (
 export const configureReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
   tokenAddresses: { [symbol: string]: tEthereumAddress },
-  helpers: AaveProtocolDataProvider,
+  helpers: StarlayProtocolDataProvider,
   admin: tEthereumAddress
 ) => {
   const addressProvider = await getLendingPoolAddressesProvider();
