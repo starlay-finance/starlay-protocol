@@ -32,11 +32,7 @@ import {
   deployWETHGateway,
   deployWETHMocked,
 } from '../../helpers/contracts-deployments';
-import {
-  getLendingPool,
-  getLendingPoolConfiguratorProxy,
-  getPairsTokenAggregator,
-} from '../../helpers/contracts-getters';
+import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
   getEthersSigners,
   getEthersSignersAddresses,
@@ -94,7 +90,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
+  const starlayAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Amm);
   const {
     ATokenNamePrefix,
@@ -107,7 +103,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(AmmConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(starlayAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -280,7 +276,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    starlayAdmin
   );
   await deployATokenImplementations(ConfigNames.Amm, ReservesConfig);
 
