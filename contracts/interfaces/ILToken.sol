@@ -101,7 +101,7 @@ interface ILToken is IERC20, IScaledBalanceToken, IInitializableLToken {
   function getIncentivesController() external view returns (IStarlayIncentivesController);
 
   /**
-   * @dev Returns the address of the underlying asset of this lToken (E.g. WETH for aWETH)
+   * @dev Returns the address of the underlying asset of this lToken (E.g. WETH for lWETH)
    **/
   function UNDERLYING_ASSET_ADDRESS() external view returns (address);
 }

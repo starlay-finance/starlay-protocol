@@ -36,7 +36,7 @@ interface IInitializableLToken {
    * @dev Initializes the lToken
    * @param pool The address of the lending pool where this lToken will be used
    * @param treasury The address of the Starlay treasury, receiving the fees on this lToken
-   * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for aWETH)
+   * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for lWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
    * @param lTokenDecimals The decimals of the lToken, same as the underlying asset's
    * @param lTokenName The name of the lToken
