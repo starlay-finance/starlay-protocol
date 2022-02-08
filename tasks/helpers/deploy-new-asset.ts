@@ -19,8 +19,8 @@ const LENDING_POOL_ADDRESS_PROVIDER = {
 
 const isSymbolValid = (symbol: string, network: eEthereumNetwork) =>
   Object.keys(reserveConfigs).includes('strategy' + symbol) &&
-  marketConfigs.AaveConfig.ReserveAssets[network][symbol] &&
-  marketConfigs.AaveConfig.ReservesConfig[symbol] === reserveConfigs['strategy' + symbol];
+  marketConfigs.StarlayConfig.ReserveAssets[network][symbol] &&
+  marketConfigs.StarlayConfig.ReservesConfig[symbol] === reserveConfigs['strategy' + symbol];
 
 task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters')
   .addParam('symbol', `Asset symbol, needs to have configuration ready`)
@@ -40,7 +40,7 @@ WRONG RESERVE ASSET SETUP:
     setDRE(localBRE);
     const strategyParams = reserveConfigs['strategy' + symbol];
     const reserveAssetAddress =
-      marketConfigs.AaveConfig.ReserveAssets[localBRE.network.name][symbol];
+      marketConfigs.StarlayConfig.ReserveAssets[localBRE.network.name][symbol];
     const deployCustomAToken = chooseATokenDeployment(strategyParams.aTokenImpl);
     const addressProvider = await getLendingPoolAddressesProvider(
       LENDING_POOL_ADDRESS_PROVIDER[network]

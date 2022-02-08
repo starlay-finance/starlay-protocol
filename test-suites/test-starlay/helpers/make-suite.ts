@@ -24,7 +24,7 @@ import { getEthersSigners, getParamPerNetwork } from '../../../helpers/contracts
 import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
 import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
-import { AaveConfig } from '../../../markets/starlay';
+import { StarlayConfig } from '../../../markets/starlay';
 import { FlashLiquidationAdapter } from '../../../types';
 import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
 import { AToken } from '../../../types/AToken';
@@ -120,7 +120,7 @@ export async function initializeMakeSuite() {
 
   if (process.env.FORK) {
     testEnv.registry = await getLendingPoolAddressesProviderRegistry(
-      getParamPerNetwork(AaveConfig.ProviderRegistry, process.env.FORK as eNetwork)
+      getParamPerNetwork(StarlayConfig.ProviderRegistry, process.env.FORK as eNetwork)
     );
   } else {
     testEnv.registry = await getLendingPoolAddressesProviderRegistry();

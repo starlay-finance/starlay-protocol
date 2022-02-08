@@ -7,7 +7,7 @@ import {
   deployMintableDelegationERC20,
 } from '../../helpers/contracts-deployments';
 import { ProtocolErrors } from '../../helpers/types';
-import AaveConfig from '../../markets/starlay';
+import StarlayConfig from '../../markets/starlay';
 import { DelegationAwareAToken } from '../../types/DelegationAwareAToken';
 import { MintableDelegationERC20 } from '../../types/MintableDelegationERC20';
 import { makeSuite, TestEnv } from './helpers/make-suite';
@@ -28,7 +28,7 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
       [
         pool.address,
         delegationERC20.address,
-        await getTreasuryAddress(AaveConfig),
+        await getTreasuryAddress(StarlayConfig),
         ZERO_ADDRESS,
         'aDEL',
         'aDEL',

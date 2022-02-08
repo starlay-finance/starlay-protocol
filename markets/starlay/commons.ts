@@ -1,4 +1,3 @@
-import { eAstarNetwork } from './../../helpers/types';
 import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
   oneEther,
@@ -6,6 +5,7 @@ import {
   ZERO_ADDRESS,
 } from '../../helpers/constants';
 import { eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
+import { eAstarNetwork } from './../../helpers/types';
 
 // ----------------
 // PROTOCOL GLOBAL PARAMS

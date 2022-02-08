@@ -1,6 +1,6 @@
 import AmmConfig from '../markets/amm';
 import AstarConfig from '../markets/astar';
-import AaveConfig from '../markets/starlay';
+import StarlayConfig from '../markets/starlay';
 import { CommonsConfig } from '../markets/starlay/commons';
 import { deployWETHMocked } from './contracts-deployments';
 import {
@@ -29,7 +29,7 @@ export enum ConfigNames {
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Aave:
-      return AaveConfig;
+      return StarlayConfig;
     case ConfigNames.Amm:
       return AmmConfig;
     case ConfigNames.Astar:
@@ -53,7 +53,7 @@ export const getReservesConfigByPool = (pool: AavePools): iMultiPoolsAssets<IRes
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
       [AavePools.proto]: {
-        ...AaveConfig.ReservesConfig,
+        ...StarlayConfig.ReservesConfig,
       },
       [AavePools.amm]: {
         ...AmmConfig.ReservesConfig,

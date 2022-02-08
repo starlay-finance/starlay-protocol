@@ -50,15 +50,15 @@ import {
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { AavePools, eContractid, tEthereumAddress, TokenContractId } from '../../helpers/types';
-import AaveConfig from '../../markets/starlay';
+import StarlayConfig from '../../markets/starlay';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
 
-const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
-const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = AaveConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
+const ALL_ASSETS_INITIAL_PRICES = StarlayConfig.Mocks.AllAssetsInitialPrices;
+const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
+const LENDING_RATE_ORACLE_RATES_COMMON = StarlayConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
@@ -100,7 +100,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   } = {
     ...(await deployAllMockTokens(deployer)),
   };
-  const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId);
+  const addressesProvider = await deployLendingPoolAddressesProvider(StarlayConfig.MarketId);
   await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
