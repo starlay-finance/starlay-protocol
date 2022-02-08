@@ -44,13 +44,13 @@ interface IUiPoolDataProvider {
     uint256 stableRateSlope2;
     // incentives
     uint256 aEmissionPerSecond;
-    uint256 vEmissionPerSecond;
+    uint256 vdEmissionPerSecond;
     uint256 sdEmissionPerSecond;
     uint256 aIncentivesLastUpdateTimestamp;
-    uint256 vIncentivesLastUpdateTimestamp;
+    uint256 vdIncentivesLastUpdateTimestamp;
     uint256 sdIncentivesLastUpdateTimestamp;
     uint256 aTokenIncentivesIndex;
-    uint256 vTokenIncentivesIndex;
+    uint256 vdTokenIncentivesIndex;
     uint256 sdTokenIncentivesIndex;
   }
 
@@ -64,7 +64,7 @@ interface IUiPoolDataProvider {
     uint256 stableBorrowLastUpdateTimestamp;
     // incentives
     uint256 aTokenincentivesUserIndex;
-    uint256 vTokenincentivesUserIndex;
+    uint256 vdTokenincentivesUserIndex;
     uint256 sdTokenincentivesUserIndex;
   }
 

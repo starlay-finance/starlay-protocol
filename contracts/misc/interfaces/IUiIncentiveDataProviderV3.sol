@@ -8,7 +8,7 @@ interface IUiIncentiveDataProviderV3 {
   struct AggregatedReserveIncentiveData {
     address underlyingAsset;
     IncentiveData aIncentiveData;
-    IncentiveData vIncentiveData;
+    IncentiveData vdIncentiveData;
     IncentiveData sdIncentiveData;
   }
 
@@ -35,7 +35,7 @@ interface IUiIncentiveDataProviderV3 {
   struct UserReserveIncentiveData {
     address underlyingAsset;
     UserIncentiveData aTokenIncentivesUserData;
-    UserIncentiveData vTokenIncentivesUserData;
+    UserIncentiveData vdTokenIncentivesUserData;
     UserIncentiveData sdTokenIncentivesUserData;
   }
 
