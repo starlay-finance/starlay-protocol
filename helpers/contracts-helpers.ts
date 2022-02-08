@@ -173,15 +173,10 @@ export const getOptionalParamAddressPerNetwork = (
   return getParamPerNetwork(param, network);
 };
 
-export const getParamPerPool = <T>(
-  { proto, amm, astar }: iParamsPerPool<T>,
-  pool: StarlayPools
-) => {
+export const getParamPerPool = <T>({ proto, astar }: iParamsPerPool<T>, pool: StarlayPools) => {
   switch (pool) {
     case StarlayPools.proto:
       return proto;
-    case StarlayPools.amm:
-      return amm;
     case StarlayPools.astar:
       return astar;
     default:
