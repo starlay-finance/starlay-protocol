@@ -373,12 +373,12 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           expectedDaiAmount
         );
 
-        const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
+        const lUsdcData = await pool.getReserveData(usdc.address);
+        const lUsdc = await getContract<LToken>(eContractid.LToken, lUsdcData.lTokenAddress);
 
-        // User will swap liquidity aUsdc to lDai
-        const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
-        await aUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
+        // User will swap liquidity lUsdc to lDai
+        const userLUsdcBalanceBefore = await lUsdc.balanceOf(userAddress);
+        await lUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           usdc.address,
@@ -419,14 +419,14 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const adapterUsdcBalance = await usdc.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(paraswapLiquiditySwapAdapter.address);
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
+        const userLUsdcBalance = await lUsdc.balanceOf(userAddress);
 
         // N.B. will get some portion of flashloan premium back from the pool
         expect(adapterUsdcBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(flashloanTotal));
-        expect(userAUsdcBalance).to.be.lte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
+        expect(userLUsdcBalance).to.be.gte(userLUsdcBalanceBefore.sub(flashloanTotal));
+        expect(userLUsdcBalance).to.be.lte(userLUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
 
       it('should revert when min amount to receive exceeds the max slippage amount', async () => {
@@ -543,11 +543,11 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
 
-        const aUsdcData = await pool.getReserveData(usdc.address);
-        const aUsdc = await getContract<LToken>(eContractid.LToken, aUsdcData.lTokenAddress);
+        const lUsdcData = await pool.getReserveData(usdc.address);
+        const lUsdc = await getContract<LToken>(eContractid.LToken, lUsdcData.lTokenAddress);
 
-        // User will swap liquidity aUsdc to lDai
-        await aUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
+        // User will swap liquidity lUsdc to lDai
+        await lUsdc.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           usdc.address,
