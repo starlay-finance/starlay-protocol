@@ -145,7 +145,7 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
               0
             );
 
-            reserveIncentiveData.sIncentiveData = IncentiveData(
+            reserveIncentiveData.sdIncentiveData = IncentiveData(
               baseData.stableDebtTokenAddress,
               address(sTokenIncentiveController),
               sRewardsInformation
@@ -173,7 +173,7 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
               0
             );
 
-            reserveIncentiveData.sIncentiveData = IncentiveData(
+            reserveIncentiveData.sdIncentiveData = IncentiveData(
               baseData.stableDebtTokenAddress,
               address(sTokenIncentiveController),
               sRewardsInformation
@@ -359,7 +359,7 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
             IERC20Detailed(sRewardToken).decimals()
           );
 
-          userReservesIncentivesData[i].sTokenIncentivesUserData = UserIncentiveData(
+          userReservesIncentivesData[i].sdTokenIncentivesUserData = UserIncentiveData(
             baseData.stableDebtTokenAddress,
             address(sTokenIncentiveController),
             sUserRewardsInformation

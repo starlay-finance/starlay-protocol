@@ -112,7 +112,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
             uint256 sEmissionPerSecond,
             uint256 sIncentivesLastUpdateTimestamp
           ) {
-            reserveIncentiveData.sIncentiveData = IncentiveData(
+            reserveIncentiveData.sdIncentiveData = IncentiveData(
               sEmissionPerSecond,
               sIncentivesLastUpdateTimestamp,
               sTokenIncentivesIndex,
@@ -132,7 +132,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               uint256 sTokenIncentivesIndex
             ) = sTokenIncentiveController.assets(baseData.stableDebtTokenAddress);
 
-            reserveIncentiveData.sIncentiveData = IncentiveData(
+            reserveIncentiveData.sdIncentiveData = IncentiveData(
               sEmissionPerSecond,
               sIncentivesLastUpdateTimestamp,
               sTokenIncentivesIndex,
@@ -300,7 +300,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
         bytes memory /*lowLevelData*/
       ) {}
 
-      userReservesIncentivesData[i].sTokenIncentivesUserData = sUserIncentiveData;
+      userReservesIncentivesData[i].sdTokenIncentivesUserData = sUserIncentiveData;
     }
 
     return (userReservesIncentivesData);
