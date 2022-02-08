@@ -1,7 +1,7 @@
 {
-  "name": "@aave/protocol-v2",
-  "version": "1.0.1",
-  "description": "Aave Protocol V2 smart contracts",
+  "name": "@starlay/starlay-protocol",
+  "version": "0.0.1",
+  "description": "Starlay Protocol smart contracts",
   "files": [
     "contracts",
     "artifacts"
@@ -133,25 +133,15 @@
       "pre-commit": "pretty-quick --staged --pattern 'contracts/**/*.sol' --pattern 'helpers/**/*.ts'  --pattern 'test-suites/test-aave/**/*.ts' --pattern 'tasks/**/*.ts'"
     }
   },
-  "author": "Aave",
-  "contributors": [
-    "Ernesto Boado <ernesto@aave.com>",
-    "Emilio Frangella <emilio@aave.com>",
-    "Andrey Kozlov <andrey@aave.com>",
-    "David Racero <david.k@aave.com>",
-    "Pol Sendra <pol@aave.com>",
-    "David Truong <david@aave.com>"
-  ],
+  "author": "Starlay",
   "license": "AGPLv3",
   "dependencies": {
     "axios-curlirize": "^1.3.7",
     "tmp-promise": "^3.0.2"
   },
   "keywords": [
-    "aave",
-    "protocol",
-    "protocol-v2",
-    "ethereum",
-    "solidity"
+    "starlay",
+    "polkadot",
+    "astar"
   ]
 }
