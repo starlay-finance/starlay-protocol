@@ -97,10 +97,10 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -140,14 +140,14 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(liquidityToSwap));
       });
 
       it('should correctly swap and deposit multiple tokens', async () => {
@@ -195,7 +195,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
@@ -244,15 +244,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -308,7 +308,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
         const wethFlashloanAmount = new BigNumber(amountWETHtoSwap.toString())
@@ -385,15 +385,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -414,9 +414,9 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -478,14 +478,14 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(liquidityToSwap));
       });
 
       it('should revert if inconsistent params', async () => {
@@ -503,7 +503,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
@@ -766,7 +766,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
@@ -904,7 +904,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
@@ -956,11 +956,11 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
-        expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
+        expect(userLEthBalanceBefore).to.be.eq(liquidityToSwap);
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         const params = buildLiquiditySwapParams(
@@ -1002,15 +1002,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterLEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.eq(Zero);
-        expect(adapterAEthBalance).to.be.eq(Zero);
+        expect(userLEthBalance).to.be.eq(Zero);
+        expect(adapterLEthBalance).to.be.eq(Zero);
       });
 
       it('should correctly swap tokens all the balance using permit', async () => {
@@ -1031,10 +1031,10 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const liquidityToSwap = parseEther('10');
-        expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
+        expect(userLEthBalanceBefore).to.be.eq(liquidityToSwap);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
@@ -1097,15 +1097,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterLEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.eq(Zero);
-        expect(adapterAEthBalance).to.be.eq(Zero);
+        expect(userLEthBalance).to.be.eq(Zero);
+        expect(adapterLEthBalance).to.be.eq(Zero);
       });
     });
 
@@ -1140,10 +1140,10 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         await expect(
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
@@ -1173,14 +1173,14 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(liquidityToSwap));
       });
 
       it('should correctly swap tokens using permit', async () => {
@@ -1198,9 +1198,9 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
@@ -1252,14 +1252,14 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(liquidityToSwap));
       });
 
       it('should revert if inconsistent params', async () => {
@@ -1378,7 +1378,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
@@ -1447,7 +1447,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
@@ -1482,15 +1482,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -1546,7 +1546,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
         const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
@@ -1616,15 +1616,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
-        expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userLEthBalance).to.be.lt(userLEthBalanceBefore);
+        expect(userLEthBalance).to.be.gte(userLEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -1646,13 +1646,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
-        expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
+        expect(userLEthBalanceBefore).to.be.eq(liquidityToSwap);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         // Only has 10 ltokens, so all the balance will be swapped
@@ -1686,15 +1686,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterLEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.eq(Zero);
-        expect(adapterAEthBalance).to.be.eq(Zero);
+        expect(userLEthBalance).to.be.eq(Zero);
+        expect(adapterLEthBalance).to.be.eq(Zero);
       });
 
       it('should correctly swap all the balance when using permit', async () => {
@@ -1714,11 +1714,11 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // Remove other balance
         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+        const userLEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
-        // User will swap liquidity 10 aEth to lDai
+        // User will swap liquidity 10 lEth to lDai
         const liquidityToSwap = parseEther('10');
-        expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
+        expect(userLEthBalanceBefore).to.be.eq(liquidityToSwap);
 
         // Only has 10 ltokens, so all the balance will be swapped
         const bigAmountToSwap = parseEther('100');
@@ -1772,15 +1772,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userLDaiBalance = await lDai.balanceOf(userAddress);
-        const userAEthBalance = await aWETH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userLEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterLEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userLDaiBalance).to.be.eq(expectedDaiAmount);
-        expect(userAEthBalance).to.be.eq(Zero);
-        expect(adapterAEthBalance).to.be.eq(Zero);
+        expect(userLEthBalance).to.be.eq(Zero);
+        expect(adapterLEthBalance).to.be.eq(Zero);
       });
     });
   });
