@@ -41,7 +41,7 @@ import {LendingPoolStorage} from './LendingPoolStorage.sol';
  * - To be covered by a proxy contract, owned by the LendingPoolAddressesProvider of the specific market
  * - All admin functions are callable by the LendingPoolConfigurator contract defined also in the
  *   LendingPoolAddressesProvider
- * @author Aave
+ * @author Starlay
  **/
 contract LendingPool is VersionedInitializable, ILendingPool, LendingPoolStorage {
   using SafeMath for uint256;
@@ -713,7 +713,7 @@ contract LendingPool is VersionedInitializable, ILendingPool, LendingPoolStorage
   }
 
   /**
-   * @dev Returns the fee on flash loans 
+   * @dev Returns the fee on flash loans
    */
   function FLASHLOAN_PREMIUM_TOTAL() public view returns (uint256) {
     return _flashLoanPremiumTotal;

@@ -10,7 +10,7 @@ import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesControl
 /**
  * @title ERC20
  * @notice Basic ERC20 implementation
- * @author Aave, inspired by the Openzeppelin ERC20 implementation
+ * @author Starlay, inspired by the Openzeppelin ERC20 implementation
  **/
 abstract contract IncentivizedERC20 is Context, IERC20, IERC20Detailed {
   using SafeMath for uint256;
@@ -69,10 +69,10 @@ abstract contract IncentivizedERC20 is Context, IERC20, IERC20Detailed {
   }
 
   /**
-   * @return Abstract function implemented by the child aToken/debtToken. 
+   * @return Abstract function implemented by the child aToken/debtToken.
    * Done this way in order to not break compatibility with previous versions of aTokens/debtTokens
    **/
-  function _getIncentivesController() internal view virtual returns(IAaveIncentivesController);
+  function _getIncentivesController() internal view virtual returns (IAaveIncentivesController);
 
   /**
    * @dev Executes a transfer of tokens from _msgSender() to recipient

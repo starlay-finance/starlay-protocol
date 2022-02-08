@@ -16,7 +16,7 @@ import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
  * point of utilization and another from that one to 100%
  * - An instance of this same contract, can't be used across different Aave markets, due to the caching
  *   of the LendingPoolAddressesProvider
- * @author Aave
+ * @author Starlay
  **/
 contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
   using WadRayMath for uint256;
