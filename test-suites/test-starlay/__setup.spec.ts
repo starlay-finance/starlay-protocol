@@ -10,7 +10,6 @@ import {
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployAaveOracle,
   deployAaveProtocolDataProvider,
   deployATokenImplementations,
   deployATokensAndRatesHelper,
@@ -29,6 +28,7 @@ import {
   deployParaSwapLiquiditySwapAdapter,
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
+  deployStarlayOracle,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
@@ -207,7 +207,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const priceAggregator = await deployMockAggregators(ALL_ASSETS_INITIAL_PRICES, addresses);
 
-  await deployAaveOracle([
+  await deployStarlayOracle([
     priceAggregator.address,
     fallbackOracle.address,
     mockTokens.WETH.address,

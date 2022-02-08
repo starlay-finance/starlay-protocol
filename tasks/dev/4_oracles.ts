@@ -1,22 +1,22 @@
 import { task } from 'hardhat/config';
+import { ConfigNames, getQuoteCurrency, loadPoolConfig } from '../../helpers/configuration';
 import {
-  deployPriceOracle,
-  deployAaveOracle,
   deployLendingRateOracle,
+  deployPriceOracle,
+  deployStarlayOracle,
 } from '../../helpers/contracts-deployments';
+import {
+  getAllMockedTokens,
+  getLendingPoolAddressesProvider,
+} from '../../helpers/contracts-getters';
+import { waitForTx } from '../../helpers/misc-utils';
+import { getAllAggregatorsAddresses, getAllTokenAddresses } from '../../helpers/mock-helpers';
 import {
   deployMockAggregators,
   setInitialAssetPricesInOracle,
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
-import { ICommonConfiguration, iAssetBase, TokenContractId } from '../../helpers/types';
-import { waitForTx } from '../../helpers/misc-utils';
-import { getAllAggregatorsAddresses, getAllTokenAddresses } from '../../helpers/mock-helpers';
-import { ConfigNames, loadPoolConfig, getQuoteCurrency } from '../../helpers/configuration';
-import {
-  getAllMockedTokens,
-  getLendingPoolAddressesProvider,
-} from '../../helpers/contracts-getters';
+import { iAssetBase, ICommonConfiguration, TokenContractId } from '../../helpers/types';
 
 task('dev:deploy-oracles', 'Deploy oracles for dev environment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -53,7 +53,7 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
     const allTokenAddresses = getAllTokenAddresses(mockTokens);
     const allAggregatorsAddresses = getAllAggregatorsAddresses(mockAggregators);
 
-    await deployAaveOracle(
+    await deployStarlayOracle(
       [
         mockAggregators.address,
         fallbackOracle.address,

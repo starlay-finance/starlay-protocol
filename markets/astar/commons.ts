@@ -118,7 +118,7 @@ export const CommonsConfig: ICommonConfiguration = {
   TokenDistributor: {
     [eAstarNetwork.shibuya]: '',
   },
-  AaveOracle: {
+  StarlayOracle: {
     [eAstarNetwork.shibuya]: '',
   },
   FallbackOracle: {

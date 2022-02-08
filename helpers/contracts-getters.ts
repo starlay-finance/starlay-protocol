@@ -2,8 +2,8 @@ import {
   AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
-  AaveOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
+  FlashLiquidationAdapterFactory,
   GenericLogicFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
@@ -15,25 +15,25 @@ import {
   MintableERC20Factory,
   MockATokenFactory,
   MockFlashLoanReceiverFactory,
-  MockStableDebtTokenFactory,
-  MockVariableDebtTokenFactory,
-  MockUniswapV2Router02Factory,
   MockParaSwapAugustusFactory,
   MockParaSwapAugustusRegistryFactory,
+  MockStableDebtTokenFactory,
+  MockUniswapV2Router02Factory,
+  MockVariableDebtTokenFactory,
   ParaSwapLiquiditySwapAdapterFactory,
+  PriceAggregatorAdapterDiaImplFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableAndVariableTokensHelperFactory,
   StableDebtTokenFactory,
+  StarlayOracleFactory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
   WETH9MockedFactory,
   WETHGatewayFactory,
-  FlashLiquidationAdapterFactory,
-  PriceAggregatorAdapterDiaImplFactory,
 } from '../types';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
 import { getEthersSigners, MockTokenMap } from './contracts-helpers';
@@ -380,9 +380,12 @@ export const getLendingPoolCollateralManager = async (address?: tEthereumAddress
 export const getAddressById = async (id: string): Promise<tEthereumAddress | undefined> =>
   (await getDb().get(`${id}.${DRE.network.name}`).value())?.address || undefined;
 
-export const getAaveOracle = async (address?: tEthereumAddress) =>
-  await AaveOracleFactory.connect(
-    address || (await getDb().get(`${eContractid.AaveOracle}.${DRE.network.name}`).value()).address,
+export const getStarlayOracle = async (address?: tEthereumAddress) =>
+  await StarlayOracleFactory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.StarlayOracle}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
 

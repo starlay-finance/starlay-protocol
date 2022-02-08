@@ -28,7 +28,7 @@ export const CommonsConfig: ICommonConfiguration = {
     OneAddress: '0x0000000000000000000000000000000000000001',
     AaveReferral: '0',
   },
-  AaveOracle: {
+  StarlayOracle: {
     hardhat: '',
     main: '',
     shibuya: '',
