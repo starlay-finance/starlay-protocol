@@ -1,7 +1,7 @@
 import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
-  oneEther,
   oneRay,
+  oneUsd,
   ZERO_ADDRESS,
 } from '../../helpers/constants';
 import { eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
@@ -18,8 +18,8 @@ export const CommonsConfig: ICommonConfiguration = {
   VariableDebtTokenNamePrefix: 'Starley variable debt bearing',
   SymbolPrefix: '',
   ProviderId: 0, // Overriden in index.ts
-  OracleQuoteCurrency: 'ETH',
-  OracleQuoteUnit: oneEther.toString(),
+  OracleQuoteCurrency: 'USD',
+  OracleQuoteUnit: oneUsd.toString(),
   ProtocolGlobalParams: {
     TokenDistributorPercentageBase: '10000',
     MockUsdPriceInWei: '5848466240000000',
@@ -27,12 +27,6 @@ export const CommonsConfig: ICommonConfiguration = {
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
     StarlayReferral: '0',
-  },
-  StarlayOracle: {
-    hardhat: '',
-    main: '',
-    shibuya: '',
-    tenderly: '',
   },
 
   // ----------------
@@ -44,7 +38,6 @@ export const CommonsConfig: ICommonConfiguration = {
       ...MOCK_CHAINLINK_AGGREGATORS_PRICES,
     },
   },
-  // TODO: reorg alphabetically, checking the reason of tests failing
   LendingRateOracleRatesCommon: {
     WETH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
@@ -160,6 +153,14 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.main]: '', //'0xA50ba011c48153De246E5192C8f9258A2ba79Ca9',
     [eEthereumNetwork.tenderly]: '0xA50ba011c48153De246E5192C8f9258A2ba79Ca9',
   },
+  StarlayOracle: {
+    [eEthereumNetwork.coverage]: '',
+    [eEthereumNetwork.hardhat]: '',
+    [eEthereumNetwork.buidlerevm]: '',
+    [eAstarNetwork.shibuya]: '',
+    [eEthereumNetwork.main]: '',
+    [eEthereumNetwork.tenderly]: '',
+  },
   FallbackOracle: {
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
@@ -181,15 +182,14 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.main]: {},
     [eEthereumNetwork.tenderly]: {},
     [eAstarNetwork.shibuya]: {
-      SBY: '0xCD233fBd0D45C3C3bcdcE8543529290166790DD0', //created through dev:migration
-      ETH: '0x6905e3e220c33E38379C5255185f4946f9433504', //created through dev:migration
-      BTC: '0x5eC0E19eBAf29D6Abd042D00981F982844c93134', //created through dev:migration
-      SDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
-      USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
-      USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
+      BTC: '0x2025efC28f85c717df189916344ECa168AAD0667', // TODO: WBTC
+      ETH: '0x04efa209F9e74E612a529c393Cf9F1141E696F06', // WETH
+      SDN: '0xB9F3803304b582fCd852365aD75192FEA089D49F', // WSDN
+      USDC: '0xA4F42578c723A5B6781A9F49d586B8645ba85C31',
+      USDT: '0x3f815e7d299f08278c0308aE1048aa45ED12415f', // TODO:
+      ASTR: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd', // WASTR
+      LAY: '0x1302f8D1e37B8b83C7c3eB3b02E0e7eEAc28929f', // TODO:
     },
-    [eEthereumNetwork.main]: {},
-    [eEthereumNetwork.tenderly]: {},
   },
   ReserveAssets: {
     [eEthereumNetwork.coverage]: {},
@@ -210,16 +210,16 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: '',
   },
   WETH: {
-    [eEthereumNetwork.coverage]: '', // deployed in local evm
-    [eEthereumNetwork.hardhat]: '', // deployed in local evm
-    [eEthereumNetwork.buidlerevm]: '', // deployed in local evm
+    [eEthereumNetwork.coverage]: '',
+    [eEthereumNetwork.hardhat]: '',
+    [eEthereumNetwork.buidlerevm]: '',
     [eEthereumNetwork.main]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   },
   WrappedNativeToken: {
-    [eEthereumNetwork.coverage]: '', // deployed in local evm
-    [eEthereumNetwork.hardhat]: '', // deployed in local evm
-    [eEthereumNetwork.buidlerevm]: '', // deployed in local evm
+    [eEthereumNetwork.coverage]: '',
+    [eEthereumNetwork.hardhat]: '',
+    [eEthereumNetwork.buidlerevm]: '',
     [eEthereumNetwork.main]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   },
