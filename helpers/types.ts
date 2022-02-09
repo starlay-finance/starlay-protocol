@@ -351,7 +351,7 @@ export interface IBaseConfiguration {
   PriceAggregator: iParamsPerNetwork<tEthereumAddress>;
   FallbackOracle: iParamsPerNetwork<tEthereumAddress>;
   ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
-  DIAAggregator: iParamsPerNetwork<ITokenAddress>;
+  DIAAggregator: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
   DIAAggregatorAddress: iParamsPerNetwork<tEthereumAddress>;
   PoolAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;
   PoolAdminIndex: number;
