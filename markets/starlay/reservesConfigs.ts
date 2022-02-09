@@ -166,18 +166,6 @@ export const strategyMKR: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyREN: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '5500',
-  liquidationThreshold: '6000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
-
 export const strategySNX: IReserveParams = {
   strategy: rateStrategyVolatileThree,
   baseLTVAsCollateral: '1500',
@@ -211,18 +199,6 @@ export const strategyWBTC: IReserveParams = {
   borrowingEnabled: true,
   stableBorrowRateEnabled: true,
   reserveDecimals: '8',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
-
-export const strategyYFI: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '4000',
-  liquidationThreshold: '5500',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };
