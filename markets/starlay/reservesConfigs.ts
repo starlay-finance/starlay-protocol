@@ -4,7 +4,9 @@ import {
   rateStrategyStableThree,
   rateStrategyStableTwo,
   rateStrategyVolatileTwo,
+  rateStrategyWASTR,
   rateStrategyWETH,
+  rateStrategyWSDN,
 } from './rateStrategies';
 
 export const strategyDAI: IReserveParams = {
@@ -78,4 +80,28 @@ export const strategyWBTC: IReserveParams = {
   reserveDecimals: '8',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
+};
+
+export const strategyWASTR: IReserveParams = {
+  strategy: rateStrategyWASTR,
+  baseLTVAsCollateral: '8000',
+  liquidationThreshold: '8250',
+  liquidationBonus: '10500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: true,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1000',
+};
+
+export const strategySDN: IReserveParams = {
+  strategy: rateStrategyWSDN,
+  baseLTVAsCollateral: '8000',
+  liquidationThreshold: '8250',
+  liquidationBonus: '10500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: true,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1000',
 };

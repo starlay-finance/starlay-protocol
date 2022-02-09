@@ -1,18 +1,9 @@
-import {
-  tEthereumAddress,
-  iMultiPoolsAssets,
-  IMarketRates,
-  iAssetBase,
-  iAssetAggregatorBase,
-  SymbolMap,
-} from './types';
-
 import { LendingRateOracle } from '../types/LendingRateOracle';
 import { PriceOracle } from '../types/PriceOracle';
-import { MockAggregator } from '../types/MockAggregator';
 import { deployMockAggregator } from './contracts-deployments';
-import { chunk, waitForTx } from './misc-utils';
 import { getStableAndVariableTokensHelper } from './contracts-getters';
+import { chunk, waitForTx } from './misc-utils';
+import { iAssetBase, IMarketRates, iMultiPoolsAssets, SymbolMap, tEthereumAddress } from './types';
 
 export const setInitialMarketRatesInRatesOracleByHelper = async (
   marketRates: iMultiPoolsAssets<IMarketRates>,

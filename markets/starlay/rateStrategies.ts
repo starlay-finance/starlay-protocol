@@ -66,3 +66,23 @@ export const rateStrategyVolatileFour: IInterestRateStrategyParams = {
   stableRateSlope1: '0',
   stableRateSlope2: '0',
 };
+
+export const rateStrategyWASTR: IInterestRateStrategyParams = {
+  name: 'rateStrategyWASTR',
+  optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.08).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+};
+
+export const rateStrategyWSDN: IInterestRateStrategyParams = {
+  name: 'rateStrategyWSDN',
+  optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.08).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+};

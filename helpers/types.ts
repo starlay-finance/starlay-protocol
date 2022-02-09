@@ -210,7 +210,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH'
+  'DAI' | 'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
