@@ -222,6 +222,7 @@ export type iStarlayPoolAssets<T> = Pick<
 export type iAstarPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
   'WASTR' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC'
+>;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
 
