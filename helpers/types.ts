@@ -201,30 +201,13 @@ export interface iAssetCommon<T> {
 export interface iAssetBase<T> {
   WETH: T;
   DAI: T;
-  TUSD: T;
   USDC: T;
   USDT: T;
-  SUSD: T;
   AAVE: T;
-  BAT: T;
-  MKR: T;
-  LINK: T;
-  KNC: T;
   WBTC: T;
-  MANA: T;
-  ZRX: T;
-  SNX: T;
-  BUSD: T;
-  YFI: T;
-  UNI: T;
   USD: T;
-  REN: T;
-  ENJ: T;
-  xSUSHI: T;
-  WSBY: T;
+  WASTR: T;
   WSDN: T;
-  ARSW: T;
-  VEIN: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
@@ -233,32 +216,12 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'TUSD'
-  | 'USDC'
-  | 'USDT'
-  | 'SUSD'
-  | 'AAVE'
-  | 'BAT'
-  | 'MKR'
-  | 'LINK'
-  | 'KNC'
-  | 'WBTC'
-  | 'MANA'
-  | 'ZRX'
-  | 'SNX'
-  | 'BUSD'
-  | 'WETH'
-  | 'YFI'
-  | 'UNI'
-  | 'REN'
-  | 'ENJ'
-  | 'xSUSHI'
+  'DAI' | 'USDC' | 'USDT' | 'AAVE' | 'WBTC' | 'WETH'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'WSBY' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC' | 'ARSW' | 'VEIN'
+  'WASTR' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
@@ -270,30 +233,13 @@ export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 export enum TokenContractId {
   DAI = 'DAI',
   AAVE = 'AAVE',
-  TUSD = 'TUSD',
-  BAT = 'BAT',
   WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',
-  SUSD = 'SUSD',
-  ZRX = 'ZRX',
-  MKR = 'MKR',
   WBTC = 'WBTC',
-  LINK = 'LINK',
-  KNC = 'KNC',
-  MANA = 'MANA',
-  REN = 'REN',
-  SNX = 'SNX',
-  BUSD = 'BUSD',
   USD = 'USD',
-  YFI = 'YFI',
-  UNI = 'UNI',
-  ENJ = 'ENJ',
-  xSUSHI = 'xSUSHI',
-  WSBY = 'WSBY',
+  WASTR = 'WASTR',
   WSDN = 'WSDN',
-  ARSW = 'ARSW',
-  VEIN = 'VEIN',
 }
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {

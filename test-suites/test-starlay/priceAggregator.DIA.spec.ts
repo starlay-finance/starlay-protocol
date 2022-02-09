@@ -1,12 +1,12 @@
-import { MockAggregatorDIA } from './../../types/MockAggregatorDIA.d';
+import BigNumber from 'bignumber.js';
+import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
+import { PriceAggregatorAdapterDiaImpl } from '../../types';
 import {
   deployMockAggregatorDIA,
   deployPriceAggregatorDiaImpl,
 } from './../../helpers/contracts-deployments';
+import { MockAggregatorDIA } from './../../types/MockAggregatorDIA.d';
 import { makeSuite, TestEnv } from './helpers/make-suite';
-import { PriceAggregatorAdapterDiaImpl } from '../../types';
-import BigNumber from 'bignumber.js';
-import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 
 const { expect } = require('chai');
 const oneEther = new BigNumber(Math.pow(10, 18));
@@ -27,11 +27,6 @@ const mockPrices = () => {
       price: oneEther.multipliedBy('47.332685').toFixed(),
       tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec3',
       symbol: 'BTC',
-    },
-    {
-      price: oneEther.multipliedBy('0.003620948469').toFixed(),
-      tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec4',
-      symbol: 'ARSW',
     },
   ];
 };

@@ -53,59 +53,17 @@ export const CommonsConfig: ICommonConfiguration = {
     DAI: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    TUSD: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
-    },
-    SUSD: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
     USDT: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
-    BAT: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     AAVE: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    LINK: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    KNC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    MKR: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    MANA: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     WBTC: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    ZRX: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    SNX: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    YFI: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    REN: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    UNI: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    ENJ: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    BUSD: {
-      borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
   },
   // ----------------
@@ -238,8 +196,6 @@ export const CommonsConfig: ICommonConfiguration = {
       SDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
       USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
       USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
-      ARSW: '0x42b9a112CdB5955af31BB41C5571d4f71FC39274', //created through dev:migration
-      VEIN: '0x8d3aB269290542307AD86Ff579Ae38d05617ce8a', //created through dev:migration
     },
     [eEthereumNetwork.main]: {},
     [eEthereumNetwork.tenderly]: {},

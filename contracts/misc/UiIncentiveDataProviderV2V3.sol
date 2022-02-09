@@ -17,8 +17,6 @@ import {IERC20DetailedBytes} from './interfaces/IERC20DetailedBytes.sol';
 contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
-  address public constant MKRAddress = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
-
   constructor() public {}
 
   function getFullReservesIncentiveData(ILendingPoolAddressesProvider provider, address user)
@@ -374,12 +372,7 @@ contract UiIncentiveDataProviderV2V3 is IUiIncentiveDataProviderV3 {
   }
 
   function getSymbol(address rewardToken) public view returns (string memory) {
-    if (address(rewardToken) == address(MKRAddress)) {
-      bytes32 symbol = IERC20DetailedBytes(rewardToken).symbol();
-      return bytes32ToString(symbol);
-    } else {
-      return IERC20Detailed(rewardToken).symbol();
-    }
+    return IERC20Detailed(rewardToken).symbol();
   }
 
   function bytes32ToString(bytes32 _bytes32) public pure returns (string memory) {
