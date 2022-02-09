@@ -74,13 +74,7 @@ export const CommonsConfig: ICommonConfiguration = {
     LINK: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    KNC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     MKR: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    MANA: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     WBTC: {
@@ -89,14 +83,8 @@ export const CommonsConfig: ICommonConfiguration = {
     ZRX: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    SNX: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     UNI: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    BUSD: {
-      borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
   },
   // ----------------

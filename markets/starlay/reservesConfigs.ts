@@ -10,18 +10,6 @@ import {
   rateStrategyWETH,
 } from './rateStrategies';
 
-export const strategyBUSD: IReserveParams = {
-  strategy: rateStrategyStableOne,
-  baseLTVAsCollateral: '0',
-  liquidationThreshold: '0',
-  liquidationBonus: '0',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '1000',
-};
-
 export const strategyDAI: IReserveParams = {
   strategy: rateStrategyStableTwo,
   baseLTVAsCollateral: '7500',
@@ -118,18 +106,6 @@ export const strategyWETH: IReserveParams = {
   reserveFactor: '1000',
 };
 
-export const strategyKNC: IReserveParams = {
-  strategy: rateStrategyVolatileTwo,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
-
 export const strategyLINK: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: '7000',
@@ -142,18 +118,6 @@ export const strategyLINK: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyMANA: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '3500',
-};
-
 export const strategyMKR: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: '6000',
@@ -164,18 +128,6 @@ export const strategyMKR: IReserveParams = {
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
-};
-
-export const strategySNX: IReserveParams = {
-  strategy: rateStrategyVolatileThree,
-  baseLTVAsCollateral: '1500',
-  liquidationThreshold: '4000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '3500',
 };
 
 // Invalid borrow rates in params currently, replaced with snx params

@@ -34,13 +34,9 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   AAVE: oneEther.multipliedBy('0.003620948469').toFixed(),
   BAT: oneEther.multipliedBy('0.00137893825230').toFixed(),
-  BUSD: oneEther.multipliedBy('0.00736484').toFixed(),
   DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
-  KNC: oneEther.multipliedBy('0.001072').toFixed(),
   LINK: oneEther.multipliedBy('0.009955').toFixed(),
-  MANA: oneEther.multipliedBy('0.000158').toFixed(),
   MKR: oneEther.multipliedBy('2.508581').toFixed(),
-  SNX: oneEther.multipliedBy('0.00442616').toFixed(),
   SUSD: oneEther.multipliedBy('0.00364714136416').toFixed(),
   TUSD: oneEther.multipliedBy('0.00364714136416').toFixed(),
   UNI: oneEther.multipliedBy('0.00536479').toFixed(),

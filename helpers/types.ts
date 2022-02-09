@@ -209,12 +209,8 @@ export interface iAssetBase<T> {
   BAT: T;
   MKR: T;
   LINK: T;
-  KNC: T;
   WBTC: T;
-  MANA: T;
   ZRX: T;
-  SNX: T;
-  BUSD: T;
   UNI: T;
   USD: T;
   WSBY: T;
@@ -238,12 +234,8 @@ export type iStarlayPoolAssets<T> = Pick<
   | 'BAT'
   | 'MKR'
   | 'LINK'
-  | 'KNC'
   | 'WBTC'
-  | 'MANA'
   | 'ZRX'
-  | 'SNX'
-  | 'BUSD'
   | 'WETH'
   | 'UNI'
 >;
@@ -272,10 +264,6 @@ export enum TokenContractId {
   MKR = 'MKR',
   WBTC = 'WBTC',
   LINK = 'LINK',
-  KNC = 'KNC',
-  MANA = 'MANA',
-  SNX = 'SNX',
-  BUSD = 'BUSD',
   USD = 'USD',
   UNI = 'UNI',
   WSBY = 'WSBY',
