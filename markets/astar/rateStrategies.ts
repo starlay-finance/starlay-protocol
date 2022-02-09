@@ -21,3 +21,13 @@ export const rateStrategyStableOne: IInterestRateStrategyParams = {
   stableRateSlope1: new BigNumber(0.02).multipliedBy(oneRay).toFixed(),
   stableRateSlope2: new BigNumber(0.75).multipliedBy(oneRay).toFixed(),
 };
+
+export const rateStrategyLAY: IInterestRateStrategyParams = {
+  name: 'rateStrategyLAY',
+  optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: '0',
+  variableRateSlope1: '0',
+  variableRateSlope2: '0',
+  stableRateSlope1: '0',
+  stableRateSlope2: '0',
+};

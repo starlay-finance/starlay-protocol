@@ -1,5 +1,5 @@
 import { eContractid, IReserveParams } from '../../helpers/types';
-import { rateStrategyStableOne, rateStrategyVolatileOne } from './rateStrategies';
+import { rateStrategyLAY, rateStrategyStableOne, rateStrategyVolatileOne } from './rateStrategies';
 
 export const strategyWASTR: IReserveParams = {
   strategy: rateStrategyVolatileOne,
@@ -71,4 +71,16 @@ export const strategyUSDC: IReserveParams = {
   reserveDecimals: '6',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '1000',
+};
+
+export const strategyLAY: IReserveParams = {
+  strategy: rateStrategyLAY,
+  baseLTVAsCollateral: '5000',
+  liquidationThreshold: '6500',
+  liquidationBonus: '11000',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1500',
 };
