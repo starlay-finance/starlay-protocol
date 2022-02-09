@@ -27,22 +27,7 @@ export const CommonsConfig: ICommonConfiguration = {
     OneAddress: '0x0000000000000000000000000000000000000001',
     StarlayReferral: '0',
   },
-  DIAAggregator: {
-    [eAstarNetwork.shibuya]: {
-      SBY: '0xCD233fBd0D45C3C3bcdcE8543529290166790DD0', //created through dev:migration
-      ETH: '0x6905e3e220c33E38379C5255185f4946f9433504', //created through dev:migration
-      BTC: '0x5eC0E19eBAf29D6Abd042D00981F982844c93134', //created through dev:migration
-      SDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
-      USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
-      USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
-    },
-  },
-  DIAAggregatorAddress: {
-    [eAstarNetwork.shibuya]: '',
-  },
-  PriceAggregator: {
-    [eAstarNetwork.shibuya]: '',
-  },
+
   // ----------------
   // COMMON PROTOCOL PARAMS ACROSS POOLS AND NETWORKS
   // ----------------
@@ -52,18 +37,8 @@ export const CommonsConfig: ICommonConfiguration = {
       ...MOCK_CHAINLINK_AGGREGATORS_PRICES,
     },
   },
-  // TODO: reorg alphabetically, checking the reason of tests failing
   LendingRateOracleRatesCommon: {
-    WASTR: {
-      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
-    },
     WETH: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    WBTC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    WSDN: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     USDC: {
@@ -71,6 +46,18 @@ export const CommonsConfig: ICommonConfiguration = {
     },
     USDT: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
+    },
+    LAY: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    },
+    WBTC: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    },
+    WASTR: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    },
+    WSDN: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },
   // ----------------
@@ -82,10 +69,10 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: undefined,
   },
   PoolAdminIndex: 0,
-  EmergencyAdminIndex: 1,
   EmergencyAdmin: {
     [eAstarNetwork.shibuya]: undefined,
   },
+  EmergencyAdminIndex: 1,
   ProviderRegistry: {
     [eAstarNetwork.shibuya]: '',
   },
@@ -114,17 +101,33 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
   },
   FallbackOracle: {
-    [eAstarNetwork.shibuya]: '0x89015CEd5436610374a18AF3feB0deaE13419Af5', //created through dev:migration
+    // any address needed
+    [eAstarNetwork.shibuya]: ZERO_ADDRESS,
+  },
+  DIAAggregator: {
+    // key: without 'w' to call function of DIA e.g WBTC->BTC
+    // ref: https://docs.diadata.org/documentation/oracle-documentation/crypto-assets
+    [eAstarNetwork.shibuya]: {
+      BTC: '0x2025efC28f85c717df189916344ECa168AAD0667', // TODO: WBTC
+      ETH: '0x04efa209F9e74E612a529c393Cf9F1141E696F06', // WETH
+      SDN: '0xB9F3803304b582fCd852365aD75192FEA089D49F', // WSDN
+      USDC: '0xA4F42578c723A5B6781A9F49d586B8645ba85C31',
+      USDT: '0x3f815e7d299f08278c0308aE1048aa45ED12415f', // TODO:
+      ASTR: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd', // WASTR
+      LAY: '0x1302f8D1e37B8b83C7c3eB3b02E0e7eEAc28929f', // TODO:
+    },
+  },
+  DIAAggregatorAddress: {
+    // https://docs.diadata.org/documentation/oracle-documentation/deployed-contracts#astar-shiden
+    [eAstarNetwork.shibuya]: '0x1232acd632dd75f874e357c77295da3f5cd7733e',
+    // [eAstarNetwork.shiden]: '0xCe784F99f87dBa11E0906e2fE954b08a8cc9815d',
+    // [eAstarNetwork.astar]: '0xd79357ebb0cd724e391f2b49a8De0E31688fEc75',
+  },
+  PriceAggregator: {
+    [eAstarNetwork.shibuya]: '',
   },
   ChainlinkAggregator: {
-    [eAstarNetwork.shibuya]: {
-      WASTR: '',
-      WETH: '0x6905e3e220c33E38379C5255185f4946f9433504', //created through dev:migration
-      WBTC: '0x5eC0E19eBAf29D6Abd042D00981F982844c93134', //created through dev:migration
-      WSDN: '0xE48a5cab6326eE1a8328D5bdCA1B3c487cc5E1aE', //created through dev:migration
-      USDC: '0x7C0E606f0915d94473D4bc9507BE51C1daAda5BF', //created through dev:migration
-      USDT: '0x96f263a277B2508568f3Bd21f095f5a365Ab755D', //created through dev:migration
-    },
+    [eAstarNetwork.shibuya]: {},
   },
   ReserveAssets: {
     [eAstarNetwork.shibuya]: {},
@@ -137,7 +140,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
   },
   WrappedNativeToken: {
-    [eAstarNetwork.shibuya]: '0x7ECA847c7F0820fB03B99B69985bb374bb5c543B', // WASTR
+    [eAstarNetwork.shibuya]: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd',
   },
   ReserveFactorTreasuryAddress: {
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
