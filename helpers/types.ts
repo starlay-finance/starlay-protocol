@@ -8,16 +8,10 @@ export type eNetwork = eEthereumNetwork | eAstarNetwork;
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
-  kovan = 'kovan',
   main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
   tenderly = 'tenderly',
-}
-
-export enum EthereumNetworkNames {
-  kovan = 'kovan',
-  main = 'main',
 }
 
 export enum eAstarNetwork {
@@ -286,7 +280,6 @@ export interface iParamsPerNetworkAll<T> extends iEthereumParamsPerNetwork<T> {}
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
   [eEthereumNetwork.buidlerevm]: T;
-  [eEthereumNetwork.kovan]: T;
   [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.tenderly]: T;

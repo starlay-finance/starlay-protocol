@@ -29,14 +29,6 @@ export const StarlayConfig: IStarlayConfiguration = {
     [eEthereumNetwork.buidlerevm]: {},
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.coverage]: {},
-    [eEthereumNetwork.kovan]: {
-      LAY: '0xB597cd8D3217ea6477232F9217fa70837ff667Af',
-      DAI: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
-      USDC: '0xe22da380ee6B445bb8273C81944ADEB6E8450422',
-      USDT: '0x13512979ADE267AB5100878E2e0f485B568328a4',
-      WBTC: '0xD1B98B6607330172f1D991521145A22BCe793277',
-      WETH: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-    },
     [eEthereumNetwork.main]: {
       LAY: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',

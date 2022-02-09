@@ -16,10 +16,6 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
     const addressesByNetwork: {
       [key: string]: { incentivesController: string; starlayOracle: string };
     } = {
-      [eEthereumNetwork.kovan]: {
-        incentivesController: '0x0000000000000000000000000000000000000000',
-        starlayOracle: '0x8fb777d67e9945e2c01936e319057f9d41d559e6',
-      },
       [eEthereumNetwork.main]: {
         incentivesController: '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
         starlayOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',

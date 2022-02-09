@@ -8,20 +8,13 @@ import { HardhatUserConfig } from 'hardhat/types';
 import path from 'path';
 import 'solidity-coverage';
 import 'temp-hardhat-etherscan';
-import {
-  buildForkConfig, NETWORKS_DEFAULT_GAS, NETWORKS_RPC_URL
-} from './helper-hardhat-config';
+import { buildForkConfig, NETWORKS_DEFAULT_GAS, NETWORKS_RPC_URL } from './helper-hardhat-config';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
-import {
-  eAstarNetwork,
-  eEthereumNetwork,
-  eNetwork
-} from './helpers/types';
+import { eAstarNetwork, eEthereumNetwork, eNetwork } from './helpers/types';
 // @ts-ignore
 import { accounts } from './test-wallets.js';
 
 require('dotenv').config();
-
 
 const SKIP_LOAD = process.env.SKIP_LOAD === 'true';
 const DEFAULT_BLOCK_GAS_LIMIT = 8000000;
@@ -93,7 +86,6 @@ const buidlerConfig: HardhatUserConfig = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
