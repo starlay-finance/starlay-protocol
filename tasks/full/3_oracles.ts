@@ -64,8 +64,8 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
       await waitForTx(
         await priceAggregatorAdapter.setAssetSources(
-          Object.keys(feedTokens),
-          Object.values(feedTokens)
+          Object.values(feedTokens), // address
+          Object.keys(feedTokens) // symbol
         )
       );
 
