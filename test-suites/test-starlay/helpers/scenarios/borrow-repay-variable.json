@@ -243,7 +243,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1 WETH, user 1 deposits 100 LINK as collateral and borrows 0.5 WETH at variable rate",
+      "description": "User 0 deposits 1 WETH, user 1 deposits 0.021 WBTC as collateral and borrows 0.5 WETH at variable rate",
       "actions": [
         {
           "name": "mint",
@@ -274,8 +274,8 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "LINK",
-            "amount": "100",
+            "reserve": "WBTC",
+            "amount": "0.021",
             "user": "1"
           },
           "expected": "success"
@@ -283,7 +283,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "LINK",
+            "reserve": "WBTC",
             "user": "1"
           },
           "expected": "success"
@@ -292,8 +292,8 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "LINK",
-            "amount": "100",
+            "reserve": "WBTC",
+            "amount": "0.021",
             "user": "1"
           },
           "expected": "success"
@@ -431,7 +431,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "LINK",
+            "reserve": "WBTC",
             "amount": "-1",
             "user": "1"
           },

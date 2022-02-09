@@ -3,7 +3,6 @@ import {
   rateStrategyAAVE,
   rateStrategyStableThree,
   rateStrategyStableTwo,
-  rateStrategyVolatileOne,
   rateStrategyVolatileTwo,
   rateStrategyWETH,
 } from './rateStrategies';
@@ -66,18 +65,6 @@ export const strategyWETH: IReserveParams = {
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '1000',
-};
-
-export const strategyLINK: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '7000',
-  liquidationThreshold: '7500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
 };
 
 export const strategyWBTC: IReserveParams = {
