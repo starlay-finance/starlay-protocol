@@ -39,10 +39,8 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   WETH: oneEther.toFixed(),
   WBTC: oneEther.multipliedBy('47.332685').toFixed(),
   USD: '5848466240000000',
-  WSBY: oneEther.multipliedBy('0.003620948469').toFixed(),
+  WASTR: oneEther.multipliedBy('0.003620948469').toFixed(),
   WSDN: oneEther.multipliedBy('0.003620948469').toFixed(),
-  ARSW: oneEther.multipliedBy('0.003620948469').toFixed(),
-  VEIN: oneEther.multipliedBy('0.003620948469').toFixed(),
 };
 
 export const aggregatorProxy = {
