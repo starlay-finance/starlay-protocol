@@ -201,17 +201,13 @@ export interface iAssetCommon<T> {
 export interface iAssetBase<T> {
   WETH: T;
   DAI: T;
-  TUSD: T;
   USDC: T;
   USDT: T;
-  SUSD: T;
   AAVE: T;
-  BAT: T;
   MKR: T;
   LINK: T;
   WBTC: T;
   ZRX: T;
-  UNI: T;
   USD: T;
   WSBY: T;
   WSDN: T;
@@ -225,19 +221,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'TUSD'
-  | 'USDC'
-  | 'USDT'
-  | 'SUSD'
-  | 'AAVE'
-  | 'BAT'
-  | 'MKR'
-  | 'LINK'
-  | 'WBTC'
-  | 'ZRX'
-  | 'WETH'
-  | 'UNI'
+  'DAI' | 'USDC' | 'USDT' | 'AAVE' | 'MKR' | 'LINK' | 'WBTC' | 'ZRX' | 'WETH'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
@@ -254,18 +238,14 @@ export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 export enum TokenContractId {
   DAI = 'DAI',
   AAVE = 'AAVE',
-  TUSD = 'TUSD',
-  BAT = 'BAT',
   WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',
-  SUSD = 'SUSD',
   ZRX = 'ZRX',
   MKR = 'MKR',
   WBTC = 'WBTC',
   LINK = 'LINK',
   USD = 'USD',
-  UNI = 'UNI',
   WSBY = 'WSBY',
   WSDN = 'WSDN',
   ARSW = 'ARSW',

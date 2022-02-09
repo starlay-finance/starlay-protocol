@@ -53,20 +53,11 @@ export const CommonsConfig: ICommonConfiguration = {
     DAI: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    TUSD: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    SUSD: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
     USDT: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
-    BAT: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     AAVE: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
@@ -81,9 +72,6 @@ export const CommonsConfig: ICommonConfiguration = {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     ZRX: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    UNI: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },
