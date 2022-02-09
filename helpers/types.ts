@@ -203,7 +203,7 @@ export interface iAssetBase<T> {
   DAI: T;
   USDC: T;
   USDT: T;
-  AAVE: T;
+  LAY: T;
   WBTC: T;
   USD: T;
   WASTR: T;
@@ -216,7 +216,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'AAVE' | 'WBTC' | 'WETH'
+  'DAI' | 'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
@@ -232,7 +232,7 @@ export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = 'DAI',
-  AAVE = 'AAVE',
+  LAY = 'LAY',
   WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',

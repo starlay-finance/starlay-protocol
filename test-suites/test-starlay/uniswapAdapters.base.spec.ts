@@ -1,11 +1,11 @@
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
-import { getMockUniswapRouter } from '../../helpers/contracts-getters';
-import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
 import BigNumber from 'bignumber.js';
-import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
 import { ethers } from 'ethers';
 import { USD_ADDRESS } from '../../helpers/constants';
+import { getMockUniswapRouter } from '../../helpers/contracts-getters';
+import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
+import { evmRevert, evmSnapshot } from '../../helpers/misc-utils';
+import { MockUniswapV2Router02 } from '../../types/MockUniswapV2Router02';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 const { parseEther } = ethers.utils;
 
 const { expect } = require('chai');
@@ -78,13 +78,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(result['3']).to.be.eq(daiUsdValue);
       });
       it('should work correctly with different decimals', async () => {
-        const { aave, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+        const { lay, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
         const amountIn = parseEther('10');
         const flashloanPremium = amountIn.mul(9).div(10000);
         const amountToSwap = amountIn.sub(flashloanPremium);
 
-        const aavePrice = await oracle.getAssetPrice(aave.address);
+        const layPrice = await oracle.getAssetPrice(lay.address);
         const usdcPrice = await oracle.getAssetPrice(usdc.address);
         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -98,8 +98,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           .mul('1000000') // usdc 6 decimals
           .div(expectedUSDCAmount.mul(parseEther('1')));
 
-        const aaveUsdValue = amountIn
-          .mul(aavePrice)
+        const layUsdValue = amountIn
+          .mul(layPrice)
           .div(parseEther('1'))
           .mul(usdPrice)
           .div(parseEther('1'));
@@ -112,20 +112,20 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         await mockUniswapRouter.setAmountOut(
           amountToSwap,
-          aave.address,
+          lay.address,
           usdc.address,
           expectedUSDCAmount
         );
 
         const result = await uniswapLiquiditySwapAdapter.getAmountsOut(
           amountIn,
-          aave.address,
+          lay.address,
           usdc.address
         );
 
         expect(result['0']).to.be.eq(expectedUSDCAmount);
         expect(result['1']).to.be.eq(outPerInPrice);
-        expect(result['2']).to.be.eq(aaveUsdValue);
+        expect(result['2']).to.be.eq(layUsdValue);
         expect(result['3']).to.be.eq(usdcUsdValue);
       });
     });
@@ -177,13 +177,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(result['3']).to.be.eq(daiUsdValue);
       });
       it('should work correctly with different decimals', async () => {
-        const { aave, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+        const { lay, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
         const amountIn = parseEther('10');
         const flashloanPremium = amountIn.mul(9).div(10000);
         const amountToSwap = amountIn.add(flashloanPremium);
 
-        const aavePrice = await oracle.getAssetPrice(aave.address);
+        const layPrice = await oracle.getAssetPrice(lay.address);
         const usdcPrice = await oracle.getAssetPrice(usdc.address);
         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -197,8 +197,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           .mul(parseEther('1'))
           .div(amountToSwap.mul('1000000')); // usdc 6 decimals
 
-        const aaveUsdValue = amountToSwap
-          .mul(aavePrice)
+        const layUsdValue = amountToSwap
+          .mul(layPrice)
           .div(parseEther('1'))
           .mul(usdPrice)
           .div(parseEther('1'));
@@ -209,17 +209,17 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           .mul(usdPrice)
           .div(parseEther('1'));
 
-        await mockUniswapRouter.setAmountIn(amountOut, aave.address, usdc.address, amountIn);
+        await mockUniswapRouter.setAmountIn(amountOut, lay.address, usdc.address, amountIn);
 
         const result = await uniswapLiquiditySwapAdapter.getAmountsIn(
           amountOut,
-          aave.address,
+          lay.address,
           usdc.address
         );
 
         expect(result['0']).to.be.eq(amountToSwap);
         expect(result['1']).to.be.eq(inPerOutPrice);
-        expect(result['2']).to.be.eq(aaveUsdValue);
+        expect(result['2']).to.be.eq(layUsdValue);
         expect(result['3']).to.be.eq(usdcUsdValue);
       });
     });

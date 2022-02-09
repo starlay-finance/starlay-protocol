@@ -59,7 +59,7 @@ export const CommonsConfig: ICommonConfiguration = {
     USDT: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
-    AAVE: {
+    LAY: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     WBTC: {

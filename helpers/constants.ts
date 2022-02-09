@@ -32,7 +32,6 @@ export const STARLAY_REFERRAL = '0';
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
-  AAVE: oneEther.multipliedBy('0.003620948469').toFixed(),
   DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
   USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
   USDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
@@ -41,6 +40,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   USD: '5848466240000000',
   WASTR: oneEther.multipliedBy('0.003620948469').toFixed(),
   WSDN: oneEther.multipliedBy('0.003620948469').toFixed(),
+  LAY: oneEther.multipliedBy('0.003620948469').toFixed(),
 };
 
 export const aggregatorProxy = {

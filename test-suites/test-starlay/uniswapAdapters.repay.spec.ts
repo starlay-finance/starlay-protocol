@@ -40,7 +40,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
   describe('UniswapRepayAdapter', () => {
     beforeEach(async () => {
-      const { users, weth, dai, usdc, aave, pool, deployer } = testEnv;
+      const { users, weth, dai, usdc, lay, pool, deployer } = testEnv;
       const userAddress = users[0].address;
 
       // Provide liquidity
@@ -57,18 +57,18 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       await weth.approve(pool.address, parseEther('100'));
       await pool.deposit(weth.address, parseEther('100'), deployer.address, 0);
 
-      await aave.mint(parseEther('1000000'));
-      await aave.approve(pool.address, parseEther('1000000'));
-      await pool.deposit(aave.address, parseEther('1000000'), deployer.address, 0);
+      await lay.mint(parseEther('1000000'));
+      await lay.approve(pool.address, parseEther('1000000'));
+      await pool.deposit(lay.address, parseEther('1000000'), deployer.address, 0);
 
       // Make a deposit for user
       await weth.mint(parseEther('1000'));
       await weth.approve(pool.address, parseEther('1000'));
       await pool.deposit(weth.address, parseEther('1000'), userAddress, 0);
 
-      await aave.mint(parseEther('1000000'));
-      await aave.approve(pool.address, parseEther('1000000'));
-      await pool.deposit(aave.address, parseEther('1000000'), userAddress, 0);
+      await lay.mint(parseEther('1000000'));
+      await lay.approve(pool.address, parseEther('1000000'));
+      await pool.deposit(lay.address, parseEther('1000000'), userAddress, 0);
 
       await usdc.mint(usdcLiquidity);
       await usdc.approve(pool.address, usdcLiquidity);

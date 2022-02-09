@@ -150,7 +150,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     DAI: mockTokens.DAI.address,
     USDC: mockTokens.USDC.address,
     USDT: mockTokens.USDT.address,
-    AAVE: mockTokens.AAVE.address,
+    LAY: mockTokens.LAY.address,
     WBTC: mockTokens.WBTC.address,
     USD: USD_ADDRESS,
     WASTR: mockTokens.WASTR.address,
