@@ -7,7 +7,7 @@ import './math';
 export const strToBN = (amount: string): BigNumber => new BigNumber(amount);
 
 interface Configuration {
-  reservesParams: iAssetsWithoutUSD<IReserveParams>;
+  reservesParams: iAssetsWithoutUSD<IReserveParams> & { DAI: IReserveParams };
 }
 
 export const configuration: Configuration = <Configuration>{};

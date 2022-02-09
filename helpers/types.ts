@@ -194,7 +194,6 @@ export interface iAssetCommon<T> {
 }
 export interface iAssetBase<T> {
   WETH: T;
-  DAI: T;
   USDC: T;
   USDT: T;
   LAY: T;
@@ -221,8 +220,6 @@ export type iAstarPoolAssets<T> = Pick<
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
 
 export type iStarlayPoolTokens<T> = Omit<iStarlayPoolAssets<T>, 'ETH'>;
-
-export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export const TokenContractId = [
   'LAY',

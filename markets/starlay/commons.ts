@@ -42,9 +42,6 @@ export const CommonsConfig: ICommonConfiguration = {
     WETH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    DAI: {
-      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
-    },
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },

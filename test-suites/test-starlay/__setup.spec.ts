@@ -5,9 +5,9 @@ import {
   ConfigNames,
   getReservesConfigByPool,
   getTreasuryAddress,
-  loadPoolConfig
+  loadPoolConfig,
 } from '../../helpers/configuration';
-import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
+import { oneEther, oneRay, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployFlashLiquidationAdapter,
@@ -33,21 +33,21 @@ import {
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
   deployWETHGateway,
-  deployWETHMocked
+  deployWETHMocked,
 } from '../../helpers/contracts-deployments';
 import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
   getEthersSigners,
   getEthersSignersAddresses,
   insertContractAddressInDb,
-  registerContractInJsonDb
+  registerContractInJsonDb,
 } from '../../helpers/contracts-helpers';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { waitForTx } from '../../helpers/misc-utils';
 import {
   deployMockAggregators,
   setInitialAssetPricesInOracle,
-  setInitialMarketRatesInRatesOracleByHelper
+  setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import StarlayConfig from '../../markets/starlay';
@@ -56,10 +56,18 @@ import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
 
-const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = StarlayConfig.Mocks.AllAssetsInitialPrices;
+const ALL_ASSETS_INITIAL_PRICES = {
+  ...StarlayConfig.Mocks.AllAssetsInitialPrices,
+  DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
+};
+const LENDING_RATE_ORACLE_RATES_COMMON = {
+  ...StarlayConfig.LendingRateOracleRatesCommon,
+  DAI: {
+    borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+  },
+};
 const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = StarlayConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
