@@ -65,9 +65,6 @@ export const CommonsConfig: ICommonConfiguration = {
     LINK: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    MKR: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     WBTC: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },

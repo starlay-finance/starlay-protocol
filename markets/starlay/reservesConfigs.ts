@@ -80,18 +80,6 @@ export const strategyLINK: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyMKR: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
-
 export const strategyWBTC: IReserveParams = {
   strategy: rateStrategyVolatileTwo,
   baseLTVAsCollateral: '7000',

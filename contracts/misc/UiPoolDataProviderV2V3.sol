@@ -28,7 +28,6 @@ contract UiPoolDataProviderV2V3 is IUiPoolDataProviderV3 {
   IChainlinkAggregator public immutable networkBaseTokenPriceInUsdProxyAggregator;
   IChainlinkAggregator public immutable marketReferenceCurrencyPriceInUsdProxyAggregator;
   uint256 public constant ETH_CURRENCY_UNIT = 1 ether;
-  address public constant MKRAddress = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
 
   constructor(
     IChainlinkAggregator _networkBaseTokenPriceInUsdProxyAggregator,
@@ -110,12 +109,7 @@ contract UiPoolDataProviderV2V3 is IUiPoolDataProviderV3 {
       reserveData.totalScaledVariableDebt = IVariableDebtToken(reserveData.variableDebtTokenAddress)
         .scaledTotalSupply();
 
-      if (address(reserveData.underlyingAsset) == address(MKRAddress)) {
-        bytes32 symbol = IERC20DetailedBytes(reserveData.underlyingAsset).symbol();
-        reserveData.symbol = bytes32ToString(symbol);
-      } else {
-        reserveData.symbol = IERC20Detailed(reserveData.underlyingAsset).symbol();
-      }
+      reserveData.symbol = IERC20Detailed(reserveData.underlyingAsset).symbol();
 
       (
         reserveData.baseLTVasCollateral,
