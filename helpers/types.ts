@@ -14,10 +14,6 @@ export enum eEthereumNetwork {
   tenderly = 'tenderly',
 }
 
-export enum EthereumNetworkNames {
-  main = 'main',
-}
-
 export enum eAstarNetwork {
   // astar = 'astar',
   // shiden = 'shiden',
