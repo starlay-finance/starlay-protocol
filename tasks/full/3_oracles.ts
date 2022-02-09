@@ -46,10 +46,10 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       const starlayOracleAddress = getParamPerNetwork(poolConfig.StarlayOracle, network);
       const priceAggregatorAddress = getParamPerNetwork(poolConfig.PriceAggregator, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
-      const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
-      const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
-      const feedTokens = await getParamPerNetwork(DIAAggregator, network);
-      const diaAggregatorAddress = await getParamPerNetwork(DIAAggregatorAddress, network);
+      const fallbackOracleAddress = getParamPerNetwork(FallbackOracle, network);
+      const reserveAssets = getParamPerNetwork(ReserveAssets, network);
+      const feedTokens = getParamPerNetwork(DIAAggregator, network);
+      const diaAggregatorAddress = getParamPerNetwork(DIAAggregatorAddress, network);
       const tokensToWatch: SymbolMap<string> = {
         ...reserveAssets,
         USD: UsdAddress,
@@ -60,7 +60,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       let lendingRateOracle: LendingRateOracle;
 
       priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
-        ? await await getPriceAggregator(priceAggregatorAddress)
+        ? await getPriceAggregator(priceAggregatorAddress)
         : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
       await waitForTx(
         await priceAggregatorAdapter.setAssetSources(
@@ -70,7 +70,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       );
 
       if (notFalsyOrZeroAddress(starlayOracleAddress)) {
-        starlayOracle = await await getStarlayOracle(starlayOracleAddress);
+        starlayOracle = await getStarlayOracle(starlayOracleAddress);
         await waitForTx(await starlayOracle.setPriceAggregator(priceAggregatorAdapter.address));
       } else {
         starlayOracle = await deployStarlayOracle(
