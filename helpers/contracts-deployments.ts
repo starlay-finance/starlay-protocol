@@ -516,7 +516,7 @@ export const deployAllMockTokens = async (verify?: boolean) => {
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
-  for (const tokenSymbol of Object.keys(TokenContractId)) {
+  for (const tokenSymbol of Object.values(TokenContractId)) {
     let decimals = '18';
 
     let configData = (<any>protoConfigData)[tokenSymbol];

@@ -210,7 +210,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN'
+  'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
@@ -224,17 +224,16 @@ export type iStarlayPoolTokens<T> = Omit<iStarlayPoolAssets<T>, 'ETH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
-export enum TokenContractId {
-  DAI = 'DAI',
-  LAY = 'LAY',
-  WETH = 'WETH',
-  USDC = 'USDC',
-  USDT = 'USDT',
-  WBTC = 'WBTC',
-  USD = 'USD',
-  WASTR = 'WASTR',
-  WSDN = 'WSDN',
-}
+export const TokenContractId = [
+  'LAY',
+  'WETH',
+  'USDC',
+  'USDT',
+  'WBTC',
+  'USD',
+  'WASTR',
+  'WSDN',
+] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
   lTokenImpl: eContractid;

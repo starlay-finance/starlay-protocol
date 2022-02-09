@@ -176,7 +176,7 @@ export const getMockedTokens = async (config: PoolConfiguration) => {
 
 export const getAllMockedTokens = async () => {
   const db = getDb();
-  const tokens: MockTokenMap = await Object.keys(TokenContractId).reduce<Promise<MockTokenMap>>(
+  const tokens: MockTokenMap = await Object.values(TokenContractId).reduce<Promise<MockTokenMap>>(
     async (acc, tokenSymbol) => {
       const accumulator = await acc;
       const address = db.get(`${tokenSymbol.toUpperCase()}.${DRE.network.name}`).value().address;
