@@ -10,7 +10,6 @@ import {
   getLendingPoolAddressesProvider,
 } from '../../helpers/contracts-getters';
 import { waitForTx } from '../../helpers/misc-utils';
-import { getAllAggregatorsAddresses, getAllTokenAddresses } from '../../helpers/mock-helpers';
 import {
   deployMockAggregators,
   setInitialAssetPricesInOracle,
@@ -28,7 +27,6 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
       Mocks: { AllAssetsInitialPrices },
       ProtocolGlobalParams: { UsdAddress, MockUsdPriceInWei },
       LendingRateOracleRatesCommon,
-      OracleQuoteCurrency,
       OracleQuoteUnit,
     } = poolConfig as ICommonConfiguration;
 
@@ -47,15 +45,15 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
     const fallbackOracle = await deployPriceOracle(verify);
     await waitForTx(await fallbackOracle.setEthUsdPrice(MockUsdPriceInWei));
     await setInitialAssetPricesInOracle(AllAssetsInitialPrices, mockTokensAddress, fallbackOracle);
-
-    const mockAggregators = await deployMockAggregators(AllAssetsInitialPrices, verify);
-
-    const allTokenAddresses = getAllTokenAddresses(mockTokens);
-    const allAggregatorsAddresses = getAllAggregatorsAddresses(mockAggregators);
+    const mockAggregator = await deployMockAggregators(
+      AllAssetsInitialPrices,
+      mockTokensAddress,
+      verify
+    );
 
     await deployStarlayOracle(
       [
-        mockAggregators.address,
+        mockAggregator.address,
         fallbackOracle.address,
         await getQuoteCurrency(poolConfig),
         OracleQuoteUnit,
@@ -67,7 +65,7 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
     const lendingRateOracle = await deployLendingRateOracle(verify);
     await waitForTx(await addressesProvider.setLendingRateOracle(lendingRateOracle.address));
 
-    const { USD, ...tokensAddressesWithoutUsd } = allTokenAddresses;
+    const { USD, ...tokensAddressesWithoutUsd } = mockTokensAddress;
     const allReservesAddresses = {
       ...tokensAddressesWithoutUsd,
     };

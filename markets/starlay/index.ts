@@ -1,10 +1,12 @@
 import { eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
+import { strategyWSDN } from '../astar/reservesConfigs';
 import { CommonsConfig } from './commons';
 import {
   strategyDAI,
   strategyLAY,
   strategyUSDC,
   strategyUSDT,
+  strategyWASTR,
   strategyWBTC,
   strategyWETH,
 } from './reservesConfigs';
@@ -24,6 +26,8 @@ export const StarlayConfig: IStarlayConfiguration = {
     USDT: strategyUSDT,
     WBTC: strategyWBTC,
     WETH: strategyWETH,
+    WASTR: strategyWASTR,
+    WSDN: strategyWSDN,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},

@@ -64,6 +64,12 @@ export const CommonsConfig: ICommonConfiguration = {
     WBTC: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
+    WASTR: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    },
+    WSDN: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
