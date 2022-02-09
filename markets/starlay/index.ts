@@ -1,8 +1,8 @@
 import { eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
-  strategyAAVE,
   strategyDAI,
+  strategyLAY,
   strategyUSDC,
   strategyUSDT,
   strategyWBTC,
@@ -18,7 +18,7 @@ export const StarlayConfig: IStarlayConfiguration = {
   MarketId: 'Starlay genesis market',
   ProviderId: 1,
   ReservesConfig: {
-    AAVE: strategyAAVE,
+    LAY: strategyLAY,
     DAI: strategyDAI,
     USDC: strategyUSDC,
     USDT: strategyUSDT,
@@ -30,7 +30,7 @@ export const StarlayConfig: IStarlayConfiguration = {
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.coverage]: {},
     [eEthereumNetwork.kovan]: {
-      AAVE: '0xB597cd8D3217ea6477232F9217fa70837ff667Af',
+      LAY: '0xB597cd8D3217ea6477232F9217fa70837ff667Af',
       DAI: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
       USDC: '0xe22da380ee6B445bb8273C81944ADEB6E8450422',
       USDT: '0x13512979ADE267AB5100878E2e0f485B568328a4',
@@ -38,7 +38,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       WETH: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
     },
     [eEthereumNetwork.main]: {
-      AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
+      LAY: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
@@ -46,7 +46,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     },
     [eEthereumNetwork.tenderly]: {
-      AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
+      LAY: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
