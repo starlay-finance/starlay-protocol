@@ -46,7 +46,7 @@ export const rateStrategyAAVE: IInterestRateStrategyParams = {
   stableRateSlope2: '0',
 };
 
-// LINK MKR ZRX
+// LINK MKR
 export const rateStrategyVolatileOne: IInterestRateStrategyParams = {
   name: 'rateStrategyVolatileOne',
   optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),

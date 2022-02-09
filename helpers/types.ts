@@ -207,7 +207,6 @@ export interface iAssetBase<T> {
   MKR: T;
   LINK: T;
   WBTC: T;
-  ZRX: T;
   USD: T;
   WSBY: T;
   WSDN: T;
@@ -221,7 +220,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'AAVE' | 'MKR' | 'LINK' | 'WBTC' | 'ZRX' | 'WETH'
+  'DAI' | 'USDC' | 'USDT' | 'AAVE' | 'MKR' | 'LINK' | 'WBTC' | 'WETH'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
@@ -241,7 +240,6 @@ export enum TokenContractId {
   WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',
-  ZRX = 'ZRX',
   MKR = 'MKR',
   WBTC = 'WBTC',
   LINK = 'LINK',

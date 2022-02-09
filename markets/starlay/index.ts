@@ -9,7 +9,6 @@ import {
   strategyUSDT,
   strategyWBTC,
   strategyWETH,
-  strategyZRX,
 } from './reservesConfigs';
 
 // ----------------
@@ -29,7 +28,6 @@ export const StarlayConfig: IStarlayConfiguration = {
     USDT: strategyUSDT,
     WBTC: strategyWBTC,
     WETH: strategyWETH,
-    ZRX: strategyZRX,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -44,7 +42,6 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0x13512979ADE267AB5100878E2e0f485B568328a4',
       WBTC: '0xD1B98B6607330172f1D991521145A22BCe793277',
       WETH: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-      ZRX: '0xD0d76886cF8D952ca26177EB7CfDf83bad08C00C',
     },
     [eEthereumNetwork.main]: {
       AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
@@ -55,7 +52,6 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      ZRX: '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
     },
     [eEthereumNetwork.tenderly]: {
       AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
@@ -66,7 +62,6 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      ZRX: '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
     },
   },
 };

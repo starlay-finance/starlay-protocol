@@ -103,15 +103,3 @@ export const strategyWBTC: IReserveParams = {
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };
-
-export const strategyZRX: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
