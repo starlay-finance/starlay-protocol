@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { getReservesConfigByPool } from '../../helpers/configuration';
-import { IReserveParams, iStarlayPoolAssets, StarlayPools } from '../../helpers/types';
+import StarlayConfig from '../../markets/starlay';
+import { strategyDAI } from '../../markets/starlay/reservesConfigs';
 import { configuration as actionsConfiguration } from './helpers/actions';
 import { makeSuite } from './helpers/make-suite';
 import { executeStory } from './helpers/scenario-engine';
@@ -17,9 +17,10 @@ makeSuite('Subgraph scenario tests', async (testEnv) => {
 
     actionsConfiguration.skipIntegrityCheck = false; //set this to true to execute solidity-coverage
 
-    calculationsConfiguration.reservesParams = <iStarlayPoolAssets<IReserveParams>>(
-      getReservesConfigByPool(StarlayPools.proto)
-    );
+    calculationsConfiguration.reservesParams = {
+      ...StarlayConfig.ReservesConfig,
+      DAI: strategyDAI,
+    };
   });
   after('Reset', () => {
     // Reset BigNumber

@@ -5,7 +5,7 @@ import {
   ConfigNames,
   getReservesConfigByPool,
   getTreasuryAddress,
-  loadPoolConfig,
+  loadPoolConfig
 } from '../../helpers/configuration';
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
@@ -33,21 +33,21 @@ import {
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
   deployWETHGateway,
-  deployWETHMocked,
+  deployWETHMocked
 } from '../../helpers/contracts-deployments';
 import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
   getEthersSigners,
   getEthersSignersAddresses,
   insertContractAddressInDb,
-  registerContractInJsonDb,
+  registerContractInJsonDb
 } from '../../helpers/contracts-helpers';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { waitForTx } from '../../helpers/misc-utils';
 import {
   deployMockAggregators,
   setInitialAssetPricesInOracle,
-  setInitialMarketRatesInRatesOracleByHelper,
+  setInitialMarketRatesInRatesOracleByHelper
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import StarlayConfig from '../../markets/starlay';
