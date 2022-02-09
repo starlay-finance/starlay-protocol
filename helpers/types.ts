@@ -219,7 +219,6 @@ export interface iAssetBase<T> {
   UNI: T;
   USD: T;
   REN: T;
-  ENJ: T;
   WSBY: T;
   WSDN: T;
   ARSW: T;
@@ -251,7 +250,6 @@ export type iStarlayPoolAssets<T> = Pick<
   | 'YFI'
   | 'UNI'
   | 'REN'
-  | 'ENJ'
 >;
 
 export type iAstarPoolAssets<T> = Pick<
@@ -286,7 +284,6 @@ export enum TokenContractId {
   USD = 'USD',
   YFI = 'YFI',
   UNI = 'UNI',
-  ENJ = 'ENJ',
   WSBY = 'WSBY',
   WSDN = 'WSDN',
   ARSW = 'ARSW',

@@ -106,18 +106,6 @@ export const strategyBAT: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyENJ: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '5500',
-  liquidationThreshold: '6000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
-};
-
 export const strategyWETH: IReserveParams = {
   strategy: rateStrategyWETH,
   baseLTVAsCollateral: '8000',
