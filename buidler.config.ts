@@ -48,7 +48,7 @@ const getCommonNetworkConfig = (networkName: eEthereumNetwork, networkId: number
 const buidlerConfig: any = {
   solc: {
     version: '0.6.12',
-    optimizer: {enabled: true, runs: 200},
+    optimizer: { enabled: true, runs: 200 },
     evmVersion: 'istanbul',
   },
   typechain: {
@@ -67,7 +67,6 @@ const buidlerConfig: any = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     buidlerevm: {
       hardfork: 'istanbul',
@@ -77,7 +76,7 @@ const buidlerConfig: any = {
       chainId: BUIDLEREVM_CHAINID,
       throwOnTransactionFailures: true,
       throwOnCallFailures: true,
-      accounts: accounts.map(({secretKey, balance}: {secretKey: string; balance: string}) => ({
+      accounts: accounts.map(({ secretKey, balance }: { secretKey: string; balance: string }) => ({
         privateKey: secretKey,
         balance,
       })),
