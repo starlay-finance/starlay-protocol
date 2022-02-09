@@ -69,7 +69,7 @@
 //   })
 
 //   it("BORROW - Test user cannot borrow using the same currency as collateral", async () => {
-//     const {aDAI: aDaiInstance} = _lTokenInstances
+//     const {lDai: lDaiInstance} = _lTokenInstances
 //     const {DAI: daiInstance} = _tokenInstances
 
 //     //mints DAI to depositor
@@ -120,12 +120,12 @@
 //   })
 
 //   it("BORROW - Test user cannot borrow more than 25% of the liquidity available", async () => {
-//     const {aDAI: aDaiInstance} = _lTokenInstances
+//     const {lDai: lDaiInstance} = _lTokenInstances
 //     const {DAI: daiInstance} = _tokenInstances
 
 //     //redeem the DAI previously deposited
-//     const amountADAIToRedeem = await convertToCurrencyDecimals(aDaiInstance.address, "1000")
-//     await aDaiInstance.redeem(amountADAIToRedeem, {
+//     const amountLDAIToRedeem = await convertToCurrencyDecimals(lDaiInstance.address, "1000")
+//     await lDaiInstance.redeem(amountLDAIToRedeem, {
 //       from: _borrowerAddress,
 //     })
 
@@ -150,7 +150,7 @@
 //   })
 
 //   it("BORROW - Test user can still borrow  a currency that he previously deposited as a collateral but he transferred/redeemed", async () => {
-//     const {aDAI: aDaiInstance} = _lTokenInstances
+//     const {lDai: lDaiInstance} = _lTokenInstances
 //     const {DAI: daiInstance} = _tokenInstances
 
 //     const user = users[2]
@@ -175,11 +175,11 @@
 //       value: amountETHToDeposit,
 //     })
 
-//     //user transfers to another address all the overlying aDAI
+//     //user transfers to another address all the overlying lDai
 
-//     const aDAIBalance = await aDaiInstance.balanceOf(user)
+//     const lDaiBalance = await lDaiInstance.balanceOf(user)
 
-//     await aDaiInstance.transfer(users[3], aDAIBalance, {
+//     await lDaiInstance.transfer(users[3], lDaiBalance, {
 //       from: user,
 //     })
 

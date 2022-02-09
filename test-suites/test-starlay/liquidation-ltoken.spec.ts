@@ -16,7 +16,6 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
     INVALID_HF,
     LPCM_SPECIFIED_CURRENCY_NOT_BORROWED_BY_USER,
     LPCM_COLLATERAL_CANNOT_BE_LIQUIDATED,
-    LP_IS_PAUSED,
   } = ProtocolErrors;
 
   it('Deposits WETH, borrows DAI/Check liquidation fails because health factor is above 1', async () => {
@@ -116,7 +115,7 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
   });
 
   it('Liquidates the borrow', async () => {
-    const { pool, dai, weth, aWETH, aDai, users, oracle, helpersContract, deployer } = testEnv;
+    const { pool, dai, weth, users, oracle, helpersContract, deployer } = testEnv;
     const borrower = users[1];
 
     //mints dai to the caller
@@ -167,12 +166,6 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
     const principalDecimals = (
       await helpersContract.getReserveConfigurationData(dai.address)
     ).decimals.toString();
-
-    const expectedCollateralLiquidated = new BigNumber(principalPrice)
-      .times(new BigNumber(amountToLiquidate).times(105))
-      .times(new BigNumber(10).pow(collateralDecimals))
-      .div(new BigNumber(collateralPrice).times(new BigNumber(10).pow(principalDecimals)))
-      .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     if (!tx.blockNumber) {
       expect(false, 'Invalid block number');
@@ -332,12 +325,6 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
     const principalDecimals = (
       await helpersContract.getReserveConfigurationData(usdc.address)
     ).decimals.toString();
-
-    const expectedCollateralLiquidated = new BigNumber(principalPrice)
-      .times(new BigNumber(amountToLiquidate).times(105))
-      .times(new BigNumber(10).pow(collateralDecimals))
-      .div(new BigNumber(collateralPrice).times(new BigNumber(10).pow(principalDecimals)))
-      .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
       oneEther.toFixed(0),

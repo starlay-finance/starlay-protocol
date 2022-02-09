@@ -33,7 +33,7 @@ interface IInitializableDebtToken {
   /**
    * @dev Initializes the debt token.
    * @param pool The address of the lending pool where this lToken will be used
-   * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for aWETH)
+   * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for lWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
    * @param debtTokenDecimals The decimals of the debtToken, same as the underlying asset's
    * @param debtTokenName The name of the token

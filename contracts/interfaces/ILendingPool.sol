@@ -169,7 +169,7 @@ interface ILendingPool {
 
   /**
    * @dev Deposits an `amount` of underlying asset into the reserve, receiving in return overlying lTokens.
-   * - E.g. User deposits 100 USDC and gets in return 100 aUSDC
+   * - E.g. User deposits 100 USDC and gets in return 100 lUSDC
    * @param asset The address of the underlying asset to deposit
    * @param amount The amount to be deposited
    * @param onBehalfOf The address that will receive the lTokens, same as msg.sender if the user
@@ -187,7 +187,7 @@ interface ILendingPool {
 
   /**
    * @dev Withdraws an `amount` of underlying asset from the reserve, burning the equivalent lTokens owned
-   * E.g. User has 100 aUSDC, calls withdraw() and receives 100 USDC, burning the 100 aUSDC
+   * E.g. User has 100 lUSDC, calls withdraw() and receives 100 USDC, burning the 100 lUSDC
    * @param asset The address of the underlying asset to withdraw
    * @param amount The underlying amount to be withdrawn
    *   - Send the value type(uint256).max in order to withdraw the whole lToken balance

@@ -50,7 +50,7 @@ contract WETHGateway is IWETHGateway, Ownable {
   /**
    * @dev withdraws the WETH _reserves of msg.sender.
    * @param lendingPool address of the targeted underlying lending pool
-   * @param amount amount of aWETH to withdraw and receive native ETH
+   * @param amount amount of lWETH to withdraw and receive native ETH
    * @param to address of the user who will receive native ETH
    */
   function withdrawETH(
@@ -58,15 +58,15 @@ contract WETHGateway is IWETHGateway, Ownable {
     uint256 amount,
     address to
   ) external override {
-    ILToken aWETH = ILToken(ILendingPool(lendingPool).getReserveData(address(WETH)).lTokenAddress);
-    uint256 userBalance = aWETH.balanceOf(msg.sender);
+    ILToken lWETH = ILToken(ILendingPool(lendingPool).getReserveData(address(WETH)).lTokenAddress);
+    uint256 userBalance = lWETH.balanceOf(msg.sender);
     uint256 amountToWithdraw = amount;
 
     // if amount is equal to uint(-1), the user wants to redeem everything
     if (amount == type(uint256).max) {
       amountToWithdraw = userBalance;
     }
-    aWETH.transferFrom(msg.sender, address(this), amountToWithdraw);
+    lWETH.transferFrom(msg.sender, address(this), amountToWithdraw);
     ILendingPool(lendingPool).withdraw(address(WETH), amountToWithdraw, address(this));
     WETH.withdraw(amountToWithdraw);
     _safeTransferETH(to, amountToWithdraw);

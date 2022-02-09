@@ -29,7 +29,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       ZERO_ADDRESS,
       ZERO_ADDRESS,
       'Starley Interest bearing DAI updated',
-      'aDAI',
+      'lDai',
       '0x10',
     ]);
 
@@ -85,7 +85,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
   });
 
   it('Upgrades the DAI LToken implementation ', async () => {
-    const { dai, configurator, aDai } = testEnv;
+    const { dai, configurator, lDai } = testEnv;
 
     const name = await (await getLToken(newLTokenAddress)).name();
     const symbol = await (await getLToken(newLTokenAddress)).symbol();
@@ -109,7 +109,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     };
     await configurator.updateLToken(updateLTokenInputParams);
 
-    const tokenName = await aDai.name();
+    const tokenName = await lDai.name();
 
     expect(tokenName).to.be.eq('Starley Interest bearing DAI updated', 'Invalid token name');
   });

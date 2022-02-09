@@ -1,29 +1,26 @@
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { ProtocolErrors, RateMode } from '../../helpers/types';
-import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
-import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'bignumber.js';
-import { MockFlashLoanReceiver } from '../../types/MockFlashLoanReceiver';
+import { parseEther, parseUnits } from 'ethers/lib/utils';
+import { APPROVAL_AMOUNT_LENDING_POOL } from '../../helpers/constants';
 import { getMockFlashLoanReceiver } from '../../helpers/contracts-getters';
+import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
+import { ProtocolErrors, RateMode } from '../../helpers/types';
+import { MockFlashLoanReceiver } from '../../types/MockFlashLoanReceiver';
+import { makeSuite, TestEnv } from './helpers/make-suite';
 
 const { expect } = require('chai');
 
 makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   let _mockFlashLoanReceiver = {} as MockFlashLoanReceiver;
 
-  const {
-    LP_IS_PAUSED,
-    INVALID_FROM_BALANCE_AFTER_TRANSFER,
-    INVALID_TO_BALANCE_AFTER_TRANSFER,
-  } = ProtocolErrors;
+  const { LP_IS_PAUSED, INVALID_FROM_BALANCE_AFTER_TRANSFER, INVALID_TO_BALANCE_AFTER_TRANSFER } =
+    ProtocolErrors;
 
   before(async () => {
     _mockFlashLoanReceiver = await getMockFlashLoanReceiver();
   });
 
   it('User 0 deposits 1000 DAI. Configurator pauses pool. Transfers to user 1 reverts. Configurator unpauses the network and next transfer succees', async () => {
-    const { users, pool, dai, aDai, configurator } = testEnv;
+    const { users, pool, dai, lDai, configurator } = testEnv;
 
     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
@@ -35,19 +32,19 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
       .connect(users[0].signer)
       .deposit(dai.address, amountDAItoDeposit, users[0].address, '0');
 
-    const user0Balance = await aDai.balanceOf(users[0].address);
-    const user1Balance = await aDai.balanceOf(users[1].address);
+    const user0Balance = await lDai.balanceOf(users[0].address);
+    const user1Balance = await lDai.balanceOf(users[1].address);
 
     // Configurator pauses the pool
     await configurator.connect(users[1].signer).setPoolPause(true);
 
     // User 0 tries the transfer to User 1
     await expect(
-      aDai.connect(users[0].signer).transfer(users[1].address, amountDAItoDeposit)
+      lDai.connect(users[0].signer).transfer(users[1].address, amountDAItoDeposit)
     ).to.revertedWith(LP_IS_PAUSED);
 
-    const pausedFromBalance = await aDai.balanceOf(users[0].address);
-    const pausedToBalance = await aDai.balanceOf(users[1].address);
+    const pausedFromBalance = await lDai.balanceOf(users[0].address);
+    const pausedToBalance = await lDai.balanceOf(users[1].address);
 
     expect(pausedFromBalance).to.be.equal(
       user0Balance.toString(),
@@ -62,10 +59,10 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     await configurator.connect(users[1].signer).setPoolPause(false);
 
     // User 0 succeeds transfer to User 1
-    await aDai.connect(users[0].signer).transfer(users[1].address, amountDAItoDeposit);
+    await lDai.connect(users[0].signer).transfer(users[1].address, amountDAItoDeposit);
 
-    const fromBalance = await aDai.balanceOf(users[0].address);
-    const toBalance = await aDai.balanceOf(users[1].address);
+    const fromBalance = await lDai.balanceOf(users[0].address);
+    const toBalance = await lDai.balanceOf(users[1].address);
 
     expect(fromBalance.toString()).to.be.equal(
       user0Balance.sub(amountDAItoDeposit),
@@ -78,7 +75,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   });
 
   it('Deposit', async () => {
-    const { users, pool, dai, aDai, configurator } = testEnv;
+    const { users, pool, dai, lDai, configurator } = testEnv;
 
     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
@@ -98,7 +95,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   });
 
   it('Withdraw', async () => {
-    const { users, pool, dai, aDai, configurator } = testEnv;
+    const { users, pool, dai, lDai, configurator } = testEnv;
 
     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
