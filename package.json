@@ -71,7 +71,7 @@
     "chai-bn": "^0.2.1",
     "defender-relay-client": "^1.7.0",
     "dotenv": "^8.2.0",
-    "eth-sig-util": "2.5.3",
+    "eth-sig-util": "3.0.1",
     "ethereum-waffle": "3.4.0",
     "ethereumjs-util": "7.0.2",
     "ethers": "^5.0.19",
