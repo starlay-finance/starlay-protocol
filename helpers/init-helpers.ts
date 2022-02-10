@@ -139,9 +139,9 @@ export const initReservesByHelper = async (
       lTokenName: `${lTokenNamePrefix} ${symbol}`,
       lTokenSymbol: `l${symbolPrefix}${symbol}`,
       variableDebtTokenName: `${variableDebtTokenNamePrefix} ${symbolPrefix}${symbol}`,
-      variableDebtTokenSymbol: `variableDebt${symbolPrefix}${symbol}`,
+      variableDebtTokenSymbol: `vd${symbolPrefix}${symbol}`,
       stableDebtTokenName: `${stableDebtTokenNamePrefix} ${symbol}`,
-      stableDebtTokenSymbol: `stableDebt${symbolPrefix}${symbol}`,
+      stableDebtTokenSymbol: `sd${symbolPrefix}${symbol}`,
       params: await getLTokenExtraParams(lTokenImpl, tokenAddresses[symbol]),
     });
   }

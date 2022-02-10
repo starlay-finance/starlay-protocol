@@ -52,7 +52,7 @@ WRONG RESERVE ASSET SETUP:
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
         `Starley stable debt bearing ${symbol}`,
-        `stableDebt${symbol}`,
+        `sd${symbol}`,
       ],
       verify
     );
@@ -62,7 +62,7 @@ WRONG RESERVE ASSET SETUP:
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
         `Starley variable debt bearing ${symbol}`,
-        `variableDebt${symbol}`,
+        `vd${symbol}`,
       ],
       verify
     );
@@ -81,8 +81,8 @@ WRONG RESERVE ASSET SETUP:
     console.log(`
     New interest bearing asset deployed on ${network}:
     Interest bearing l${symbol} address: ${lToken.address}
-    Variable Debt variableDebt${symbol} address: ${variableDebt.address}
-    Stable Debt stableDebt${symbol} address: ${stableDebt.address}
+    Variable Debt vd${symbol} address: ${variableDebt.address}
+    Stable Debt sd${symbol} address: ${stableDebt.address}
     Strategy Implementation for ${symbol} address: ${rates.address}
     `);
   });
