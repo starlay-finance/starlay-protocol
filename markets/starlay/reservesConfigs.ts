@@ -82,7 +82,7 @@ export const strategyWASTR: IReserveParams = {
   reserveFactor: '1000',
 };
 
-export const strategySDN: IReserveParams = {
+export const strategyWSDN: IReserveParams = {
   strategy: rateStrategyWSDN,
   baseLTVAsCollateral: '8000',
   liquidationThreshold: '8250',

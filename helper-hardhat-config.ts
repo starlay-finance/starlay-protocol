@@ -29,9 +29,6 @@ export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined =
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
-  [eEthereumNetwork.main]: ALCHEMY_KEY
-    ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`
-    : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.coverage]: 'http://localhost:8555',
   [eEthereumNetwork.hardhat]: 'http://localhost:8545',
   [eEthereumNetwork.buidlerevm]: 'http://localhost:8545',
@@ -39,10 +36,11 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eAstarNetwork.shibuya]: BWARE_LABS_KEY
     ? `https://shibuya-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : 'https://rpc.shibuya.astar.network:8545',
+  // [eAstarNetwork.astar]: '',
+  // [eAstarNetwork.shiden]: '',
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
-  [eEthereumNetwork.main]: 65 * GWEI,
   [eEthereumNetwork.coverage]: 65 * GWEI,
   [eEthereumNetwork.hardhat]: 65 * GWEI,
   [eEthereumNetwork.buidlerevm]: 65 * GWEI,
@@ -51,7 +49,6 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
-  [eEthereumNetwork.main]: 12406069,
   [eEthereumNetwork.coverage]: undefined,
   [eEthereumNetwork.hardhat]: undefined,
   [eEthereumNetwork.buidlerevm]: undefined,

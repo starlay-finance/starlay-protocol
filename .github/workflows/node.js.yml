@@ -32,7 +32,7 @@ jobs:
         run: npm run ci:test
       ##- name: Dev deployment
       ##  run: npm run starlay:evm:dev:migration
-      ##- name: Mainnet deployment at Mainnet fork
+      ##- name: Astar deployment at Astar fork
       ##  run: npm run starlay:fork:main
       ##  env:
       ##    ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}

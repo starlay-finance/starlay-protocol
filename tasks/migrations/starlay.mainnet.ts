@@ -4,7 +4,7 @@ import { checkVerification } from '../../helpers/etherscan-verification';
 import { printContracts } from '../../helpers/misc-utils';
 import { usingTenderly } from '../../helpers/tenderly-utils';
 
-task('starlay:mainnet', 'Deploy development enviroment')
+task('starlay:astar', 'Deploy Starlay astar enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
   .addFlag('skipRegistry', 'Skip addresses provider registration at Addresses Provider Registry')
   .setAction(async ({ verify, skipRegistry }, DRE) => {

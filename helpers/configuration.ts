@@ -1,4 +1,3 @@
-import AstarConfig from '../markets/astar';
 import StarlayConfig from '../markets/starlay';
 import { CommonsConfig } from '../markets/starlay/commons';
 import { deployWETHMocked } from './contracts-deployments';
@@ -21,15 +20,12 @@ import {
 export enum ConfigNames {
   Commons = 'Commons',
   Starlay = 'Starlay',
-  Astar = 'Astar',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Starlay:
       return StarlayConfig;
-    case ConfigNames.Astar:
-      return AstarConfig;
     case ConfigNames.Commons:
       return CommonsConfig;
     default:
@@ -50,9 +46,6 @@ export const getReservesConfigByPool = (pool: StarlayPools): iMultiPoolsAssets<I
     {
       [StarlayPools.proto]: {
         ...StarlayConfig.ReservesConfig,
-      },
-      [StarlayPools.astar]: {
-        ...AstarConfig.ReservesConfig,
       },
     },
     pool
@@ -98,9 +91,6 @@ export const getWethAddress = async (config: IBaseConfiguration) => {
   if (wethAddress) {
     return wethAddress;
   }
-  if (currentNetwork.includes('main')) {
-    throw new Error('WETH not set at mainnet configuration.');
-  }
   const weth = await deployWETHMocked();
   return weth.address;
 };
@@ -111,8 +101,8 @@ export const getWrappedNativeTokenAddress = async (config: IBaseConfiguration) =
   if (wethAddress) {
     return wethAddress;
   }
-  if (currentNetwork.includes('main')) {
-    throw new Error('WETH not set at mainnet configuration.');
+  if (currentNetwork.includes('astar')) {
+    throw new Error('WASTR not set at astar configuration.');
   }
   const weth = await deployWETHMocked();
   return weth.address;

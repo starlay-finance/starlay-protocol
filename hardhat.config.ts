@@ -86,7 +86,6 @@ const buidlerConfig: HardhatUserConfig = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
     hardhat: {
