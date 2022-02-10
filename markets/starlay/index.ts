@@ -1,4 +1,4 @@
-import { eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
+import { eAstarNetwork, eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
 import { strategyWSDN } from '../astar/reservesConfigs';
 import { CommonsConfig } from './commons';
 import {
@@ -31,19 +31,16 @@ export const StarlayConfig: IStarlayConfiguration = {
     [eEthereumNetwork.buidlerevm]: {},
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.coverage]: {},
-    [eEthereumNetwork.main]: {
-      LAY: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
-      USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-      WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    },
-    [eEthereumNetwork.tenderly]: {
-      LAY: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
-      USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-      WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    [eEthereumNetwork.main]: {},
+    [eEthereumNetwork.tenderly]: {},
+    [eAstarNetwork.shibuya]: {
+      WASTR: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd',
+      WSDN: '0xB9F3803304b582fCd852365aD75192FEA089D49F',
+      WETH: '0x04efa209F9e74E612a529c393Cf9F1141E696F06',
+      WBTC: '0x2025efC28f85c717df189916344ECa168AAD0667', //tmp
+      USDT: '0x3f815e7d299f08278c0308aE1048aa45ED12415f', // tmp
+      USDC: '0xA4F42578c723A5B6781A9F49d586B8645ba85C31',
+      LAY: '0x1302f8D1e37B8b83C7c3eB3b02E0e7eEAc28929f', //tmp
     },
   },
 };
