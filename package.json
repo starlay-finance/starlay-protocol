@@ -66,7 +66,7 @@
     "@types/node": "14.0.5",
     "bignumber.js": "9.0.0",
     "buidler-typechain": "0.1.1",
-    "chai": "4.2.0",
+    "chai": "4.3.6",
     "chai-bignumber": "3.0.0",
     "chai-bn": "^0.2.1",
     "defender-relay-client": "^1.7.0",
