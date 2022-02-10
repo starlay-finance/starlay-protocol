@@ -74,7 +74,7 @@
     "eth-sig-util": "2.5.3",
     "ethereum-waffle": "3.0.2",
     "ethereumjs-util": "7.0.2",
-    "ethers": "^5.0.19",
+    "ethers": "^5.5.4",
     "globby": "^11.0.1",
     "hardhat": "^2.2.0",
     "hardhat-gas-reporter": "^1.0.0",
