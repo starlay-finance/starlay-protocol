@@ -3,3 +3,10 @@
 # Starley Protocol
 
 This repository contains the smart contracts source code and markets configuration for Starlay Protocol V2. The repository uses Docker Compose and Hardhat as development enviroment for compilation, testing and deployment tasks.
+
+## About Development
+
+### Setup
+
+set specified node version
+reference: `.node-version`
