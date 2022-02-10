@@ -21,7 +21,6 @@
     "test:main:check-list": "npm run compile && FORK=main TS_NODE_TRANSPILE_ONLY=1 hardhat test  test-suites/test-starlay/__setup.spec.ts test-suites/test-starlay/mainnet/check-list.spec.ts",
     "dev:coverage": "buidler compile --force && buidler coverage --network coverage",
     "starlay:evm:dev:migration": "npm run compile && hardhat starlay:dev",
-    "astar:shibuya:full:migration": "npm run compile && npm run hardhat:shibuya astar:mainnet -- --pool Astar",
     "starlay:docker:full:migration": "npm run compile && npm run hardhat:docker -- starlay:mainnet --skip-registry",
     "starlay:docker:full:migration:add-registry": "npm run compile && npm run hardhat:docker -- starlay:mainnet",
     "starlay:docker:add-market-to-registry-from-config": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Starlay",

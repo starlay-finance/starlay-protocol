@@ -1,5 +1,4 @@
 import { eAstarNetwork, eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
-import { strategyWSDN } from '../astar/reservesConfigs';
 import { CommonsConfig } from './commons';
 import {
   strategyLAY,
@@ -8,6 +7,7 @@ import {
   strategyWASTR,
   strategyWBTC,
   strategyWETH,
+  strategyWSDN,
 } from './reservesConfigs';
 
 // ----------------

@@ -22,7 +22,6 @@ export enum eAstarNetwork {
 
 export enum StarlayPools {
   proto = 'proto',
-  astar = 'astar',
 }
 
 export enum eContractid {
@@ -212,11 +211,6 @@ export type iStarlayPoolAssets<T> = Pick<
   'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN'
 >;
 
-export type iAstarPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'WASTR' | 'WETH' | 'WBTC' | 'WSDN' | 'USDT' | 'USDC' | 'LAY'
->;
-
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
 
 export type iStarlayPoolTokens<T> = Omit<iStarlayPoolAssets<T>, 'ETH'>;
@@ -288,7 +282,6 @@ export interface iAstarParamsPerNetwork<T> {
 }
 export interface iParamsPerPool<T> {
   [StarlayPools.proto]: T;
-  [StarlayPools.astar]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -373,10 +366,6 @@ export interface ICommonConfiguration extends IBaseConfiguration {
 
 export interface IStarlayConfiguration extends ICommonConfiguration {
   ReservesConfig: iStarlayPoolAssets<IReserveParams>;
-}
-
-export interface IAstarConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAstarPoolAssets<IReserveParams>;
 }
 
 export interface ITokenAddress {

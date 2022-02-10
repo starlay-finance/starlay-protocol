@@ -1,4 +1,3 @@
-import AstarConfig from '../markets/astar';
 import StarlayConfig from '../markets/starlay';
 import { CommonsConfig } from '../markets/starlay/commons';
 import { deployWETHMocked } from './contracts-deployments';
@@ -21,15 +20,12 @@ import {
 export enum ConfigNames {
   Commons = 'Commons',
   Starlay = 'Starlay',
-  Astar = 'Astar',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Starlay:
       return StarlayConfig;
-    case ConfigNames.Astar:
-      return AstarConfig;
     case ConfigNames.Commons:
       return CommonsConfig;
     default:
@@ -50,9 +46,6 @@ export const getReservesConfigByPool = (pool: StarlayPools): iMultiPoolsAssets<I
     {
       [StarlayPools.proto]: {
         ...StarlayConfig.ReservesConfig,
-      },
-      [StarlayPools.astar]: {
-        ...AstarConfig.ReservesConfig,
       },
     },
     pool
