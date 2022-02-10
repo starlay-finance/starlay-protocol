@@ -8,7 +8,6 @@ export type eNetwork = eEthereumNetwork | eAstarNetwork;
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
-  main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
   tenderly = 'tenderly',
@@ -270,7 +269,6 @@ export interface iParamsPerNetworkAll<T> extends iEthereumParamsPerNetwork<T> {}
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
   [eEthereumNetwork.buidlerevm]: T;
-  [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.tenderly]: T;
 }

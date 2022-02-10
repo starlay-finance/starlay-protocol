@@ -271,7 +271,7 @@ before(async () => {
   const FORK = process.env.FORK;
 
   if (FORK) {
-    await rawBRE.run('starlay:mainnet', { skipRegistry: true });
+    await rawBRE.run('starlay:astar', { skipRegistry: true });
   } else {
     console.log('-> Deploying test environment...');
     await buildTestEnv(deployer, secondaryWallet);

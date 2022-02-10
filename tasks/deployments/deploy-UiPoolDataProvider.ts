@@ -2,7 +2,7 @@ import { task } from 'hardhat/config';
 import { exit } from 'process';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import { deployUiPoolDataProvider } from '../../helpers/contracts-deployments';
-import { eAstarNetwork, eContractid, eEthereumNetwork } from '../../helpers/types';
+import { eAstarNetwork, eContractid } from '../../helpers/types';
 
 task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider contract`)
   .addFlag('verify', 'Verify UiPoolDataProvider contract via Etherscan API.')
@@ -16,10 +16,6 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
     const addressesByNetwork: {
       [key: string]: { incentivesController: string; starlayOracle: string };
     } = {
-      [eEthereumNetwork.main]: {
-        incentivesController: '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
-        starlayOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
-      },
       [eAstarNetwork.shibuya]: {
         incentivesController: ZERO_ADDRESS, // TODO: only for v1
         starlayOracle: ZERO_ADDRESS, //TODO: only for v1

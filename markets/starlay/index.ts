@@ -31,7 +31,6 @@ export const StarlayConfig: IStarlayConfiguration = {
     [eEthereumNetwork.buidlerevm]: {},
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.coverage]: {},
-    [eEthereumNetwork.main]: {},
     [eEthereumNetwork.tenderly]: {},
     [eAstarNetwork.shibuya]: {
       WASTR: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd',

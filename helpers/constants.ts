@@ -48,7 +48,6 @@ export const ALL_ASSETS_PRICES_FOR_TESTING = {
 };
 
 export const aggregatorProxy = {
-  main: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   shibuya: ZERO_ADDRESS, //TODO:
 };
