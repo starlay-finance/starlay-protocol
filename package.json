@@ -75,7 +75,6 @@
     "ethereum-waffle": "3.4.0",
     "ethereumjs-util": "7.1.4",
     "ethers": "^5.0.19",
-    "globby": "^13.1.1",
     "hardhat": "^2.2.0",
     "hardhat-gas-reporter": "^1.0.0",
     "hardhat-typechain": "^0.3.3",
