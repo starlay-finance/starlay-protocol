@@ -7,7 +7,12 @@ import {
   getTreasuryAddress,
   loadPoolConfig,
 } from '../../helpers/configuration';
-import { ALL_ASSETS_PRICES_FOR_TESTING, oneEther, ZERO_ADDRESS } from '../../helpers/constants';
+import {
+  ALL_ASSETS_PRICES_FOR_TESTING,
+  oneEther,
+  oneRay,
+  ZERO_ADDRESS,
+} from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployFlashLiquidationAdapter,
@@ -50,7 +55,8 @@ import {
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
-import StarlayConfig, { TestConfig } from '../../markets/starlay';
+import StarlayConfig from '../../markets/starlay';
+import { strategyDAI } from '../../markets/starlay/reservesConfigs';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
