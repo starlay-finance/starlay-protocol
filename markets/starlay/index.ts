@@ -39,7 +39,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       WBTC: '0x2025efC28f85c717df189916344ECa168AAD0667', //tmp
       USDT: '0x3f815e7d299f08278c0308aE1048aa45ED12415f', // tmp
       USDC: '0xA4F42578c723A5B6781A9F49d586B8645ba85C31',
-      LAY: '0x1302f8D1e37B8b83C7c3eB3b02E0e7eEAc28929f', //tmp
+      LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
     },
   },
 };
