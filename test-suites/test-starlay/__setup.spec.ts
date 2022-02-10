@@ -7,7 +7,12 @@ import {
   getTreasuryAddress,
   loadPoolConfig,
 } from '../../helpers/configuration';
-import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
+import {
+  ALL_ASSETS_PRICES_FOR_TESTING,
+  oneEther,
+  oneRay,
+  ZERO_ADDRESS,
+} from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployFlashLiquidationAdapter,
@@ -51,21 +56,27 @@ import {
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import StarlayConfig from '../../markets/starlay';
+import { strategyDAI } from '../../markets/starlay/reservesConfigs';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
 
-const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = StarlayConfig.Mocks.AllAssetsInitialPrices;
+const ALL_ASSETS_INITIAL_PRICES = ALL_ASSETS_PRICES_FOR_TESTING;
+const LENDING_RATE_ORACLE_RATES_COMMON = {
+  ...StarlayConfig.LendingRateOracleRatesCommon,
+  DAI: {
+    borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+  },
+};
 const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = StarlayConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
-
-  for (const tokenSymbol of Object.keys(TokenContractId)) {
+  const testTokenContracId = [...TokenContractId, 'DAI'];
+  for (const tokenSymbol of Object.values(testTokenContracId)) {
     if (tokenSymbol === 'WETH') {
       tokens[tokenSymbol] = await deployWETHMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
@@ -193,6 +204,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   // Reserve params from STARLAY pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
+    DAI: strategyDAI,
   };
 
   const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);

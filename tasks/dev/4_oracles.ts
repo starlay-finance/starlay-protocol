@@ -31,7 +31,7 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
     } = poolConfig as ICommonConfiguration;
 
     const defaultTokenList = {
-      ...Object.fromEntries(Object.keys(TokenContractId).map((symbol) => [symbol, ''])),
+      ...Object.fromEntries(Object.values(TokenContractId).map((symbol) => [symbol, ''])),
       USD: UsdAddress,
     } as iAssetBase<string>;
     const mockTokens = await getAllMockedTokens();

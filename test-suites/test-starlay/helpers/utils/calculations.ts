@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js';
 import { MAX_UINT_AMOUNT, ONE_YEAR, PERCENTAGE_FACTOR, RAY } from '../../../../helpers/constants';
-import { IReserveParams, iStarlayPoolAssets, RateMode } from '../../../../helpers/types';
+import { iAssetsWithoutUSD, IReserveParams, RateMode } from '../../../../helpers/types';
 import { ReserveData, UserReserveData } from './interfaces';
 import './math';
 
 export const strToBN = (amount: string): BigNumber => new BigNumber(amount);
 
 interface Configuration {
-  reservesParams: iStarlayPoolAssets<IReserveParams>;
+  reservesParams: iAssetsWithoutUSD<IReserveParams> & { DAI: IReserveParams };
 }
 
 export const configuration: Configuration = <Configuration>{};

@@ -1,5 +1,5 @@
 import {
-  MOCK_CHAINLINK_AGGREGATORS_PRICES,
+  MOCK_PRICE_AGGREGATORS_PRICES,
   oneRay,
   oneUsd,
   ZERO_ADDRESS,
@@ -35,15 +35,12 @@ export const CommonsConfig: ICommonConfiguration = {
 
   Mocks: {
     AllAssetsInitialPrices: {
-      ...MOCK_CHAINLINK_AGGREGATORS_PRICES,
+      ...MOCK_PRICE_AGGREGATORS_PRICES,
     },
   },
   LendingRateOracleRatesCommon: {
     WETH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    DAI: {
-      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),

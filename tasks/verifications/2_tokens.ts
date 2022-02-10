@@ -112,7 +112,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           tokenAddress,
           treasuryAddress,
           `Starley interest bearing ${token}`,
-          `ib${token}`,
+          `l${token}`,
           ZERO_ADDRESS,
         ]);
       } else {
@@ -139,7 +139,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
             lendingPoolProxy.address,
             tokenAddress,
             `Starley variable debt bearing ${token}`,
-            `vd${token}`,
+            `variableDebt${token}`,
             ZERO_ADDRESS,
           ]
         );

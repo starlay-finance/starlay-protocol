@@ -38,7 +38,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       dai.address,
       ZERO_ADDRESS,
       'Starley stable debt bearing DAI updated',
-      'sdDAI',
+      'stableDebtDAI',
       '0x10',
     ]);
 
@@ -47,7 +47,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       dai.address,
       ZERO_ADDRESS,
       'Starley variable debt bearing DAI updated',
-      'vdDAI',
+      'variableDebtDAI',
       '0x10',
     ]);
 
