@@ -101,8 +101,8 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
         ]
       );
 
-      const stableDebt = await getAddressById(`stableDebt${token}`);
-      const variableDebt = await getAddressById(`variableDebt${token}`);
+      const stableDebt = await getAddressById(`sd${token}`);
+      const variableDebt = await getAddressById(`vd${token}`);
       const lToken = await getAddressById(`a${token}`);
 
       if (lToken) {
@@ -124,7 +124,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           lendingPoolProxy.address,
           tokenAddress,
           `Starley stable debt bearing ${token}`,
-          `stableDebt${token}`,
+          `sd${token}`,
           ZERO_ADDRESS,
         ]);
       } else {
@@ -139,7 +139,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
             lendingPoolProxy.address,
             tokenAddress,
             `Starley variable debt bearing ${token}`,
-            `variableDebt${token}`,
+            `vd${token}`,
             ZERO_ADDRESS,
           ]
         );
