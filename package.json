@@ -65,7 +65,7 @@
     "@types/mocha": "7.0.2",
     "@types/node": "14.0.5",
     "bignumber.js": "9.0.0",
-    "buidler-typechain": "0.1.1",
+    "buidler-typechain": "0.2.2",
     "chai": "4.3.6",
     "chai-bignumber": "3.0.0",
     "chai-bn": "^0.2.1",
