@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@nomiclabs/buidler": "^1.4.7",
-    "@nomiclabs/buidler-ethers": "2.0.0",
+    "@nomiclabs/buidler-ethers": "2.0.2",
     "@nomiclabs/buidler-etherscan": "^2.1.0",
     "@nomiclabs/buidler-waffle": "2.0.0",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
