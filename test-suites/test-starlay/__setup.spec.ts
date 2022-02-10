@@ -7,7 +7,7 @@ import {
   getTreasuryAddress,
   loadPoolConfig,
 } from '../../helpers/configuration';
-import { oneEther, oneRay, ZERO_ADDRESS } from '../../helpers/constants';
+import { ALL_ASSETS_PRICES_FOR_TESTING, oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployFlashLiquidationAdapter,
@@ -50,16 +50,12 @@ import {
   setInitialMarketRatesInRatesOracleByHelper,
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
-import StarlayConfig from '../../markets/starlay';
-import { strategyDAI } from '../../markets/starlay/reservesConfigs';
+import StarlayConfig, { TestConfig } from '../../markets/starlay';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
 
-const ALL_ASSETS_INITIAL_PRICES = {
-  ...StarlayConfig.Mocks.AllAssetsInitialPrices,
-  DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
-};
+const ALL_ASSETS_INITIAL_PRICES = ALL_ASSETS_PRICES_FOR_TESTING;
 const LENDING_RATE_ORACLE_RATES_COMMON = {
   ...StarlayConfig.LendingRateOracleRatesCommon,
   DAI: {

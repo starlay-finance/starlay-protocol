@@ -30,7 +30,7 @@ export const MOCK_USD_PRICE_IN_WEI = '5848466240000000';
 export const USD_ADDRESS = '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96';
 export const STARLAY_REFERRAL = '0';
 
-export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
+export const MOCK_PRICE_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
   USDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
@@ -40,6 +40,11 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   WASTR: oneEther.multipliedBy('0.003620948469').toFixed(),
   WSDN: oneEther.multipliedBy('0.003620948469').toFixed(),
   LAY: oneEther.multipliedBy('0.003620948469').toFixed(),
+};
+
+export const ALL_ASSETS_PRICES_FOR_TESTING = {
+  ...MOCK_PRICE_AGGREGATORS_PRICES,
+  DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
 };
 
 export const aggregatorProxy = {
