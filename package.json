@@ -76,7 +76,7 @@
     "ethereumjs-util": "7.1.4",
     "ethers": "^5.0.19",
     "hardhat": "^2.2.0",
-    "hardhat-gas-reporter": "^1.0.0",
+    "hardhat-gas-reporter": "^1.0.7",
     "hardhat-typechain": "^0.3.3",
     "husky": "^4.2.5",
     "lowdb": "1.0.0",
