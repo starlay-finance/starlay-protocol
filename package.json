@@ -79,7 +79,7 @@
     "hardhat-gas-reporter": "^1.0.0",
     "hardhat-typechain": "^0.3.3",
     "husky": "^4.2.5",
-    "lowdb": "1.0.0",
+    "lowdb": "3.0.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "solidity-coverage": "^0.7.19",
