@@ -65,9 +65,7 @@ import {
   eContractid,
   eEthereumNetwork,
   eNetwork,
-  iMultiPoolsAssets,
   IReserveParams,
-  PoolConfiguration,
   StarlayPools,
   tEthereumAddress,
   TokenContractId,
@@ -522,27 +520,6 @@ export const deployAllMockTokens = async (verify?: boolean) => {
 
     tokens[tokenSymbol] = await deployMintableERC20(
       [tokenSymbol, tokenSymbol, configData ? configData.reserveDecimals : decimals],
-      verify
-    );
-    await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
-  }
-  return tokens;
-};
-
-export const deployMockTokens = async (config: PoolConfiguration, verify?: boolean) => {
-  const tokens: { [symbol: string]: MintableERC20 } = {};
-  const defaultDecimals = 18;
-
-  const configData = config.ReservesConfig;
-
-  for (const tokenSymbol of Object.keys(configData)) {
-    tokens[tokenSymbol] = await deployMintableERC20(
-      [
-        tokenSymbol,
-        tokenSymbol,
-        configData[tokenSymbol as keyof iMultiPoolsAssets<IReserveParams>].reserveDecimals ||
-          defaultDecimals.toString(),
-      ],
       verify
     );
     await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
