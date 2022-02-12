@@ -20,12 +20,9 @@ import {
   MockAggregatorFactory,
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
-  MockParaSwapAugustusFactory,
-  MockParaSwapAugustusRegistryFactory,
   MockStableDebtTokenFactory,
   MockUniswapV2Router02Factory,
   MockVariableDebtTokenFactory,
-  ParaSwapLiquiditySwapAdapterFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
   SelfdestructTransferFactory,
@@ -713,35 +710,6 @@ export const deployRateStrategy = async (
       ).address;
   }
 };
-export const deployMockParaSwapAugustus = async (verify?: boolean) =>
-  withSaveAndVerify(
-    await new MockParaSwapAugustusFactory(await getFirstSigner()).deploy(),
-    eContractid.MockParaSwapAugustus,
-    [],
-    verify
-  );
-
-export const deployMockParaSwapAugustusRegistry = async (
-  args: [tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new MockParaSwapAugustusRegistryFactory(await getFirstSigner()).deploy(...args),
-    eContractid.MockParaSwapAugustusRegistry,
-    args,
-    verify
-  );
-
-export const deployParaSwapLiquiditySwapAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new ParaSwapLiquiditySwapAdapterFactory(await getFirstSigner()).deploy(...args),
-    eContractid.ParaSwapLiquiditySwapAdapter,
-    args,
-    verify
-  );
 
 export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
   withSaveAndVerify(

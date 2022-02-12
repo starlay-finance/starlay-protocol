@@ -26,10 +26,7 @@ import {
   deployLTokensAndRatesHelper,
   deployMintableERC20,
   deployMockFlashLoanReceiver,
-  deployMockParaSwapAugustus,
-  deployMockParaSwapAugustusRegistry,
   deployMockUniswapRouter,
-  deployParaSwapLiquiditySwapAdapter,
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
   deployStarlayOracle,
@@ -250,12 +247,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await deployUniswapLiquiditySwapAdapter(adapterParams);
   await deployUniswapRepayAdapter(adapterParams);
   await deployFlashLiquidationAdapter(adapterParams);
-
-  const augustus = await deployMockParaSwapAugustus();
-
-  const augustusRegistry = await deployMockParaSwapAugustusRegistry([augustus.address]);
-
-  await deployParaSwapLiquiditySwapAdapter([addressesProvider.address, augustusRegistry.address]);
 
   await deployWalletBalancerProvider();
 

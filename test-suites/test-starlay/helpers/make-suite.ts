@@ -12,7 +12,6 @@ import {
   getLendingPoolConfiguratorProxy,
   getLToken,
   getMintableERC20,
-  getParaSwapLiquiditySwapAdapter,
   getPriceOracle,
   getStarlayProtocolDataProvider,
   getUniswapLiquiditySwapAdapter,
@@ -32,7 +31,6 @@ import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPool
 import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
 import { LToken } from '../../../types/LToken';
 import { MintableERC20 } from '../../../types/MintableERC20';
-import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
 import { PriceOracle } from '../../../types/PriceOracle';
 import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
 import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
@@ -68,7 +66,6 @@ export interface TestEnv {
   registry: LendingPoolAddressesProviderRegistry;
   wethGateway: WETHGateway;
   flashLiquidationAdapter: FlashLiquidationAdapter;
-  paraswapLiquiditySwapAdapter: ParaSwapLiquiditySwapAdapter;
 }
 
 let buidlerevmSnapshotId: string = '0x1';
@@ -93,7 +90,6 @@ const testEnv: TestEnv = {
   uniswapLiquiditySwapAdapter: {} as UniswapLiquiditySwapAdapter,
   uniswapRepayAdapter: {} as UniswapRepayAdapter,
   flashLiquidationAdapter: {} as FlashLiquidationAdapter,
-  paraswapLiquiditySwapAdapter: {} as ParaSwapLiquiditySwapAdapter,
   registry: {} as LendingPoolAddressesProviderRegistry,
   wethGateway: {} as WETHGateway,
 } as TestEnv;
@@ -159,8 +155,6 @@ export async function initializeMakeSuite() {
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
   testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();
   testEnv.flashLiquidationAdapter = await getFlashLiquidationAdapter();
-
-  testEnv.paraswapLiquiditySwapAdapter = await getParaSwapLiquiditySwapAdapter();
 }
 
 const setSnapshot = async () => {
