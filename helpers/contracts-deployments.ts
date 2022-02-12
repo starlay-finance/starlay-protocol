@@ -27,7 +27,6 @@ import {
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
-  StakeUIHelper,
   StakeUIHelperFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
