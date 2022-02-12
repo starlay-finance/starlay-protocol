@@ -84,7 +84,7 @@ export const deployUiPoolDataProviderV2 = async (
       aggregatorProxy,
       baseTokenAddress
     ),
-    eContractid.UiPoolDataProvider,
+    eContractid.UiPoolDataProviderV2,
     [aggregatorProxy, baseTokenAddress],
     verify
   );
