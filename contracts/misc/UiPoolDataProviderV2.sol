@@ -18,7 +18,6 @@ import {IPriceAggregatorAdapter} from '../interfaces/IPriceAggregatorAdapter.sol
 import {
   DefaultReserveInterestRateStrategy
 } from '../protocol/lendingpool/DefaultReserveInterestRateStrategy.sol';
-import {IERC20DetailedBytes} from './interfaces/IERC20DetailedBytes.sol';
 
 contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
   using WadRayMath for uint256;
