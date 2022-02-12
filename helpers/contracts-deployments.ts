@@ -33,7 +33,6 @@ import {
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
-  UiIncentiveDataProviderV2V3,
   UiPoolDataProviderV2Factory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
@@ -50,12 +49,10 @@ import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregator
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
-  deployContract,
   getOptionalParamAddressPerNetwork,
   insertContractAddressInDb,
   linkBytecode,
   registerContractInJsonDb,
-  verifyContract,
   withSaveAndVerify,
 } from './contracts-helpers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
@@ -76,15 +73,6 @@ export const deployUiIncentiveDataProviderV2 = async (verify?: boolean) =>
     [],
     verify
   );
-
-export const deployUiIncentiveDataProviderV2V3 = async (verify?: boolean) => {
-  const id = eContractid.UiIncentiveDataProviderV2V3;
-  const instance = await deployContract<UiIncentiveDataProviderV2V3>(id, []);
-  if (verify) {
-    await verifyContract(id, instance, []);
-  }
-  return instance;
-};
 
 export const deployUiPoolDataProviderV2 = async (
   aggregatorProxy: string,

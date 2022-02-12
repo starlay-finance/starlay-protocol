@@ -75,7 +75,6 @@ export enum eContractid {
   MockParaSwapAugustus = 'MockParaSwapAugustus',
   MockParaSwapAugustusRegistry = 'MockParaSwapAugustusRegistry',
   ParaSwapLiquiditySwapAdapter = 'ParaSwapLiquiditySwapAdapter',
-  UiIncentiveDataProviderV2V3 = 'UiIncentiveDataProviderV2V3',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
 }
 
