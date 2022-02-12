@@ -301,19 +301,6 @@ export const buildRepayAdapterParams = (
   );
 };
 
-export const buildFlashLiquidationAdapterParams = (
-  collateralAsset: tEthereumAddress,
-  debtAsset: tEthereumAddress,
-  user: tEthereumAddress,
-  debtToCover: BigNumberish,
-  useEthPath: boolean
-) => {
-  return ethers.utils.defaultAbiCoder.encode(
-    ['address', 'address', 'address', 'uint256', 'bool'],
-    [collateralAsset, debtAsset, user, debtToCover, useEthPath]
-  );
-};
-
 export const verifyContract = async (
   id: string,
   instance: Contract,

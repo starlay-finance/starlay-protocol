@@ -15,7 +15,6 @@ import {
 } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
-  deployFlashLiquidationAdapter,
   deployLendingPool,
   deployLendingPoolAddressesProvider,
   deployLendingPoolAddressesProviderRegistry,
@@ -26,13 +25,10 @@ import {
   deployLTokensAndRatesHelper,
   deployMintableERC20,
   deployMockFlashLoanReceiver,
-  deployMockUniswapRouter,
   deployPriceOracle,
   deployStableAndVariableTokensHelper,
   deployStarlayOracle,
   deployStarlayProtocolDataProvider,
-  deployUniswapLiquiditySwapAdapter,
-  deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
   deployWETHGateway,
   deployWETHMocked,
@@ -235,18 +231,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     await addressesProvider.setLendingPoolCollateralManager(collateralManager.address)
   );
   await deployMockFlashLoanReceiver(addressesProvider.address);
-
-  const mockUniswapRouter = await deployMockUniswapRouter();
-
-  const adapterParams: [string, string, string] = [
-    addressesProvider.address,
-    mockUniswapRouter.address,
-    mockTokens.WETH.address,
-  ];
-
-  await deployUniswapLiquiditySwapAdapter(adapterParams);
-  await deployUniswapRepayAdapter(adapterParams);
-  await deployFlashLiquidationAdapter(adapterParams);
 
   await deployWalletBalancerProvider();
 
