@@ -34,7 +34,6 @@ import {
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
   UiIncentiveDataProviderV2V3,
-  UiPoolDataProvider,
   UiPoolDataProviderV2Factory,
   UiPoolDataProviderV2V3Factory,
   UniswapLiquiditySwapAdapterFactory,
@@ -117,19 +116,6 @@ export const deployUiPoolDataProviderV2V3 = async (
     [aggregatorProxy, ethUsdAggregatorProxy],
     verify
   );
-
-export const deployUiPoolDataProvider = async (
-  [incentivesController, starlayOracle]: [tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) => {
-  const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, starlayOracle];
-  const instance = await deployContract<UiPoolDataProvider>(id, args);
-  if (verify) {
-    await verifyContract(id, instance, args);
-  }
-  return instance;
-};
 
 const readArtifact = async (id: string) => {
   if (DRE.network.name === eEthereumNetwork.buidlerevm) {
