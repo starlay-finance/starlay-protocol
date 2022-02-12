@@ -92,17 +92,17 @@ export const deployUiIncentiveDataProviderV2V3 = async (verify?: boolean) => {
 };
 
 export const deployUiPoolDataProviderV2 = async (
-  chainlinkAggregatorProxy: string,
-  chainlinkEthUsdAggregatorProxy: string,
+  aggregatorProxy: string,
+  baseTokenAddress: string,
   verify?: boolean
 ) =>
   withSaveAndVerify(
     await new UiPoolDataProviderV2Factory(await getFirstSigner()).deploy(
-      chainlinkAggregatorProxy,
-      chainlinkEthUsdAggregatorProxy
+      aggregatorProxy,
+      baseTokenAddress
     ),
     eContractid.UiPoolDataProvider,
-    [chainlinkAggregatorProxy, chainlinkEthUsdAggregatorProxy],
+    [aggregatorProxy, baseTokenAddress],
     verify
   );
 

@@ -47,9 +47,16 @@ export const ALL_ASSETS_PRICES_FOR_TESTING = {
   DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
 };
 
+// PriceAggregatorAddress
 export const aggregatorProxy = {
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
+  // astar: ZERO_ADDRESS, //TODO:
+  // shiden: ZERO_ADDRESS, //TODO:
   shibuya: ZERO_ADDRESS, //TODO:
 };
 
-export const ethUsdAggregatorProxy = aggregatorProxy;
+export const baseTokenAddress = {
+  // astar: ZERO_ADDRESS, //TODO:
+  // shiden: ZERO_ADDRESS, //TODO:
+  shibuya: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd', // WSBY
+};
