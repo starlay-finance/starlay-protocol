@@ -38,7 +38,6 @@
     "print-contracts:shibuya": "npm run hardhat:shibuya -- print-contracts",
     "print-config:shibuya": "hardhat --network shibuya print-config --pool Starlay --data-provider 0xA1901785c29cBd48bfA74e46b67C736b26054fa4",
     "shibuya:deployUIProviderV2": "hardhat --network shibuya deploy-UiPoolDataProviderV2",
-    "shibuya:deployUIProviderV2V3": "hardhat --network shibuya deploy-UiPoolDataProviderV2V3",
     "shibuya:deployUIIncentivesProviderV2": "hardhat --network shibuya deploy-UiIncentiveDataProviderV2",
     "astar:deployUniswapRepayAdapter": "hardhat --network astar deploy-UniswapRepayAdapter --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "astar:UniswapLiquiditySwapAdapter": "hardhat --network astar deploy-UniswapLiquiditySwapAdapter  --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",

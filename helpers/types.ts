@@ -60,7 +60,6 @@ export enum eContractid {
   StableAndVariableTokensHelper = 'StableAndVariableTokensHelper',
   LTokensAndRatesHelper = 'LTokensAndRatesHelper',
   UiPoolDataProviderV2 = 'UiPoolDataProviderV2',
-  UiPoolDataProviderV2V3 = 'UiPoolDataProviderV2V3',
   WETHGateway = 'WETHGateway',
   WETH = 'WETH',
   WETHMocked = 'WETHMocked',

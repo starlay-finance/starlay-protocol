@@ -35,7 +35,6 @@ import {
   UiIncentiveDataProviderV2Factory,
   UiIncentiveDataProviderV2V3,
   UiPoolDataProviderV2Factory,
-  UiPoolDataProviderV2V3Factory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
@@ -99,21 +98,6 @@ export const deployUiPoolDataProviderV2 = async (
     ),
     eContractid.UiPoolDataProvider,
     [aggregatorProxy, baseTokenAddress],
-    verify
-  );
-
-export const deployUiPoolDataProviderV2V3 = async (
-  aggregatorProxy: string,
-  ethUsdAggregatorProxy: string,
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new UiPoolDataProviderV2V3Factory(await getFirstSigner()).deploy(
-      aggregatorProxy,
-      ethUsdAggregatorProxy
-    ),
-    eContractid.UiPoolDataProvider,
-    [aggregatorProxy, ethUsdAggregatorProxy],
     verify
   );
 
