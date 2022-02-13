@@ -45,6 +45,7 @@ import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
 import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
 import { MintableERC20 } from '../types/MintableERC20';
 import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
+import { WETH9Mocked } from '../types/WETH9Mocked';
 import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
@@ -467,11 +468,16 @@ export const deployDelegationAwareLTokenImpl = async (verify: boolean) =>
   );
 
 export const deployAllMockTokens = async (verify?: boolean) => {
-  const tokens: { [symbol: string]: MintableERC20 } = {};
+  const tokens: { [symbol: string]: MintableERC20 | WETH9Mocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.values(TokenContractId)) {
+    if (tokenSymbol === 'WASTR') {
+      tokens[tokenSymbol] = await deployWETHMocked();
+      await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
+      continue;
+    }
     let decimals = '18';
 
     let configData = (<any>protoConfigData)[tokenSymbol];
@@ -542,7 +548,7 @@ export const deployMockStableDebtToken = async (
 export const deployWETHMocked = async (verify?: boolean) =>
   withSaveAndVerify(
     await new WETH9MockedFactory(await getFirstSigner()).deploy(),
-    eContractid.WETHMocked,
+    eContractid.WASTRMocked,
     [],
     verify
   );
