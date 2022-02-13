@@ -41,3 +41,24 @@ jobs:
       # - uses: codecov/codecov-action@v1
       #   with:
       #     fail_ci_if_error: true
+      - name: prepare
+        id: prepare
+        shell: bash
+        if: |
+          github.ref == 'refs/heads/main' &&
+          !contains(github.event.head_commit.message, 'chore(release)')
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" >> ~/.npmrc
+          git config user.name "GitHub Actions Build"
+          git config user.email "contact@starlay.finance"
+      - id: release
+        name: release
+        if: |
+          github.ref == 'refs/heads/main' &&
+          !contains(github.event.head_commit.message, 'chore(release)')
+        run: |
+          - npm ci
+          - echo //registry.npmjs.org/:_authToken=${NPM_V2_PACKAGES_TOKEN} > .npmrc
+          - npm run compile
+          - ${VERSION}
+          - npm publish --access public
