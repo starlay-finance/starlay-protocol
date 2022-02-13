@@ -33,10 +33,7 @@ import {
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
-  UiIncentiveDataProviderV2V3,
-  UiPoolDataProvider,
   UiPoolDataProviderV2Factory,
-  UiPoolDataProviderV2V3Factory,
   UniswapLiquiditySwapAdapterFactory,
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
@@ -52,12 +49,10 @@ import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregator
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
-  deployContract,
   getOptionalParamAddressPerNetwork,
   insertContractAddressInDb,
   linkBytecode,
   registerContractInJsonDb,
-  verifyContract,
   withSaveAndVerify,
 } from './contracts-helpers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
@@ -65,9 +60,7 @@ import {
   eContractid,
   eEthereumNetwork,
   eNetwork,
-  iMultiPoolsAssets,
   IReserveParams,
-  PoolConfiguration,
   StarlayPools,
   tEthereumAddress,
   TokenContractId,
@@ -81,15 +74,6 @@ export const deployUiIncentiveDataProviderV2 = async (verify?: boolean) =>
     verify
   );
 
-export const deployUiIncentiveDataProviderV2V3 = async (verify?: boolean) => {
-  const id = eContractid.UiIncentiveDataProviderV2V3;
-  const instance = await deployContract<UiIncentiveDataProviderV2V3>(id, []);
-  if (verify) {
-    await verifyContract(id, instance, []);
-  }
-  return instance;
-};
-
 export const deployUiPoolDataProviderV2 = async (
   aggregatorProxy: string,
   baseTokenAddress: string,
@@ -100,38 +84,10 @@ export const deployUiPoolDataProviderV2 = async (
       aggregatorProxy,
       baseTokenAddress
     ),
-    eContractid.UiPoolDataProvider,
+    eContractid.UiPoolDataProviderV2,
     [aggregatorProxy, baseTokenAddress],
     verify
   );
-
-export const deployUiPoolDataProviderV2V3 = async (
-  aggregatorProxy: string,
-  ethUsdAggregatorProxy: string,
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new UiPoolDataProviderV2V3Factory(await getFirstSigner()).deploy(
-      aggregatorProxy,
-      ethUsdAggregatorProxy
-    ),
-    eContractid.UiPoolDataProvider,
-    [aggregatorProxy, ethUsdAggregatorProxy],
-    verify
-  );
-
-export const deployUiPoolDataProvider = async (
-  [incentivesController, starlayOracle]: [tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) => {
-  const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, starlayOracle];
-  const instance = await deployContract<UiPoolDataProvider>(id, args);
-  if (verify) {
-    await verifyContract(id, instance, args);
-  }
-  return instance;
-};
 
 const readArtifact = async (id: string) => {
   if (DRE.network.name === eEthereumNetwork.buidlerevm) {
@@ -522,27 +478,6 @@ export const deployAllMockTokens = async (verify?: boolean) => {
 
     tokens[tokenSymbol] = await deployMintableERC20(
       [tokenSymbol, tokenSymbol, configData ? configData.reserveDecimals : decimals],
-      verify
-    );
-    await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
-  }
-  return tokens;
-};
-
-export const deployMockTokens = async (config: PoolConfiguration, verify?: boolean) => {
-  const tokens: { [symbol: string]: MintableERC20 } = {};
-  const defaultDecimals = 18;
-
-  const configData = config.ReservesConfig;
-
-  for (const tokenSymbol of Object.keys(configData)) {
-    tokens[tokenSymbol] = await deployMintableERC20(
-      [
-        tokenSymbol,
-        tokenSymbol,
-        configData[tokenSymbol as keyof iMultiPoolsAssets<IReserveParams>].reserveDecimals ||
-          defaultDecimals.toString(),
-      ],
       verify
     );
     await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
