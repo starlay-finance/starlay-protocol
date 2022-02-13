@@ -290,7 +290,10 @@ export const getWETHGateway = async (address?: tEthereumAddress) =>
 
 export const getWETHMocked = async (address?: tEthereumAddress) =>
   await WETH9MockedFactory.connect(
-    address || (await getDb().get(`${eContractid.WETHMocked}.${DRE.network.name}`).value()).address,
+    address ||
+      (
+        await getDb().get(`${eContractid.WASTRMocked}.${DRE.network.name}`).value()
+      ).address,
     await getFirstSigner()
   );
 
@@ -393,7 +396,9 @@ export const getPriceAggregator = async (address?: tEthereumAddress) =>
   await PriceAggregatorAdapterDiaImplFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.PriceAggregatorAdapterDiaImpl}.${DRE.network.name}`).value()
+        await getDb()
+          .get(`${eContractid.PriceAggregatorAdapterDiaImpl}.${DRE.network.name}`)
+          .value()
       ).address,
     await getFirstSigner()
   );
