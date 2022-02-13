@@ -160,14 +160,14 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
-    [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shibuya]: '0x7eCdDacFb4B0dCbD4Eb974934d3EDA29a9A50518',
   },
   FallbackOracle: {
     [eEthereumNetwork.buidlerevm]: '',
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
-    [eAstarNetwork.shibuya]: ZERO_ADDRESS,
+    [eAstarNetwork.shibuya]: '0x0417750Cba71Bc894d31CF7071a1214c612106F2',
   },
   ChainlinkAggregator: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -223,7 +223,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    [eAstarNetwork.shibuya]: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd',
+    [eAstarNetwork.shibuya]: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
   },
   ReserveFactorTreasuryAddress: {
     [eEthereumNetwork.buidlerevm]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',

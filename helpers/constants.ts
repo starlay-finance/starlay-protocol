@@ -52,11 +52,11 @@ export const aggregatorProxy = {
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   // astar: ZERO_ADDRESS, //TODO:
   // shiden: ZERO_ADDRESS, //TODO:
-  shibuya: ZERO_ADDRESS, //TODO:
+  shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
 };
 
 export const baseTokenAddress = {
   // astar: ZERO_ADDRESS, //TODO:
   // shiden: ZERO_ADDRESS, //TODO:
-  shibuya: '0x674421E9567653EE76e96fEEA3B2B2966d000Dbd', // WSBY
+  shibuya: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
 };
