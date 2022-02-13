@@ -1,5 +1,4 @@
 import { readArtifact as buidlerReadArtifact } from '@nomiclabs/buidler/plugins';
-import { MockContract } from 'ethereum-waffle';
 import { Contract } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
@@ -512,7 +511,7 @@ export const deployDelegationAwareLTokenImpl = async (verify: boolean) =>
   );
 
 export const deployAllMockTokens = async (verify?: boolean) => {
-  const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
+  const tokens: { [symbol: string]: MintableERC20 } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
@@ -531,7 +530,7 @@ export const deployAllMockTokens = async (verify?: boolean) => {
 };
 
 export const deployMockTokens = async (config: PoolConfiguration, verify?: boolean) => {
-  const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
+  const tokens: { [symbol: string]: MintableERC20 } = {};
   const defaultDecimals = 18;
 
   const configData = config.ReservesConfig;
