@@ -389,8 +389,14 @@ export const getStarlayOracle = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getPriceAggregator = async (address: tEthereumAddress) =>
-  await PriceAggregatorAdapterDiaImplFactory.connect(address, await getFirstSigner());
+export const getPriceAggregator = async (address?: tEthereumAddress) =>
+  await PriceAggregatorAdapterDiaImplFactory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.PriceAggregatorAdapterDiaImpl}.${DRE.network.name}`).value()
+      ).address,
+    await getFirstSigner()
+  );
 
 export const getMockUniswapRouter = async (address?: tEthereumAddress) =>
   await MockUniswapV2Router02Factory.connect(

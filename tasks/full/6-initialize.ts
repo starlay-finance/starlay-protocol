@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import { exit } from 'process';
 import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
-import { aggregatorProxy } from '../../helpers/constants';
+import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployLendingPoolCollateralManager,
@@ -102,7 +102,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       const uiPoolDataProvider = await deployUiPoolDataProviderV2(
         aggregatorProxy[localBRE.network.name],
-        aggregatorProxy[localBRE.network.name],
+        baseTokenAddress[localBRE.network.name],
         verify
       );
       console.log('UiPoolDataProvider deployed at:', uiPoolDataProvider.address);

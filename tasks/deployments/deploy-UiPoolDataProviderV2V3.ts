@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
-import { eContractid } from '../../helpers/types';
+import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
 import { deployUiPoolDataProviderV2V3 } from '../../helpers/contracts-deployments';
-import { aggregatorProxy, ethUsdAggregatorProxy } from '../../helpers/constants';
+import { eContractid } from '../../helpers/types';
 
 task(`deploy-${eContractid.UiPoolDataProviderV2V3}`, `Deploys the UiPoolDataProviderV2V3 contract`)
   .addFlag('verify', 'Verify UiPoolDataProviderV2V3 contract via Etherscan API.')
@@ -23,7 +23,7 @@ task(`deploy-${eContractid.UiPoolDataProviderV2V3}`, `Deploys the UiPoolDataProv
 
     const UiPoolDataProviderV2V3 = await deployUiPoolDataProviderV2V3(
       aggregatorProxy[localBRE.network.name],
-      ethUsdAggregatorProxy[localBRE.network.name],
+      baseTokenAddress[localBRE.network.name],
       verify
     );
 
