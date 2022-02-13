@@ -72,7 +72,7 @@ const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
 const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 
 const deployAllMockTokens = async (deployer: Signer) => {
-  const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
+  const tokens: { [symbol: string]: MintableERC20 | WETH9Mocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
   const testTokenContracId = [...TokenContractId, 'DAI'];
