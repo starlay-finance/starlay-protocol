@@ -1,7 +1,8 @@
 .env
 #Buidler files
 cache
-artifacts
+artifacts/build-info
+artifacts/@openzeppelin
 node_modules
 dist/
 build/
