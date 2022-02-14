@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
-import {IWETH} from './interfaces/IWETH.sol';
+import {IWASTR} from './interfaces/IWASTR.sol';
 import {IWASTRGateway} from './interfaces/IWASTRGateway.sol';
 import {ILendingPool} from '../interfaces/ILendingPool.sol';
 import {ILToken} from '../interfaces/ILToken.sol';
@@ -17,14 +17,14 @@ contract WETHGateway is IWASTRGateway, Ownable {
   using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
-  IWETH internal immutable WETH;
+  IWASTR internal immutable WETH;
 
   /**
    * @dev Sets the WETH address and the LendingPoolAddressesProvider address. Infinite approves lending pool.
    * @param weth Address of the Wrapped Ether contract
    **/
   constructor(address weth) public {
-    WETH = IWETH(weth);
+    WETH = IWASTR(weth);
   }
 
   function authorizeLendingPool(address lendingPool) external onlyOwner {
