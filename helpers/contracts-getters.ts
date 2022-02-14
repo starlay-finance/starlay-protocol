@@ -32,7 +32,7 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
-  WETH9MockedFactory,
+  WASTRMockedFactory,
   WETHGatewayFactory,
 } from '../types';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
@@ -288,8 +288,8 @@ export const getWETHGateway = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getWETHMocked = async (address?: tEthereumAddress) =>
-  await WETH9MockedFactory.connect(
+export const getWASTRMocked = async (address?: tEthereumAddress) =>
+  await WASTRMockedFactory.connect(
     address ||
       (
         await getDb().get(`${eContractid.WASTRMocked}.${DRE.network.name}`).value()

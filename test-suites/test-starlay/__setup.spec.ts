@@ -37,8 +37,8 @@ import {
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
+  deployWASTRMocked,
   deployWETHGateway,
-  deployWETHMocked,
 } from '../../helpers/contracts-deployments';
 import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
@@ -58,7 +58,7 @@ import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '..
 import StarlayConfig from '../../markets/starlay';
 import { strategyDAI } from '../../markets/starlay/reservesConfigs';
 import { MintableERC20 } from '../../types/MintableERC20';
-import { WETH9Mocked } from '../../types/WETH9Mocked';
+import { WASTRMocked } from './../../types/WASTRMocked.d';
 import { initializeMakeSuite } from './helpers/make-suite';
 
 const ALL_ASSETS_INITIAL_PRICES = ALL_ASSETS_PRICES_FOR_TESTING;
@@ -72,13 +72,13 @@ const USD_ADDRESS = StarlayConfig.ProtocolGlobalParams.UsdAddress;
 const MOCK_USD_PRICE_IN_WEI = StarlayConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 
 const deployAllMockTokens = async (deployer: Signer) => {
-  const tokens: { [symbol: string]: MintableERC20 | WETH9Mocked } = {};
+  const tokens: { [symbol: string]: MintableERC20 | WASTRMocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
   const testTokenContracId = [...TokenContractId, 'DAI'];
   for (const tokenSymbol of Object.values(testTokenContracId)) {
-    if (tokenSymbol === 'WETH') {
-      tokens[tokenSymbol] = await deployWETHMocked();
+    if (tokenSymbol === 'WASTR') {
+      tokens[tokenSymbol] = await deployWASTRMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
       continue;
     }
@@ -107,7 +107,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const config = loadPoolConfig(ConfigNames.Starlay);
 
   const mockTokens: {
-    [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
+    [symbol: string]: MockContract | MintableERC20 | WASTRMocked;
   } = {
     ...(await deployAllMockTokens(deployer)),
   };

@@ -38,15 +38,15 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
-  WETH9MockedFactory,
+  WASTRMockedFactory,
   WETHGatewayFactory,
 } from '../types';
 import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
 import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
 import { MintableERC20 } from '../types/MintableERC20';
 import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
-import { WETH9Mocked } from '../types/WETH9Mocked';
 import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
+import { WASTRMocked } from './../types/WASTRMocked.d';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
@@ -468,13 +468,13 @@ export const deployDelegationAwareLTokenImpl = async (verify: boolean) =>
   );
 
 export const deployAllMockTokens = async (verify?: boolean) => {
-  const tokens: { [symbol: string]: MintableERC20 | WETH9Mocked } = {};
+  const tokens: { [symbol: string]: MintableERC20 | WASTRMocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.values(TokenContractId)) {
     if (tokenSymbol === 'WASTR') {
-      tokens[tokenSymbol] = await deployWETHMocked();
+      tokens[tokenSymbol] = await deployWASTRMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
       continue;
     }
@@ -545,9 +545,9 @@ export const deployMockStableDebtToken = async (
   return instance;
 };
 
-export const deployWETHMocked = async (verify?: boolean) =>
+export const deployWASTRMocked = async (verify?: boolean) =>
   withSaveAndVerify(
-    await new WETH9MockedFactory(await getFirstSigner()).deploy(),
+    await new WASTRMockedFactory(await getFirstSigner()).deploy(),
     eContractid.WASTRMocked,
     [],
     verify

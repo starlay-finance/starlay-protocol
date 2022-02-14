@@ -1,6 +1,6 @@
 import StarlayConfig from '../markets/starlay';
 import { CommonsConfig } from '../markets/starlay/commons';
-import { deployWETHMocked } from './contracts-deployments';
+import { deployWASTRMocked } from './contracts-deployments';
 import {
   getEthersSignersAddresses,
   getParamPerNetwork,
@@ -91,7 +91,7 @@ export const getWethAddress = async (config: IBaseConfiguration) => {
   if (wethAddress) {
     return wethAddress;
   }
-  const weth = await deployWETHMocked();
+  const weth = await deployWASTRMocked();
   return weth.address;
 };
 
@@ -104,7 +104,7 @@ export const getWrappedNativeTokenAddress = async (config: IBaseConfiguration) =
   if (currentNetwork.includes('astar')) {
     throw new Error('WASTR not set at astar configuration.');
   }
-  const weth = await deployWETHMocked();
+  const weth = await deployWASTRMocked();
   return weth.address;
 };
 

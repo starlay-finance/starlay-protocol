@@ -17,15 +17,15 @@ import {
   getStarlayProtocolDataProvider,
   getUniswapLiquiditySwapAdapter,
   getUniswapRepayAdapter,
+  getWASTRMocked,
   getWETHGateway,
-  getWETHMocked,
 } from '../../../helpers/contracts-getters';
 import { getEthersSigners, getParamPerNetwork } from '../../../helpers/contracts-helpers';
 import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
 import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { StarlayConfig } from '../../../markets/starlay';
-import { FlashLiquidationAdapter } from '../../../types';
+import { FlashLiquidationAdapter, WASTRMocked } from '../../../types';
 import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
 import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPoolAddressesProviderRegistry';
@@ -37,7 +37,6 @@ import { PriceOracle } from '../../../types/PriceOracle';
 import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
 import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
 import { UniswapRepayAdapter } from '../../../types/UniswapRepayAdapter';
-import { WETH9Mocked } from '../../../types/WETH9Mocked';
 import { WETHGateway } from '../../../types/WETHGateway';
 import { almostEqual } from './almost-equal';
 
@@ -56,7 +55,7 @@ export interface TestEnv {
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
   helpersContract: StarlayProtocolDataProvider;
-  weth: WETH9Mocked;
+  weth: WASTRMocked;
   lWETH: LToken;
   dai: MintableERC20;
   lDai: LToken;
@@ -83,7 +82,7 @@ const testEnv: TestEnv = {
   configurator: {} as LendingPoolConfigurator,
   helpersContract: {} as StarlayProtocolDataProvider,
   oracle: {} as PriceOracle,
-  weth: {} as WETH9Mocked,
+  weth: {} as WASTRMocked,
   lWETH: {} as LToken,
   dai: {} as MintableERC20,
   lDai: {} as LToken,
@@ -153,7 +152,7 @@ export async function initializeMakeSuite() {
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.usdc = await getMintableERC20(usdcAddress);
   testEnv.lay = await getMintableERC20(layAddress);
-  testEnv.weth = await getWETHMocked(wethAddress);
+  testEnv.weth = await getWASTRMocked(wethAddress);
   testEnv.wethGateway = await getWETHGateway();
 
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
