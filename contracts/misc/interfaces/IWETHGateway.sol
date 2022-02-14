@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.6.12;
 
-interface IWETHGateway {
+interface IWASTRGateway {
   function depositETH(
     address lendingPool,
     address onBehalfOf,

@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
 import {IWETH} from './interfaces/IWETH.sol';
-import {IWETHGateway} from './interfaces/IWETHGateway.sol';
+import {IWASTRGateway} from './interfaces/IWASTRGateway.sol';
 import {ILendingPool} from '../interfaces/ILendingPool.sol';
 import {ILToken} from '../interfaces/ILToken.sol';
 import {ReserveConfiguration} from '../protocol/libraries/configuration/ReserveConfiguration.sol';
@@ -13,7 +13,7 @@ import {UserConfiguration} from '../protocol/libraries/configuration/UserConfigu
 import {Helpers} from '../protocol/libraries/helpers/Helpers.sol';
 import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
 
-contract WETHGateway is IWETHGateway, Ownable {
+contract WETHGateway is IWASTRGateway, Ownable {
   using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
