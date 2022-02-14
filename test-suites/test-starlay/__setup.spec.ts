@@ -14,7 +14,7 @@ import {
   ZERO_ADDRESS,
 } from '../../helpers/constants';
 import {
-  authorizeWETHGateway,
+  authorizeWASTRGateway,
   deployFlashLiquidationAdapter,
   deployLendingPool,
   deployLendingPoolAddressesProvider,
@@ -37,8 +37,8 @@ import {
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployWalletBalancerProvider,
+  deployWASTRGateway,
   deployWASTRMocked,
-  deployWETHGateway,
 } from '../../helpers/contracts-deployments';
 import { getLendingPool, getLendingPoolConfiguratorProxy } from '../../helpers/contracts-getters';
 import {
@@ -259,8 +259,8 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
-  await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
+  const gateWay = await deployWASTRGateway([mockTokens.WETH.address]);
+  await authorizeWASTRGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');
 };

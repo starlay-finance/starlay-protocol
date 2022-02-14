@@ -17,8 +17,8 @@ import {
   getStarlayProtocolDataProvider,
   getUniswapLiquiditySwapAdapter,
   getUniswapRepayAdapter,
+  getWASTRGateway,
   getWASTRMocked,
-  getWETHGateway,
 } from '../../../helpers/contracts-getters';
 import { getEthersSigners, getParamPerNetwork } from '../../../helpers/contracts-helpers';
 import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
@@ -37,7 +37,7 @@ import { PriceOracle } from '../../../types/PriceOracle';
 import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
 import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
 import { UniswapRepayAdapter } from '../../../types/UniswapRepayAdapter';
-import { WETHGateway } from '../../../types/WETHGateway';
+import { WASTRGateway } from '../../../types/WASTRGateway';
 import { almostEqual } from './almost-equal';
 
 chai.use(bignumberChai());
@@ -65,7 +65,7 @@ export interface TestEnv {
   uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
   uniswapRepayAdapter: UniswapRepayAdapter;
   registry: LendingPoolAddressesProviderRegistry;
-  wethGateway: WETHGateway;
+  wastrGateway: WASTRGateway;
   flashLiquidationAdapter: FlashLiquidationAdapter;
   paraswapLiquiditySwapAdapter: ParaSwapLiquiditySwapAdapter;
 }
@@ -94,7 +94,7 @@ const testEnv: TestEnv = {
   flashLiquidationAdapter: {} as FlashLiquidationAdapter,
   paraswapLiquiditySwapAdapter: {} as ParaSwapLiquiditySwapAdapter,
   registry: {} as LendingPoolAddressesProviderRegistry,
-  wethGateway: {} as WETHGateway,
+  wastrGateway: {} as WASTRGateway,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -153,7 +153,7 @@ export async function initializeMakeSuite() {
   testEnv.usdc = await getMintableERC20(usdcAddress);
   testEnv.lay = await getMintableERC20(layAddress);
   testEnv.weth = await getWASTRMocked(wethAddress);
-  testEnv.wethGateway = await getWETHGateway();
+  testEnv.wastrGateway = await getWASTRGateway();
 
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
   testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();

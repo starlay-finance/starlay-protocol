@@ -60,7 +60,7 @@ export enum eContractid {
   StableAndVariableTokensHelper = 'StableAndVariableTokensHelper',
   LTokensAndRatesHelper = 'LTokensAndRatesHelper',
   UiPoolDataProviderV2 = 'UiPoolDataProviderV2',
-  WETHGateway = 'WETHGateway',
+  WASTRGateway = 'WASTRGateway',
   WETH = 'WETH',
   WASTRMocked = 'WASTRMocked',
   SelfdestructTransferMock = 'SelfdestructTransferMock',
@@ -344,7 +344,7 @@ export interface IBaseConfiguration {
   LTokenDomainSeparator: iParamsPerNetwork<string>;
   WETH: iParamsPerNetwork<tEthereumAddress>;
   WrappedNativeToken: iParamsPerNetwork<tEthereumAddress>;
-  WethGateway: iParamsPerNetwork<tEthereumAddress>;
+  WastrGateway: iParamsPerNetwork<tEthereumAddress>;
   ReserveFactorTreasuryAddress: iParamsPerNetwork<tEthereumAddress>;
   IncentivesController: iParamsPerNetwork<tEthereumAddress>;
   StableDebtTokenImplementation?: iParamsPerNetwork<tEthereumAddress>;

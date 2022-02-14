@@ -16,7 +16,7 @@
     "test-suites/test-starlay/uniswapAdapters.repay.spec.ts",
     "test-suites/test-starlay/upgradeability.spec.ts",
     "test-suites/test-starlay/variable-debt-token.spec.ts",
-    "test-suites/test-starlay/weth-gateway.spec.ts"
+    "test-suites/test-starlay/wastr-gateway.spec.ts"
   ],
   "files": [
     "./hardhat.config.ts",

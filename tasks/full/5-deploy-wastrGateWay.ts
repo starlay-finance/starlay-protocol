@@ -1,14 +1,14 @@
 import { task } from 'hardhat/config';
 import {
-  loadPoolConfig,
   ConfigNames,
   getWrappedNativeTokenAddress,
+  loadPoolConfig,
 } from '../../helpers/configuration';
-import { deployWETHGateway } from '../../helpers/contracts-deployments';
+import { deployWASTRGateway } from '../../helpers/contracts-deployments';
 
-const CONTRACT_NAME = 'WETHGateway';
+const CONTRACT_NAME = 'WASTRGateway';
 
-task(`full-deploy-weth-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
+task(`full-deploy-wastr-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .addFlag('verify', `Verify ${CONTRACT_NAME} contract via Etherscan API.`)
   .setAction(async ({ verify, pool }, localBRE) => {
@@ -19,7 +19,7 @@ task(`full-deploy-weth-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
     if (!localBRE.network.config.chainId) {
       throw new Error('INVALID_CHAIN_ID');
     }
-    const wethGateWay = await deployWETHGateway([Weth], verify);
-    console.log(`${CONTRACT_NAME}.address`, wethGateWay.address);
+    const wastrGateWay = await deployWASTRGateway([Weth], verify);
+    console.log(`${CONTRACT_NAME}.address`, wastrGateWay.address);
     console.log(`\tFinished ${CONTRACT_NAME} deployment`);
   });

@@ -124,7 +124,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
   },
-  WethGateway: {
+  WastrGateway: {
     [eEthereumNetwork.buidlerevm]: '',
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',

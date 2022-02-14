@@ -2,7 +2,7 @@ import { task } from 'hardhat/config';
 import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  authorizeWETHGateway,
+  authorizeWASTRGateway,
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployStarlayProtocolDataProvider,
@@ -11,7 +11,7 @@ import {
 import {
   getAllMockedTokens,
   getLendingPoolAddressesProvider,
-  getWETHGateway,
+  getWASTRGateway,
 } from '../../helpers/contracts-getters';
 import { getParamPerNetwork, insertContractAddressInDb } from '../../helpers/contracts-helpers';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
@@ -31,7 +31,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
       StableDebtTokenNamePrefix,
       VariableDebtTokenNamePrefix,
       SymbolPrefix,
-      WethGateway,
+      WastrGateway,
       ReservesConfig,
     } = poolConfig;
     const mockTokens = await getAllMockedTokens();
@@ -84,9 +84,9 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-    let gateway = getParamPerNetwork(WethGateway, network);
+    let gateway = getParamPerNetwork(WastrGateway, network);
     if (!notFalsyOrZeroAddress(gateway)) {
-      gateway = (await getWETHGateway()).address;
+      gateway = (await getWASTRGateway()).address;
     }
-    await authorizeWETHGateway(gateway, lendingPoolAddress);
+    await authorizeWASTRGateway(gateway, lendingPoolAddress);
   });

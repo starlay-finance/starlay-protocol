@@ -17,12 +17,12 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   const depositSize = parseEther('5');
   const daiSize = parseEther('10000');
   it('Deposit WETH', async () => {
-    const { users, wethGateway, lWETH } = testEnv;
+    const { users, wastrGateway, lWETH } = testEnv;
 
     const user = users[1];
 
     // Deposit with native ETH
-    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
+    await wastrGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
@@ -31,7 +31,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Withdraw WETH - Partial', async () => {
-    const { users, wethGateway, lWETH } = testEnv;
+    const { users, wastrGateway, lWETH } = testEnv;
 
     const user = users[1];
     const priorEthersBalance = await user.signer.getBalance();
@@ -45,12 +45,12 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Approve the lTokens to Gateway so Gateway can withdraw and convert to Ether
     const approveTx = await lWETH
       .connect(user.signer)
-      .approve(wethGateway.address, MAX_UINT_AMOUNT);
+      .approve(wastrGateway.address, MAX_UINT_AMOUNT);
     const { gasUsed: approveGas } = await waitForTx(approveTx);
 
     // Partial Withdraw and send native Ether to user
     const { gasUsed: withdrawGas } = await waitForTx(
-      await wethGateway.connect(user.signer).withdrawASTR(partialWithdraw, user.address)
+      await wastrGateway.connect(user.signer).withdrawASTR(partialWithdraw, user.address)
     );
 
     const afterPartialEtherBalance = await user.signer.getBalance();
@@ -68,7 +68,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Withdraw WETH - Full', async () => {
-    const { users, lWETH, wethGateway } = testEnv;
+    const { users, lWETH, wastrGateway } = testEnv;
 
     const user = users[1];
     const priorEthersBalance = await user.signer.getBalance();
@@ -79,12 +79,12 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Approve the lTokens to Gateway so Gateway can withdraw and convert to Ether
     const approveTx = await lWETH
       .connect(user.signer)
-      .approve(wethGateway.address, MAX_UINT_AMOUNT);
+      .approve(wastrGateway.address, MAX_UINT_AMOUNT);
     const { gasUsed: approveGas } = await waitForTx(approveTx);
 
     // Full withdraw
     const { gasUsed: withdrawGas } = await waitForTx(
-      await wethGateway.connect(user.signer).withdrawASTR(MAX_UINT_AMOUNT, user.address)
+      await wastrGateway.connect(user.signer).withdrawASTR(MAX_UINT_AMOUNT, user.address)
     );
 
     const afterFullEtherBalance = await user.signer.getBalance();
@@ -99,7 +99,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Borrow stable WETH and Full Repay with ETH', async () => {
-    const { users, wethGateway, dai, lDai, weth, pool, helpersContract } = testEnv;
+    const { users, wastrGateway, dai, lDai, weth, pool, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
@@ -131,7 +131,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     // Full Repay WETH with native ETH
     await waitForTx(
-      await wethGateway
+      await wastrGateway
         .connect(user.signer)
         .repayASTR(MAX_UINT_AMOUNT, '1', user.address, { value: repaySize })
     );
@@ -141,7 +141,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Borrow variable WETH and Full Repay with ETH', async () => {
-    const { users, wethGateway, lWETH, weth, pool, helpersContract } = testEnv;
+    const { users, wastrGateway, lWETH, weth, pool, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
@@ -153,7 +153,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     const varDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
 
     // Deposit with native ETH
-    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
+    await wastrGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
@@ -172,7 +172,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Partial Repay WETH loan with native ETH
     const partialPayment = repaySize.div(2);
     await waitForTx(
-      await wethGateway
+      await wastrGateway
         .connect(user.signer)
         .repayASTR(partialPayment, '2', user.address, { value: partialPayment })
     );
@@ -182,7 +182,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     // Full Repay WETH loan with native ETH
     await waitForTx(
-      await wethGateway
+      await wastrGateway
         .connect(user.signer)
         .repayASTR(MAX_UINT_AMOUNT, '2', user.address, { value: repaySize })
     );
@@ -191,7 +191,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Borrow ETH via delegateApprove ETH and repays back', async () => {
-    const { users, wethGateway, lWETH, weth, helpersContract } = testEnv;
+    const { users, wastrGateway, lWETH, weth, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const user = users[2];
     const { variableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(
@@ -203,20 +203,20 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     expect(priorDebtBalance).to.be.eq(zero);
 
     // Deposit WETH with native ETH
-    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
+    await wastrGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
     expect(lTokensBalance).to.be.gt(zero);
     expect(lTokensBalance).to.be.gte(depositSize);
 
-    // Delegates borrowing power of WETH to WETHGateway
+    // Delegates borrowing power of WETH to WastrGateway
     await waitForTx(
-      await varDebtToken.connect(user.signer).approveDelegation(wethGateway.address, borrowSize)
+      await varDebtToken.connect(user.signer).approveDelegation(wastrGateway.address, borrowSize)
     );
 
     // Borrows ETH with WETH as collateral
-    await waitForTx(await wethGateway.connect(user.signer).borrowASTR(borrowSize, '2', '0'));
+    await waitForTx(await wastrGateway.connect(user.signer).borrowASTR(borrowSize, '2', '0'));
 
     const debtBalance = await varDebtToken.balanceOf(user.address);
 
@@ -224,7 +224,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     // Full Repay WETH loan with native ETH
     await waitForTx(
-      await wethGateway
+      await wastrGateway
         .connect(user.signer)
         .repayASTR(MAX_UINT_AMOUNT, '2', user.address, { value: borrowSize.mul(2) })
     );
@@ -233,14 +233,14 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Should revert if receiver function receives Ether if not WETH', async () => {
-    const { users, wethGateway } = testEnv;
+    const { users, wastrGateway } = testEnv;
     const user = users[0];
     const amount = parseEther('1');
 
     // Call receiver function (empty data + value)
     await expect(
       user.signer.sendTransaction({
-        to: wethGateway.address,
+        to: wastrGateway.address,
         value: amount,
         gasLimit: DRE.network.config.gas,
       })
@@ -248,7 +248,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Should revert if fallback functions is called with Ether', async () => {
-    const { users, wethGateway } = testEnv;
+    const { users, wastrGateway } = testEnv;
     const user = users[0];
     const amount = parseEther('1');
     const fakeABI = ['function wantToCallFallback()'];
@@ -258,7 +258,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Call fallback function with value
     await expect(
       user.signer.sendTransaction({
-        to: wethGateway.address,
+        to: wastrGateway.address,
         data: fakeMethodEncoded,
         value: amount,
         gasLimit: DRE.network.config.gas,
@@ -267,7 +267,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Should revert if fallback functions is called', async () => {
-    const { users, wethGateway } = testEnv;
+    const { users, wastrGateway } = testEnv;
     const user = users[0];
 
     const fakeABI = ['function wantToCallFallback()'];
@@ -277,7 +277,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Call fallback function without value
     await expect(
       user.signer.sendTransaction({
-        to: wethGateway.address,
+        to: wastrGateway.address,
         data: fakeMethodEncoded,
         gasLimit: DRE.network.config.gas,
       })
@@ -285,11 +285,11 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Getters should retrieve correct state', async () => {
-    const { lWETH, weth, pool, wethGateway } = testEnv;
+    const { lWETH, weth, pool, wastrGateway } = testEnv;
 
-    const WETHAddress = await wethGateway.getWETHAddress();
-    const lWETHAddress = await wethGateway.getLWETHAddress();
-    const poolAddress = await wethGateway.getLendingPoolAddress();
+    const WETHAddress = await wastrGateway.getWASTRAddress();
+    const lWETHAddress = await wastrGateway.getLWETHAddress();
+    const poolAddress = await wastrGateway.getLendingPoolAddress();
 
     expect(WETHAddress).to.be.equal(weth.address);
     expect(lWETHAddress).to.be.equal(lWETH.address);
@@ -297,7 +297,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Owner can do emergency token recovery', async () => {
-    const { users, weth, dai, wethGateway, deployer } = testEnv;
+    const { users, weth, dai, wastrGateway, deployer } = testEnv;
     const user = users[0];
     const amount = parseEther('1');
 
@@ -313,14 +313,14 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     );
     const daiBalanceAfterMint = await dai.balanceOf(user.address);
 
-    await dai.connect(user.signer).transfer(wethGateway.address, amount);
+    await dai.connect(user.signer).transfer(wastrGateway.address, amount);
     const daiBalanceAfterBadTransfer = await dai.balanceOf(user.address);
     expect(daiBalanceAfterBadTransfer).to.be.eq(
       daiBalanceAfterMint.sub(amount),
       'User should have lost the funds here.'
     );
 
-    await wethGateway
+    await wastrGateway
       .connect(deployer.signer)
       .emergencyTokenTransfer(dai.address, user.address, amount);
     const daiBalanceAfterRecovery = await dai.balanceOf(user.address);
@@ -332,7 +332,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Owner can do emergency native ETH recovery', async () => {
-    const { users, wethGateway, deployer } = testEnv;
+    const { users, wastrGateway, deployer } = testEnv;
     const user = users[0];
     const amount = parseEther('1');
     const userBalancePriorCall = await user.signer.getBalance();
@@ -340,10 +340,10 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     // Deploy contract with payable selfdestruct contract
     const selfdestructContract = await deploySelfdestructTransferMock();
 
-    // Selfdestruct the mock, pointing to WETHGateway address
+    // Selfdestruct the mock, pointing to WastrGateway address
     const callTx = await selfdestructContract
       .connect(user.signer)
-      .destroyAndTransfer(wethGateway.address, { value: amount });
+      .destroyAndTransfer(wastrGateway.address, { value: amount });
     const { gasUsed } = await waitForTx(callTx);
     const gasFees = gasUsed.mul(callTx.gasPrice);
     const userBalanceAfterCall = await user.signer.getBalance();
@@ -352,15 +352,15 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     ('User should have lost the funds');
 
     // Recover the funds from the contract and sends back to the user
-    await wethGateway.connect(deployer.signer).emergencyEtherTransfer(user.address, amount);
+    await wastrGateway.connect(deployer.signer).emergencyAstarTransfer(user.address, amount);
 
     const userBalanceAfterRecovery = await user.signer.getBalance();
-    const wethGatewayAfterRecovery = await DRE.ethers.provider.getBalance(wethGateway.address);
+    const wastrGatewayAfterRecovery = await DRE.ethers.provider.getBalance(wastrGateway.address);
 
     expect(userBalanceAfterRecovery).to.be.eq(
       userBalancePriorCall.sub(gasFees),
       'User should recover the funds due emergency eth transfer.'
     );
-    expect(wethGatewayAfterRecovery).to.be.eq('0', 'WETHGateway ether balance should be zero.');
+    expect(wastrGatewayAfterRecovery).to.be.eq('0', 'WastrGateway ether balance should be zero.');
   });
 });

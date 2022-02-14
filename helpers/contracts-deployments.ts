@@ -38,8 +38,8 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
+  WASTRGatewayFactory,
   WASTRMockedFactory,
-  WETHGatewayFactory,
 } from '../types';
 import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
 import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
@@ -513,20 +513,20 @@ export const deployLTokensAndRatesHelper = async (
     verify
   );
 
-export const deployWETHGateway = async (args: [tEthereumAddress], verify?: boolean) =>
+export const deployWASTRGateway = async (args: [tEthereumAddress], verify?: boolean) =>
   withSaveAndVerify(
-    await new WETHGatewayFactory(await getFirstSigner()).deploy(...args),
-    eContractid.WETHGateway,
+    await new WASTRGatewayFactory(await getFirstSigner()).deploy(...args),
+    eContractid.WASTRGateway,
     args,
     verify
   );
 
-export const authorizeWETHGateway = async (
-  wethGateWay: tEthereumAddress,
+export const authorizeWASTRGateway = async (
+  wastrGateWay: tEthereumAddress,
   lendingPool: tEthereumAddress
 ) =>
-  await new WETHGatewayFactory(await getFirstSigner())
-    .attach(wethGateWay)
+  await new WASTRGatewayFactory(await getFirstSigner())
+    .attach(wastrGateWay)
     .authorizeLendingPool(lendingPool);
 
 export const deployMockStableDebtToken = async (
