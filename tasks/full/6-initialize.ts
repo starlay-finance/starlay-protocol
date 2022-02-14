@@ -5,6 +5,7 @@ import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployLendingPoolCollateralManager,
+  deployUiIncentiveDataProviderV2,
   deployUiPoolDataProviderV2,
   deployWalletBalancerProvider,
 } from '../../helpers/contracts-deployments';
@@ -106,6 +107,9 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         verify
       );
       console.log('UiPoolDataProvider deployed at:', uiPoolDataProvider.address);
+
+      const uiIncentiveDataProvider = await deployUiIncentiveDataProviderV2();
+      console.log('UiIncentiveDataProvider deployed at:', uiIncentiveDataProvider.address);
 
       const lendingPoolAddress = await addressesProvider.getLendingPool();
 
