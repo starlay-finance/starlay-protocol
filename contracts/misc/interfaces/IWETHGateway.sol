@@ -2,26 +2,26 @@
 pragma solidity 0.6.12;
 
 interface IWASTRGateway {
-  function depositETH(
+  function depositASTR(
     address lendingPool,
     address onBehalfOf,
     uint16 referralCode
   ) external payable;
 
-  function withdrawETH(
+  function withdrawASTR(
     address lendingPool,
     uint256 amount,
     address onBehalfOf
   ) external;
 
-  function repayETH(
+  function repayASTR(
     address lendingPool,
     uint256 amount,
     uint256 rateMode,
     address onBehalfOf
   ) external payable;
 
-  function borrowETH(
+  function borrowASTR(
     address lendingPool,
     uint256 amount,
     uint256 interesRateMode,

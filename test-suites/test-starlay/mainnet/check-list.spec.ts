@@ -22,7 +22,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     const user = users[1];
 
     // Deposit with native ETH
-    await wethGateway.connect(user.signer).depositETH(user.address, '0', { value: depositSize });
+    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
@@ -50,7 +50,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     // Partial Withdraw and send native Ether to user
     const { gasUsed: withdrawGas } = await waitForTx(
-      await wethGateway.connect(user.signer).withdrawETH(partialWithdraw, user.address)
+      await wethGateway.connect(user.signer).withdrawASTR(partialWithdraw, user.address)
     );
 
     const afterPartialEtherBalance = await user.signer.getBalance();
@@ -84,7 +84,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     // Full withdraw
     const { gasUsed: withdrawGas } = await waitForTx(
-      await wethGateway.connect(user.signer).withdrawETH(MAX_UINT_AMOUNT, user.address)
+      await wethGateway.connect(user.signer).withdrawASTR(MAX_UINT_AMOUNT, user.address)
     );
 
     const afterFullEtherBalance = await user.signer.getBalance();
@@ -133,7 +133,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     await waitForTx(
       await wethGateway
         .connect(user.signer)
-        .repayETH(MAX_UINT_AMOUNT, '1', user.address, { value: repaySize })
+        .repayASTR(MAX_UINT_AMOUNT, '1', user.address, { value: repaySize })
     );
 
     const debtBalanceAfterRepay = await stableDebtToken.balanceOf(user.address);
@@ -153,7 +153,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     const varDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
 
     // Deposit with native ETH
-    await wethGateway.connect(user.signer).depositETH(user.address, '0', { value: depositSize });
+    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
@@ -174,7 +174,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     await waitForTx(
       await wethGateway
         .connect(user.signer)
-        .repayETH(partialPayment, '2', user.address, { value: partialPayment })
+        .repayASTR(partialPayment, '2', user.address, { value: partialPayment })
     );
 
     const debtBalanceAfterPartialRepay = await varDebtToken.balanceOf(user.address);
@@ -184,7 +184,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     await waitForTx(
       await wethGateway
         .connect(user.signer)
-        .repayETH(MAX_UINT_AMOUNT, '2', user.address, { value: repaySize })
+        .repayASTR(MAX_UINT_AMOUNT, '2', user.address, { value: repaySize })
     );
     const debtBalanceAfterFullRepay = await varDebtToken.balanceOf(user.address);
     expect(debtBalanceAfterFullRepay).to.be.eq(zero);
@@ -203,7 +203,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     expect(priorDebtBalance).to.be.eq(zero);
 
     // Deposit WETH with native ETH
-    await wethGateway.connect(user.signer).depositETH(user.address, '0', { value: depositSize });
+    await wethGateway.connect(user.signer).depositASTR(user.address, '0', { value: depositSize });
 
     const lTokensBalance = await lWETH.balanceOf(user.address);
 
@@ -216,7 +216,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     );
 
     // Borrows ETH with WETH as collateral
-    await waitForTx(await wethGateway.connect(user.signer).borrowETH(borrowSize, '2', '0'));
+    await waitForTx(await wethGateway.connect(user.signer).borrowASTR(borrowSize, '2', '0'));
 
     const debtBalance = await varDebtToken.balanceOf(user.address);
 
@@ -226,7 +226,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     await waitForTx(
       await wethGateway
         .connect(user.signer)
-        .repayETH(MAX_UINT_AMOUNT, '2', user.address, { value: borrowSize.mul(2) })
+        .repayASTR(MAX_UINT_AMOUNT, '2', user.address, { value: borrowSize.mul(2) })
     );
     const debtBalanceAfterFullRepay = await varDebtToken.balanceOf(user.address);
     expect(debtBalanceAfterFullRepay).to.be.eq(zero);
