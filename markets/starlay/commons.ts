@@ -268,4 +268,12 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
     [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
   },
+  StakedLay: {
+    [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
+    [eEthereumNetwork.coverage]: ZERO_ADDRESS,
+    [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
+    [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
+    [eAstarNetwork.shibuya]: ZERO_ADDRESS,
+    [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65',
+  },
 };

@@ -30,6 +30,8 @@ import {
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
+  StakeUIHelper,
+  StakeUIHelperFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
@@ -756,3 +758,26 @@ export const deployMockAggregatorDIA = async (args: [string[], string[]], verify
     args,
     verify
   );
+
+export const deployStakeUIHelper = async (
+  [priceOracle, lay, stakedLay, mockUsd]: [
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress
+  ],
+  verify?: boolean
+) => {
+  const args = [priceOracle, lay, stakedLay, mockUsd];
+  return withSaveAndVerify(
+    await new StakeUIHelperFactory(await getFirstSigner()).deploy(
+      priceOracle,
+      lay,
+      stakedLay,
+      mockUsd
+    ),
+    eContractid.StakeUIHelper,
+    args,
+    verify
+  );
+};

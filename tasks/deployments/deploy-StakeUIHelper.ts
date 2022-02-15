@@ -1,0 +1,40 @@
+import { task } from 'hardhat/config';
+import {
+  deployStakeUIHelper,
+  deployUiPoolDataProviderV2,
+} from '../../helpers/contracts-deployments';
+import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
+import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
+import { getPriceOracle, getStarlayOracle } from '../../helpers/contracts-getters';
+import { getParamPerNetwork } from '../../helpers/contracts-helpers';
+import { loadPoolConfig } from '../../helpers/configuration';
+
+task(`deploy-${eContractid.StakeUIHelper}`, `Deploys the StakeUIHelper contract`)
+  .addFlag('verify', 'Verify StakeUIHelper contract via Etherscan API.')
+  .setAction(async ({ verify, pool }, localBRE) => {
+    await localBRE.run('set-DRE');
+    if (!localBRE.network.config.chainId) {
+      throw new Error('INVALID_CHAIN_ID');
+    }
+    const network = <eNetwork>localBRE.network.name;
+    const poolConfig = loadPoolConfig(pool);
+    const {
+      ReserveAssets,
+      StakedLay,
+      ProtocolGlobalParams: { UsdAddress },
+    } = poolConfig as ICommonConfiguration;
+    const oracle = await getStarlayOracle();
+    const assets = await getParamPerNetwork(ReserveAssets, network);
+    const lay = assets['LAY'];
+    const stkLay = await getParamPerNetwork(StakedLay, network);
+    console.log(`\n- StakeUIHelper oracle: ${oracle.address}`);
+    console.log(`\n- StakeUIHelper lay: ${lay}`);
+    console.log(`\n- StakeUIHelper stkLay: ${stkLay}`);
+    console.log(`\n- StakeUIHelper usd: ${UsdAddress}`);
+    console.log(`\n- StakeUIHelper deployment`);
+
+    const StakeUIHelper = await deployStakeUIHelper([oracle.address, lay, lay, UsdAddress]);
+
+    console.log('StakeUIHelper deployed :', StakeUIHelper.address);
+    console.log(`\tFinished StakeUIHelper deployment`);
+  });

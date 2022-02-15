@@ -53,6 +53,8 @@
     "shiden:deployUIProviderV2": "hardhat --network shiden deploy-UiPoolDataProviderV2",
     "shibuya:deployUIIncentivesProviderV2": "hardhat --network shibuya deploy-UiIncentiveDataProviderV2",
     "shiden:deployUIIncentivesProviderV2": "hardhat --network shiden deploy-UiIncentiveDataProviderV2",
+    "shibuya:deployStakeUIHelper": "hardhat --network shibuya deploy-StakeUIHelper --pool Starlay",
+    "shiden:deployStakeUIHelper": "hardhat --network shiden deploy-StakeUIHelper --pool Starlay",
     "astar:deployUniswapRepayAdapter": "hardhat --network astar deploy-UniswapRepayAdapter --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "astar:UniswapLiquiditySwapAdapter": "hardhat --network astar deploy-UniswapLiquiditySwapAdapter  --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "astar:ParaSwapLiquiditySwapAdapter": "hardhat --network astar deploy-ParaSwapLiquiditySwapAdapter --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --augustusRegistry 0xa68bEA62Dc4034A689AA0F58A76681433caCa663",
