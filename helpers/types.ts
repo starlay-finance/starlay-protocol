@@ -76,6 +76,7 @@ export enum eContractid {
   MockParaSwapAugustusRegistry = 'MockParaSwapAugustusRegistry',
   ParaSwapLiquiditySwapAdapter = 'ParaSwapLiquiditySwapAdapter',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
+  StakeUIHelper = 'StakeUIHelper',
 }
 
 /*
@@ -352,6 +353,7 @@ export interface IBaseConfiguration {
   ReserveAssets: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
   OracleQuoteCurrency: string;
   OracleQuoteUnit: string;
+  StakedLay: iParamsPerNetwork<tEthereumAddress>;
 }
 
 export interface ICommonConfiguration extends IBaseConfiguration {
