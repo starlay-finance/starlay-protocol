@@ -72,6 +72,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: undefined,
     [eEthereumNetwork.tenderly]: undefined,
     [eAstarNetwork.shibuya]: undefined,
+    [eAstarNetwork.shiden]: undefined,
   },
   PoolAdminIndex: 0,
   EmergencyAdmin: {
@@ -80,6 +81,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: undefined,
     [eEthereumNetwork.tenderly]: undefined,
     [eAstarNetwork.shibuya]: undefined,
+    [eAstarNetwork.shiden]: undefined,
   },
   EmergencyAdminIndex: 1,
   ProviderRegistry: {
@@ -88,6 +90,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0x52D306e36E3B6B02c153d0266ff0f85d18BCD413',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   ProviderRegistryOwner: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -95,6 +98,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xB9062896ec3A615a4e4444DF183F0531a77218AE',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   LendingRateOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -102,6 +106,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0x8A32f49FFbA88aba6EFF96F45D8BD1D4b3f35c7D',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   LendingPoolCollateralManager: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -109,6 +114,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xbd4765210d4167CE2A5b87280D9E8Ee316D5EC7C',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   LendingPoolConfigurator: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -116,6 +122,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   LendingPool: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -123,6 +130,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   WethGateway: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -130,6 +138,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   TokenDistributor: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -137,6 +146,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   DIAAggregatorAddress: {
     // https://docs.diadata.org/documentation/oracle-documentation/deployed-contracts#astar-shiden
@@ -145,7 +155,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x1232acd632dd75f874e357c77295da3f5cd7733e',
-    // [eAstarNetwork.shiden]: '0xCe784F99f87dBa11E0906e2fE954b08a8cc9815d',
+    [eAstarNetwork.shiden]: '0xCe784F99f87dBa11E0906e2fE954b08a8cc9815d',
     // [eAstarNetwork.astar]: '0xd79357ebb0cd724e391f2b49a8De0E31688fEc75',
   },
   PriceAggregator: {
@@ -154,6 +164,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xA50ba011c48153De246E5192C8f9258A2ba79Ca9',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   StarlayOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -161,6 +172,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x7eCdDacFb4B0dCbD4Eb974934d3EDA29a9A50518',
+    [eAstarNetwork.shiden]: '',
   },
   FallbackOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -168,6 +180,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0x0417750Cba71Bc894d31CF7071a1214c612106F2',
+    [eAstarNetwork.shiden]: ZERO_ADDRESS,
   },
   ChainlinkAggregator: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -175,6 +188,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.tenderly]: {},
     [eAstarNetwork.shibuya]: {},
+    [eAstarNetwork.shiden]: {},
   },
   DIAAggregator: {
     // key: without 'w' to call function of DIA e.g WBTC->BTC
@@ -192,6 +206,15 @@ export const CommonsConfig: ICommonConfiguration = {
       USDC: '0xB56df4fA49847e7B659B5ed4A133512635fF2577',
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
     },
+    [eAstarNetwork.shiden]: {
+      ASTR: '',
+      SDN: '',
+      ETH: '',
+      BTC: '',
+      USDT: '',
+      USDC: '',
+      LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+    },
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -199,6 +222,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: {},
     [eEthereumNetwork.tenderly]: {},
     [eAstarNetwork.shibuya]: {},
+    [eAstarNetwork.shiden]: {},
   },
   ReservesConfig: {},
   LTokenDomainSeparator: {
@@ -210,6 +234,7 @@ export const CommonsConfig: ICommonConfiguration = {
       '0xbae024d959c6a022dc5ed37294cd39c141034b2ae5f02a955cce75c930a81bf5',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   WETH: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -217,6 +242,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     [eAstarNetwork.shibuya]: '',
+    [eAstarNetwork.shiden]: '',
   },
   WrappedNativeToken: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -224,6 +250,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     [eAstarNetwork.shibuya]: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
+    [eAstarNetwork.shiden]: '',
   },
   ReserveFactorTreasuryAddress: {
     [eEthereumNetwork.buidlerevm]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
@@ -231,6 +258,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
     [eEthereumNetwork.tenderly]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
+    [eAstarNetwork.shiden]: '0xCdfc500F7f0FCe1278aECb0340b523cD55b3EBbb', //brd dev
   },
   IncentivesController: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
@@ -238,5 +266,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
+    [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
   },
 };

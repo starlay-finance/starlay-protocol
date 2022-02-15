@@ -41,6 +41,15 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDC: '0xB56df4fA49847e7B659B5ed4A133512635fF2577',
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
     },
+    [eAstarNetwork.shiden]: {
+      WASTR: '',
+      WSDN: '',
+      WETH: '',
+      WBTC: '',
+      USDT: '',
+      USDC: '',
+      LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+    },
   },
 };
 
