@@ -57,6 +57,6 @@ export const aggregatorProxy = {
 
 export const baseTokenAddress = {
   // astar: ZERO_ADDRESS, //TODO:
-  shiden: ZERO_ADDRESS, //TODO:
+  shiden: '0x44a26AE046a01d99eBAbecc24B4d61B388656871', //TODO:
   shibuya: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
 };

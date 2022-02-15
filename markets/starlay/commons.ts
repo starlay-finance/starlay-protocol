@@ -207,12 +207,12 @@ export const CommonsConfig: ICommonConfiguration = {
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
     },
     [eAstarNetwork.shiden]: {
-      ASTR: '',
-      SDN: '',
-      ETH: '',
-      BTC: '',
-      USDT: '',
-      USDC: '',
+      ASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
+      SDN: '0x7cA69766F4be8Ec93dD01E1d571e64b867455e58',
+      ETH: '0x72fE832eB0452285e91CA9F46B85229A5107CeE8',
+      BTC: '0xEdAA9f408ac11339766a4E5e0d4653BDee52fcA1',
+      USDT: '0xdB25FDCCe3E63B376D308dC2D46234632d9959d8',
+      USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
     },
   },
@@ -250,7 +250,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     [eAstarNetwork.shibuya]: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
-    [eAstarNetwork.shiden]: '',
+    [eAstarNetwork.shiden]: '0x44a26AE046a01d99eBAbecc24B4d61B388656871', //WASTR
   },
   ReserveFactorTreasuryAddress: {
     [eEthereumNetwork.buidlerevm]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
