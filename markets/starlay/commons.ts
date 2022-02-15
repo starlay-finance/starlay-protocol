@@ -172,7 +172,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x7eCdDacFb4B0dCbD4Eb974934d3EDA29a9A50518',
-    [eAstarNetwork.shiden]: '',
+    [eAstarNetwork.shiden]: '0xe627F5D052A87532D7809b147F215B37B8a2Fb54',
   },
   FallbackOracle: {
     [eEthereumNetwork.buidlerevm]: '',
