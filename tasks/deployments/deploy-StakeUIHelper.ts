@@ -1,16 +1,13 @@
 import { task } from 'hardhat/config';
-import {
-  deployStakeUIHelper,
-  deployUiPoolDataProviderV2,
-} from '../../helpers/contracts-deployments';
+import { deployStakeUIHelper } from '../../helpers/contracts-deployments';
 import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
-import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
-import { getPriceOracle, getStarlayOracle } from '../../helpers/contracts-getters';
+import { getStarlayOracle } from '../../helpers/contracts-getters';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { loadPoolConfig } from '../../helpers/configuration';
+import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
 
 task(`deploy-${eContractid.StakeUIHelper}`, `Deploys the StakeUIHelper contract`)
   .addFlag('verify', 'Verify StakeUIHelper contract via Etherscan API.')
+  .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     await localBRE.run('set-DRE');
     if (!localBRE.network.config.chainId) {
@@ -24,16 +21,16 @@ task(`deploy-${eContractid.StakeUIHelper}`, `Deploys the StakeUIHelper contract`
       ProtocolGlobalParams: { UsdAddress },
     } = poolConfig as ICommonConfiguration;
     const oracle = await getStarlayOracle();
-    const assets = await getParamPerNetwork(ReserveAssets, network);
+    const assets = getParamPerNetwork(ReserveAssets, network);
     const lay = assets['LAY'];
-    const stkLay = await getParamPerNetwork(StakedLay, network);
+    const stkLay = getParamPerNetwork(StakedLay, network);
     console.log(`\n- StakeUIHelper oracle: ${oracle.address}`);
     console.log(`\n- StakeUIHelper lay: ${lay}`);
     console.log(`\n- StakeUIHelper stkLay: ${stkLay}`);
     console.log(`\n- StakeUIHelper usd: ${UsdAddress}`);
     console.log(`\n- StakeUIHelper deployment`);
 
-    const StakeUIHelper = await deployStakeUIHelper([oracle.address, lay, lay, UsdAddress]);
+    const StakeUIHelper = await deployStakeUIHelper([oracle.address, lay, stkLay, UsdAddress]);
 
     console.log('StakeUIHelper deployed :', StakeUIHelper.address);
     console.log(`\tFinished StakeUIHelper deployment`);
