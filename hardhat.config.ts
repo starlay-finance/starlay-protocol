@@ -88,6 +88,7 @@ const buidlerConfig: HardhatUserConfig = {
     },
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
+    shiden: getCommonNetworkConfig(eAstarNetwork.shiden, 336),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
