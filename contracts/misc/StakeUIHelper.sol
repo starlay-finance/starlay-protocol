@@ -101,6 +101,9 @@ contract StakeUIHelper is StakeUIHelperI {
     pure
     returns (uint256)
   {
+    if (stakeTokenTotalSupply == 0) {
+      return 0;
+    }
     return (distributionPerSecond * SECONDS_PER_YEAR * APY_PRECISION) / stakeTokenTotalSupply;
   }
 
