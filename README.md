@@ -1,33 +1,24 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 ```
-         .JggNNNNNNNgm+.       (MMMMMMR_                                                  ,MMMMMM$`
-      .(dMMMMMMMMMMMMMMNmx.    JMMMMMM$`                                                  JMMMMMM\
-     .dMMMMMMMMMMMMMMMMM#:     dMMMMMM}                                                   dMMMMMM}
-    (dMMMMMMMBY77TWMMMM=`     .WMMMMMM}                                                  .WMMMMM#:
-   .WMMMMMM#!       ?=`   `.QQNMMMMMMMNQQQmc                                             .MMMMMMD~
-   JMMMMMMM$               (MMMMMMMMMMMMMMN>                                             (MMMMMMP`
-   dMMMMMMMNe.             dMMMMMMMMMMMMMM#!            `                                jMMMMMM%
-   JMMMMMMMMMNagJ.         ?"7MMMMMMMB""""=         ..JggmNNNNggJJ.    qNNNNNp  .(gNNI   dMMMMMM}          .JjggNNNNgg&J, .qNNNNNNN+       (NNNNNNNI
-   .dMMMMMMMMMMMMMNm+.       .WMMMMMM)           .(gMMMMMMMMMMMMMM\   .MMMMMMb(gMMMMM{  .WMMMMM#:      ..gNMMMMMMMMMMMMN$  dMMMMMMMK.     (MMMMMMM8`
-    -TMMMMMMMMMMMMMMMNm.     .MMMMMMM}         .jMMMMMMMMMWMMMMMM#:   jMMMMMMMMMMMMMM:  .MMMMMMK~    .+NMMMMMMMMMMMMMMM#>  (MMMMMMMN-    .dMMMMMM#!
-      _7TMMMMMMMMMMMMMMN<    (MMMMMMH!        (MMMMMM#=`  jMMMMMMP`   dMMMMMMMMMMMBH9`  (MMMMMMD    -dMMMMMMM=`  jMMMMM#    dMMMMMMNl   .dMMMMMMM:
-          _?TWMMMMMMMMMMy.   jMMMMMMD~       (MMMMMMf`    dMMMMMM]    MMMMMMMM#=`       dMMMMMM%   (MMMMMMM@`    dMMMMM@    (MMMMMMMK   (MMMMMMM:
-               ?MMMMMMMMK_   dMMMMMM$`      .MMMMMM$`    .MMMMMMM\   (MMMMMMM#>         dMMMMMM}  (MMMMMMM@     (MMMMMN$     dMMMMMMN- .MMMMMMM}
-                JMMMMMMMD`  .WMMMMMM%      .dMMMMMM\     dMMMMMM#:   jMMMMMMMD         .MMMMMM#:  dMMMMMMN%     dMMMMM#:     (MMMMMMNo.dMMMMMM%
-    .(,        .dMMMMMMM{   .MMMMMMM)      .MMMMMMN:    .MMMMMMM@`   dMMMMMM#!         .MMMMMM@_  dMMMMMM#>    (MMMMMM#`      dMMMMMMNdMMMMMM%
-  .gMMMNgJ-...JMMMMMMMMf`   ,MMMMMMMNa(..  ,MMMMMMN}   -MMMMMMMM]    dMMMMMM@          (MMMMMMD  .dMMMMMMN2  .(MMMMMMMB       JMMMMMMMMMMMMMY`
-.gMMMMMMMMMMMMMMMMMMMM%`    .MMMMMMMMMMNl  .MMMMMMMNa&NMMMMMMMMN}   (MMMMMMN$          dMMMMMMt   dMMMMMMMNagMMMMMMMMN$        dMMMMMMMMMMMD`
-?MMMMMMMMMMMMMMMMMMMD!      .WMMMMMMMMMMN-  ?MMMMMMMMMMMMMMMMMM#:   jMMMMMM#l          dMMMMMN}   (MMMMMMMMMMMMMMMMMM#>        dMMMMMMMMMM@`
-  ?TMMMMMMMMMMMMM9=`          7MMMMMMMMB=`   ?WMMMMMMMM=(MMMMMM@`   dMMMMMM#!         .MMMMMM#:    _TMMMMMMMMY<dMMMMM#`        _MMMMMMMMM#!
-     `~?7777=?!`                ~!?7?!`        ~?7T=?`   ??????!    ?777777=          .777777=`      `??77?!`  ??????!          vMMMMMMM#:
-                                                                                                                                dMMMMMM#=
-                                                                                                                               +MMMMMM#=
-                                                                                                                              (MMMMMM#=
-                                                                                                                             (MMMMMMM9
-                                                                                                                            (MMMMMMM8
-                                                                                                                           (MMMMMMM8`
-                                                                                                                           ?7777777`
+     ..gNMMMMNmJ.    dMMM#_                                 ,MMMN!
+   .(MMMMMMMMMMM#^  .MMMMF                                  dMMM#
+  .dMMMM#"?7TMMY   ..MMMMb...                               MMMM@
+  (MMMM#          (MMMMMMMMM#!                             .MMMMD
+  dMMMMMm,        dMMMMMMMMM#        ......    .....   ... (MMMM\         .....   ......     ......
+  (MMMMMMMMNa..     dMMMN        .(NMMMMMMMM}  JMMM#.gMM#! jMMM#:    ..gMMMMMMMMr dMMMMN.   .MMMMM!
+   (MMMMMMMMMMNe   .MMMM#      .dMMMMB"MMMM#:  dMMMMMMMM#  dMMM#`  .gMMMMM"4MMMN! (MMMMM-  .dMMMM\
+      ?TMMMMMMMM[  .MMMMD     .MMMM=  .MMMM#  .MMMMMM=` `  dMMM@  .MMMM#^  .MMM#   MMMMMp  dMMMM=
+          ?MMMMMb  (MMMM%    .MMMM%   .MMMMD  (MMMM#'     .MMMMD .MMMMM:   dMMM@   (MMMM#..MMMMD
+   ..     .MMMMM%  dMMMM)    dMMMN{  .MMMMM}  dMMMM$      ,MMMM} .MMMM#`  .MMMM%   .MMMMNaMMMMF
+ .dMMNgJ(+MMMMMF`  dMMMMNgJ  dMMMM[ .dMMMMM`  dMMMM:      JMMMM~ (MMMMN, .MMMMN}    JMMMMMMMM@`
+dMMMMMMMMMMMMM=    dMMMMMMN| (MMMMMMMMMMMM#  .MMMM#~      dMMM#` .MMMMMMMMMMMM#~     MMMMMMM@`
+  7WMMMMMM#"!       ?HMMMM"!  (TMMMM"`MMMMF  .MMMM@       MMMM@   -TMMMM9~dMMM@      jMMMMM#`
+                                                                                     .MMMM#!
+                                                                                    .MMMMM'
+                                                                                   .dMMMM\
+                                                                                  .MMMMMt
+                                                                                  7""""t
 ```
 
 # Starley Protocol
