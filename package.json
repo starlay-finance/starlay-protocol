@@ -74,7 +74,7 @@
     "@typechain/truffle-v5": "2.0.2",
     "@typechain/web3-v1": "1.0.0",
     "@types/chai": "4.2.11",
-    "@types/lowdb": "1.0.9",
+    "@types/lowdb": "1.0.11",
     "@types/mocha": "7.0.2",
     "@types/node": "14.0.5",
     "bignumber.js": "9.0.2",
