@@ -76,7 +76,7 @@
     "@types/chai": "4.2.11",
     "@types/lowdb": "1.0.9",
     "@types/mocha": "7.0.2",
-    "@types/node": "14.0.5",
+    "@types/node": "17.0.18",
     "bignumber.js": "9.0.0",
     "buidler-typechain": "0.2.2",
     "chai": "4.3.6",
