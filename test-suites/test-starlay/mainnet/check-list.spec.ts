@@ -5,12 +5,9 @@ import { deploySelfdestructTransferMock } from '../../../helpers/contracts-deplo
 import { getStableDebtToken, getVariableDebtToken } from '../../../helpers/contracts-getters';
 import { convertToCurrencyDecimals } from '../../../helpers/contracts-helpers';
 import { DRE, waitForTx } from '../../../helpers/misc-utils';
-import { IUniswapV2Router02Factory } from '../../../types/IUniswapV2Router02Factory';
 import { makeSuite, TestEnv } from '../helpers/make-suite';
 
 const { expect } = require('chai');
-
-const UNISWAP_ROUTER = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D';
 
 makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   const zero = BigNumber.from('0');
@@ -301,16 +298,6 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
     const user = users[0];
     const amount = parseEther('1');
 
-    const uniswapRouter = IUniswapV2Router02Factory.connect(UNISWAP_ROUTER, user.signer);
-    await uniswapRouter.swapETHForExactTokens(
-      amount, // 1 DAI
-      [weth.address, dai.address], // Uniswap paths WETH - DAI
-      user.address,
-      (await DRE.ethers.provider.getBlock('latest')).timestamp + 300,
-      {
-        value: amount, // 1 Ether, we get refund of the unneeded Ether to buy 1 DAI
-      }
-    );
     const daiBalanceAfterMint = await dai.balanceOf(user.address);
 
     await dai.connect(user.signer).transfer(wethGateway.address, amount);

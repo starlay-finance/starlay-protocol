@@ -5,18 +5,14 @@ import { solidity } from 'ethereum-waffle';
 import { Signer } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
-  getFlashLiquidationAdapter,
   getLendingPool,
   getLendingPoolAddressesProvider,
   getLendingPoolAddressesProviderRegistry,
   getLendingPoolConfiguratorProxy,
   getLToken,
   getMintableERC20,
-  getParaSwapLiquiditySwapAdapter,
   getPriceOracle,
   getStarlayProtocolDataProvider,
-  getUniswapLiquiditySwapAdapter,
-  getUniswapRepayAdapter,
   getWETHGateway,
   getWETHMocked,
 } from '../../../helpers/contracts-getters';
@@ -25,18 +21,14 @@ import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
 import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { StarlayConfig } from '../../../markets/starlay';
-import { FlashLiquidationAdapter } from '../../../types';
 import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
 import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPoolAddressesProviderRegistry';
 import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
 import { LToken } from '../../../types/LToken';
 import { MintableERC20 } from '../../../types/MintableERC20';
-import { ParaSwapLiquiditySwapAdapter } from '../../../types/ParaSwapLiquiditySwapAdapter';
 import { PriceOracle } from '../../../types/PriceOracle';
 import { StarlayProtocolDataProvider } from '../../../types/StarlayProtocolDataProvider';
-import { UniswapLiquiditySwapAdapter } from '../../../types/UniswapLiquiditySwapAdapter';
-import { UniswapRepayAdapter } from '../../../types/UniswapRepayAdapter';
 import { WETH9Mocked } from '../../../types/WETH9Mocked';
 import { WETHGateway } from '../../../types/WETHGateway';
 import { almostEqual } from './almost-equal';
@@ -63,12 +55,8 @@ export interface TestEnv {
   usdc: MintableERC20;
   lay: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
-  uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
-  uniswapRepayAdapter: UniswapRepayAdapter;
   registry: LendingPoolAddressesProviderRegistry;
   wethGateway: WETHGateway;
-  flashLiquidationAdapter: FlashLiquidationAdapter;
-  paraswapLiquiditySwapAdapter: ParaSwapLiquiditySwapAdapter;
 }
 
 let buidlerevmSnapshotId: string = '0x1';
@@ -90,10 +78,6 @@ const testEnv: TestEnv = {
   usdc: {} as MintableERC20,
   lay: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
-  uniswapLiquiditySwapAdapter: {} as UniswapLiquiditySwapAdapter,
-  uniswapRepayAdapter: {} as UniswapRepayAdapter,
-  flashLiquidationAdapter: {} as FlashLiquidationAdapter,
-  paraswapLiquiditySwapAdapter: {} as ParaSwapLiquiditySwapAdapter,
   registry: {} as LendingPoolAddressesProviderRegistry,
   wethGateway: {} as WETHGateway,
 } as TestEnv;
@@ -155,12 +139,6 @@ export async function initializeMakeSuite() {
   testEnv.lay = await getMintableERC20(layAddress);
   testEnv.weth = await getWETHMocked(wethAddress);
   testEnv.wethGateway = await getWETHGateway();
-
-  testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
-  testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();
-  testEnv.flashLiquidationAdapter = await getFlashLiquidationAdapter();
-
-  testEnv.paraswapLiquiditySwapAdapter = await getParaSwapLiquiditySwapAdapter();
 }
 
 const setSnapshot = async () => {
