@@ -5,11 +5,11 @@ import { ECDSASignature, fromRpcSig } from 'ethereumjs-util';
 import { BigNumberish, Contract, ethers, Signer, utils } from 'ethers';
 import { Artifact } from 'hardhat/types';
 import { MintableERC20 } from '../types/MintableERC20';
+import { verifyAtBlockscout } from './blockscout-utils';
 import { ConfigNames, loadPoolConfig } from './configuration';
 import { ZERO_ADDRESS } from './constants';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
 import { getDefenderRelaySigner, usingDefender } from './defender-utils';
-import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import {
@@ -354,7 +354,7 @@ export const verifyContract = async (
   if (usingTenderly()) {
     await verifyAtTenderly(id, instance);
   }
-  await verifyEtherscanContract(instance.address, args);
+  await verifyAtBlockscout(id, instance, args);
   return instance;
 };
 

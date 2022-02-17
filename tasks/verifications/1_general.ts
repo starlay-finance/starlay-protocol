@@ -1,24 +1,8 @@
 import { task } from 'hardhat/config';
-import {
-  ConfigNames,
-  getTreasuryAddress,
-  getWrappedNativeTokenAddress,
-  loadPoolConfig,
-} from '../../helpers/configuration';
-import {
-  getLendingPoolAddressesProvider,
-  getLendingPoolAddressesProviderRegistry,
-  getLendingPoolCollateralManagerImpl,
-  getLendingPoolConfiguratorImpl,
-  getLendingPoolImpl,
-  getProxy,
-  getStarlayProtocolDataProvider,
-  getWalletProvider,
-  getWETHGateway,
-} from '../../helpers/contracts-getters';
-import { getParamPerNetwork, verifyContract } from '../../helpers/contracts-helpers';
-import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
-import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
+import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
+import { getMockContract } from '../../helpers/contracts-getters';
+import { verifyContract } from '../../helpers/contracts-helpers';
+import { eNetwork, ICommonConfiguration } from '../../helpers/types';
 
 task('verify:general', 'Verify contracts at Etherscan')
   .addFlag('all', 'Verify all contracts at Etherscan')
@@ -37,119 +21,124 @@ task('verify:general', 'Verify contracts at Etherscan')
       LendingPool,
       WethGateway,
     } = poolConfig as ICommonConfiguration;
-    const treasuryAddress = await getTreasuryAddress(poolConfig);
+    // const treasuryAddress = await getTreasuryAddress(poolConfig);
 
-    const registryAddress = getParamPerNetwork(ProviderRegistry, network);
-    const addressesProvider = await getLendingPoolAddressesProvider();
-    const addressesProviderRegistry = notFalsyOrZeroAddress(registryAddress)
-      ? await getLendingPoolAddressesProviderRegistry(registryAddress)
-      : await getLendingPoolAddressesProviderRegistry();
-    const lendingPoolAddress = await addressesProvider.getLendingPool();
-    const lendingPoolConfiguratorAddress = await addressesProvider.getLendingPoolConfigurator(); //getLendingPoolConfiguratorProxy();
-    const lendingPoolCollateralManagerAddress =
-      await addressesProvider.getLendingPoolCollateralManager();
+    // const registryAddress = getParamPerNetwork(ProviderRegistry, network);
+    // const addressesProvider = await getLendingPoolAddressesProvider();
+    // const addressesProviderRegistry = notFalsyOrZeroAddress(registryAddress)
+    //   ? await getLendingPoolAddressesProviderRegistry(registryAddress)
+    //   : await getLendingPoolAddressesProviderRegistry();
+    // const lendingPoolAddress = await addressesProvider.getLendingPool();
+    // const lendingPoolConfiguratorAddress = await addressesProvider.getLendingPoolConfigurator(); //getLendingPoolConfiguratorProxy();
+    // const lendingPoolCollateralManagerAddress =
+    //   await addressesProvider.getLendingPoolCollateralManager();
 
-    const lendingPoolProxy = await getProxy(lendingPoolAddress);
-    const lendingPoolConfiguratorProxy = await getProxy(lendingPoolConfiguratorAddress);
-    const lendingPoolCollateralManagerProxy = await getProxy(lendingPoolCollateralManagerAddress);
+    // const lendingPoolProxy = await getProxy(lendingPoolAddress);
+    // const lendingPoolConfiguratorProxy = await getProxy(lendingPoolConfiguratorAddress);
+    // const lendingPoolCollateralManagerProxy = await getProxy(lendingPoolCollateralManagerAddress);
+    const MockContract = await getMockContract();
 
-    if (all) {
-      const lendingPoolImplAddress = getParamPerNetwork(LendingPool, network);
-      const lendingPoolImpl = notFalsyOrZeroAddress(lendingPoolImplAddress)
-        ? await getLendingPoolImpl(lendingPoolImplAddress)
-        : await getLendingPoolImpl();
+    // if (all) {
+    //   const lendingPoolImplAddress = getParamPerNetwork(LendingPool, network);
+    //   const lendingPoolImpl = notFalsyOrZeroAddress(lendingPoolImplAddress)
+    //     ? await getLendingPoolImpl(lendingPoolImplAddress)
+    //     : await getLendingPoolImpl();
 
-      const lendingPoolConfiguratorImplAddress = getParamPerNetwork(
-        LendingPoolConfigurator,
-        network
-      );
-      const lendingPoolConfiguratorImpl = notFalsyOrZeroAddress(lendingPoolConfiguratorImplAddress)
-        ? await getLendingPoolConfiguratorImpl(lendingPoolConfiguratorImplAddress)
-        : await getLendingPoolConfiguratorImpl();
+    //   const lendingPoolConfiguratorImplAddress = getParamPerNetwork(
+    //     LendingPoolConfigurator,
+    //     network
+    //   );
+    //   const lendingPoolConfiguratorImpl = notFalsyOrZeroAddress(lendingPoolConfiguratorImplAddress)
+    //     ? await getLendingPoolConfiguratorImpl(lendingPoolConfiguratorImplAddress)
+    //     : await getLendingPoolConfiguratorImpl();
 
-      const lendingPoolCollateralManagerImplAddress = getParamPerNetwork(
-        LendingPoolCollateralManager,
-        network
-      );
-      const lendingPoolCollateralManagerImpl = notFalsyOrZeroAddress(
-        lendingPoolCollateralManagerImplAddress
-      )
-        ? await getLendingPoolCollateralManagerImpl(lendingPoolCollateralManagerImplAddress)
-        : await getLendingPoolCollateralManagerImpl();
+    //   const lendingPoolCollateralManagerImplAddress = getParamPerNetwork(
+    //     LendingPoolCollateralManager,
+    //     network
+    //   );
+    //   const lendingPoolCollateralManagerImpl = notFalsyOrZeroAddress(
+    //     lendingPoolCollateralManagerImplAddress
+    //   )
+    //     ? await getLendingPoolCollateralManagerImpl(lendingPoolCollateralManagerImplAddress)
+    //     : await getLendingPoolCollateralManagerImpl();
 
-      const dataProvider = await getStarlayProtocolDataProvider();
-      const walletProvider = await getWalletProvider();
+    //   const dataProvider = await getStarlayProtocolDataProvider();
+    //   const walletProvider = await getWalletProvider();
 
-      const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
-      const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
-        ? await getWETHGateway(wethGatewayAddress)
-        : await getWETHGateway();
+    //   const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
+    //   const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
+    //     ? await getWETHGateway(wethGatewayAddress)
+    //     : await getWETHGateway();
 
-      // Address Provider
-      console.log('\n- Verifying address provider...\n');
-      await verifyContract(eContractid.LendingPoolAddressesProvider, addressesProvider, [MarketId]);
+    //   // Address Provider
+    //   console.log('\n- Verifying address provider...\n');
+    //   await verifyContract(eContractid.LendingPoolAddressesProvider, addressesProvider, [MarketId]);
 
-      // Address Provider Registry
-      console.log('\n- Verifying address provider registry...\n');
-      await verifyContract(
-        eContractid.LendingPoolAddressesProviderRegistry,
-        addressesProviderRegistry,
-        []
-      );
+    //   // Address Provider Registry
+    //   console.log('\n- Verifying address provider registry...\n');
+    //   await verifyContract(
+    //     eContractid.LendingPoolAddressesProviderRegistry,
+    //     addressesProviderRegistry,
+    //     []
+    //   );
 
-      // Lending Pool implementation
-      console.log('\n- Verifying LendingPool Implementation...\n');
-      await verifyContract(eContractid.LendingPool, lendingPoolImpl, []);
+    //   // Lending Pool implementation
+    //   console.log('\n- Verifying LendingPool Implementation...\n');
+    //   await verifyContract(eContractid.LendingPool, lendingPoolImpl, []);
 
-      // Lending Pool Configurator implementation
-      console.log('\n- Verifying LendingPool Configurator Implementation...\n');
-      await verifyContract(eContractid.LendingPoolConfigurator, lendingPoolConfiguratorImpl, []);
+    //   // Lending Pool Configurator implementation
+    //   console.log('\n- Verifying LendingPool Configurator Implementation...\n');
+    //   await verifyContract(eContractid.LendingPoolConfigurator, lendingPoolConfiguratorImpl, []);
 
-      // Lending Pool Collateral Manager implementation
-      console.log('\n- Verifying LendingPool Collateral Manager Implementation...\n');
-      await verifyContract(
-        eContractid.LendingPoolCollateralManager,
-        lendingPoolCollateralManagerImpl,
-        []
-      );
+    //   // Lending Pool Collateral Manager implementation
+    //   console.log('\n- Verifying LendingPool Collateral Manager Implementation...\n');
+    //   await verifyContract(
+    //     eContractid.LendingPoolCollateralManager,
+    //     lendingPoolCollateralManagerImpl,
+    //     []
+    //   );
 
-      // Test helpers
-      console.log('\n- Verifying  Starlay  Provider Helpers...\n');
-      await verifyContract(eContractid.StarlayProtocolDataProvider, dataProvider, [
-        addressesProvider.address,
-      ]);
+    //   // Test helpers
+    //   console.log('\n- Verifying  Starlay  Provider Helpers...\n');
+    //   await verifyContract(eContractid.StarlayProtocolDataProvider, dataProvider, [
+    //     addressesProvider.address,
+    //   ]);
 
-      // Wallet balance provider
-      console.log('\n- Verifying  Wallet Balance Provider...\n');
-      await verifyContract(eContractid.WalletBalanceProvider, walletProvider, []);
+    //   // Wallet balance provider
+    //   console.log('\n- Verifying  Wallet Balance Provider...\n');
+    //   await verifyContract(eContractid.WalletBalanceProvider, walletProvider, []);
 
-      // WETHGateway
-      console.log('\n- Verifying  WETHGateway...\n');
-      await verifyContract(eContractid.WETHGateway, wethGateway, [
-        await getWrappedNativeTokenAddress(poolConfig),
-      ]);
-    }
+    //   // WETHGateway
+    //   console.log('\n- Verifying  WETHGateway...\n');
+    //   await verifyContract(eContractid.WETHGateway, wethGateway, [
+    //     await getWrappedNativeTokenAddress(poolConfig),
+    //   ]);
+    // }
     // Lending Pool proxy
-    console.log('\n- Verifying  Lending Pool Proxy...\n');
-    await verifyContract(eContractid.InitializableAdminUpgradeabilityProxy, lendingPoolProxy, [
-      addressesProvider.address,
-    ]);
+    // console.log('\n- Verifying  Lending Pool Proxy...\n');
+    // await verifyContract(eContractid.InitializableAdminUpgradeabilityProxy, lendingPoolProxy, [
+    //   addressesProvider.address,
+    // ]);
 
-    // LendingPool Conf proxy
-    console.log('\n- Verifying  Lending Pool Configurator Proxy...\n');
-    await verifyContract(
-      eContractid.InitializableAdminUpgradeabilityProxy,
-      lendingPoolConfiguratorProxy,
-      [addressesProvider.address]
-    );
+    // // LendingPool Conf proxy
+    // console.log('\n- Verifying  Lending Pool Configurator Proxy...\n');
+    // await verifyContract(
+    //   eContractid.InitializableAdminUpgradeabilityProxy,
+    //   lendingPoolConfiguratorProxy,
+    //   [addressesProvider.address]
+    // );
 
     // Proxy collateral manager
-    console.log('\n- Verifying  Lending Pool Collateral Manager Proxy...\n');
-    await verifyContract(
-      eContractid.InitializableAdminUpgradeabilityProxy,
-      lendingPoolCollateralManagerProxy,
-      []
-    );
+    // console.log('\n- Verifying  Lending Pool Collateral Manager Proxy...\n');
+    // await verifyContract(
+    //   eContractid.InitializableAdminUpgradeabilityProxy,
+    //   lendingPoolCollateralManagerProxy,
+    //   []
+    // );
+
+    // Proxy collateral manager
+    console.log('\n- Verifying  MockContract...\n');
+    await verifyContract('MockContract', MockContract, []);
 
     console.log('Finished verifications.');
   });

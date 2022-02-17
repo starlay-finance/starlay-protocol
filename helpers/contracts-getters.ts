@@ -12,6 +12,7 @@ import {
   LTokenFactory,
   LTokensAndRatesHelperFactory,
   MintableERC20Factory,
+  MockContractFactory,
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
   MockParaSwapAugustusFactory,
@@ -463,5 +464,11 @@ export const getParaSwapLiquiditySwapAdapter = async (address?: tEthereumAddress
       (
         await getDb().get(`${eContractid.ParaSwapLiquiditySwapAdapter}.${DRE.network.name}`).value()
       ).address,
+    await getFirstSigner()
+  );
+
+export const getMockContract = async (address?: tEthereumAddress) =>
+  await MockContractFactory.connect(
+    address || (await getDb().get(`MockContract.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );

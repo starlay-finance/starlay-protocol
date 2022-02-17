@@ -18,6 +18,7 @@ import {
   MintableERC20Factory,
   MockAggregatorDIAFactory,
   MockAggregatorFactory,
+  MockContractFactory,
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
   MockParaSwapAugustusFactory,
@@ -30,7 +31,6 @@ import {
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
-  StakeUIHelper,
   StakeUIHelperFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
@@ -781,3 +781,11 @@ export const deployStakeUIHelper = async (
     verify
   );
 };
+
+export const deployMockContract = async (verify?: boolean) =>
+  withSaveAndVerify(
+    await new MockContractFactory(await getFirstSigner()).deploy(),
+    'MockContract',
+    [],
+    verify
+  );

@@ -103,7 +103,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
 
       const stableDebt = await getAddressById(`sd${token}`);
       const variableDebt = await getAddressById(`vd${token}`);
-      const lToken = await getAddressById(`a${token}`);
+      const lToken = await getAddressById(`l${token}`);
 
       if (lToken) {
         console.log('\n- Verifying lToken...\n');

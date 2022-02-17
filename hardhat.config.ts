@@ -1,4 +1,5 @@
 import '@nomiclabs/hardhat-ethers';
+import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
 import '@tenderly/hardhat-tenderly';
 import fs from 'fs';
@@ -7,7 +8,6 @@ import 'hardhat-typechain';
 import { HardhatUserConfig } from 'hardhat/types';
 import path from 'path';
 import 'solidity-coverage';
-import 'temp-hardhat-etherscan';
 import { buildForkConfig, NETWORKS_DEFAULT_GAS, NETWORKS_RPC_URL } from './helper-hardhat-config';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
 import { eAstarNetwork, eEthereumNetwork, eNetwork } from './helpers/types';
