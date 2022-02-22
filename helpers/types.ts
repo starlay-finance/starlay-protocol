@@ -41,6 +41,7 @@ export enum eContractid {
   MockAggregatorDIA = 'MockAggregatorDIA',
   LendingRateOracle = 'LendingRateOracle',
   StarlayOracle = 'StarlayOracle',
+  StarlayFallbackOracle = 'StarlayFallbackOracle',
   DefaultReserveInterestRateStrategy = 'DefaultReserveInterestRateStrategy',
   LendingPoolCollateralManager = 'LendingPoolCollateralManager',
   InitializableAdminUpgradeabilityProxy = 'InitializableAdminUpgradeabilityProxy',

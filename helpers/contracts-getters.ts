@@ -21,6 +21,7 @@ import {
   SelfdestructTransferFactory,
   StableAndVariableTokensHelperFactory,
   StableDebtTokenFactory,
+  StarlayFallbackOracleFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   VariableDebtTokenFactory,
@@ -68,6 +69,15 @@ export const getPriceOracle = async (address?: tEthereumAddress) =>
     address ||
       (
         await getDb().get(`${eContractid.PriceOracle}.${DRE.network.name}`).value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getStarlayFallbackOracle = async (address?: tEthereumAddress) =>
+  await StarlayFallbackOracleFactory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.StarlayFallbackOracle}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
