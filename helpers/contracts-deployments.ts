@@ -26,6 +26,7 @@ import {
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
   StakeUIHelperFactory,
+  StarlayFallbackOracleFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
@@ -208,6 +209,14 @@ export const deployPriceOracle = async (verify?: boolean) =>
   withSaveAndVerify(
     await new PriceOracleFactory(await getFirstSigner()).deploy(),
     eContractid.PriceOracle,
+    [],
+    verify
+  );
+
+export const deployStarlayFallbackOracle = async (verify?: boolean) =>
+  withSaveAndVerify(
+    await new StarlayFallbackOracleFactory(await getFirstSigner()).deploy(),
+    eContractid.StarlayFallbackOracle,
     [],
     verify
   );

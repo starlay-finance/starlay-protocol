@@ -1,10 +1,10 @@
 import { task } from 'hardhat/config';
 import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
-import { deployPriceOracle } from '../../helpers/contracts-deployments';
-import { getStarlayOracle } from '../../helpers/contracts-getters';
+import { INITIAL_PRICES } from '../../helpers/constants';
+import { getStarlayFallbackOracle } from '../../helpers/contracts-getters';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { waitForTx } from '../../helpers/misc-utils';
-import { setInitialAssetPricesInOracle } from '../../helpers/oracles-helpers';
+import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
+import { setAssetPricesInFallbackOracle } from '../../helpers/oracles-helpers';
 import {
   eNetwork,
   iAssetBase,
@@ -13,24 +13,29 @@ import {
   TokenContractId,
 } from '../../helpers/types';
 
-task('set-fallback-oracle', 'Deploy FallbackOracle, and set it to StarlayOracle')
-  .addFlag('verify', 'Verify contracts at Etherscan')
-  .setAction(async ({ verify }, DRE) => {
+task('set-price-in-fallback-oracle', 'Set prices in StarlayFallbackOracle').setAction(
+  async ({}, DRE) => {
     await DRE.run('set-DRE');
     const network = <eNetwork>DRE.network.name;
     const poolConfig = loadPoolConfig(ConfigNames.Starlay);
     const {
-      Mocks: { AllAssetsInitialPrices },
-      ProtocolGlobalParams: { UsdAddress, MockUsdPriceInWei },
+      ProtocolGlobalParams: { UsdAddress },
       ReserveAssets,
+      FallbackOracle,
     } = poolConfig as ICommonConfiguration;
     const reserveAssets = getParamPerNetwork(ReserveAssets, network);
-    const starlayOracleAddress = getParamPerNetwork(poolConfig.StarlayOracle, network);
+    const fallbackOracleAddress = getParamPerNetwork(FallbackOracle, network);
+
+    if (!notFalsyOrZeroAddress(fallbackOracleAddress)) {
+      throw 'Fallback Oracle Address is undefined. Check configuration at config directory';
+    }
+
+    const fallbackOracle = await getStarlayFallbackOracle(fallbackOracleAddress);
+
     const allReserveAssets: SymbolMap<string> = {
       ...reserveAssets,
       USD: UsdAddress,
     };
-
     const defaultTokenList = {
       ...Object.fromEntries(Object.values(TokenContractId).map((symbol) => [symbol, ''])),
       USD: UsdAddress,
@@ -42,15 +47,7 @@ task('set-fallback-oracle', 'Deploy FallbackOracle, and set it to StarlayOracle'
       },
       defaultTokenList
     );
-    console.log('reserveAssetsAddress:', reserveAssetsAddress);
 
-    const fallbackOracle = await deployPriceOracle(verify);
-    await waitForTx(await fallbackOracle.setEthUsdPrice(MockUsdPriceInWei));
-    await setInitialAssetPricesInOracle(
-      AllAssetsInitialPrices,
-      reserveAssetsAddress,
-      fallbackOracle
-    );
-    const starlayOracle = await getStarlayOracle(starlayOracleAddress);
-    await waitForTx(await starlayOracle.setFallbackOracle(fallbackOracle.address));
-  });
+    await setAssetPricesInFallbackOracle(INITIAL_PRICES, reserveAssetsAddress, fallbackOracle);
+  }
+);

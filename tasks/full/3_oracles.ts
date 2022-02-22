@@ -9,19 +9,22 @@ import {
 import {
   deployLendingRateOracle,
   deployPriceAggregatorDiaImpl,
+  deployStarlayFallbackOracle,
   deployStarlayOracle,
 } from '../../helpers/contracts-deployments';
 import {
+  getFirstSigner,
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
   getPriceAggregator,
+  getStarlayFallbackOracle,
   getStarlayOracle,
 } from '../../helpers/contracts-getters';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { eNetwork, ICommonConfiguration, SymbolMap } from '../../helpers/types';
-import { LendingRateOracle, StarlayOracle } from '../../types';
+import { LendingRateOracle, StarlayFallbackOracle, StarlayOracle } from '../../types';
 import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
@@ -58,6 +61,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       let priceAggregatorAdapter: PriceAggregatorAdapterDiaImpl;
       let starlayOracle: StarlayOracle;
       let lendingRateOracle: LendingRateOracle;
+      let fallbackOracle: StarlayFallbackOracle;
 
       priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
         ? await getPriceAggregator(priceAggregatorAddress)
@@ -69,6 +73,17 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         )
       );
 
+      // deploy fallbackOracle
+      if (notFalsyOrZeroAddress(fallbackOracleAddress)) {
+        fallbackOracle = await getStarlayFallbackOracle(fallbackOracleAddress);
+      } else {
+        fallbackOracle = await deployStarlayFallbackOracle(verify);
+        const currentSignerAddress = (
+          await (await getFirstSigner()).getAddress()
+        ).toLocaleLowerCase();
+        await fallbackOracle.authorizeSybil(currentSignerAddress);
+      }
+
       if (notFalsyOrZeroAddress(starlayOracleAddress)) {
         starlayOracle = await getStarlayOracle(starlayOracleAddress);
         await waitForTx(await starlayOracle.setPriceAggregator(priceAggregatorAdapter.address));
@@ -76,7 +91,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         starlayOracle = await deployStarlayOracle(
           [
             priceAggregatorAdapter.address,
-            fallbackOracleAddress,
+            fallbackOracle.address,
             await getQuoteCurrency(poolConfig),
             poolConfig.OracleQuoteUnit,
           ],
