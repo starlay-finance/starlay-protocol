@@ -50,6 +50,15 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
     },
+    [eAstarNetwork.astar]: {
+      WASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
+      WSDN: '0x75364D4F779d0Bd0facD9a218c67f87dD9Aff3b4',
+      WETH: '0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c',
+      WBTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA',
+      USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
+      USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
+      LAY: '',
+    },
   },
 };
 

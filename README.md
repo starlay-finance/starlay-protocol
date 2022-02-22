@@ -125,6 +125,8 @@ For deploying starlay-protocol, you can use the available scripts located at `pa
 
 ### Shiden deployment
 
+Shiden is development and testing environment.
+
 ```
 # In one terminal
 docker-compose up
