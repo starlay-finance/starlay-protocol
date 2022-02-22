@@ -1,5 +1,6 @@
 import { task } from 'hardhat/config';
 import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
+import { INITIAL_PRICES } from '../../helpers/constants';
 import { getStarlayFallbackOracle } from '../../helpers/contracts-getters';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -18,7 +19,6 @@ task('set-price-in-fallback-oracle', 'Set prices in StarlayFallbackOracle').setA
     const network = <eNetwork>DRE.network.name;
     const poolConfig = loadPoolConfig(ConfigNames.Starlay);
     const {
-      Mocks: { AllAssetsInitialPrices },
       ProtocolGlobalParams: { UsdAddress },
       ReserveAssets,
       FallbackOracle,
@@ -48,10 +48,6 @@ task('set-price-in-fallback-oracle', 'Set prices in StarlayFallbackOracle').setA
       defaultTokenList
     );
 
-    await setAssetPricesInFallbackOracle(
-      AllAssetsInitialPrices,
-      reserveAssetsAddress,
-      fallbackOracle
-    );
+    await setAssetPricesInFallbackOracle(INITIAL_PRICES, reserveAssetsAddress, fallbackOracle);
   }
 );

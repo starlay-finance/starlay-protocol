@@ -30,6 +30,18 @@ export const MOCK_USD_PRICE_IN_WEI = '5848466240000000';
 export const USD_ADDRESS = '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96';
 export const STARLAY_REFERRAL = '0';
 
+// to set initial prices in fallback oracle
+export const INITIAL_PRICES = {
+  USD: oneUsd.toFixed(),
+  USDC: oneUsd.toFixed(),
+  USDT: oneUsd.toFixed(),
+  WETH: oneUsd.multipliedBy('2544.21785388').toFixed(),
+  WBTC: oneUsd.multipliedBy('76685.43908087').toFixed(),
+  WASTR: oneUsd.multipliedBy('0.13042952').toFixed(),
+  WSDN: oneUsd.multipliedBy('0.83322952').toFixed(),
+  LAY: oneUsd.multipliedBy('0.00162094').toFixed(),
+};
+
 export const MOCK_PRICE_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
