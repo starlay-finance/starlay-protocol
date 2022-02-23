@@ -166,7 +166,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x1232acd632dd75f874e357c77295da3f5cd7733e',
     [eAstarNetwork.shiden]: '0xb727CD54C33095111eDb4082B4d5c857f99F19Ec', // DIAOracleV2
-    [eAstarNetwork.astar]: '', // DIAOracleV2
+    [eAstarNetwork.astar]: '0xd79357ebb0cd724e391f2b49a8De0E31688fEc75', // TODO: replace it to DIAOracleV2
   },
   PriceAggregator: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -233,7 +233,7 @@ export const CommonsConfig: ICommonConfiguration = {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
       SDN: '0x75364D4F779d0Bd0facD9a218c67f87dD9Aff3b4',
       ETH: '0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c',
-      WBTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA', // for DIAOracleV2
+      BTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA', // TODO: replace it for DIAOracleV2 (BTC-> WBTC)
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
       LAY: '0x68692054974A8026A9838C338ea53F79539c79af', // TODO: this is one for testing
