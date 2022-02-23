@@ -304,6 +304,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65',
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
+    [eAstarNetwork.astar]: '0x75AC15EbCA4e93D61bCc878ded9Ba338FD23E761', // TODO: this is one for testing
   },
 };
