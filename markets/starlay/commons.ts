@@ -183,7 +183,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x7eCdDacFb4B0dCbD4Eb974934d3EDA29a9A50518',
-    [eAstarNetwork.shiden]: '0xe627F5D052A87532D7809b147F215B37B8a2Fb54',
+    [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
   },
   FallbackOracle: {
@@ -192,7 +192,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0x0417750Cba71Bc894d31CF7071a1214c612106F2',
-    [eAstarNetwork.shiden]: ZERO_ADDRESS,
+    [eAstarNetwork.shiden]: '0x9FBAfb936E1553F174f9375aFcdaa3B446a945Cf',
     [eAstarNetwork.astar]: '0x74EeFCDD1F04667cf20474e642a77c063600B281',
   },
   ChainlinkAggregator: {
