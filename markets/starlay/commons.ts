@@ -193,7 +193,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0x0417750Cba71Bc894d31CF7071a1214c612106F2',
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
+    [eAstarNetwork.astar]: '0x74EeFCDD1F04667cf20474e642a77c063600B281',
   },
   ChainlinkAggregator: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -236,7 +236,7 @@ export const CommonsConfig: ICommonConfiguration = {
       BTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA', // TODO: replace it for DIAOracleV2 (BTC-> WBTC)
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
-      LAY: '0x68692054974A8026A9838C338ea53F79539c79af', // TODO: this is one for testing
+      LAY: '0x026734Fb820F072a0FbA1D49A60E4f545F9804a1', // TODO: this is one for testing
     },
   },
   ReserveAssets: {
@@ -295,7 +295,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
     [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
-    [eAstarNetwork.astar]: '0x3Ea37fc68295262e6061aBC3eB4446c167FEE420',
+    [eAstarNetwork.astar]: '0x0684B5972f320B1F4e810b6432Cb8190B2D6cA7b', // TODO: this is one for testing
   },
   StakedLay: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
@@ -304,6 +304,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65',
-    [eAstarNetwork.astar]: '0x75AC15EbCA4e93D61bCc878ded9Ba338FD23E761', // TODO: this is one for testing
+    [eAstarNetwork.astar]: '0xE2aca8Aeb4422B0dd0BD227bacfa18300E6c9ee2', // TODO: this is one for testing
   },
 };
