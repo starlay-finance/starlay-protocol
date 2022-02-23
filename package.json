@@ -25,9 +25,6 @@
     "starlay:shiden:dev:migration": "npm run compile && npm run hardhat:shiden -- starlay:dev",
     "starlay:astar:dev:migration": "npm run compile && npm run hardhat:astar -- starlay:dev",
     "starlay:dev:migration": "npm run compile && hardhat starlay:dev",
-    "starlay:shibuya:set-price-in-fallback-oracle": "npm run compile && npm run hardhat:shibuya -- set-price-in-fallback-oracle",
-    "starlay:shiden:set-price-in-fallback-oracle": "npm run compile && npm run hardhat:shiden -- set-price-in-fallback-oracle",
-    "starlay:astar:set-price-in-fallback-oracle": "npm run compile && npm run hardhat:astar -- set-price-in-fallback-oracle",
     "starlay:docker:full:migration": "npm run compile && npm run hardhat:docker -- starlay:astar --skip-registry",
     "starlay:docker:full:migration:add-registry": "npm run compile && npm run hardhat:docker -- starlay:astar",
     "starlay:docker:add-market-to-registry-from-config": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Starlay",
@@ -58,7 +55,7 @@
     "print-contracts:astar": "npm run hardhat:astar -- print-contracts",
     "print-config:shibuya": "hardhat --network shibuya print-config --pool Starlay --data-provider 0xA1901785c29cBd48bfA74e46b67C736b26054fa4",
     "print-config:shiden": "hardhat --network shiden print-config --pool Starlay --data-provider 0xFbF5495E31c1CD46406058d104F76BD5b3B8D662",
-    "print-config:astar": "hardhat --network astar print-config --pool Starlay --data-provider 0xFbF5495E31c1CD46406058d104F76BD5b3B8D662",
+    "print-config:astar": "hardhat --network astar print-config --pool Starlay --data-provider 0x3AE80D0456F466c5cf46fA45C993D88561337417",
     "shibuya:deployUIProviderV2": "hardhat --network shibuya deploy-UiPoolDataProviderV2",
     "shiden:deployUIProviderV2": "hardhat --network shiden deploy-UiPoolDataProviderV2",
     "astar:deployUIProviderV2": "hardhat --network astar deploy-UiPoolDataProviderV2",
@@ -71,6 +68,9 @@
     "external:deploy-assets-shibuya": "npm run compile && hardhat --network shibuya external:deploy-new-asset --symbol ${SYMBOL} --verify",
     "external:deploy-assets-shiden": "npm run compile && hardhat --network shiden external:deploy-new-asset --symbol ${SYMBOL} --verify",
     "external:deploy-assets-astar": "npm run compile && hardhat --network astar external:deploy-new-asset --symbol ${SYMBOL} --verify",
+    "starlay:shibuya:set-price-in-fallback-oracle": "npm run hardhat:shibuya -- set-price-in-fallback-oracle",
+    "starlay:shiden:set-price-in-fallback-oracle": "npm run hardhat:shiden -- set-price-in-fallback-oracle",
+    "starlay:astar:set-price-in-fallback-oracle": "npm run hardhat:astar -- set-price-in-fallback-oracle",
     "prepublishOnly": "npm run compile"
   },
   "devDependencies": {
