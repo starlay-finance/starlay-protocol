@@ -295,7 +295,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
     [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
+    [eAstarNetwork.astar]: '0x3Ea37fc68295262e6061aBC3eB4446c167FEE420',
   },
   StakedLay: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
