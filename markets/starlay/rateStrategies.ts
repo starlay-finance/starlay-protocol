@@ -29,7 +29,7 @@ export const rateStrategyWETH: IInterestRateStrategyParams = {
 // LAY
 export const rateStrategyLAY: IInterestRateStrategyParams = {
   name: 'rateStrategyLAY',
-  optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
+  optimalUtilizationRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: '0',
   variableRateSlope1: '0',
   variableRateSlope2: '0',
@@ -42,30 +42,30 @@ export const rateStrategyVolatileTwo: IInterestRateStrategyParams = {
   name: 'rateStrategyVolatileTwo',
   optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
-  variableRateSlope1: new BigNumber(0.08).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
+};
+
+export const rateStrategyWASTR: IInterestRateStrategyParams = {
+  name: 'rateStrategyWASTR',
+  optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
   variableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
   stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
   stableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
 };
 
-export const rateStrategyWASTR: IInterestRateStrategyParams = {
-  name: 'rateStrategyWASTR',
-  optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
-  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
-  variableRateSlope1: new BigNumber(0.08).multipliedBy(oneRay).toFixed(),
-  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
-  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
-  stableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
-};
-
 export const rateStrategyWSDN: IInterestRateStrategyParams = {
   name: 'rateStrategyWSDN',
-  optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
+  optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
-  variableRateSlope1: new BigNumber(0.08).multipliedBy(oneRay).toFixed(),
-  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
   stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
-  stableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
 };
 
 // DAI only for test

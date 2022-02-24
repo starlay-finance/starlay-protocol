@@ -62,13 +62,13 @@ export const ALL_ASSETS_PRICES_FOR_TESTING = {
 // PriceAggregatorAddress
 export const aggregatorProxy = {
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  // astar: ZERO_ADDRESS, //TODO:
-  shiden: '0xf09C187d39A4998F25d6C3Bf2d693D355f563363',
+  astar: '0x533ECB70ed59ceDBfcC67A27e1D533f43bEed108', //TODO:
+  shiden: '0xBE38fe6439269d18190024DA4f2Cfc35323A8384',
   shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
 };
 
 export const baseTokenAddress = {
-  // astar: ZERO_ADDRESS, //TODO:
+  astar: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
   shiden: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
   shibuya: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
 };
