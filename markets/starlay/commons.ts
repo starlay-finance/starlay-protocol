@@ -92,8 +92,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0x52D306e36E3B6B02c153d0266ff0f85d18BCD413',
     [eAstarNetwork.shibuya]: '',
-    [eAstarNetwork.shiden]: '',
-    [eAstarNetwork.astar]: '',
+    [eAstarNetwork.shiden]: '0x918040Fc9460D215b5cDa27d3a8FdF801A3c1776',
+    [eAstarNetwork.astar]: '0x228cB4AbA0823db266CaC961c517Ac57A849A49b',
   },
   ProviderRegistryOwner: {
     [eEthereumNetwork.buidlerevm]: '',
