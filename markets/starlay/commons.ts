@@ -128,8 +128,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
-    [eAstarNetwork.shiden]: '',
-    [eAstarNetwork.astar]: '',
+    [eAstarNetwork.shiden]: '0xec97a2E3DEa2b0C58006964dcEB379b3B94Bd2c0', // LendingPoolConfiguratorImpl
+    [eAstarNetwork.astar]: '0x66EE292e5B75568bb38fDDa691D074B21E057465', // LendingPoolConfiguratorImpl
   },
   LendingPool: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -137,8 +137,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '',
-    [eAstarNetwork.shiden]: '',
-    [eAstarNetwork.astar]: '',
+    [eAstarNetwork.shiden]: '0x2547ED579aac7f8974925541FD1F6c8BD85F1Ca1',
+    [eAstarNetwork.astar]: '0x39aa77Aa50dDC4a1d77074891E761f5B73092c79',
   },
   WethGateway: {
     [eEthereumNetwork.buidlerevm]: '',
