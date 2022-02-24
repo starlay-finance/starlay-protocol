@@ -71,6 +71,12 @@
     "starlay:shibuya:set-price-in-fallback-oracle": "npm run hardhat:shibuya -- set-price-in-fallback-oracle",
     "starlay:shiden:set-price-in-fallback-oracle": "npm run hardhat:shiden -- set-price-in-fallback-oracle",
     "starlay:astar:set-price-in-fallback-oracle": "npm run hardhat:astar -- set-price-in-fallback-oracle",
+    "starlay:shibuya:pause-lending-pool": "hardhat --network shibuya pause-lending-pool --stop --pool Starlay",
+    "starlay:shiden:pause-lending-pool": "hardhat --network shiden pause-lending-pool --stop --pool Starlay",
+    "starlay:astar:pause-lending-pool": "hardhat --network astar pause-lending-pool --stop --pool Starlay",
+    "starlay:shibuya:start-lending-pool": "hardhat --network shibuya pause-lending-pool --pool Starlay",
+    "starlay:shiden:start-lending-pool": "hardhat --network shiden pause-lending-pool --pool Starlay",
+    "starlay:astar:start-lending-pool": "hardhat --network astar pause-lending-pool --pool Starlay",
     "prepublishOnly": "npm run compile"
   },
   "devDependencies": {
