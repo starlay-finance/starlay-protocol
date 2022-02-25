@@ -8,7 +8,6 @@ import { MintableERC20 } from '../types/MintableERC20';
 import { ConfigNames, loadPoolConfig } from './configuration';
 import { ZERO_ADDRESS } from './constants';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
-import { getDefenderRelaySigner, usingDefender } from './defender-utils';
 import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
@@ -23,7 +22,7 @@ import {
   iParamsPerPool,
   StarlayPools,
   tEthereumAddress,
-  tStringTokenSmallUnits,
+  tStringTokenSmallUnits
 } from './types';
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
@@ -67,10 +66,10 @@ export const rawInsertContractAddressInDb = async (id: string, address: tEthereu
 
 export const getEthersSigners = async (): Promise<Signer[]> => {
   const ethersSigners = await Promise.all(await DRE.ethers.getSigners());
-  if (usingDefender()) {
-    const [, ...users] = ethersSigners;
-    return [await getDefenderRelaySigner(), ...users];
-  }
+  // if (usingDefender()) {
+  //   const [, ...users] = ethersSigners;
+  //   return [await getDefenderRelaySigner(), ...users];
+  // }
   return ethersSigners;
 };
 
