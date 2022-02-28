@@ -78,7 +78,7 @@ export const strategyWASTR: IReserveParams = {
   stableBorrowRateEnabled: false,
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
-  reserveFactor: '1000',
+  reserveFactor: '2000',
 };
 
 export const strategyWSDN: IReserveParams = {
@@ -90,7 +90,7 @@ export const strategyWSDN: IReserveParams = {
   stableBorrowRateEnabled: false,
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
-  reserveFactor: '1000',
+  reserveFactor: '2000',
 };
 
 // only for test
