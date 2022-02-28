@@ -111,7 +111,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           lendingPoolProxy.address,
           tokenAddress,
           treasuryAddress,
-          `Starley interest bearing ${token}`,
+          `Starlay interest bearing ${token}`,
           `l${token}`,
           ZERO_ADDRESS,
         ]);
@@ -123,7 +123,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
         await verifyContract(eContractid.StableDebtToken, await getStableDebtToken(stableDebt), [
           lendingPoolProxy.address,
           tokenAddress,
-          `Starley stable debt bearing ${token}`,
+          `Starlay stable debt bearing ${token}`,
           `sd${token}`,
           ZERO_ADDRESS,
         ]);
@@ -138,7 +138,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           [
             lendingPoolProxy.address,
             tokenAddress,
-            `Starley variable debt bearing ${token}`,
+            `Starlay variable debt bearing ${token}`,
             `vd${token}`,
             ZERO_ADDRESS,
           ]

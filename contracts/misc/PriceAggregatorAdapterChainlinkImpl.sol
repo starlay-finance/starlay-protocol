@@ -5,7 +5,7 @@ import {IChainlinkAggregator} from '../interfaces/IChainlinkAggregator.sol';
 import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 
 /// @title PriceAggregatorChainlinkImpl
-/// @author Starley
+/// @author Starlay
 /// @notice Price aggregator Chainlink implementation
 contract PriceAggregatorAdapterChainlinkImpl is IPriceAggregatorAdapter, Ownable {
   mapping(address => IChainlinkAggregator) private assetsSources;

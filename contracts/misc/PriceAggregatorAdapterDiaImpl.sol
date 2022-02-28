@@ -8,7 +8,7 @@ import {IERC20Detailed} from '../dependencies/openzeppelin/contracts/IERC20Detai
 import {SafeMath} from '../dependencies/openzeppelin/contracts/SafeMath.sol';
 
 /// @title PriceAggregatorDiaImpl
-/// @author Starley
+/// @author Starlay
 /// @notice Price aggregator Dia implementation
 contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
   IDiaAggregator private _aggregator;

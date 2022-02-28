@@ -33,7 +33,7 @@ makeSuite('LToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await lDai.name();
 
-    expect(name).to.be.equal('Starley interest bearing DAI');
+    expect(name).to.be.equal('Starlay interest bearing DAI');
 
     const fromBalance = await lDai.balanceOf(users[0].address);
     const toBalance = await lDai.balanceOf(users[1].address);

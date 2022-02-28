@@ -13,9 +13,9 @@ import { eAstarNetwork } from './../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  LTokenNamePrefix: 'Starley interest bearing',
-  StableDebtTokenNamePrefix: 'Starley stable debt bearing',
-  VariableDebtTokenNamePrefix: 'Starley variable debt bearing',
+  LTokenNamePrefix: 'Starlay interest bearing',
+  StableDebtTokenNamePrefix: 'Starlay stable debt bearing',
+  VariableDebtTokenNamePrefix: 'Starlay variable debt bearing',
   SymbolPrefix: '',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'USD',

@@ -51,7 +51,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Starley stable debt bearing ${symbol}`,
+        `Starlay stable debt bearing ${symbol}`,
         `sd${symbol}`,
       ],
       verify
@@ -61,7 +61,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Starley variable debt bearing ${symbol}`,
+        `Starlay variable debt bearing ${symbol}`,
         `vd${symbol}`,
       ],
       verify
