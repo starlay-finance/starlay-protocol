@@ -33,13 +33,13 @@ export const STARLAY_REFERRAL = '0';
 // to set initial prices in fallback oracle
 export const INITIAL_PRICES = {
   USD: oneUsd.toFixed(),
-  USDC: oneUsd.toFixed(),
+  USDC: oneUsd.multipliedBy('0.98889786').toFixed(),
   USDT: oneUsd.toFixed(),
-  WETH: oneUsd.multipliedBy('2544.21785388').toFixed(),
-  WBTC: oneUsd.multipliedBy('76685.43908087').toFixed(),
-  WASTR: oneUsd.multipliedBy('0.13042952').toFixed(),
-  WSDN: oneUsd.multipliedBy('0.83322952').toFixed(),
-  LAY: oneUsd.multipliedBy('0.00162094').toFixed(),
+  WETH: oneUsd.multipliedBy('2555.73492766').toFixed(),
+  WBTC: oneUsd.multipliedBy('37561.51135465').toFixed(),
+  WASTR: oneUsd.multipliedBy('0.13272916').toFixed(),
+  WSDN: oneUsd.multipliedBy('0.70356687').toFixed(),
+  LAY: oneUsd.multipliedBy('0.10000000').toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {
