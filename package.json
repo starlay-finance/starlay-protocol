@@ -55,7 +55,7 @@
     "print-contracts:astar": "npm run hardhat:astar -- print-contracts",
     "print-config:shibuya": "hardhat --network shibuya print-config --pool Starlay --data-provider 0xA1901785c29cBd48bfA74e46b67C736b26054fa4",
     "print-config:shiden": "hardhat --network shiden print-config --pool Starlay --data-provider 0x68008dA59b9c1D10Deec387D189A4c6F74Db445D",
-    "print-config:astar": "hardhat --network astar print-config --pool Starlay --data-provider 0x37C27FB2F2fc29bCcd0fba225Ff55719E37D3255",
+    "print-config:astar": "hardhat --network astar print-config --pool Starlay --data-provider 0x5BF9B2644E273D92ff1C31A83476314c95953133",
     "shibuya:deployUIProviderV2": "hardhat --network shibuya deploy-UiPoolDataProviderV2",
     "shiden:deployUIProviderV2": "hardhat --network shiden deploy-UiPoolDataProviderV2",
     "astar:deployUIProviderV2": "hardhat --network astar deploy-UiPoolDataProviderV2",

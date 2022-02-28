@@ -33,13 +33,13 @@ export const STARLAY_REFERRAL = '0';
 // to set initial prices in fallback oracle
 export const INITIAL_PRICES = {
   USD: oneUsd.toFixed(),
-  USDC: oneUsd.toFixed(),
+  USDC: oneUsd.multipliedBy('0.98889786').toFixed(),
   USDT: oneUsd.toFixed(),
-  WETH: oneUsd.multipliedBy('2544.21785388').toFixed(),
-  WBTC: oneUsd.multipliedBy('76685.43908087').toFixed(),
-  WASTR: oneUsd.multipliedBy('0.13042952').toFixed(),
-  WSDN: oneUsd.multipliedBy('0.83322952').toFixed(),
-  LAY: oneUsd.multipliedBy('0.00162094').toFixed(),
+  WETH: oneUsd.multipliedBy('2555.73492766').toFixed(),
+  WBTC: oneUsd.multipliedBy('37561.51135465').toFixed(),
+  WASTR: oneUsd.multipliedBy('0.13272916').toFixed(),
+  WSDN: oneUsd.multipliedBy('0.70356687').toFixed(),
+  LAY: oneUsd.multipliedBy('0.10000000').toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {
@@ -62,7 +62,7 @@ export const ALL_ASSETS_PRICES_FOR_TESTING = {
 // PriceAggregatorAddress
 export const aggregatorProxy = {
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  astar: '0x533ECB70ed59ceDBfcC67A27e1D533f43bEed108', //TODO:
+  astar: '0x043C93fF4d52B2F76811852644549553A00309a8',
   shiden: '0xBE38fe6439269d18190024DA4f2Cfc35323A8384',
   shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
 };
