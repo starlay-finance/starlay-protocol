@@ -29,7 +29,7 @@ export const rateStrategyWETH: IInterestRateStrategyParams = {
 // LAY
 export const rateStrategyLAY: IInterestRateStrategyParams = {
   name: 'rateStrategyLAY',
-  optimalUtilizationRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: '0',
   variableRateSlope1: '0',
   variableRateSlope2: '0',
