@@ -62,7 +62,7 @@ export const ALL_ASSETS_PRICES_FOR_TESTING = {
 // PriceAggregatorAddress
 export const aggregatorProxy = {
   tenderly: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  astar: '0x533ECB70ed59ceDBfcC67A27e1D533f43bEed108', //TODO:
+  astar: '0x21FB82E40fAd97b927AD655208110D5269c42020',
   shiden: '0xBE38fe6439269d18190024DA4f2Cfc35323A8384',
   shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
 };

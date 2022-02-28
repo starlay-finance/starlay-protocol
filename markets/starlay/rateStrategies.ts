@@ -2,8 +2,6 @@ import BigNumber from 'bignumber.js';
 import { oneRay } from '../../helpers/constants';
 import { IInterestRateStrategyParams } from '../../helpers/types';
 
-// TODO: set params
-
 // USDC USDT
 export const rateStrategyStable: IInterestRateStrategyParams = {
   name: 'rateStrategyStable',
