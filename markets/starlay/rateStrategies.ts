@@ -5,8 +5,8 @@ import { IInterestRateStrategyParams } from '../../helpers/types';
 // TODO: set params
 
 // USDC USDT
-export const rateStrategyStableThree: IInterestRateStrategyParams = {
-  name: 'rateStrategyStableThree',
+export const rateStrategyStable: IInterestRateStrategyParams = {
+  name: 'rateStrategyStable',
   optimalUtilizationRate: new BigNumber(0.9).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
   variableRateSlope1: new BigNumber(0.04).multipliedBy(oneRay).toFixed(),
@@ -38,8 +38,8 @@ export const rateStrategyLAY: IInterestRateStrategyParams = {
 };
 
 // WBTC
-export const rateStrategyVolatileTwo: IInterestRateStrategyParams = {
-  name: 'rateStrategyVolatileTwo',
+export const rateStrategyWBTC: IInterestRateStrategyParams = {
+  name: 'rateStrategyWBTC',
   optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
   variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
