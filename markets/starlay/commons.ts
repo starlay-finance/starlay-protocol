@@ -159,14 +159,13 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.astar]: '',
   },
   DIAAggregatorAddress: {
-    // https://docs.diadata.org/documentation/oracle-documentation/deployed-contracts#astar-shiden
     [eEthereumNetwork.buidlerevm]: '',
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '',
     [eAstarNetwork.shibuya]: '0x1232acd632dd75f874e357c77295da3f5cd7733e',
     [eAstarNetwork.shiden]: '0xb727CD54C33095111eDb4082B4d5c857f99F19Ec',
-    [eAstarNetwork.astar]: '0xd79357ebb0cd724e391f2b49a8De0E31688fEc75',
+    [eAstarNetwork.astar]: '0x35490A8AC7cD0Df5C4d7Ab4243A6B517133BcDB1',
   },
   PriceAggregator: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -224,7 +223,7 @@ export const CommonsConfig: ICommonConfiguration = {
       ASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
       SDN: '0x7cA69766F4be8Ec93dD01E1d571e64b867455e58',
       ETH: '0x72fE832eB0452285e91CA9F46B85229A5107CeE8',
-      WBTC: '0xEdAA9f408ac11339766a4E5e0d4653BDee52fcA1', // for DIAOracleV2
+      WBTC: '0xEdAA9f408ac11339766a4E5e0d4653BDee52fcA1',
       USDT: '0xdB25FDCCe3E63B376D308dC2D46234632d9959d8',
       USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
@@ -233,7 +232,7 @@ export const CommonsConfig: ICommonConfiguration = {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
       SDN: '0x75364D4F779d0Bd0facD9a218c67f87dD9Aff3b4',
       ETH: '0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c',
-      BTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA', // TODO: replace it for DIAOracleV2 (BTC-> WBTC)
+      WBTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA',
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
