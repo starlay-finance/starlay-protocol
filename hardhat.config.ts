@@ -36,6 +36,7 @@ if (!SKIP_LOAD) {
     'deployments',
     'helpers',
     'operations',
+    'bots',
   ].forEach((folder) => {
     const tasksPath = path.join(__dirname, 'tasks', folder);
     fs.readdirSync(tasksPath)
