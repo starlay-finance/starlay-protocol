@@ -14,7 +14,8 @@ makeSuite('Use native ETH at LendingPool via WETHGateway', (testEnv: TestEnv) =>
   const depositSize = parseEther('5');
   const daiSize = parseEther('10000');
   it('Deposit WETH via WethGateway and DAI', async () => {
-    const { users, wethGateway, lWETH, pool } = testEnv;
+    const { users, wethGateway, lWETH, pool, weth, configurator } = testEnv;
+    await configurator.enableReserveStableRate(weth.address);
 
     const user = users[1];
     const depositor = users[0];

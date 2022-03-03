@@ -16,7 +16,8 @@ makeSuite('LToken: Transfer', (testEnv: TestEnv) => {
   } = ProtocolErrors;
 
   it('User 0 deposits 1000 DAI, transfers to user 1', async () => {
-    const { users, pool, dai, lDai } = testEnv;
+    const { users, pool, dai, lDai, configurator, weth } = testEnv;
+    await configurator.enableReserveStableRate(weth.address);
 
     await dai.connect(users[0].signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
 

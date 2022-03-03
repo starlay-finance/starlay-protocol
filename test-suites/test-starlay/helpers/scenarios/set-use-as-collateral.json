@@ -133,12 +133,12 @@
       ]
     },
     {
-      "description": "User 1 Deposits 10 LAY, disables WETH as collateral. Should revert as 10 LAY are not enough to cover the debt (revert expected)",
+      "description": "User 1 Deposits 10 WSDN, disables WETH as collateral. Should revert as 10 WSDN are not enough to cover the debt (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "LAY",
+            "reserve": "WSDN",
             "amount": "10",
             "user": "1"
           },
@@ -147,7 +147,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "LAY",
+            "reserve": "WSDN",
             "user": "1"
           },
           "expected": "success"
@@ -155,7 +155,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "LAY",
+            "reserve": "WSDN",
             "amount": "10",
             "user": "1"
           },
@@ -173,13 +173,13 @@
       ]
     },
     {
-      "description": "User 1 Deposits 640 more LAY (enough to cover the DAI debt), disables WETH as collateral",
+      "description": "User 1 Deposits 740 more WSDN (enough to cover the DAI debt), disables WETH as collateral",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "LAY",
-            "amount": "640",
+            "reserve": "WSDN",
+            "amount": "740",
             "user": "1"
           },
           "expected": "success"
@@ -187,8 +187,8 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "LAY",
-            "amount": "640",
+            "reserve": "WSDN",
+            "amount": "740",
             "user": "1"
           },
           "expected": "success"
@@ -205,12 +205,12 @@
       ]
     },
     {
-      "description": "User 1 disables LAY as collateral (revert expected)",
+      "description": "User 1 disables WSDN as collateral (revert expected)",
       "actions": [
         {
           "name": "setUseAsCollateral",
           "args": {
-            "reserve": "LAY",
+            "reserve": "WSDN",
             "user": "1",
             "useAsCollateral": "false"
           },
