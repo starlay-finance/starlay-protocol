@@ -19,7 +19,7 @@ task('liquidation-call', 'Liquidation call').setAction(async ({}, DRE) => {
   const uniqueBorrowedUsers = [...new Set(borrowedTransactions)];
   const uniqueDepositedUsers = [...new Set(depositTransactions)];
   console.log('unique deposited users', uniqueDepositedUsers.length);
-  console.log('unique borrowed users', uniqueDepositedUsers.length);
+  console.log('unique borrowed users', uniqueBorrowedUsers.length);
   console.log('Health Factors');
   const usersVSHealthFactors = {};
   for (let i = 0; i < uniqueBorrowedUsers.length; i++) {
