@@ -54,6 +54,7 @@ export interface TestEnv {
   lDai: LToken;
   usdc: MintableERC20;
   lay: MintableERC20;
+  wsdn: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
   registry: LendingPoolAddressesProviderRegistry;
   wethGateway: WETHGateway;
@@ -77,6 +78,7 @@ const testEnv: TestEnv = {
   lDai: {} as LToken,
   usdc: {} as MintableERC20,
   lay: {} as MintableERC20,
+  wsdn: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
   registry: {} as LendingPoolAddressesProviderRegistry,
   wethGateway: {} as WETHGateway,
@@ -123,11 +125,12 @@ export async function initializeMakeSuite() {
   const usdcAddress = reservesTokens.find((token) => token.symbol === 'USDC')?.tokenAddress;
   const layAddress = reservesTokens.find((token) => token.symbol === 'LAY')?.tokenAddress;
   const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
+  const wsdnAddress = reservesTokens.find((token) => token.symbol === 'WSDN')?.tokenAddress;
 
   if (!lDaiAddress || !lWETHAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !usdcAddress || !layAddress || !wethAddress) {
+  if (!daiAddress || !usdcAddress || !layAddress || !wethAddress || !wsdnAddress) {
     process.exit(1);
   }
 
@@ -137,6 +140,7 @@ export async function initializeMakeSuite() {
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.usdc = await getMintableERC20(usdcAddress);
   testEnv.lay = await getMintableERC20(layAddress);
+  testEnv.wsdn = await getMintableERC20(wsdnAddress);
   testEnv.weth = await getWETHMocked(wethAddress);
   testEnv.wethGateway = await getWETHGateway();
 }

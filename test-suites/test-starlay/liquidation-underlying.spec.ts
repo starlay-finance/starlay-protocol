@@ -24,8 +24,10 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   });
 
   it("It's not possible to liquidate on a non-active collateral or a non active principal", async () => {
-    const { configurator, weth, pool, users, dai } = testEnv;
+    const { configurator, weth, pool, users, dai, usdc } = testEnv;
     const user = users[1];
+    await configurator.enableReserveStableRate(weth.address);
+    await configurator.enableReserveStableRate(usdc.address);
     await configurator.deactivateReserve(weth.address);
 
     await expect(
@@ -93,7 +95,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalDataAfter.currentLiquidationThreshold.toString()).to.be.bignumber.equal(
-      '8250',
+      '8500',
       INVALID_HF
     );
   });
@@ -222,7 +224,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
   });
 
-  it('User 3 deposits 1000 USDC, user 4 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
+  it('User 3 deposits 1000 USDC, user 4 deposits 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
     const { usdc, users, pool, oracle, weth, helpersContract } = testEnv;
 
     const depositor = users[3];
@@ -277,11 +279,10 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     //drops HF below 1
     await oracle.setAssetPrice(
       usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.12).toFixed(0)
+      new BigNumber(usdcPrice.toString()).multipliedBy(1.18).toFixed(0)
     );
 
-    //mints dai to the liquidator
-
+    //mints usdc to the liquidator
     await usdc
       .connect(liquidator.signer)
       .mint(await convertToCurrencyDecimals(usdc.address, '1000'));
@@ -375,31 +376,31 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
   });
 
-  it('User 4 deposits 10 LAY - drops HF, liquidates the LAY, which results on a lower amount being liquidated', async () => {
-    const { lay, usdc, users, pool, oracle, helpersContract } = testEnv;
+  it('User 4 deposits 10 WSDN - drops HF, liquidates the WSDN, which results on a lower amount being liquidated', async () => {
+    const { wsdn, usdc, users, pool, oracle, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints LAY to borrower
-    await lay.connect(borrower.signer).mint(await convertToCurrencyDecimals(lay.address, '10'));
+    //mints WSDN to borrower
+    await wsdn.connect(borrower.signer).mint(await convertToCurrencyDecimals(wsdn.address, '10'));
 
     //approve protocol to access the borrower wallet
-    await lay.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wsdn.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //borrower deposits 10 LAY
-    const amountToDeposit = await convertToCurrencyDecimals(lay.address, '10');
+    //borrower deposits 10 WSDN
+    const amountToDeposit = await convertToCurrencyDecimals(wsdn.address, '10');
 
     await pool
       .connect(borrower.signer)
-      .deposit(lay.address, amountToDeposit, borrower.address, '0');
+      .deposit(wsdn.address, amountToDeposit, borrower.address, '0');
     const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
     //drops HF below 1
     await oracle.setAssetPrice(
       usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.14).toFixed(0)
+      new BigNumber(usdcPrice.toString()).multipliedBy(1.06).toFixed(0)
     );
 
     //mints usdc to the liquidator
@@ -416,19 +417,19 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
 
     const usdcReserveDataBefore = await helpersContract.getReserveData(usdc.address);
-    const layReserveDataBefore = await helpersContract.getReserveData(lay.address);
+    const wsdnReserveDataBefore = await helpersContract.getReserveData(wsdn.address);
 
     const amountToLiquidate = new BigNumber(userReserveDataBefore.currentStableDebt.toString())
       .div(2)
       .decimalPlaces(0, BigNumber.ROUND_DOWN)
       .toFixed(0);
 
-    const collateralPrice = await oracle.getAssetPrice(lay.address);
+    const collateralPrice = await oracle.getAssetPrice(wsdn.address);
     const principalPrice = await oracle.getAssetPrice(usdc.address);
 
     await pool
       .connect(liquidator.signer)
-      .liquidationCall(lay.address, usdc.address, borrower.address, amountToLiquidate, false);
+      .liquidationCall(wsdn.address, usdc.address, borrower.address, amountToLiquidate, false);
 
     const userReserveDataAfter = await helpersContract.getUserReserveData(
       usdc.address,
@@ -438,11 +439,11 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const usdcReserveDataAfter = await helpersContract.getReserveData(usdc.address);
-    const layReserveDataAfter = await helpersContract.getReserveData(lay.address);
+    const wsdnReserveDataAfter = await helpersContract.getReserveData(wsdn.address);
 
-    const layConfiguration = await helpersContract.getReserveConfigurationData(lay.address);
-    const collateralDecimals = layConfiguration.decimals.toString();
-    const liquidationBonus = layConfiguration.liquidationBonus.toString();
+    const wsdnConfiguration = await helpersContract.getReserveConfigurationData(wsdn.address);
+    const collateralDecimals = wsdnConfiguration.decimals.toString();
+    const liquidationBonus = wsdnConfiguration.liquidationBonus.toString();
 
     const principalDecimals = (
       await helpersContract.getReserveConfigurationData(usdc.address)
@@ -479,8 +480,8 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       'Invalid principal available liquidity'
     );
 
-    expect(layReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(layReserveDataBefore.availableLiquidity.toString())
+    expect(wsdnReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(wsdnReserveDataBefore.availableLiquidity.toString())
         .minus(expectedCollateralLiquidated)
         .toFixed(0),
       'Invalid collateral available liquidity'
