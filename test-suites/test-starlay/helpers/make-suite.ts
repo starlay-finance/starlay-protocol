@@ -9,10 +9,12 @@ import {
   getLendingPoolAddressesProvider,
   getLendingPoolAddressesProviderRegistry,
   getLendingPoolConfiguratorProxy,
+  getLeverager,
   getLToken,
   getMintableERC20,
   getPriceOracle,
   getStarlayProtocolDataProvider,
+  getVariableDebtToken,
   getWETHGateway,
   getWETHMocked,
 } from '../../../helpers/contracts-getters';
@@ -21,10 +23,12 @@ import { DRE, evmRevert, evmSnapshot } from '../../../helpers/misc-utils';
 import { usingTenderly } from '../../../helpers/tenderly-utils';
 import { eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { StarlayConfig } from '../../../markets/starlay';
+import { VariableDebtToken } from '../../../types';
 import { LendingPool } from '../../../types/LendingPool';
 import { LendingPoolAddressesProvider } from '../../../types/LendingPoolAddressesProvider';
 import { LendingPoolAddressesProviderRegistry } from '../../../types/LendingPoolAddressesProviderRegistry';
 import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
+import { Leverager } from '../../../types/Leverager';
 import { LToken } from '../../../types/LToken';
 import { MintableERC20 } from '../../../types/MintableERC20';
 import { PriceOracle } from '../../../types/PriceOracle';
@@ -45,6 +49,7 @@ export interface TestEnv {
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
   pool: LendingPool;
+  leverager: Leverager;
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
   helpersContract: StarlayProtocolDataProvider;
@@ -53,6 +58,7 @@ export interface TestEnv {
   dai: MintableERC20;
   lDai: LToken;
   usdc: MintableERC20;
+  vdUsdc: VariableDebtToken;
   lay: MintableERC20;
   wsdn: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
@@ -69,6 +75,7 @@ const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
   pool: {} as LendingPool,
+  leverager: {} as Leverager,
   configurator: {} as LendingPoolConfigurator,
   helpersContract: {} as StarlayProtocolDataProvider,
   oracle: {} as PriceOracle,
@@ -77,6 +84,7 @@ const testEnv: TestEnv = {
   dai: {} as MintableERC20,
   lDai: {} as LToken,
   usdc: {} as MintableERC20,
+  vdUsdc: {} as VariableDebtToken,
   lay: {} as MintableERC20,
   wsdn: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
@@ -99,6 +107,7 @@ export async function initializeMakeSuite() {
   }
   testEnv.deployer = deployer;
   testEnv.pool = await getLendingPool();
+  testEnv.leverager = await getLeverager();
 
   testEnv.configurator = await getLendingPoolConfiguratorProxy();
 
@@ -127,10 +136,16 @@ export async function initializeMakeSuite() {
   const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
   const wsdnAddress = reservesTokens.find((token) => token.symbol === 'WSDN')?.tokenAddress;
 
+  const usdc = await testEnv.helpersContract.getReserveTokensAddresses(usdcAddress!);
+  const vdUsdcAddress = usdc.variableDebtTokenAddress;
+
   if (!lDaiAddress || !lWETHAddress) {
     process.exit(1);
   }
   if (!daiAddress || !usdcAddress || !layAddress || !wethAddress || !wsdnAddress) {
+    process.exit(1);
+  }
+  if (!vdUsdcAddress) {
     process.exit(1);
   }
 
@@ -139,6 +154,7 @@ export async function initializeMakeSuite() {
 
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.usdc = await getMintableERC20(usdcAddress);
+  testEnv.vdUsdc = await getVariableDebtToken(vdUsdcAddress);
   testEnv.lay = await getMintableERC20(layAddress);
   testEnv.wsdn = await getMintableERC20(wsdnAddress);
   testEnv.weth = await getWETHMocked(wethAddress);

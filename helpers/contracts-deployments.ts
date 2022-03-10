@@ -37,6 +37,7 @@ import {
   WETHGatewayFactory,
 } from '../types';
 import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
+import { LeveragerFactory } from '../types/LeveragerFactory';
 import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
 import { MintableERC20 } from '../types/MintableERC20';
 import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
@@ -707,6 +708,16 @@ export const deployStakeUIHelper = async (
       stakedLay,
       mockUsd
     ),
+    eContractid.StakeUIHelper,
+    args,
+    verify
+  );
+};
+
+export const deployLeverager = async ([pool]: [tEthereumAddress], verify?: boolean) => {
+  const args = [pool];
+  return withSaveAndVerify(
+    await new LeveragerFactory(await getFirstSigner()).deploy(pool),
     eContractid.StakeUIHelper,
     args,
     verify

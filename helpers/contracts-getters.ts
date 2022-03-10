@@ -1,3 +1,4 @@
+import { LeveragerFactory } from './../types/LeveragerFactory';
 import {
   DefaultReserveInterestRateStrategyFactory,
   GenericLogicFactory,
@@ -403,5 +404,11 @@ export const getPriceAggregator = async (address?: tEthereumAddress) =>
           .get(`${eContractid.PriceAggregatorAdapterDiaImpl}.${DRE.network.name}`)
           .value()
       ).address,
+    await getFirstSigner()
+  );
+
+export const getLeverager = async (address?: tEthereumAddress) =>
+  await LeveragerFactory.connect(
+    address || (await getDb().get(`${eContractid.Leverager}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );

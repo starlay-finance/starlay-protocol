@@ -71,6 +71,7 @@ export enum eContractid {
   PriceAggregatorAdapterDiaImpl = 'PriceAggregatorAdapterDiaImpl',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
   StakeUIHelper = 'StakeUIHelper',
+  Leverager = 'Leverager',
 }
 
 /*

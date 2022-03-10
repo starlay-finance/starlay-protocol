@@ -21,6 +21,7 @@ import {
   deployLendingPoolCollateralManager,
   deployLendingPoolConfigurator,
   deployLendingRateOracle,
+  deployLeverager,
   deployLTokenImplementations,
   deployLTokensAndRatesHelper,
   deployMintableERC20,
@@ -237,6 +238,9 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
   await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
 
+  const leverager = await deployLeverager([lendingPoolAddress]);
+
+  await insertContractAddressInDb(eContractid.Leverager, leverager.address);
   console.timeEnd('setup');
 };
 
