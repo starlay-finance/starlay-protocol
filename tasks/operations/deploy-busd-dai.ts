@@ -9,6 +9,7 @@ import * as marketConfigs from '../../markets/starlay';
 import { MOCK_PRICE_AGGREGATORS_PRICES } from '../../helpers/constants';
 import {
   getLendingPoolAddressesProvider,
+  getPriceAggregatorAdapterDiaImpl,
   getStarlayFallbackOracle,
   getStarlayProtocolDataProvider,
 } from '../../helpers/contracts-getters';
@@ -26,6 +27,11 @@ const DATA_PROVIDER = {
 const FALLBACK_ORACLE = {
   main: '',
   shiden: '0xA42D5A35b6bbC93fe63FE54536f320faC9996f4C',
+};
+
+const PRICE_ORACLE_DIA_IMPL = {
+  main: '',
+  shiden: '0x8F2fFfF56375CDeD7f53E0D90259711Cd122Da31',
 };
 
 task(
@@ -90,8 +96,13 @@ task(
     admin
   );
 
-  const priceOracle = await getStarlayFallbackOracle(FALLBACK_ORACLE[network]);
   console.log('*** submit mock prices to fallback oracle ***');
+  const priceOracle = await getStarlayFallbackOracle(FALLBACK_ORACLE[network]);
   await priceOracle.submitPrices([reserveAssetAddressBUSD], [MOCK_PRICE_AGGREGATORS_PRICES.BUSD]);
   await priceOracle.submitPrices([reserveAssetAddressDAI], [MOCK_PRICE_AGGREGATORS_PRICES.DAI]);
+
+  console.log('*** set asset sources to price oracle dia impl ***');
+  const priceOracleDiaImpl = await getPriceAggregatorAdapterDiaImpl(PRICE_ORACLE_DIA_IMPL[network]);
+  await priceOracleDiaImpl.setAssetSources([reserveAssetAddressBUSD], ['BUSD']);
+  await priceOracleDiaImpl.setAssetSources([reserveAssetAddressDAI], ['DAI']);
 });
