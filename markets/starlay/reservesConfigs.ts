@@ -23,6 +23,20 @@ export const strategyUSDC: IReserveParams = {
 
 export const strategyUSDT: IReserveParams = strategyUSDC;
 
+export const strategyDAI: IReserveParams = {
+  strategy: rateStrategyStable,
+  baseLTVAsCollateral: '8000',
+  liquidationThreshold: '8500',
+  liquidationBonus: '10500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1000',
+};
+
+export const strategyBUSD: IReserveParams = strategyDAI;
+
 export const strategyLAY: IReserveParams = {
   strategy: rateStrategyLAY,
   baseLTVAsCollateral: '0',
@@ -81,17 +95,4 @@ export const strategyWSDN: IReserveParams = {
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
-};
-
-// only for test
-export const strategyDAI: IReserveParams = {
-  strategy: rateStrategyStableTwo,
-  baseLTVAsCollateral: '7500',
-  liquidationThreshold: '8000',
-  liquidationBonus: '10500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  lTokenImpl: eContractid.LToken,
-  reserveFactor: '1000',
 };

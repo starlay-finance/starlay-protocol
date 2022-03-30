@@ -1,19 +1,35 @@
+import { getTreasuryAddress } from './../../helpers/configuration';
+import { getParamPerNetwork } from './../../helpers/contracts-helpers';
+import { BigNumberish, BytesLike } from 'ethers';
 import { task } from 'hardhat/config';
+import { config } from 'process';
+import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
+import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { setDRE } from '../../helpers/misc-utils';
-import { eEthereumNetwork } from '../../helpers/types';
+import { eEthereumNetwork, eNetwork, ICommonConfiguration } from '../../helpers/types';
 import * as marketConfigs from '../../markets/starlay';
 import * as reserveConfigs from '../../markets/starlay/reservesConfigs';
-import { ZERO_ADDRESS } from './../../helpers/constants';
+import { MOCK_PRICE_AGGREGATORS_PRICES, ZERO_ADDRESS } from './../../helpers/constants';
 import {
   chooseLTokenDeployment,
   deployDefaultReserveInterestRateStrategy,
   deployStableDebtToken,
   deployVariableDebtToken,
 } from './../../helpers/contracts-deployments';
-import { getLendingPoolAddressesProvider } from './../../helpers/contracts-getters';
+import {
+  getFirstSigner,
+  getLendingPool,
+  getLendingPoolAddressesProvider,
+  getStarlayFallbackOracle,
+  getStarlayProtocolDataProvider,
+} from './../../helpers/contracts-getters';
+import { setAssetPricesInFallbackOracle } from '../../helpers/oracles-helpers';
+import { MintableDelegationERC20Factory } from '../../types';
+import { parseEther } from 'ethers/lib/utils';
 
 const LENDING_POOL_ADDRESS_PROVIDER = {
   main: '0xb53c1a33016b2dc2ff3653530bff1848a515c8c5',
+  shiden: '0xa70fFbaFE4B048798bBCBDdfB995fcCec2D1f2CA',
 };
 
 const isSymbolValid = (symbol: string, network: eEthereumNetwork) =>
@@ -24,8 +40,9 @@ const isSymbolValid = (symbol: string, network: eEthereumNetwork) =>
 task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters')
   .addParam('symbol', `Asset symbol, needs to have configuration ready`)
   .addFlag('verify', 'Verify contracts at Etherscan')
-  .setAction(async ({ verify, symbol }, localBRE) => {
-    const network = localBRE.network.name;
+  .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
+  .setAction(async ({ verify, symbol, pool }, localBRE) => {
+    const network = <eNetwork>localBRE.network.name;
     if (!isSymbolValid(symbol, network as eEthereumNetwork)) {
       throw new Error(
         `
@@ -37,6 +54,8 @@ WRONG RESERVE ASSET SETUP:
       );
     }
     setDRE(localBRE);
+    const poolConfig = loadPoolConfig(pool);
+    const { IncentivesController } = poolConfig as ICommonConfiguration;
     const strategyParams = reserveConfigs['strategy' + symbol];
     const reserveAssetAddress =
       marketConfigs.StarlayConfig.ReserveAssets[localBRE.network.name][symbol];
@@ -44,13 +63,16 @@ WRONG RESERVE ASSET SETUP:
     const addressProvider = await getLendingPoolAddressesProvider(
       LENDING_POOL_ADDRESS_PROVIDER[network]
     );
+
     const poolAddress = await addressProvider.getLendingPool();
     const lToken = await deployCustomLToken(verify);
+    const incentivesController = getParamPerNetwork(IncentivesController, network);
+
     const stableDebt = await deployStableDebtToken(
       [
         poolAddress,
         reserveAssetAddress,
-        ZERO_ADDRESS, // Incentives Controller
+        incentivesController, // Incentives Controller
         `Starlay stable debt bearing ${symbol}`,
         `sd${symbol}`,
       ],
@@ -60,7 +82,7 @@ WRONG RESERVE ASSET SETUP:
       [
         poolAddress,
         reserveAssetAddress,
-        ZERO_ADDRESS, // Incentives Controller
+        incentivesController, // Incentives Controller
         `Starlay variable debt bearing ${symbol}`,
         `vd${symbol}`,
       ],
@@ -78,6 +100,7 @@ WRONG RESERVE ASSET SETUP:
       ],
       verify
     );
+
     console.log(`
     New interest bearing asset deployed on ${network}:
     Interest bearing l${symbol} address: ${lToken.address}
@@ -85,4 +108,9 @@ WRONG RESERVE ASSET SETUP:
     Stable Debt sd${symbol} address: ${stableDebt.address}
     Strategy Implementation for ${symbol} address: ${rates.address}
     `);
+    return {
+      lTokenAddress: lToken.address,
+      vdTokenAddress: variableDebt.address,
+      stableDebtTokenAddress: stableDebt.address,
+    };
   });

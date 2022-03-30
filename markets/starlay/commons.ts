@@ -60,6 +60,12 @@ export const CommonsConfig: ICommonConfiguration = {
     WSDN: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
+    DAI: {
+      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+    },
+    BUSD: {
+      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
@@ -227,6 +233,8 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: '0xdB25FDCCe3E63B376D308dC2D46234632d9959d8',
       USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+      BUSD: '0xfB46219F03acDE19837204C01f208A84daf66bFE',
+      DAI: '0x87937913DE720Fd18051bDbc12270E8EFD0Df048',
     },
     [eAstarNetwork.astar]: {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
@@ -236,6 +244,8 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
+      BUSD: 'TODO',
+      DAI: 'TODO',
     },
   },
   ReserveAssets: {
