@@ -66,8 +66,8 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
-      BUSD: 'TODO',
-      DAI: 'TODO',
+      BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
+      DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
     },
   },
 };
