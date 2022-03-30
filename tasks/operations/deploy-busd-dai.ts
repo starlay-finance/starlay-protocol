@@ -12,7 +12,6 @@ import {
   getStarlayFallbackOracle,
   getStarlayProtocolDataProvider,
 } from '../../helpers/contracts-getters';
-import { deployMintableERC20 } from '../../helpers/contracts-deployments';
 
 const LENDING_POOL_ADDRESS_PROVIDER = {
   main: '0xb53c1a33016b2dc2ff3653530bff1848a515c8c5',
