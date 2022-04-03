@@ -12,7 +12,7 @@ import {
   getContractAddressWithJsonFallback,
   rawInsertContractAddressInDb,
 } from './contracts-helpers';
-import { chunk, getDb, waitForTx } from './misc-utils';
+import { chunk, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import {
   eContractid,
   eNetwork,
@@ -118,18 +118,45 @@ export const initReservesByHelper = async (
       // and once under the actual `strategyASSET` key.
       rawInsertContractAddressInDb(strategy.name, strategyAddresses[strategy.name]);
     }
+    if (!notFalsyOrZeroAddress(tokenAddresses[symbol])) {
+      throw new Error(`token address of ${symbol} is not defined`);
+    }
+    if (!notFalsyOrZeroAddress(strategyAddresses[strategy.name])) {
+      throw new Error(`strategy address of ${strategyAddresses[strategy.name]} is not defined`);
+    }
+    const lTokenImplAddress = await getContractAddressWithJsonFallback(lTokenImpl, poolName);
+    if (!notFalsyOrZeroAddress(lTokenImplAddress)) {
+      throw new Error(`address of lTokenImpl is not defined`);
+    }
+    const sdTokenImplAddress = await getContractAddressWithJsonFallback(
+      eContractid.StableDebtToken,
+      poolName
+    );
+    if (!notFalsyOrZeroAddress(sdTokenImplAddress)) {
+      throw new Error(`address of sdTokenImpl is not defined`);
+    }
+    const vdTokenImplAddress = await getContractAddressWithJsonFallback(
+      eContractid.VariableDebtToken,
+      poolName
+    );
+    if (!notFalsyOrZeroAddress(vdTokenImplAddress)) {
+      throw new Error(`address of lTokenImpl is not defined`);
+    }
+    if (!notFalsyOrZeroAddress(tokenAddresses[symbol])) {
+      throw new Error(`underlying asset address of ${tokenAddresses[symbol]} is not defined`);
+    }
+    if (!notFalsyOrZeroAddress(treasuryAddress)) {
+      throw new Error(`treasury address is not defined`);
+    }
+    if (!notFalsyOrZeroAddress(incentivesController)) {
+      throw new Error(`incentivesController address is not defined`);
+    }
     // Prepare input parameters
     reserveSymbols.push(symbol);
     initInputParams.push({
-      lTokenImpl: await getContractAddressWithJsonFallback(lTokenImpl, poolName),
-      stableDebtTokenImpl: await getContractAddressWithJsonFallback(
-        eContractid.StableDebtToken,
-        poolName
-      ),
-      variableDebtTokenImpl: await getContractAddressWithJsonFallback(
-        eContractid.VariableDebtToken,
-        poolName
-      ),
+      lTokenImpl: lTokenImplAddress,
+      stableDebtTokenImpl: sdTokenImplAddress,
+      variableDebtTokenImpl: vdTokenImplAddress,
       underlyingAssetDecimals: reserveDecimals,
       interestRateStrategyAddress: strategyAddresses[strategy.name],
       underlyingAsset: tokenAddresses[symbol],
@@ -242,6 +269,10 @@ export const configureReservesByHelper = async (
     if (alreadyEnabled) {
       console.log(`- Reserve ${assetSymbol} is already enabled as collateral, skipping`);
       continue;
+    }
+
+    if (!notFalsyOrZeroAddress(tokenAddress)) {
+      throw new Error(`token address of ${assetSymbol} is not defined`);
     }
     // Push data
 
