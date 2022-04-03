@@ -16,6 +16,8 @@ contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
   string private DELIMITER = '/';
   string private _baseTokenSymbol;
   mapping(address => string) public symbols;
+  event AggregatorUpdated(address aggregator);
+  event AssetSourcesUpdated(address[] assets, string[] tokenSymbols);
 
   constructor(address aggregator, string memory baseTokenSymbol) public {
     _aggregator = IDiaAggregator(aggregator);
@@ -24,6 +26,7 @@ contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
 
   function setAggregator(address aggregator) external onlyOwner {
     _aggregator = IDiaAggregator(aggregator);
+    emit AggregatorUpdated(aggregator);
   }
 
   /// @notice External function called by the Starlay governance to set or replace sources of assets
@@ -34,6 +37,7 @@ contract PriceAggregatorAdapterDiaImpl is IPriceAggregatorAdapter, Ownable {
     onlyOwner
   {
     _setAssetsSources(assets, tokenSymbols);
+    emit AssetSourcesUpdated(assets, tokenSymbols);
   }
 
   /// @notice Internal function to set the sources for each asset
