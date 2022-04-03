@@ -37,8 +37,6 @@ contract LToken is
   /// @dev owner => next valid nonce to submit with permit()
   mapping(address => uint256) public _nonces;
 
-  bytes32 public DOMAIN_SEPARATOR;
-
   ILendingPool internal _pool;
   address internal _treasury;
   address internal _underlyingAsset;
@@ -79,16 +77,16 @@ contract LToken is
     assembly {
       chainId := chainid()
     }
-
-    DOMAIN_SEPARATOR = keccak256(
-      abi.encode(
-        EIP712_DOMAIN,
-        keccak256(bytes(lTokenName)),
-        keccak256(EIP712_REVISION),
-        chainId,
-        address(this)
-      )
-    );
+    bytes32 domainSeparator =
+      keccak256(
+        abi.encode(
+          EIP712_DOMAIN,
+          keccak256(bytes(name())),
+          keccak256(EIP712_REVISION),
+          chainId,
+          address(this)
+        )
+      );
 
     _setName(lTokenName);
     _setSymbol(lTokenSymbol);
@@ -353,11 +351,27 @@ contract LToken is
     //solium-disable-next-line
     require(block.timestamp <= deadline, 'INVALID_EXPIRATION');
     uint256 currentValidNonce = _nonces[owner];
+    uint256 chainId;
+
+    //solium-disable-next-line
+    assembly {
+      chainId := chainid()
+    }
+    bytes32 domainSeparator =
+      keccak256(
+        abi.encode(
+          EIP712_DOMAIN,
+          keccak256(bytes(name())),
+          keccak256(EIP712_REVISION),
+          chainId,
+          address(this)
+        )
+      );
     bytes32 digest =
       keccak256(
         abi.encodePacked(
           '\x19\x01',
-          DOMAIN_SEPARATOR,
+          domainSeparator,
           keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, currentValidNonce, deadline))
         )
       );
