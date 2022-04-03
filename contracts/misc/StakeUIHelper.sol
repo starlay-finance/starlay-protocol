@@ -27,6 +27,7 @@ contract StakeUIHelper is StakeUIHelperI {
     require(priceOracle != address(0), 'priceOracle address cannot be empty');
     require(lay != address(0), 'lay address cannot be empty');
     require(stkLay != address(0), 'stkLay address cannot be empty');
+    require(mockUsd != address(0), 'mockUsd address cannot be empty');
     PRICE_ORACLE = IPriceOracleGetter(priceOracle);
 
     LAY = lay;

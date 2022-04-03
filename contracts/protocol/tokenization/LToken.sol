@@ -73,6 +73,7 @@ contract LToken is
   ) external override initializer {
     require(treasury != address(0), 'treasury address cannot be empty');
     require(underlyingAsset != address(0), 'underlyingAsset address cannot be empty');
+    require(address(pool) != address(0), 'pool address cannot be empty');
 
     _setName(lTokenName);
     _setSymbol(lTokenSymbol);

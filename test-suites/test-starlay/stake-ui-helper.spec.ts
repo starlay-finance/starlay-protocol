@@ -2,7 +2,7 @@ import { StakeUIHelper } from './../../types/StakeUIHelper.d';
 import { StakedTokenMockFactory } from './../../types/StakedTokenMockFactory';
 import { StakedTokenMock } from './../../types/StakedTokenMock.d';
 import BigNumber from 'bignumber.js';
-import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
+import { APPROVAL_AMOUNT_LENDING_POOL, oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import { deployStakeUIHelper } from '../../helpers/contracts-deployments';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { DRE } from '../../helpers/misc-utils';
@@ -12,6 +12,8 @@ import { calcExpectedVariableDebtTokenBalance } from './helpers/utils/calculatio
 import { getReserveData, getUserData } from './helpers/utils/helpers';
 import { parseEther } from 'ethers/lib/utils';
 import { time } from 'console';
+import { StakeUIHelperFactory } from '../../types';
+import { getFirstSigner } from '../../helpers/contracts-getters';
 
 const chai = require('chai');
 const { expect } = chai;
@@ -29,6 +31,52 @@ makeSuite('StakeUIHelper', (testEnv) => {
       mockStakeToken.address,
       dai.address,
     ]);
+  });
+  describe('constructor', async () => {
+    it('should revert if price oracle is zero address', async () => {
+      const { dai, lay } = testEnv;
+      await expect(
+        new StakeUIHelperFactory(await getFirstSigner()).deploy(
+          ZERO_ADDRESS,
+          lay.address,
+          mockStakeToken.address,
+          dai.address
+        )
+      ).to.be.revertedWith('priceOracle address cannot be empty');
+    });
+    it('should revert if lay is zero address', async () => {
+      const { dai, oracle } = testEnv;
+      await expect(
+        new StakeUIHelperFactory(await getFirstSigner()).deploy(
+          oracle.address,
+          ZERO_ADDRESS,
+          mockStakeToken.address,
+          dai.address
+        )
+      ).to.be.revertedWith('lay address cannot be empty');
+    });
+    it('should revert if stkLay is zero address', async () => {
+      const { dai, lay, oracle } = testEnv;
+      await expect(
+        new StakeUIHelperFactory(await getFirstSigner()).deploy(
+          oracle.address,
+          lay.address,
+          ZERO_ADDRESS,
+          dai.address
+        )
+      ).to.be.revertedWith('stkLay address cannot be empty');
+    });
+    it('should revert if mockUsd is zero address', async () => {
+      const { lay, oracle } = testEnv;
+      await expect(
+        new StakeUIHelperFactory(await getFirstSigner()).deploy(
+          oracle.address,
+          lay.address,
+          mockStakeToken.address,
+          ZERO_ADDRESS
+        )
+      ).to.be.revertedWith('mockUsd address cannot be empty');
+    });
   });
   describe('getStkGeneralLayData', async () => {
     it('stakeAPY is 0 if totalSupply of StakeToken is 0', async () => {
