@@ -19,15 +19,18 @@ contract StakeUIHelper is StakeUIHelperI {
   uint256 internal constant USD_BASE = 1e26;
 
   constructor(
-    IPriceOracleGetter priceOracle,
+    address priceOracle,
     address lay,
-    IStakedToken stkLay,
+    address stkLay,
     address mockUsd
   ) public {
-    PRICE_ORACLE = priceOracle;
+    require(priceOracle != address(0), 'priceOracle address cannot be empty');
+    require(lay != address(0), 'lay address cannot be empty');
+    require(stkLay != address(0), 'stkLay address cannot be empty');
+    PRICE_ORACLE = IPriceOracleGetter(priceOracle);
 
     LAY = lay;
-    STAKED_LAY = stkLay;
+    STAKED_LAY = IStakedToken(stkLay);
     MOCK_USD_ADDRESS = mockUsd;
   }
 

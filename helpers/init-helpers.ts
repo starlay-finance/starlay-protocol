@@ -148,9 +148,6 @@ export const initReservesByHelper = async (
     if (!notFalsyOrZeroAddress(treasuryAddress)) {
       throw new Error(`treasury address is not defined`);
     }
-    if (!notFalsyOrZeroAddress(incentivesController)) {
-      throw new Error(`incentivesController address is not defined`);
-    }
     // Prepare input parameters
     reserveSymbols.push(symbol);
     initInputParams.push({

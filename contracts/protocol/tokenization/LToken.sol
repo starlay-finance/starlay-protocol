@@ -71,22 +71,8 @@ contract LToken is
     string calldata lTokenSymbol,
     bytes calldata params
   ) external override initializer {
-    uint256 chainId;
-
-    //solium-disable-next-line
-    assembly {
-      chainId := chainid()
-    }
-    bytes32 domainSeparator =
-      keccak256(
-        abi.encode(
-          EIP712_DOMAIN,
-          keccak256(bytes(name())),
-          keccak256(EIP712_REVISION),
-          chainId,
-          address(this)
-        )
-      );
+    require(treasury != address(0), 'treasury address cannot be empty');
+    require(underlyingAsset != address(0), 'underlyingAsset address cannot be empty');
 
     _setName(lTokenName);
     _setSymbol(lTokenSymbol);

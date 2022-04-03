@@ -10,21 +10,6 @@ import { makeSuite, TestEnv } from './helpers/make-suite';
 const { parseEther } = ethers.utils;
 
 makeSuite('LToken: Permit', (testEnv: TestEnv) => {
-  it('Checks the domain separator', async () => {
-    const { lDai } = testEnv;
-    const separator = await lDai.DOMAIN_SEPARATOR();
-
-    const domain = {
-      name: await lDai.name(),
-      version: '1',
-      chainId: DRE.network.config.chainId,
-      verifyingContract: lDai.address,
-    };
-    const domainSeparator = _TypedDataEncoder.hashDomain(domain);
-
-    expect(separator).to.be.equal(domainSeparator, 'Invalid domain separator');
-  });
-
   it('Get lDai for tests', async () => {
     const { dai, pool, deployer } = testEnv;
 
