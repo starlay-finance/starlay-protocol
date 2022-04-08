@@ -53,6 +53,9 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         const lendingPoolConfiguratorImpl = await deployLendingPoolConfigurator(verify);
         lendingPoolConfiguratorImplAddress = lendingPoolConfiguratorImpl.address;
       }
+      if (!notFalsyOrZeroAddress(lendingPoolProxy.address)) {
+        throw new Error('missing lendingPoolProxy');
+      }
       console.log(
         '\tSetting lending pool configurator implementation with address:',
         lendingPoolConfiguratorImplAddress

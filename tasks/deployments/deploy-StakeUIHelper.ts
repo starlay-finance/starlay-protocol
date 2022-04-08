@@ -1,3 +1,4 @@
+import { notFalsyOrZeroAddress } from './../../helpers/misc-utils';
 import { task } from 'hardhat/config';
 import { deployStakeUIHelper } from '../../helpers/contracts-deployments';
 import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
@@ -29,6 +30,19 @@ task(`deploy-${eContractid.StakeUIHelper}`, `Deploys the StakeUIHelper contract`
     console.log(`\n- StakeUIHelper stkLay: ${stkLay}`);
     console.log(`\n- StakeUIHelper usd: ${UsdAddress}`);
     console.log(`\n- StakeUIHelper deployment`);
+
+    if (!notFalsyOrZeroAddress(oracle.address)) {
+      throw new Error('oracle address is not defined');
+    }
+    if (!notFalsyOrZeroAddress(lay)) {
+      throw new Error('lay address is not defined');
+    }
+    if (!notFalsyOrZeroAddress(stkLay)) {
+      throw new Error('stkLay address is not defined');
+    }
+    if (!notFalsyOrZeroAddress(UsdAddress)) {
+      throw new Error('UsdAddress address is not defined');
+    }
 
     const StakeUIHelper = await deployStakeUIHelper([oracle.address, lay, stkLay, UsdAddress]);
 
