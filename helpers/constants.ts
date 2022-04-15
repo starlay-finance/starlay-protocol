@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { parseEther } from 'ethers/lib/utils';
 
 // ----------------
 // MATH
@@ -40,12 +41,16 @@ export const INITIAL_PRICES = {
   WASTR: oneUsd.multipliedBy('0.13272916').toFixed(),
   WSDN: oneUsd.multipliedBy('0.70356687').toFixed(),
   LAY: oneUsd.multipliedBy('0.10000000').toFixed(),
+  DAI: oneEther.toFixed(),
+  BUSD: oneUsd.toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
   USDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
+  DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
+  BUSD: oneEther.multipliedBy('0.00369068412860').toFixed(),
   WETH: oneEther.toFixed(),
   WBTC: oneEther.multipliedBy('47.332685').toFixed(),
   USD: '5848466240000000',

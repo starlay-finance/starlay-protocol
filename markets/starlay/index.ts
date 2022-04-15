@@ -1,6 +1,8 @@
 import { eAstarNetwork, eEthereumNetwork, IStarlayConfiguration } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
+  strategyBUSD,
+  strategyDAI,
   strategyLAY,
   strategyUSDC,
   strategyUSDT,
@@ -26,6 +28,8 @@ export const StarlayConfig: IStarlayConfiguration = {
     WETH: strategyWETH,
     WASTR: strategyWASTR,
     WSDN: strategyWSDN,
+    DAI: strategyDAI,
+    BUSD: strategyBUSD,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -40,6 +44,8 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0x8aDa54F1169969119078E23C4Ec632D01bDa329b',
       USDC: '0xB56df4fA49847e7B659B5ed4A133512635fF2577',
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
+      BUSD: '',
+      DAI: '',
     },
     [eAstarNetwork.shiden]: {
       WASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -49,6 +55,8 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0xdB25FDCCe3E63B376D308dC2D46234632d9959d8',
       USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+      BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
+      DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
     },
     [eAstarNetwork.astar]: {
       WASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
@@ -58,6 +66,8 @@ export const StarlayConfig: IStarlayConfiguration = {
       USDT: '0x3795C36e7D12A8c252A20C5a7B455f7c57b60283',
       USDC: '0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98',
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
+      BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
+      DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
     },
   },
 };
