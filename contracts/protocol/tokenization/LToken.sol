@@ -38,7 +38,7 @@ contract LToken is
   mapping(address => uint256) public _nonces;
 
   ILendingPool internal _pool;
-  address internal _treasury;
+  address internal _voter;
   address internal _underlyingAsset;
   IStarlayIncentivesController internal _incentivesController;
 
@@ -54,7 +54,7 @@ contract LToken is
   /**
    * @dev Initializes the lToken
    * @param pool The address of the lending pool where this lToken will be used
-   * @param treasury The address of the Starlay treasury, receiving the fees on this lToken
+   * @param voter The address of the contract Voter.sol where the fees are distributed to voters
    * @param underlyingAsset The address of the underlying asset of this lToken (E.g. WETH for lWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
    * @param lTokenDecimals The decimals of the lToken, same as the underlying asset's
@@ -63,7 +63,7 @@ contract LToken is
    */
   function initialize(
     ILendingPool pool,
-    address treasury,
+    address voter,
     address underlyingAsset,
     IStarlayIncentivesController incentivesController,
     uint8 lTokenDecimals,
@@ -71,7 +71,7 @@ contract LToken is
     string calldata lTokenSymbol,
     bytes calldata params
   ) external override initializer {
-    require(treasury != address(0), 'treasury address cannot be empty');
+    require(voter != address(0), 'voter address cannot be empty');
     require(underlyingAsset != address(0), 'underlyingAsset address cannot be empty');
     require(address(pool) != address(0), 'pool address cannot be empty');
 
@@ -80,14 +80,14 @@ contract LToken is
     _setDecimals(lTokenDecimals);
 
     _pool = pool;
-    _treasury = treasury;
+    _voter = voter;
     _underlyingAsset = underlyingAsset;
     _incentivesController = incentivesController;
 
     emit Initialized(
       underlyingAsset,
       address(pool),
-      treasury,
+      voter,
       address(incentivesController),
       lTokenDecimals,
       lTokenName,
@@ -146,26 +146,26 @@ contract LToken is
   }
 
   /**
-   * @dev Mints lTokens to the reserve treasury
+   * @dev Mints lTokens to the contract Voter.sol
    * - Only callable by the LendingPool
    * @param amount The amount of tokens getting minted
    * @param index The new liquidity index of the reserve
    */
-  function mintToTreasury(uint256 amount, uint256 index) external override onlyLendingPool {
+  function mintToVoter(uint256 amount, uint256 index) external override onlyLendingPool {
     if (amount == 0) {
       return;
     }
 
-    address treasury = _treasury;
+    address voter = _voter;
 
     // Compared to the normal mint, we don't check for rounding errors.
     // The amount to mint can easily be very small since it is a fraction of the interest ccrued.
-    // In that case, the treasury will experience a (very small) loss, but it
+    // In that case, the contract will experience a (very small) loss, but it
     // wont cause potentially valid transactions to fail.
-    _mint(treasury, amount.rayDiv(index));
+    _mint(voter, amount.rayDiv(index));
 
-    emit Transfer(address(0), treasury, amount);
-    emit Mint(treasury, amount, index);
+    emit Transfer(address(0), voter, amount);
+    emit Mint(voter, amount, index);
   }
 
   /**
@@ -250,12 +250,6 @@ contract LToken is
     return super.totalSupply();
   }
 
-  /**
-   * @dev Returns the address of the Starlay treasury, receiving the fees on this lToken
-   **/
-  function RESERVE_TREASURY_ADDRESS() public view returns (address) {
-    return _treasury;
-  }
 
   /**
    * @dev Returns the address of the underlying asset of this lToken (E.g. WETH for lWETH)
