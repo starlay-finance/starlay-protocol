@@ -254,7 +254,7 @@ contract LToken is
    * @dev Returns the address of the Starlay treasury, receiving the fees on this lToken
    **/
   function RESERVE_TREASURY_ADDRESS() public view returns (address) {
-    return _treasury;
+    return _voter;
   }
 
   /**
