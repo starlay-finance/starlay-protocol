@@ -151,7 +151,7 @@ contract LToken is
    * @param amount The amount of tokens getting minted
    * @param index The new liquidity index of the reserve
    */
-  function mintToVoter(uint256 amount, uint256 index) external override onlyLendingPool {
+  function mintToTreasury(uint256 amount, uint256 index) external override onlyLendingPool {
     if (amount == 0) {
       return;
     }
