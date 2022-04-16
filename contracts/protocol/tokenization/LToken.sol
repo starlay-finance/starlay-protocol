@@ -250,6 +250,12 @@ contract LToken is
     return super.totalSupply();
   }
 
+    /**
+   * @dev Returns the address of the Starlay treasury, receiving the fees on this lToken
+   **/
+  function RESERVE_TREASURY_ADDRESS() public view returns (address) {
+    return _treasury;
+  }
 
   /**
    * @dev Returns the address of the underlying asset of this lToken (E.g. WETH for lWETH)
