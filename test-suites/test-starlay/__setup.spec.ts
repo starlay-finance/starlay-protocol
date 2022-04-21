@@ -49,7 +49,7 @@ import {
 } from '../../helpers/oracles-helpers';
 import { eContractid, StarlayPools, tEthereumAddress, TokenContractId } from '../../helpers/types';
 import StarlayConfig from '../../markets/starlay';
-import { strategyDAI } from '../../markets/starlay/reservesConfigs';
+import { strategyDAIForTest } from '../../markets/starlay/reservesConfigs';
 import { MintableERC20 } from '../../types/MintableERC20';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 import { initializeMakeSuite } from './helpers/make-suite';
@@ -198,7 +198,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   // Reserve params from STARLAY pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
-    DAI: strategyDAI,
+    DAI: strategyDAIForTest,
   };
 
   const testHelpers = await deployStarlayProtocolDataProvider(addressesProvider.address);

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { PERCENTAGE_FACTOR, RAY } from '../../helpers/constants';
 import { deployDefaultReserveInterestRateStrategy } from '../../helpers/contracts-deployments';
 import { rateStrategyStableTwo } from '../../markets/starlay/rateStrategies';
-import { strategyDAI } from '../../markets/starlay/reservesConfigs';
+import { strategyDAIForTest } from '../../markets/starlay/reservesConfigs';
 import { DefaultReserveInterestRateStrategy, LToken, MintableERC20 } from '../../types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import './helpers/utils/math';
@@ -41,7 +41,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
       2: currentVariableBorrowRate,
     } = await strategyInstance[
       'calculateInterestRates(address,address,uint256,uint256,uint256,uint256,uint256,uint256)'
-    ](dai.address, lDai.address, 0, 0, 0, 0, 0, strategyDAI.reserveFactor);
+    ](dai.address, lDai.address, 0, 0, 0, 0, 0, strategyDAIForTest.reserveFactor);
 
     expect(currentLiquidityRate.toString()).to.be.equal('0', 'Invalid liquidity rate');
     expect(currentStableBorrowRate.toString()).to.be.equal(
@@ -69,7 +69,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
       '0',
       '800000000000000000',
       '0',
-      strategyDAI.reserveFactor
+      strategyDAIForTest.reserveFactor
     );
 
     const expectedVariableRate = new BigNumber(rateStrategyStableTwo.baseVariableBorrowRate).plus(
@@ -79,7 +79,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
     expect(currentLiquidityRate.toString()).to.be.equal(
       expectedVariableRate
         .times(0.8)
-        .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAI.reserveFactor))
+        .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAIForTest.reserveFactor))
         .toFixed(0),
       'Invalid liquidity rate'
     );
@@ -110,7 +110,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
       '0',
       '800000000000000000',
       '0',
-      strategyDAI.reserveFactor
+      strategyDAIForTest.reserveFactor
     );
 
     const expectedVariableRate = new BigNumber(rateStrategyStableTwo.baseVariableBorrowRate)
@@ -119,7 +119,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
 
     expect(currentLiquidityRate.toString()).to.be.equal(
       expectedVariableRate
-        .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAI.reserveFactor))
+        .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAIForTest.reserveFactor))
         .toFixed(0),
       'Invalid liquidity rate'
     );
@@ -154,7 +154,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
       '400000000000000000',
       '400000000000000000',
       '100000000000000000000000000',
-      strategyDAI.reserveFactor
+      strategyDAIForTest.reserveFactor
     );
 
     const expectedVariableRate = new BigNumber(rateStrategyStableTwo.baseVariableBorrowRate)
@@ -164,7 +164,7 @@ makeSuite('Interest rate strategy tests', (testEnv: TestEnv) => {
     const expectedLiquidityRate = new BigNumber(
       currentVariableBorrowRate.add('100000000000000000000000000').div(2).toString()
     )
-      .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAI.reserveFactor))
+      .percentMul(new BigNumber(PERCENTAGE_FACTOR).minus(strategyDAIForTest.reserveFactor))
       .toFixed(0);
 
     expect(currentLiquidityRate.toString()).to.be.equal(

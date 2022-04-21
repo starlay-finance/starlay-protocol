@@ -45,6 +45,18 @@ export const strategyDAI: IReserveParams = {
   reserveFactor: '1000',
 };
 
+export const strategyDAIForTest: IReserveParams = {
+  strategy: rateStrategyStableTwo,
+  baseLTVAsCollateral: '7500',
+  liquidationThreshold: '8000',
+  liquidationBonus: '10500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: true,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1000',
+};
+
 export const strategyBUSD: IReserveParams = strategyDAI;
 
 export const strategyLAY: IReserveParams = {
