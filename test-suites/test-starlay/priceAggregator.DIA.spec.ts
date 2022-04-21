@@ -40,10 +40,6 @@ makeSuite('Price Aggregator Implementation for DIA', (testEnv: TestEnv) => {
     evmSnapshotId = await evmSnapshot();
   });
 
-  afterEach(async () => {
-    await evmRevert(evmSnapshotId);
-  });
-
   before(async () => {
     mockAggregatorDIA = await deployMockAggregatorDIA([
       prices.map((m) => `${m.symbol}/${quoteCurrency}`),
