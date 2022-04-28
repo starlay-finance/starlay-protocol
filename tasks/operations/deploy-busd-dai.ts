@@ -9,7 +9,7 @@ import * as marketConfigs from '../../markets/starlay';
 import { MOCK_PRICE_AGGREGATORS_PRICES } from '../../helpers/constants';
 import {
   getLendingPoolAddressesProvider,
-  getPriceAggregatorAdapterDiaImpl,
+  getPriceAggregator as getPriceAggregatorAdapterDiaImpl,
   getStarlayFallbackOracle,
   getStarlayProtocolDataProvider,
 } from '../../helpers/contracts-getters';
