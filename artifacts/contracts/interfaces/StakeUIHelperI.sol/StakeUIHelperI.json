@@ -1,0 +1,400 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "StakeUIHelperI",
+  "sourceName": "contracts/interfaces/StakeUIHelperI.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getGeneralStakeUIData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenTotalSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeCooldownSeconds",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeUnstakeWindow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rewardTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeApy",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "distributionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "distributionEnd",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.GeneralStakeUIData",
+          "name": "",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getStkGeneralLayData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenTotalSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeCooldownSeconds",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeUnstakeWindow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rewardTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeApy",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "distributionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "distributionEnd",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.GeneralStakeUIData",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getStkLayData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenTotalSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeCooldownSeconds",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeUnstakeWindow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rewardTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeApy",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "distributionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "distributionEnd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userCooldown",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userIncentivesToClaim",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userPermitNonce",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.AssetUIData",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getStkUserLayData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userCooldown",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userIncentivesToClaim",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userPermitNonce",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.UserStakeUIData",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserStakeUIData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userCooldown",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userIncentivesToClaim",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userPermitNonce",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.UserStakeUIData",
+          "name": "",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserUIData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenTotalSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeCooldownSeconds",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeUnstakeWindow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rewardTokenPriceEth",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeApy",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "distributionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "distributionEnd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakeTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingTokenUserBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userCooldown",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userIncentivesToClaim",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userPermitNonce",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakeUIHelperI.AssetUIData",
+          "name": "",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

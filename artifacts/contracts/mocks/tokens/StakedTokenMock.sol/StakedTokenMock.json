@@ -1,0 +1,391 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "StakedTokenMock",
+  "sourceName": "contracts/mocks/tokens/StakedTokenMock.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "COOLDOWN_SECONDS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "DISTRIBUTION_END",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "UNSTAKE_WINDOW",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_assetData",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "emissionPerSecond",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "lastUpdateTimestamp",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_balance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_coolDownSeconds",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_distributionEnd",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_stakeCooldown",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_totalRewardsBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_unstakeWindow",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "assets",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "emissionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "lastUpdateTimestamp",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IStakedToken.AssetData",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getTotalRewardsBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "emissionPerSecond",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "lastUpdateTimestamp",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IStakedToken.AssetData",
+          "name": "__asset",
+          "type": "tuple"
+        }
+      ],
+      "name": "setAsset",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__balance",
+          "type": "uint256"
+        }
+      ],
+      "name": "setBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__cooldownSeconds",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCooldownSeconds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__distributionEnd",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDistributionEnd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__stakeCooldown",
+          "type": "uint256"
+        }
+      ],
+      "name": "setStakersCooldowns",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "name": "setTotalRewardsBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__totalSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "setTotalSupply",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "__unstakeWindow",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUnstakeWindow",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "stakersCooldowns",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x60806040526000805560006001556000600255600060035560006006556000600755600060085534801561003257600080fd5b50610569806100426000396000f3fe608060405234801561001057600080fd5b50600436106101585760003560e01c80637de81684116100c3578063e6b5a23c1161007c578063e6b5a23c1461026c578063f11b818814610274578063f7ea7a3d14610294578063f8f10dfc146102a7578063fa770a8b146102ba578063fb1669ca146102c257610158565b80637de81684146102175780638816c9771461022e5780638dbefee214610236578063919cd40f14610249578063a490a50914610251578063d54e14691461025957610158565b80633eaaf86b116101155780633eaaf86b146101d15780634dcdb793146101d957806356c4e05a146101e157806370a08231146101e957806372b49d63146101fc5780637b5b11571461020457610158565b8063091030c31461015d578063123e636d1461018657806318160ddd1461019b57806332c03c5f146101a3578063359c4a96146101b657806339ccbdd3146101be575b600080fd5b61017061016b366004610413565b6102d5565b60405161017d9190610512565b60405180910390f35b610199610194366004610441565b6102db565b005b610170610323565b6101996101b13660046104a7565b610329565b61017061032e565b6101996101cc3660046104a7565b610334565b610170610339565b61017061033f565b610170610345565b6101706101f7366004610413565b61034b565b610170610352565b6101996102123660046104a7565b610358565b61021f61035d565b60405161017d939291906104ee565b61017061037b565b610170610244366004610413565b610381565b610170610388565b61017061038e565b6101996102673660046104a7565b610394565b610170610399565b610287610282366004610413565b61039f565b60405161017d91906104bf565b6101996102a23660046104a7565b6103de565b6101996102b53660046104a7565b6103e3565b6101706103e8565b6101996102d03660046104a7565b6103ee565b50600190565b80516004805460208401516001600160801b03908116600160801b029381166fffffffffffffffffffffffffffffffff19909216919091171691909117905560400151600555565b60005490565b600755565b60025490565b600355565b60005481565b60025481565b60065481565b5060065490565b60015490565b600155565b6004546005546001600160801b0380831692600160801b9004169083565b60085481565b5060075490565b60035490565b60035481565b600855565b60015481565b6103a76103f3565b5050604080516060810182526004546001600160801b038082168352600160801b9091041660208201526005549181019190915290565b600055565b600255565b60075481565b600655565b604080516060810182526000808252602082018190529181019190915290565b600060208284031215610424578081fd5b81356001600160a01b038116811461043a578182fd5b9392505050565b600060608284031215610452578081fd5b6040516060810181811067ffffffffffffffff82111715610471578283fd5b604052823561047f8161051b565b8152602083013561048f8161051b565b60208201526040928301359281019290925250919050565b6000602082840312156104b8578081fd5b5035919050565b81516001600160801b039081168252602080840151909116908201526040918201519181019190915260600190565b6001600160801b039384168152919092166020820152604081019190915260600190565b90815260200190565b6001600160801b038116811461053057600080fd5b5056fea26469706673582212202f2820d853e56de75a81a4b89ebe8039bd441ae0d1343912e903016b30e0580f64736f6c634300060c0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101585760003560e01c80637de81684116100c3578063e6b5a23c1161007c578063e6b5a23c1461026c578063f11b818814610274578063f7ea7a3d14610294578063f8f10dfc146102a7578063fa770a8b146102ba578063fb1669ca146102c257610158565b80637de81684146102175780638816c9771461022e5780638dbefee214610236578063919cd40f14610249578063a490a50914610251578063d54e14691461025957610158565b80633eaaf86b116101155780633eaaf86b146101d15780634dcdb793146101d957806356c4e05a146101e157806370a08231146101e957806372b49d63146101fc5780637b5b11571461020457610158565b8063091030c31461015d578063123e636d1461018657806318160ddd1461019b57806332c03c5f146101a3578063359c4a96146101b657806339ccbdd3146101be575b600080fd5b61017061016b366004610413565b6102d5565b60405161017d9190610512565b60405180910390f35b610199610194366004610441565b6102db565b005b610170610323565b6101996101b13660046104a7565b610329565b61017061032e565b6101996101cc3660046104a7565b610334565b610170610339565b61017061033f565b610170610345565b6101706101f7366004610413565b61034b565b610170610352565b6101996102123660046104a7565b610358565b61021f61035d565b60405161017d939291906104ee565b61017061037b565b610170610244366004610413565b610381565b610170610388565b61017061038e565b6101996102673660046104a7565b610394565b610170610399565b610287610282366004610413565b61039f565b60405161017d91906104bf565b6101996102a23660046104a7565b6103de565b6101996102b53660046104a7565b6103e3565b6101706103e8565b6101996102d03660046104a7565b6103ee565b50600190565b80516004805460208401516001600160801b03908116600160801b029381166fffffffffffffffffffffffffffffffff19909216919091171691909117905560400151600555565b60005490565b600755565b60025490565b600355565b60005481565b60025481565b60065481565b5060065490565b60015490565b600155565b6004546005546001600160801b0380831692600160801b9004169083565b60085481565b5060075490565b60035490565b60035481565b600855565b60015481565b6103a76103f3565b5050604080516060810182526004546001600160801b038082168352600160801b9091041660208201526005549181019190915290565b600055565b600255565b60075481565b600655565b604080516060810182526000808252602082018190529181019190915290565b600060208284031215610424578081fd5b81356001600160a01b038116811461043a578182fd5b9392505050565b600060608284031215610452578081fd5b6040516060810181811067ffffffffffffffff82111715610471578283fd5b604052823561047f8161051b565b8152602083013561048f8161051b565b60208201526040928301359281019290925250919050565b6000602082840312156104b8578081fd5b5035919050565b81516001600160801b039081168252602080840151909116908201526040918201519181019190915260600190565b6001600160801b039384168152919092166020820152604081019190915260600190565b90815260200190565b6001600160801b038116811461053057600080fd5b5056fea26469706673582212202f2820d853e56de75a81a4b89ebe8039bd441ae0d1343912e903016b30e0580f64736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
