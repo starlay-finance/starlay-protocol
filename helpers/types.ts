@@ -14,8 +14,8 @@ export enum eEthereumNetwork {
 }
 
 export enum eAstarNetwork {
-  // astar = 'astar',
-  // shiden = 'shiden',
+  astar = 'astar',
+  shiden = 'shiden',
   shibuya = 'shibuya',
 }
 
@@ -41,6 +41,7 @@ export enum eContractid {
   MockAggregatorDIA = 'MockAggregatorDIA',
   LendingRateOracle = 'LendingRateOracle',
   StarlayOracle = 'StarlayOracle',
+  StarlayFallbackOracle = 'StarlayFallbackOracle',
   DefaultReserveInterestRateStrategy = 'DefaultReserveInterestRateStrategy',
   LendingPoolCollateralManager = 'LendingPoolCollateralManager',
   InitializableAdminUpgradeabilityProxy = 'InitializableAdminUpgradeabilityProxy',
@@ -62,20 +63,14 @@ export enum eContractid {
   UiPoolDataProviderV2 = 'UiPoolDataProviderV2',
   WETHGateway = 'WETHGateway',
   WETH = 'WETH',
-  WETHMocked = 'WETHMocked',
+  WASTRMocked = 'WASTRMocked',
   SelfdestructTransferMock = 'SelfdestructTransferMock',
   LendingPoolImpl = 'LendingPoolImpl',
   LendingPoolConfiguratorImpl = 'LendingPoolConfiguratorImpl',
   LendingPoolCollateralManagerImpl = 'LendingPoolCollateralManagerImpl',
   PriceAggregatorAdapterDiaImpl = 'PriceAggregatorAdapterDiaImpl',
-  MockUniswapV2Router02 = 'MockUniswapV2Router02',
-  UniswapLiquiditySwapAdapter = 'UniswapLiquiditySwapAdapter',
-  UniswapRepayAdapter = 'UniswapRepayAdapter',
-  FlashLiquidationAdapter = 'FlashLiquidationAdapter',
-  MockParaSwapAugustus = 'MockParaSwapAugustus',
-  MockParaSwapAugustusRegistry = 'MockParaSwapAugustusRegistry',
-  ParaSwapLiquiditySwapAdapter = 'ParaSwapLiquiditySwapAdapter',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
+  StakeUIHelper = 'StakeUIHelper',
 }
 
 /*
@@ -196,6 +191,8 @@ export interface iAssetBase<T> {
   USD: T;
   WASTR: T;
   WSDN: T;
+  DAI: T;
+  BUSD: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
@@ -204,7 +201,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iStarlayPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN'
+  'USDC' | 'USDT' | 'LAY' | 'WBTC' | 'WETH' | 'WASTR' | 'WSDN' | 'DAI' | 'BUSD'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
@@ -220,6 +217,8 @@ export const TokenContractId = [
   'USD',
   'WASTR',
   'WSDN',
+  'BUSD',
+  'DAI',
 ] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
@@ -271,8 +270,8 @@ export interface iEthereumParamsPerNetwork<T> {
 }
 
 export interface iAstarParamsPerNetwork<T> {
-  // [eAstarNetwork.astar]: T;
-  // [eAstarNetwork.shiden]: T;
+  [eAstarNetwork.astar]: T;
+  [eAstarNetwork.shiden]: T;
   [eAstarNetwork.shibuya]: T;
 }
 export interface iParamsPerPool<T> {
@@ -352,6 +351,7 @@ export interface IBaseConfiguration {
   ReserveAssets: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
   OracleQuoteCurrency: string;
   OracleQuoteUnit: string;
+  StakedLay: iParamsPerNetwork<tEthereumAddress>;
 }
 
 export interface ICommonConfiguration extends IBaseConfiguration {

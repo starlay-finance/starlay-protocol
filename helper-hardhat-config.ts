@@ -7,6 +7,7 @@ require('dotenv').config();
 const INFURA_KEY = process.env.INFURA_KEY || '';
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY || '';
 const BWARE_LABS_KEY = process.env.BWARE_LABS_KEY || '';
+const ONFINALITY_KEY = process.env.ONFINALITY_KEY || '';
 const TENDERLY_FORK_ID = process.env.TENDERLY_FORK_ID || '';
 const FORK = process.env.FORK || '';
 const FORK_BLOCK_NUMBER = process.env.FORK_BLOCK_NUMBER
@@ -36,8 +37,16 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eAstarNetwork.shibuya]: BWARE_LABS_KEY
     ? `https://shibuya-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : 'https://rpc.shibuya.astar.network:8545',
-  // [eAstarNetwork.astar]: '',
-  // [eAstarNetwork.shiden]: '',
+  [eAstarNetwork.shiden]: BWARE_LABS_KEY
+    ? `https://shiden-api.bwarelabs.com/${BWARE_LABS_KEY}`
+    : ONFINALITY_KEY
+    ? `https://shiden.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
+    : 'https://evm.shiden.astar.network',
+  [eAstarNetwork.astar]: BWARE_LABS_KEY
+    ? `https://astar-api.bwarelabs.com/${BWARE_LABS_KEY}`
+    : ONFINALITY_KEY
+    ? `https://astar.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
+    : 'https://rpc.astar.network:8545',
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
@@ -46,6 +55,8 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eEthereumNetwork.buidlerevm]: 65 * GWEI,
   [eEthereumNetwork.tenderly]: 1 * GWEI,
   [eAstarNetwork.shibuya]: 3 * GWEI,
+  [eAstarNetwork.shiden]: 1 * GWEI,
+  [eAstarNetwork.astar]: 1 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
@@ -54,4 +65,6 @@ export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eEthereumNetwork.buidlerevm]: undefined,
   [eEthereumNetwork.tenderly]: undefined,
   [eAstarNetwork.shibuya]: undefined,
+  [eAstarNetwork.shiden]: undefined,
+  [eAstarNetwork.astar]: undefined,
 };

@@ -4,7 +4,6 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
   DefaultReserveInterestRateStrategyFactory,
   DelegationAwareLTokenFactory,
-  FlashLiquidationAdapterFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   LendingPoolAddressesProviderFactory,
   LendingPoolAddressesProviderRegistryFactory,
@@ -20,22 +19,18 @@ import {
   MockAggregatorFactory,
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
-  MockParaSwapAugustusFactory,
-  MockParaSwapAugustusRegistryFactory,
   MockStableDebtTokenFactory,
-  MockUniswapV2Router02Factory,
   MockVariableDebtTokenFactory,
-  ParaSwapLiquiditySwapAdapterFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
   SelfdestructTransferFactory,
   StableDebtTokenFactory,
+  StakeUIHelperFactory,
+  StarlayFallbackOracleFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
   UiIncentiveDataProviderV2Factory,
   UiPoolDataProviderV2Factory,
-  UniswapLiquiditySwapAdapterFactory,
-  UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
   WETH9MockedFactory,
@@ -45,6 +40,7 @@ import { LendingPoolLibraryAddresses } from '../types/LendingPoolFactory';
 import { MintableDelegationERC20 } from '../types/MintableDelegationERC20';
 import { MintableERC20 } from '../types/MintableERC20';
 import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
+import { WETH9Mocked } from '../types/WETH9Mocked';
 import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
@@ -213,6 +209,14 @@ export const deployPriceOracle = async (verify?: boolean) =>
   withSaveAndVerify(
     await new PriceOracleFactory(await getFirstSigner()).deploy(),
     eContractid.PriceOracle,
+    [],
+    verify
+  );
+
+export const deployStarlayFallbackOracle = async (verify?: boolean) =>
+  withSaveAndVerify(
+    await new StarlayFallbackOracleFactory(await getFirstSigner()).deploy(),
+    eContractid.StarlayFallbackOracle,
     [],
     verify
   );
@@ -467,11 +471,16 @@ export const deployDelegationAwareLTokenImpl = async (verify: boolean) =>
   );
 
 export const deployAllMockTokens = async (verify?: boolean) => {
-  const tokens: { [symbol: string]: MintableERC20 } = {};
+  const tokens: { [symbol: string]: MintableERC20 | WETH9Mocked } = {};
 
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.values(TokenContractId)) {
+    if (tokenSymbol === 'WASTR') {
+      tokens[tokenSymbol] = await deployWETHMocked();
+      await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
+      continue;
+    }
     let decimals = '18';
 
     let configData = (<any>protoConfigData)[tokenSymbol];
@@ -542,7 +551,7 @@ export const deployMockStableDebtToken = async (
 export const deployWETHMocked = async (verify?: boolean) =>
   withSaveAndVerify(
     await new WETH9MockedFactory(await getFirstSigner()).deploy(),
-    eContractid.WETHMocked,
+    eContractid.WASTRMocked,
     [],
     verify
   );
@@ -592,47 +601,6 @@ export const deploySelfdestructTransferMock = async (verify?: boolean) =>
     await new SelfdestructTransferFactory(await getFirstSigner()).deploy(),
     eContractid.SelfdestructTransferMock,
     [],
-    verify
-  );
-
-export const deployMockUniswapRouter = async (verify?: boolean) =>
-  withSaveAndVerify(
-    await new MockUniswapV2Router02Factory(await getFirstSigner()).deploy(),
-    eContractid.MockUniswapV2Router02,
-    [],
-    verify
-  );
-
-export const deployUniswapLiquiditySwapAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new UniswapLiquiditySwapAdapterFactory(await getFirstSigner()).deploy(...args),
-    eContractid.UniswapLiquiditySwapAdapter,
-    args,
-    verify
-  );
-
-export const deployUniswapRepayAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new UniswapRepayAdapterFactory(await getFirstSigner()).deploy(...args),
-    eContractid.UniswapRepayAdapter,
-    args,
-    verify
-  );
-
-export const deployFlashLiquidationAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new FlashLiquidationAdapterFactory(await getFirstSigner()).deploy(...args),
-    eContractid.FlashLiquidationAdapter,
-    args,
     verify
   );
 
@@ -705,35 +673,6 @@ export const deployRateStrategy = async (
       ).address;
   }
 };
-export const deployMockParaSwapAugustus = async (verify?: boolean) =>
-  withSaveAndVerify(
-    await new MockParaSwapAugustusFactory(await getFirstSigner()).deploy(),
-    eContractid.MockParaSwapAugustus,
-    [],
-    verify
-  );
-
-export const deployMockParaSwapAugustusRegistry = async (
-  args: [tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new MockParaSwapAugustusRegistryFactory(await getFirstSigner()).deploy(...args),
-    eContractid.MockParaSwapAugustusRegistry,
-    args,
-    verify
-  );
-
-export const deployParaSwapLiquiditySwapAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress],
-  verify?: boolean
-) =>
-  withSaveAndVerify(
-    await new ParaSwapLiquiditySwapAdapterFactory(await getFirstSigner()).deploy(...args),
-    eContractid.ParaSwapLiquiditySwapAdapter,
-    args,
-    verify
-  );
 
 export const deployPriceAggregatorDiaImpl = async (args: [string, string], verify?: boolean) =>
   withSaveAndVerify(
@@ -750,3 +689,26 @@ export const deployMockAggregatorDIA = async (args: [string[], string[]], verify
     args,
     verify
   );
+
+export const deployStakeUIHelper = async (
+  [priceOracle, lay, stakedLay, mockUsd]: [
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress
+  ],
+  verify?: boolean
+) => {
+  const args = [priceOracle, lay, stakedLay, mockUsd];
+  return withSaveAndVerify(
+    await new StakeUIHelperFactory(await getFirstSigner()).deploy(
+      priceOracle,
+      lay,
+      stakedLay,
+      mockUsd
+    ),
+    eContractid.StakeUIHelper,
+    args,
+    verify
+  );
+};

@@ -13,7 +13,6 @@
     "./test",
     "./tasks",
     "./helpers",
-    "test-suites/test-starlay/uniswapAdapters.repay.spec.ts",
     "test-suites/test-starlay/upgradeability.spec.ts",
     "test-suites/test-starlay/variable-debt-token.spec.ts",
     "test-suites/test-starlay/weth-gateway.spec.ts"

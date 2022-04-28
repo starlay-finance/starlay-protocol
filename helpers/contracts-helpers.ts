@@ -8,7 +8,6 @@ import { MintableERC20 } from '../types/MintableERC20';
 import { ConfigNames, loadPoolConfig } from './configuration';
 import { ZERO_ADDRESS } from './constants';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
-import { getDefenderRelaySigner, usingDefender } from './defender-utils';
 import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
@@ -23,7 +22,7 @@ import {
   iParamsPerPool,
   StarlayPools,
   tEthereumAddress,
-  tStringTokenSmallUnits,
+  tStringTokenSmallUnits
 } from './types';
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
@@ -67,10 +66,10 @@ export const rawInsertContractAddressInDb = async (id: string, address: tEthereu
 
 export const getEthersSigners = async (): Promise<Signer[]> => {
   const ethersSigners = await Promise.all(await DRE.ethers.getSigners());
-  if (usingDefender()) {
-    const [, ...users] = ethersSigners;
-    return [await getDefenderRelaySigner(), ...users];
-  }
+  // if (usingDefender()) {
+  //   const [, ...users] = ethersSigners;
+  //   return [await getDefenderRelaySigner(), ...users];
+  // }
   return ethersSigners;
 };
 
@@ -140,7 +139,7 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
   const { coverage, buidlerevm, tenderly } = param as iEthereumParamsPerNetwork<T>;
-  const { shibuya } = param as iAstarParamsPerNetwork<T>;
+  const { shibuya, shiden, astar } = param as iAstarParamsPerNetwork<T>;
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
   }
@@ -156,6 +155,10 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return tenderly;
     case eAstarNetwork.shibuya:
       return shibuya;
+    case eAstarNetwork.shiden:
+      return shiden;
+    case eAstarNetwork.astar:
+      return astar;
   }
 };
 
@@ -296,51 +299,6 @@ export const buildRepayAdapterParams = (
   return ethers.utils.defaultAbiCoder.encode(
     ['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint8', 'bytes32', 'bytes32', 'bool'],
     [collateralAsset, collateralAmount, rateMode, permitAmount, deadline, v, r, s, useEthPath]
-  );
-};
-
-export const buildFlashLiquidationAdapterParams = (
-  collateralAsset: tEthereumAddress,
-  debtAsset: tEthereumAddress,
-  user: tEthereumAddress,
-  debtToCover: BigNumberish,
-  useEthPath: boolean
-) => {
-  return ethers.utils.defaultAbiCoder.encode(
-    ['address', 'address', 'address', 'uint256', 'bool'],
-    [collateralAsset, debtAsset, user, debtToCover, useEthPath]
-  );
-};
-
-export const buildParaSwapLiquiditySwapParams = (
-  assetToSwapTo: tEthereumAddress,
-  minAmountToReceive: BigNumberish,
-  swapAllBalanceOffset: BigNumberish,
-  swapCalldata: string | Buffer,
-  augustus: tEthereumAddress,
-  permitAmount: BigNumberish,
-  deadline: BigNumberish,
-  v: BigNumberish,
-  r: string | Buffer,
-  s: string | Buffer
-) => {
-  return ethers.utils.defaultAbiCoder.encode(
-    [
-      'address',
-      'uint256',
-      'uint256',
-      'bytes',
-      'address',
-      'tuple(uint256,uint256,uint8,bytes32,bytes32)',
-    ],
-    [
-      assetToSwapTo,
-      minAmountToReceive,
-      swapAllBalanceOffset,
-      swapCalldata,
-      augustus,
-      [permitAmount, deadline, v, r, s],
-    ]
   );
 };
 

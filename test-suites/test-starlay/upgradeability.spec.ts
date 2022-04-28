@@ -12,6 +12,7 @@ import {
   getStableDebtToken,
   getVariableDebtToken,
 } from '../../helpers/contracts-getters';
+import { createRandomAddress } from '../../helpers/misc-utils';
 import { ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 
@@ -26,9 +27,9 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const lTokenInstance = await deployMockLToken([
       pool.address,
       dai.address,
-      ZERO_ADDRESS,
-      ZERO_ADDRESS,
-      'Starley Interest bearing DAI updated',
+      pool.address,
+      pool.address,
+      'Starlay Interest bearing DAI updated',
       'lDai',
       '0x10',
     ]);
@@ -36,8 +37,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const stableDebtTokenInstance = await deployMockStableDebtToken([
       pool.address,
       dai.address,
-      ZERO_ADDRESS,
-      'Starley stable debt bearing DAI updated',
+      pool.address,
+      'Starlay stable debt bearing DAI updated',
       'stableDebtDAI',
       '0x10',
     ]);
@@ -45,8 +46,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const variableDebtTokenInstance = await deployMockVariableDebtToken([
       pool.address,
       dai.address,
-      ZERO_ADDRESS,
-      'Starley variable debt bearing DAI updated',
+      pool.address,
+      'Starlay variable debt bearing DAI updated',
       'variableDebtDAI',
       '0x10',
     ]);
@@ -89,6 +90,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const name = await (await getLToken(newLTokenAddress)).name();
     const symbol = await (await getLToken(newLTokenAddress)).symbol();
+    const randomAddress = createRandomAddress();
 
     const updateLTokenInputParams: {
       asset: string;
@@ -100,8 +102,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       params: string;
     } = {
       asset: dai.address,
-      treasury: ZERO_ADDRESS,
-      incentivesController: ZERO_ADDRESS,
+      treasury: randomAddress,
+      incentivesController: randomAddress,
       name: name,
       symbol: symbol,
       implementation: newLTokenAddress,
@@ -111,7 +113,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await lDai.name();
 
-    expect(tokenName).to.be.eq('Starley Interest bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starlay Interest bearing DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI Stable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -171,7 +173,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Starley stable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starlay stable debt bearing DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI variable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -234,6 +236,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Starley variable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Starlay variable debt bearing DAI updated', 'Invalid token name');
   });
 });

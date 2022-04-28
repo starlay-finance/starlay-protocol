@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { ConfigNames, getEmergencyAdmin, loadPoolConfig } from '../../helpers/configuration';
+import { ConfigNames, loadPoolConfig } from '../../helpers/configuration';
 import {
   deployLendingPool,
   deployLendingPoolConfigurator,
@@ -53,6 +53,9 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         const lendingPoolConfiguratorImpl = await deployLendingPoolConfigurator(verify);
         lendingPoolConfiguratorImplAddress = lendingPoolConfiguratorImpl.address;
       }
+      if (!notFalsyOrZeroAddress(lendingPoolProxy.address)) {
+        throw new Error('missing lendingPoolProxy');
+      }
       console.log(
         '\tSetting lending pool configurator implementation with address:',
         lendingPoolConfiguratorImplAddress
@@ -70,9 +73,6 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         eContractid.LendingPoolConfigurator,
         lendingPoolConfiguratorProxy.address
       );
-      const admin = await DRE.ethers.getSigner(await getEmergencyAdmin(poolConfig));
-      // Pause market during deployment
-      await waitForTx(await lendingPoolConfiguratorProxy.connect(admin).setPoolPause(true));
 
       // Deploy deployment helpers
       await deployStableAndVariableTokensHelper(

@@ -20,9 +20,10 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   });
 
   it('User 0 deposits 1000 DAI. Configurator pauses pool. Transfers to user 1 reverts. Configurator unpauses the network and next transfer succees', async () => {
-    const { users, pool, dai, lDai, configurator } = testEnv;
+    const { users, pool, dai, usdc, lDai, configurator } = testEnv;
 
     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    await configurator.enableReserveStableRate(usdc.address);
 
     await dai.connect(users[0].signer).mint(amountDAItoDeposit);
 

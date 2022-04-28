@@ -34,7 +34,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(isActive).to.be.equal(false);
   });
 
-  it('Rectivates the ETH reserve', async () => {
+  it('Reactivates the ETH reserve', async () => {
     const { configurator, weth, helpersContract } = testEnv;
     await configurator.activateReserve(weth.address);
 
@@ -156,7 +156,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
 
   it('Activates the ETH reserve for borrowing', async () => {
     const { configurator, weth, helpersContract } = testEnv;
-    await configurator.enableBorrowingOnReserve(weth.address, true);
+    await configurator.enableBorrowingOnReserve(weth.address, false);
     const { variableBorrowIndex } = await helpersContract.getReserveData(weth.address);
 
     const {
@@ -219,17 +219,17 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(18);
+    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
     expect(ltv).to.be.equal(0);
     expect(liquidationThreshold).to.be.equal(0);
     expect(liquidationBonus).to.be.equal(0);
-    expect(stableBorrowRateEnabled).to.be.equal(true);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
   it('Activates the ETH reserve as collateral', async () => {
     const { configurator, helpersContract, weth } = testEnv;
-    await configurator.configureReserveAsCollateral(weth.address, '8000', '8250', '10500');
+    await configurator.configureReserveAsCollateral(weth.address, '8000', '8500', '10500');
 
     const {
       decimals,
@@ -259,7 +259,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     await expect(
       configurator
         .connect(users[2].signer)
-        .configureReserveAsCollateral(weth.address, '7500', '8000', '10500'),
+        .configureReserveAsCollateral(weth.address, '8000', '8500', '10500'),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
@@ -334,7 +334,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
 
   it('Changes the reserve factor of WETH', async () => {
     const { configurator, helpersContract, weth } = testEnv;
-    await configurator.setReserveFactor(weth.address, '1000');
+    await configurator.setReserveFactor(weth.address, '2000');
     const {
       decimals,
       ltv,
@@ -354,8 +354,8 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
     expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
     expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
-    expect(reserveFactor).to.be.equal(1000);
+    expect(stableBorrowRateEnabled).to.be.equal(true);
+    expect(reserveFactor).to.be.equal(2000);
   });
 
   it('Check the onlyLendingPoolManager on setReserveFactor', async () => {

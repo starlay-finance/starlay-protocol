@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import StarlayConfig from '../../markets/starlay';
-import { strategyDAI } from '../../markets/starlay/reservesConfigs';
+import { strategyDAI, strategyDAIForTest } from '../../markets/starlay/reservesConfigs';
 import { configuration as actionsConfiguration } from './helpers/actions';
 import { makeSuite } from './helpers/make-suite';
 import { executeStory } from './helpers/scenario-engine';
@@ -19,7 +19,7 @@ makeSuite('Subgraph scenario tests', async (testEnv) => {
 
     calculationsConfiguration.reservesParams = {
       ...StarlayConfig.ReservesConfig,
-      DAI: strategyDAI,
+      DAI: strategyDAIForTest,
     };
   });
   after('Reset', () => {

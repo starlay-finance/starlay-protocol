@@ -29,9 +29,11 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Deposits WETH into the reserve', async () => {
-    const { pool, weth } = testEnv;
+    const { configurator, pool, weth } = testEnv;
     const userAddress = await pool.signer.getAddress();
     const amountToDeposit = ethers.utils.parseEther('1');
+
+    await configurator.enableReserveStableRate(weth.address);
 
     await weth.mint(amountToDeposit);
 

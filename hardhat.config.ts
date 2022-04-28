@@ -27,16 +27,23 @@ const UNLIMITED_BYTECODE_SIZE = process.env.UNLIMITED_BYTECODE_SIZE === 'true';
 
 // Prevent to load scripts before compilation and typechain
 if (!SKIP_LOAD) {
-  ['misc', 'migrations', 'dev', 'full', 'verifications', 'deployments', 'helpers'].forEach(
-    (folder) => {
-      const tasksPath = path.join(__dirname, 'tasks', folder);
-      fs.readdirSync(tasksPath)
-        .filter((pth) => pth.includes('.ts'))
-        .forEach((task) => {
-          require(`${tasksPath}/${task}`);
-        });
-    }
-  );
+  [
+    'misc',
+    'migrations',
+    'dev',
+    'full',
+    'verifications',
+    'deployments',
+    'helpers',
+    'operations',
+  ].forEach((folder) => {
+    const tasksPath = path.join(__dirname, 'tasks', folder);
+    fs.readdirSync(tasksPath)
+      .filter((pth) => pth.includes('.ts'))
+      .forEach((task) => {
+        require(`${tasksPath}/${task}`);
+      });
+  });
 }
 
 require(`${path.join(__dirname, 'tasks/misc')}/set-bre.ts`);
@@ -70,9 +77,9 @@ const buidlerConfig: HardhatUserConfig = {
     outDir: 'types',
     target: 'ethers-v5',
   },
-  etherscan: {
-    apiKey: ETHERSCAN_KEY,
-  },
+  // etherscan: {
+  //   apiKey: ETHERSCAN_KEY,
+  // },
   mocha: {
     timeout: 0,
   },
@@ -88,6 +95,8 @@ const buidlerConfig: HardhatUserConfig = {
     },
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
+    shiden: getCommonNetworkConfig(eAstarNetwork.shiden, 336),
+    astar: getCommonNetworkConfig(eAstarNetwork.astar, 592),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,

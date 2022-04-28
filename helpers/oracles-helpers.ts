@@ -1,3 +1,4 @@
+import { StarlayFallbackOracle } from '../types';
 import { LendingRateOracle } from '../types/LendingRateOracle';
 import { PriceOracle } from '../types/PriceOracle';
 import { deployMockAggregator } from './contracts-deployments';
@@ -71,6 +72,27 @@ export const setInitialAssetPricesInOracle = async (
     ];
     await waitForTx(await priceOracleInstance.setAssetPrice(assetAddress, price));
   }
+};
+
+export const setAssetPricesInFallbackOracle = async (
+  prices: iAssetBase<tEthereumAddress>,
+  assetsAddresses: iAssetBase<tEthereumAddress>,
+  priceOracleInstance: StarlayFallbackOracle
+) => {
+  let addresses: string[] = [];
+  let assetPrices: string[] = [];
+  for (const [assetSymbol, price] of Object.entries(prices) as [string, string][]) {
+    const assetAddressIndex = Object.keys(assetsAddresses).findIndex(
+      (value) => value === assetSymbol
+    );
+    const [, assetAddress] = (Object.entries(assetsAddresses) as [string, string][])[
+      assetAddressIndex
+    ];
+    addresses.push(assetAddress);
+    assetPrices.push(price);
+    console.log(`set fallback price ${assetAddress}:${price}`);
+  }
+  await waitForTx(await priceOracleInstance.submitPrices(addresses, assetPrices));
 };
 
 export const setAssetPricesInOracle = async (

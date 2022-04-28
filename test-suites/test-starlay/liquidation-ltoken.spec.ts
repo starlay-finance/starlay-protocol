@@ -19,9 +19,12 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
   } = ProtocolErrors;
 
   it('Deposits WETH, borrows DAI/Check liquidation fails because health factor is above 1', async () => {
-    const { dai, weth, users, pool, oracle } = testEnv;
+    const { dai, weth, usdc, users, pool, oracle, configurator } = testEnv;
     const depositor = users[0];
     const borrower = users[1];
+
+    await configurator.enableReserveStableRate(weth.address);
+    await configurator.enableReserveStableRate(usdc.address);
 
     //mints DAI to depositor
     await dai.connect(depositor.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
@@ -67,7 +70,7 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalDataAfter.currentLiquidationThreshold.toString()).to.be.bignumber.equal(
-      '8250',
+      '8500',
       'Invalid liquidation threshold'
     );
 
@@ -276,7 +279,7 @@ makeSuite('LendingPool liquidation - liquidator receiving lToken', (testEnv) => 
 
     await oracle.setAssetPrice(
       usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.12).toFixed(0)
+      new BigNumber(usdcPrice.toString()).multipliedBy(1.18).toFixed(0)
     );
 
     //mints dai to the liquidator
