@@ -219,10 +219,12 @@ export const configureReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
   tokenAddresses: { [symbol: string]: tEthereumAddress },
   helpers: StarlayProtocolDataProvider,
-  admin: tEthereumAddress
+  admin: tEthereumAddress,
+  lendingPoolAddressesProviderAddress?: tEthereumAddress,
+  lTokensAndRatesHelper?: tEthereumAddress,
 ) => {
-  const addressProvider = await getLendingPoolAddressesProvider();
-  const ltokenAndRatesDeployer = await getLTokensAndRatesHelper();
+  const addressProvider = await getLendingPoolAddressesProvider(lendingPoolAddressesProviderAddress);
+  const ltokenAndRatesDeployer = await getLTokensAndRatesHelper(lTokensAndRatesHelper);
   const tokens: string[] = [];
   const symbols: string[] = [];
 
