@@ -40,9 +40,11 @@ export const initReservesByHelper = async (
   treasuryAddress: tEthereumAddress,
   incentivesController: tEthereumAddress,
   poolName: ConfigNames,
-  verify: boolean
+  verify: boolean,
+  lendingPoolAddressProviderAddress?: tEthereumAddress,
+  lendingPoolConfiguratorProxyAddress?: tEthereumAddress
 ) => {
-  const addressProvider = await getLendingPoolAddressesProvider();
+  const addressProvider = await getLendingPoolAddressesProvider(lendingPoolAddressProviderAddress);
 
   // CHUNK CONFIGURATION
   const initChunks = 1;
@@ -174,7 +176,7 @@ export const initReservesByHelper = async (
   const chunkedSymbols = chunk(reserveSymbols, initChunks);
   const chunkedInitInputParams = chunk(initInputParams, initChunks);
 
-  const configurator = await getLendingPoolConfiguratorProxy();
+  const configurator = await getLendingPoolConfiguratorProxy(lendingPoolConfiguratorProxyAddress);
 
   console.log(`- Reserves initialization in ${chunkedInitInputParams.length} txs`);
   for (let chunkIndex = 0; chunkIndex < chunkedInitInputParams.length; chunkIndex++) {
