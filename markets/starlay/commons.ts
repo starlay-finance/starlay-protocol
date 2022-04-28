@@ -224,6 +224,10 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: '0x8aDa54F1169969119078E23C4Ec632D01bDa329b',
       USDC: '0xB56df4fA49847e7B659B5ed4A133512635fF2577',
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
+      BUSD: '',
+      DAI: '',
+      MATIC: '',
+      BNB: '',
     },
     [eAstarNetwork.shiden]: {
       ASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -235,6 +239,8 @@ export const CommonsConfig: ICommonConfiguration = {
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
       DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
+      MATIC: '',
+      BNB: '',
     },
     [eAstarNetwork.astar]: {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
@@ -246,6 +252,8 @@ export const CommonsConfig: ICommonConfiguration = {
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
       BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
       DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
+      MATIC: '0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF',
+      BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
     },
   },
   ReserveAssets: {

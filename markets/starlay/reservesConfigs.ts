@@ -1,6 +1,8 @@
 import { eContractid, IReserveParams } from '../../helpers/types';
 import {
+  rateStrategyBNB,
   rateStrategyLAY,
+  rateStrategyMATIC,
   rateStrategyStable,
   rateStrategyStableTwo,
   rateStrategyWASTR,
@@ -109,6 +111,30 @@ export const strategyWASTR: IReserveParams = {
 
 export const strategyWSDN: IReserveParams = {
   strategy: rateStrategyWSDN,
+  baseLTVAsCollateral: '4000',
+  liquidationThreshold: '5500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyMATIC: IReserveParams = {
+  strategy: rateStrategyMATIC,
+  baseLTVAsCollateral: '4000',
+  liquidationThreshold: '5500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyBNB: IReserveParams = {
+  strategy: rateStrategyBNB,
   baseLTVAsCollateral: '4000',
   liquidationThreshold: '5500',
   liquidationBonus: '11500',
