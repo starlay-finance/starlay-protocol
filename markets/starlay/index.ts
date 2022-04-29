@@ -33,7 +33,7 @@ export const StarlayConfig: IStarlayConfiguration = {
     DAI: strategyDAI,
     BUSD: strategyBUSD,
     MATIC: strategyMATIC,
-    BNB: strategyBNB
+    BNB: strategyBNB,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -63,8 +63,8 @@ export const StarlayConfig: IStarlayConfiguration = {
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
       DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
-      MATIC: '0xd3f7caf808b673Bf04c6D6f4F257A47a80679B5E',
-      BNB: '0x24A9c7137f82BC1E8b1d6b749b72C133f114Ef6b',
+      MATIC: '0xb0107B84C41eD7bda37495D318116FC42826a423',
+      BNB: '0x3508e7Fb724Ba0E01dA868EbcbEdC05f4f3d969D',
     },
     [eAstarNetwork.astar]: {
       WASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',

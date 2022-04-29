@@ -98,8 +98,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0x52D306e36E3B6B02c153d0266ff0f85d18BCD413',
     [eAstarNetwork.shibuya]: '',
-    [eAstarNetwork.shiden]: '',
-    [eAstarNetwork.astar]: '',
+    [eAstarNetwork.shiden]: '0x9d5782EBe1eBc7037F8027fFeA61e8B8C2F57964',
+    [eAstarNetwork.astar]: '0xF6206297b6857779443eF7Eca4a3cFFb1660F952',
   },
   ProviderRegistryOwner: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -311,7 +311,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
-    [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
+    [eAstarNetwork.shiden]: '0xD9F3bbC743b7AF7E1108653Cd90E483C03D6D699',
     [eAstarNetwork.astar]: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
   },
   StakedLay: {
