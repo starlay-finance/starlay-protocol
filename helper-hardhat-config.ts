@@ -41,7 +41,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     ? `https://shiden-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : ONFINALITY_KEY
     ? `https://shiden.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
-    : 'https://evm.shiden.astar.network',
+    : 'https://shiden.api.onfinality.io/public',
   [eAstarNetwork.astar]: BWARE_LABS_KEY
     ? `https://astar-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : ONFINALITY_KEY
