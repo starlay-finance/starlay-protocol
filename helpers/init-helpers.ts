@@ -221,10 +221,10 @@ export const configureReservesByHelper = async (
   helpers: StarlayProtocolDataProvider,
   admin: tEthereumAddress,
   lendingPoolAddressesProviderAddress?: tEthereumAddress,
-  lTokensAndRatesHelper?: tEthereumAddress,
+  lTokensAndRatesHelperAddress?: tEthereumAddress,
 ) => {
   const addressProvider = await getLendingPoolAddressesProvider(lendingPoolAddressesProviderAddress);
-  const ltokenAndRatesDeployer = await getLTokensAndRatesHelper(lTokensAndRatesHelper);
+  const ltokenAndRatesDeployer = await getLTokensAndRatesHelper(lTokensAndRatesHelperAddress);
   const tokens: string[] = [];
   const symbols: string[] = [];
 
