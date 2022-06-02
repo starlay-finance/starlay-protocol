@@ -1,6 +1,7 @@
 import { eContractid, IReserveParams } from '../../helpers/types';
 import {
   rateStrategyBNB,
+  rateStrategyDOT,
   rateStrategyLAY,
   rateStrategyMATIC,
   rateStrategyStable,
@@ -114,6 +115,18 @@ export const strategyWSDN: IReserveParams = {
   baseLTVAsCollateral: '4000',
   liquidationThreshold: '5500',
   liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyDOT: IReserveParams = {
+  strategy: rateStrategyDOT,
+  baseLTVAsCollateral: '6500',
+  liquidationThreshold: '7000',
+  liquidationBonus: '11000',
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
   reserveDecimals: '18',

@@ -45,6 +45,7 @@ export const INITIAL_PRICES = {
   BUSD: oneUsd.toFixed(),
   MATIC: oneUsd.multipliedBy('1.25786452').toFixed(),
   BNB: oneUsd.multipliedBy('405.11743275').toFixed(),
+  DOT: oneUsd.multipliedBy('9.45363275').toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {

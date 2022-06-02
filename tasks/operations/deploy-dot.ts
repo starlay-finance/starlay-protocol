@@ -53,32 +53,23 @@ const CONSTANTS: Constants = {
   shiden: shiden,
 };
 const SYMBOLS = {
-  MATIC: 'MATIC',
-  BNB: 'BNB',
+  DOT: 'DOT',
 };
 
 const getReserveAssetAddresss = (network: eNetwork) => ({
-  MATIC: marketConfigs.StarlayConfig.ReserveAssets[network][SYMBOLS.MATIC],
-  BNB: marketConfigs.StarlayConfig.ReserveAssets[network][SYMBOLS.BNB],
+  DOT: marketConfigs.StarlayConfig.ReserveAssets[network][SYMBOLS.DOT],
 });
 
 // 1: deploy new assets
-task(
-  'external:deploy-matic-bnb:deploy-new-asset',
-  'external:deploy-matic-bnb:deploy-new-asset'
-).setAction(async ({ verify }, localBRE) => {
+task('external:deploy-dot:deploy-new-asset').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
 
-  await DRE.run('external:deploy-new-asset', { symbol: SYMBOLS.MATIC, pool: 'Starlay' });
-  await DRE.run('external:deploy-new-asset', { symbol: SYMBOLS.BNB, pool: 'Starlay' });
+  await DRE.run('external:deploy-new-asset', { symbol: SYMBOLS.DOT, pool: 'Starlay' });
 });
 // 2: initialize & configure
-task(
-  'external:deploy-matic-bnb:init-and-configure',
-  'external:deploy-matic-bnb:init-and-configure'
-).setAction(async ({ verify }, localBRE) => {
+task('external:deploy-dot:init-and-configure').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
@@ -135,10 +126,7 @@ task(
   );
 });
 // 3: setup oracles for new assets
-task(
-  'external:deploy-matic-bnb:setup-oracles',
-  'external:deploy-matic-bnb:setup-oracles'
-).setAction(async ({ verify }, localBRE) => {
+task('external:deploy-dot:setup-oracles').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
@@ -149,13 +137,11 @@ task(
 
   console.log('*** submit mock prices to fallback oracle ***');
   const priceOracle = await getStarlayFallbackOracle(CONSTANTS[network].StarlayFallbackOracle);
-  await priceOracle.submitPrices([reserveAssetAddresss.BNB], [INITIAL_PRICES.BNB]);
-  await priceOracle.submitPrices([reserveAssetAddresss.MATIC], [INITIAL_PRICES.MATIC]);
+  await priceOracle.submitPrices([reserveAssetAddresss.DOT], [INITIAL_PRICES.DOT]);
 
   console.log('*** set asset sources to price oracle dia impl ***');
   const priceOracleDiaImpl = await getPriceAggregatorAdapterDiaImpl(
     CONSTANTS[network].PriceAggregatorAdapterDiaImpl
   );
-  await priceOracleDiaImpl.setAssetSources([reserveAssetAddresss.BNB], [SYMBOLS.BNB]);
-  await priceOracleDiaImpl.setAssetSources([reserveAssetAddresss.MATIC], [SYMBOLS.MATIC]);
+  await priceOracleDiaImpl.setAssetSources([reserveAssetAddresss.DOT], [SYMBOLS.DOT]);
 });
