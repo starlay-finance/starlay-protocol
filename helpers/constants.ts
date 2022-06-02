@@ -62,6 +62,7 @@ export const MOCK_PRICE_AGGREGATORS_PRICES = {
   LAY: oneEther.multipliedBy('0.003620948469').toFixed(),
   MATIC: oneEther.multipliedBy('0.003620948469').toFixed(),
   BNB: oneEther.multipliedBy('0.003620948469').toFixed(),
+  DOT: oneUsd.multipliedBy('9.45363275').toFixed(),
 };
 
 export const ALL_ASSETS_PRICES_FOR_TESTING = {

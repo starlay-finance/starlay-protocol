@@ -235,6 +235,7 @@ export const TokenContractId = [
   'DAI',
   'MATIC',
   'BNB',
+  'DOT',
 ] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
