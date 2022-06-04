@@ -82,18 +82,19 @@ task("check:oracle:dia-oracle", "check:oracle:dia-oracle").setAction(async ({}, 
   if (!addrs) throw new Error("Not setting addresses")
 
   const keys = [
-    "ASTR/USD",
-    "SDN/USD",
-    "ETH/USD",
-    "WBTC/USD",
-    "USDT/USD",
-    "USDC/USD",
-    "LAY/USD",
-    "BUSD/USD",
-    "DAI/USD",
-    "MATIC/USD",
-    "BNB/USD",
-  ]
+    'ASTR/USD',
+    'SDN/USD',
+    'ETH/USD',
+    'WBTC/USD',
+    'USDT/USD',
+    'USDC/USD',
+    'LAY/USD',
+    'BUSD/USD',
+    'DAI/USD',
+    'MATIC/USD',
+    'BNB/USD',
+    'DOT/USD',
+  ];
   const _oracle = new ethers.Contract(
     addrs.DiaOracle,
     new ethers.utils.Interface(ABI_DIA_ORACLE_V2),
