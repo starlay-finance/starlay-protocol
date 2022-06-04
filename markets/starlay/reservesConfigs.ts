@@ -129,7 +129,7 @@ export const strategyDOT: IReserveParams = {
   liquidationBonus: '11000',
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
+  reserveDecimals: '10',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };
