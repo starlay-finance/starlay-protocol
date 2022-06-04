@@ -68,7 +68,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
       MATIC: '0xb0107B84C41eD7bda37495D318116FC42826a423',
       BNB: '0x3508e7Fb724Ba0E01dA868EbcbEdC05f4f3d969D',
-      DOT: '',
+      DOT: '0x1135874985e7F1342bCa07201B102eFc1292b6d9',
     },
     [eAstarNetwork.astar]: {
       WASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
