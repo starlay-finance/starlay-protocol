@@ -102,6 +102,7 @@
     "chai": "4.3.6",
     "chai-bignumber": "3.0.0",
     "chai-bn": "^0.2.1",
+    "csv-parse": "^5.2.0",
     "defender-relay-client": "^1.14.0",
     "dotenv": "^8.2.0",
     "eth-sig-util": "3.0.1",
