@@ -15,7 +15,8 @@
     "./helpers",
     "test-suites/test-starlay/upgradeability.spec.ts",
     "test-suites/test-starlay/variable-debt-token.spec.ts",
-    "test-suites/test-starlay/weth-gateway.spec.ts"
+    "test-suites/test-starlay/weth-gateway.spec.ts",
+    "test-suites/test-starlay/upgrade-ltoken.spec.ts"
   ],
   "files": [
     "./hardhat.config.ts",
