@@ -23,10 +23,19 @@ export const toBalanceHistories = (records: TokenTransfer[]) =>
     .reduce<BalanceHistories>((res, { BlockNumber, FromAddress, ToAddress, TokensTransferred }) => {
       const fromHistories = res[FromAddress] || [];
       const fromLast = fromHistories[fromHistories.length - 1] || EMPTY;
-      fromHistories.push({
-        blockNumber: BlockNumber,
-        amount: max(fromLast.amount.sub(TokensTransferred)),
-      });
+      if (fromLast.blockNumber === BlockNumber) {
+        fromHistories[fromHistories.length - 1] = {
+          blockNumber: BlockNumber,
+          amount: fromLast.amount.sub(TokensTransferred),
+        };
+      } else {
+        if (fromLast.amount.isNegative())
+          fromHistories[fromHistories.length - 1] = { ...fromLast, amount: ZERO };
+        fromHistories.push({
+          blockNumber: BlockNumber,
+          amount: max(fromLast.amount.sub(TokensTransferred)),
+        });
+      }
       res[FromAddress] = fromHistories;
 
       const toHistories = res[ToAddress] || [];
