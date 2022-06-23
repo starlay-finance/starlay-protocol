@@ -39,34 +39,44 @@ const CONSTANTS: Constants = {
   shiden: shiden,
 };
 
-const checkLTokens = async (params: {
+type LTokenInfo = {
+  name: string
+  symbol: string
+  decimals: number
+  revision: number
+  underlyingAsset: string
+  pool: string
+  incentivesController: string
+  treasury: string
+  scaledTotalSupply: string
+}
+const getCurrentLTokens = async (params: {
   ethers: HardhatRuntimeEnvironment["ethers"],
   ltokenProxies: { symbol: string, addr: string }[],
   symbolAndAddrs: SymbolMap<string>
   isRev2?: boolean
-}) => {
+}): Promise<{ [key in string]: LTokenInfo }> => {
   const { ethers: { provider, utils }, ltokenProxies, symbolAndAddrs, isRev2 } = params
+  const result: { [key in string]: LTokenInfo } = {}
   for await (const item of ltokenProxies) {
-    const asset = symbolAndAddrs[item.symbol]
-    console.log(`## symbol: ${item.symbol}`)
-    console.log(`asset: ${asset}`)
-    console.log(`ltoken: ${item.addr}`)
+    // const asset = symbolAndAddrs[item.symbol]
+    console.log(`> symbol: ${item.symbol} / ltoken: ${item.addr}`)
+    // console.log(`symbol: ${item.symbol}`)
+    // console.log(`asset: ${asset}`)
+    // console.log(`ltoken: ${item.addr}`)
     const ltoken = isRev2
       ? LTokenRev2Factory.connect(item.addr, provider)
       : LTokenFactory.connect(item.addr, provider)
-    const results = await Promise.all([
-      ltoken.name(),
-      ltoken.symbol(),
-      ltoken.decimals(),
-      ltoken.UNDERLYING_ASSET_ADDRESS(),
-      ltoken.POOL(),
-      ltoken.getIncentivesController(),
-      ltoken.RESERVE_TREASURY_ADDRESS(),
-      ltoken.scaledTotalSupply().then(v => utils.formatUnits(v, 27)),
-      (isRev2 ? ltoken.getCurrentRevision() : ltoken.LTOKEN_REVISION()).then(v => v.toNumber()),
-    ])
-    const [name, symbol, decimals, underlyingAsset, pool, incentivesController, treasury, scaledTotalSupply, revision] = results
-    console.log({
+    const name = await ltoken.name()
+    const symbol = await ltoken.symbol()
+    const decimals = await ltoken.decimals()
+    const underlyingAsset = await ltoken.UNDERLYING_ASSET_ADDRESS()
+    const pool = await ltoken.POOL()
+    const incentivesController = await ltoken.getIncentivesController()
+    const treasury = await ltoken.RESERVE_TREASURY_ADDRESS()
+    const scaledTotalSupply = await ltoken.scaledTotalSupply().then(v => utils.formatUnits(v, decimals))
+    const revision = (await (isRev2 ? ltoken.getCurrentRevision() : ltoken.LTOKEN_REVISION()).then(v => v.toNumber())) as number
+    Object.assign(result, { [item.symbol]: {
       name,
       symbol,
       decimals,
@@ -76,10 +86,45 @@ const checkLTokens = async (params: {
       incentivesController,
       treasury,
       scaledTotalSupply
-    })
-    console.log(``)
+    }})
   }
+  return result
 }
+
+task("check-ltokens", "check-ltokens").setAction(async ({}, localBRE) => {
+  if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
+    throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
+  setDRE(localBRE);
+  const { ethers } = localBRE
+  const network = <eNetwork>localBRE.network.name;
+  const constants = CONSTANTS[network]
+  const pConf = loadPoolConfig(ConfigNames.Starlay);
+
+  const protocolDataProvider = await getStarlayProtocolDataProvider(constants.StarlayProtocolDataProvider);
+  const symbolAndAddrs = getParamPerNetwork(pConf.ReserveAssets, network as eNetwork)
+  const ltokenProxies: { symbol: string, addr: string }[] = []
+  for await (const [symbol, address] of Object.entries(symbolAndAddrs)) {
+    const { lTokenAddress } = await protocolDataProvider.getReserveTokensAddresses(address);
+    ltokenProxies.push({ symbol: symbol, addr: lTokenAddress })
+  }
+
+  const baseParams = {
+    ethers,
+    ltokenProxies,
+    symbolAndAddrs
+  }
+  const lTokens = await getCurrentLTokens({
+    ...baseParams,
+    isRev2: false
+  })
+  for (const item of ltokenProxies) {
+    const asset = symbolAndAddrs[item.symbol]
+    console.log(`## symbol: ${item.symbol}`)
+    console.log(`asset: ${asset}`)
+    console.log(`ltoken: ${item.addr}`)
+    console.log(lTokens[item.symbol])
+  }
+})
 
 type UpdateLTokenInputParams = {
   asset: string;
@@ -134,10 +179,17 @@ task("upgrade-ltokens-to-rev2-for-ve", "upgrade-ltokens-to-rev2-for-ve").setActi
     symbolAndAddrs
   }
   console.log(`####### Before`)
-  await checkLTokens({
+  const beforeLTokens = await getCurrentLTokens({
     ...baseParams,
     isRev2: false
   })
+  for (const item of ltokenProxies) {
+    const asset = symbolAndAddrs[item.symbol]
+    console.log(`## symbol: ${item.symbol}`)
+    console.log(`asset: ${asset}`)
+    console.log(`ltoken: ${item.addr}`)
+    console.log(beforeLTokens[item.symbol])
+  }
 
   console.log(`####### Execute`)
   const configurator = await getLendingPoolConfiguratorProxy(constants.LendingPoolConfigurator);
@@ -160,8 +212,15 @@ task("upgrade-ltokens-to-rev2-for-ve", "upgrade-ltokens-to-rev2-for-ve").setActi
   }
 
   console.log(`####### After`)
-  await checkLTokens({
+  const afterLTokens = await getCurrentLTokens({
     ...baseParams,
     isRev2: true
   })
+  for (const item of ltokenProxies) {
+    const asset = symbolAndAddrs[item.symbol]
+    console.log(`## symbol: ${item.symbol}`)
+    console.log(`asset: ${asset}`)
+    console.log(`ltoken: ${item.addr}`)
+    console.log(afterLTokens[item.symbol])
+  }
 })
