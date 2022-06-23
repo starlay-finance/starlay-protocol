@@ -12,6 +12,7 @@ import {
   LendingPoolFactory,
   LendingRateOracleFactory,
   LTokenFactory,
+  LTokenRev2Factory,
   LTokensAndRatesHelperFactory,
   MintableDelegationERC20Factory,
   MintableERC20Factory,
@@ -425,6 +426,14 @@ export const deployGenericLToken = async (
 export const deployGenericLTokenImpl = async (verify: boolean) =>
   withSaveAndVerify(
     await new LTokenFactory(await getFirstSigner()).deploy(),
+    eContractid.LToken,
+    [],
+    verify
+  );
+
+export const deployGenericLTokenRev2Impl = async (verify: boolean) =>
+  withSaveAndVerify(
+    await new LTokenRev2Factory(await getFirstSigner()).deploy(),
     eContractid.LToken,
     [],
     verify
