@@ -616,7 +616,7 @@ export const deploySelfdestructTransferMock = async (verify?: boolean) =>
 export const chooseLTokenDeployment = (id: eContractid) => {
   switch (id) {
     case eContractid.LToken:
-      return deployGenericLTokenImpl;
+      return deployGenericLTokenRev2Impl;
     case eContractid.DelegationAwareLToken:
       return deployDelegationAwareLTokenImpl;
     default:
