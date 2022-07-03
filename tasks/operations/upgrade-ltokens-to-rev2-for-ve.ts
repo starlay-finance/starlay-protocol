@@ -17,7 +17,7 @@ type Addresses = {
   StarlayProtocolDataProvider: EthereumAddress
   LendingPoolConfigurator: EthereumAddress
   IncentiveController: EthereumAddress
-  Voter: EthereumAddress
+  Voter: EthereumAddress | ""
 };
 type Constants = {
   [key in SupportedNetwork]?: Addresses;
@@ -26,13 +26,13 @@ const astar: Addresses = {
   StarlayProtocolDataProvider: "0x5BF9B2644E273D92ff1C31A83476314c95953133",
   LendingPoolConfigurator: '0xa1c2ED9e0d09f5e441aC9C44AFa308D38dAf463c',
   IncentiveController: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
-  Voter: "0xTBD",
+  Voter: "",
 }
 const shiden: Addresses = {
   StarlayProtocolDataProvider: "0x3fD308785Cf41F30993038c145cE50b7fF677a71",
   LendingPoolConfigurator: '0x1aE33143380567fe1246bE4Be5008B7bFa25790A',
   IncentiveController: '0xD9F3bbC743b7AF7E1108653Cd90E483C03D6D699',
-  Voter: "0xTBD",
+  Voter: "0x04f6A8eF63CC99Db088e036CeC627cea9941E250",
 }
 const CONSTANTS: Constants = {
   astar: astar,
