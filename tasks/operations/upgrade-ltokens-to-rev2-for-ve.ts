@@ -26,7 +26,7 @@ const astar: Addresses = {
   StarlayProtocolDataProvider: "0x5BF9B2644E273D92ff1C31A83476314c95953133",
   LendingPoolConfigurator: '0xa1c2ED9e0d09f5e441aC9C44AFa308D38dAf463c',
   IncentiveController: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
-  Voter: "",
+  Voter: "0xB45Ae34e16D97D87c021DAf03a15142935cFB177",
 }
 const shiden: Addresses = {
   StarlayProtocolDataProvider: "0x3fD308785Cf41F30993038c145cE50b7fF677a71",
