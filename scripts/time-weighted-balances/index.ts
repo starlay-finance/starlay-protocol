@@ -45,12 +45,17 @@ const main = async () => {
       }),
       {}
     );
-  const total = sum(...Object.values(timeWeightedAverage));
-
   const addressDict = await mapAddresses(
     Object.keys(timeWeighted),
     new providers.JsonRpcProvider('https://astar.api.onfinality.io/public')
   );
+  const total = CONFIG.filterNullAddress
+    ? sum(
+        ...Object.keys(timeWeightedAverage)
+          .filter((account) => addressDict[account] !== '0x')
+          .map((account) => timeWeightedAverage[account])
+      )
+    : sum(...Object.values(timeWeightedAverage));
 
   writeCsv(
     'time_weighted_balances.csv',
@@ -63,7 +68,9 @@ const main = async () => {
           account,
           addressDict[account],
           twab.toString(),
-          rewardTotal.mul(twab).div(total).toString(),
+          CONFIG.filterNullAddress && addressDict[account] === '0x'
+            ? '0'
+            : rewardTotal.mul(twab).div(total).toString(),
         ];
       })
   );
