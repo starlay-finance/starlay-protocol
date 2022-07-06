@@ -65,12 +65,10 @@ export const calcTimeWeightedBalance = (
       if (from > blockNumber) return { blockNumber: from, weighted: ZERO, lastBalance: amount };
       if (blockNumber > to) return bal;
       if (!bal) return { blockNumber, weighted: ZERO, lastBalance: amount };
-      const current = Math.min(blockNumber, to);
-      const duration = current - bal.blockNumber;
       return {
-        blockNumber: current,
-        weighted: bal.weighted.add(bal.lastBalance.mul(duration)),
+        blockNumber,
         lastBalance: amount,
+        weighted: bal.weighted.add(bal.lastBalance.mul(blockNumber - bal.blockNumber)),
       };
     }, undefined);
     if (bal && bal.blockNumber < to) {
