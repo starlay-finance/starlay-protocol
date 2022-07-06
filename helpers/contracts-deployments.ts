@@ -1,5 +1,5 @@
 import { readArtifact as buidlerReadArtifact } from '@nomiclabs/buidler/plugins';
-import { Contract } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
   DefaultReserveInterestRateStrategyFactory,
@@ -439,6 +439,9 @@ export const deployGenericLTokenRev2Impl = async (verify: boolean) =>
     verify
   );
 
+export const deployGenericLTokenRev2ImplWithSigner = async (verify: boolean, signer: Signer) =>
+  withSaveAndVerify(await new LTokenRev2Factory(signer).deploy(), eContractid.LToken, [], verify);
+
 export const deployDelegationAwareLToken = async (
   [pool, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
     tEthereumAddress,
@@ -617,7 +620,7 @@ export const chooseLTokenDeployment = (id: eContractid) => {
   switch (id) {
     case eContractid.LToken:
       return deployGenericLTokenImpl;
-      // return deployGenericLTokenRev2Impl; // TODO: revert
+    // return deployGenericLTokenRev2Impl; // TODO: revert
     case eContractid.DelegationAwareLToken:
       return deployDelegationAwareLTokenImpl;
     default:
