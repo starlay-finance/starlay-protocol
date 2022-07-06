@@ -137,7 +137,7 @@ task('check-ltokens', 'check-ltokens').setAction(async ({}, localBRE) => {
   };
   const lTokens = await getCurrentLTokens({
     ...baseParams,
-    isRev2: false,
+    isRev2: true,
   });
   for (const item of ltokenProxies) {
     const asset = symbolAndAddrs[item.symbol];
