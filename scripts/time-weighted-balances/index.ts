@@ -64,15 +64,13 @@ const main = async () => {
       .filter((account) => !EXCLUDE_ADDRESSES.includes(account))
       .map((account) => {
         const twab = timeWeightedAverage[account];
-        return [
-          account,
-          addressDict[account],
-          twab.toString(),
+        const reward =
           CONFIG.filterNullAddress && addressDict[account] === '0x'
             ? '0'
-            : rewardTotal.mul(twab).div(total).toString(),
-        ];
-      })
+            : rewardTotal.mul(twab).div(total).toString();
+        if (CONFIG.filterZeroReward && reward === '0') return [];
+        return [account, addressDict[account], twab.toString(), reward];
+      }).filter(row => !!row.length)
   );
 };
 
