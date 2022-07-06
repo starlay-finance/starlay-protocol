@@ -54,19 +54,31 @@ export const calcTimeWeightedBalance = (
   to: number
 ): TimeWeightedBalance =>
   Object.keys(history).reduce((res, key) => {
+    const bal = history[key]?.reduce<
+      | {
+          blockNumber: number;
+          weighted: BigNumber;
+          lastBalance: BigNumber;
+        }
+      | undefined
+    >((bal, { blockNumber, amount }) => {
+      if (from > blockNumber) return { blockNumber: from, weighted: ZERO, lastBalance: amount };
+      if (blockNumber > to) return bal;
+      if (!bal) return { blockNumber, weighted: ZERO, lastBalance: amount };
+      const current = Math.min(blockNumber, to);
+      const duration = current - bal.blockNumber;
+      return {
+        blockNumber: current,
+        weighted: bal.weighted.add(bal.lastBalance.mul(duration)),
+        lastBalance: amount,
+      };
+    }, undefined);
+    if (bal && bal.blockNumber < to) {
+      bal.weighted = bal.weighted.add(bal.lastBalance.mul(to - bal.blockNumber)) || ZERO;
+    }
     return {
       ...res,
-      [key]: history[key]?.reduce((bal, { blockNumber, amount }) => {
-        if (from > blockNumber) return bal;
-        if (!bal) return { blockNumber: from, amount };
-        if (bal.blockNumber === to) return bal;
-        const current = Math.min(blockNumber, to);
-        const duration = current - bal.blockNumber;
-        return {
-          blockNumber: current,
-          amount: bal.amount.add(amount.mul(duration)),
-        };
-      }),
+      [key]: { amount: bal?.weighted || ZERO },
     };
   }, {});
 
