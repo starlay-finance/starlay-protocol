@@ -98,8 +98,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.tenderly]: '0x52D306e36E3B6B02c153d0266ff0f85d18BCD413',
     [eAstarNetwork.shibuya]: '',
-    [eAstarNetwork.shiden]: '',
-    [eAstarNetwork.astar]: '',
+    [eAstarNetwork.shiden]: '0x9d5782EBe1eBc7037F8027fFeA61e8B8C2F57964',
+    [eAstarNetwork.astar]: '0xF6206297b6857779443eF7Eca4a3cFFb1660F952',
   },
   ProviderRegistryOwner: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -224,6 +224,11 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: '0x8aDa54F1169969119078E23C4Ec632D01bDa329b',
       USDC: '0xB56df4fA49847e7B659B5ed4A133512635fF2577',
       LAY: '0xEB741C051E474f83cff38B44A912281772C23CE6',
+      BUSD: '',
+      DAI: '',
+      MATIC: '',
+      BNB: '',
+      DOT: '',
     },
     [eAstarNetwork.shiden]: {
       ASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -235,6 +240,9 @@ export const CommonsConfig: ICommonConfiguration = {
       LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
       DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
+      MATIC: '0xd3f7caf808b673Bf04c6D6f4F257A47a80679B5E',
+      BNB: '0x24A9c7137f82BC1E8b1d6b749b72C133f114Ef6b',
+      DOT: '0x1135874985e7F1342bCa07201B102eFc1292b6d9',
     },
     [eAstarNetwork.astar]: {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
@@ -246,6 +254,9 @@ export const CommonsConfig: ICommonConfiguration = {
       LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
       BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
       DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
+      MATIC: '0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF',
+      BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
+      DOT: '0xffffffffffffffffffffffffffffffffffffffff',
     },
   },
   ReserveAssets: {
@@ -303,7 +314,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
     [eEthereumNetwork.tenderly]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
-    [eAstarNetwork.shiden]: '0x51e27157845bf1B72A5493F539680203B1727438',
+    [eAstarNetwork.shiden]: '0xD9F3bbC743b7AF7E1108653Cd90E483C03D6D699',
     [eAstarNetwork.astar]: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
   },
   StakedLay: {

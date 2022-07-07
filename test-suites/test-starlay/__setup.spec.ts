@@ -160,6 +160,9 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     WASTR: mockTokens.WASTR.address,
     WSDN: mockTokens.WSDN.address,
     BUSD: mockTokens.BUSD.address,
+    MATIC: mockTokens.MATIC.address,
+    BNB: mockTokens.BNB.address,
+    DOT: mockTokens.DOT.address,
   };
   await setInitialAssetPricesInOracle(ALL_ASSETS_INITIAL_PRICES, addresses, fallbackOracle);
 

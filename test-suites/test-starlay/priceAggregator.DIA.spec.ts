@@ -31,6 +31,8 @@ const mockPrices = () => {
   ];
 };
 
+// NOTE: fail "after all" in this test suite
+//   "after all" hook in "Price Aggregator Implementation for DIA"
 makeSuite('Price Aggregator Implementation for DIA', (testEnv: TestEnv) => {
   let mockAggregatorDIA: MockAggregatorDIA;
   const quoteCurrency = 'USD';
