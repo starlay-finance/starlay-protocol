@@ -1,5 +1,5 @@
 import { readArtifact as buidlerReadArtifact } from '@nomiclabs/buidler/plugins';
-import { Contract } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
   DefaultReserveInterestRateStrategyFactory,
@@ -12,6 +12,7 @@ import {
   LendingPoolFactory,
   LendingRateOracleFactory,
   LTokenFactory,
+  LTokenRev2Factory,
   LTokensAndRatesHelperFactory,
   MintableDelegationERC20Factory,
   MintableERC20Factory,
@@ -430,6 +431,17 @@ export const deployGenericLTokenImpl = async (verify: boolean) =>
     verify
   );
 
+export const deployGenericLTokenRev2Impl = async (verify: boolean) =>
+  withSaveAndVerify(
+    await new LTokenRev2Factory(await getFirstSigner()).deploy(),
+    eContractid.LToken,
+    [],
+    verify
+  );
+
+export const deployGenericLTokenRev2ImplWithSigner = async (verify: boolean, signer: Signer) =>
+  withSaveAndVerify(await new LTokenRev2Factory(signer).deploy(), eContractid.LToken, [], verify);
+
 export const deployDelegationAwareLToken = async (
   [pool, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
     tEthereumAddress,
@@ -607,7 +619,8 @@ export const deploySelfdestructTransferMock = async (verify?: boolean) =>
 export const chooseLTokenDeployment = (id: eContractid) => {
   switch (id) {
     case eContractid.LToken:
-      return deployGenericLTokenImpl;
+      // return deployGenericLTokenImpl;
+      return deployGenericLTokenRev2Impl; // use Rev2
     case eContractid.DelegationAwareLToken:
       return deployDelegationAwareLTokenImpl;
     default:
