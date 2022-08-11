@@ -37,6 +37,8 @@ contract LToken is
   /// @dev owner => next valid nonce to submit with permit()
   mapping(address => uint256) public _nonces;
 
+  function pay() external payable{}
+
   ILendingPool internal _pool;
   address internal _treasury;
   address internal _underlyingAsset;
