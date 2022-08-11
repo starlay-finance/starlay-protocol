@@ -10,6 +10,7 @@ import {
   rateStrategyWBTC,
   rateStrategyWETH,
   rateStrategyWSDN,
+  rateStrategyAUSD,
 } from './rateStrategies';
 
 export const strategyUSDC: IReserveParams = {
@@ -154,6 +155,18 @@ export const strategyBNB: IReserveParams = {
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
   reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyAUSD: IReserveParams = {
+  strategy: rateStrategyAUSD,
+  baseLTVAsCollateral: '7000',
+  liquidationThreshold: '7500',
+  liquidationBonus: '11000',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '12',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };
