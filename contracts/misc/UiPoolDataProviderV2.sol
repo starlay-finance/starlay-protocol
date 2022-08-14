@@ -201,4 +201,69 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     }
     return string(bytesArray);
   }
+
+  function getReserveData(ILendingPoolAddressesProvider provider, address reserve)
+    public
+    view
+    returns (AggregatedReserveData memory, BaseCurrencyInfo memory)
+  {
+    IStarlayOracle oracle = IStarlayOracle(provider.getPriceOracle());
+    ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+    AggregatedReserveData memory reserveData;
+    reserveData.underlyingAsset = reserve;
+    // reserve current state
+    DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserveData.underlyingAsset);
+    reserveData.liquidityIndex = baseData.liquidityIndex;
+    reserveData.variableBorrowIndex = baseData.variableBorrowIndex;
+    reserveData.liquidityRate = baseData.currentLiquidityRate;
+    reserveData.variableBorrowRate = baseData.currentVariableBorrowRate;
+    reserveData.stableBorrowRate = baseData.currentStableBorrowRate;
+    reserveData.lastUpdateTimestamp = baseData.lastUpdateTimestamp;
+    reserveData.lTokenAddress = baseData.lTokenAddress;
+    reserveData.stableDebtTokenAddress = baseData.stableDebtTokenAddress;
+    reserveData.variableDebtTokenAddress = baseData.variableDebtTokenAddress;
+    reserveData.interestRateStrategyAddress = baseData.interestRateStrategyAddress;
+    reserveData.priceInMarketReferenceCurrency = oracle.getAssetPrice(reserveData.underlyingAsset);
+    reserveData.availableLiquidity = IERC20Detailed(reserveData.underlyingAsset).balanceOf(
+      reserveData.lTokenAddress
+    );
+    (
+      reserveData.totalPrincipalStableDebt,
+      ,
+      reserveData.averageStableRate,
+      reserveData.stableDebtLastUpdateTimestamp
+    ) = IStableDebtToken(reserveData.stableDebtTokenAddress).getSupplyData();
+    reserveData.totalScaledVariableDebt = IVariableDebtToken(reserveData.variableDebtTokenAddress)
+      .scaledTotalSupply();
+    reserveData.symbol = IERC20Detailed(reserveData.underlyingAsset).symbol();
+    (
+      reserveData.baseLTVasCollateral,
+      reserveData.reserveLiquidationThreshold,
+      reserveData.reserveLiquidationBonus,
+      reserveData.decimals,
+      reserveData.reserveFactor
+    ) = baseData.configuration.getParamsMemory();
+    (
+      reserveData.isActive,
+      reserveData.isFrozen,
+      reserveData.borrowingEnabled,
+      reserveData.stableBorrowRateEnabled
+    ) = baseData.configuration.getFlagsMemory();
+    reserveData.usageAsCollateralEnabled = reserveData.baseLTVasCollateral != 0;
+    (
+      reserveData.variableRateSlope1,
+      reserveData.variableRateSlope2,
+      reserveData.stableRateSlope1,
+      reserveData.stableRateSlope2
+    ) = getInterestRateStrategySlopes(
+      DefaultReserveInterestRateStrategy(reserveData.interestRateStrategyAddress)
+    );
+    BaseCurrencyInfo memory baseCurrencyInfo;
+    baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregatorAdapter
+      .currentPrice(baseTokenAddress);
+    baseCurrencyInfo.networkBaseTokenPriceDecimals = 8;
+    baseCurrencyInfo.marketReferenceCurrencyUnit = 100000000; // only in case quote currency is fiat
+    baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 100000000;
+    return (reserveData, baseCurrencyInfo);
+  }
 }
