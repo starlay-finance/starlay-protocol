@@ -78,6 +78,7 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     for (uint256 i = 0; i < reserves.length; i++) {
       AggregatedReserveData memory reserveData = reservesData[i];
       reserveData.underlyingAsset = reserves[i];
+      if (reserveData.underlyingAsset == 0xfFFFFfFF00000000000000010000000000000001) continue;
 
       // reserve current state
       DataTypes.ReserveData memory baseData =
