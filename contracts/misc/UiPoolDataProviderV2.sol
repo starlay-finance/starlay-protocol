@@ -266,4 +266,90 @@ contract UiPoolDataProviderV2 is IUiPoolDataProviderV2 {
     baseCurrencyInfo.marketReferenceCurrencyPriceInUsd = 100000000;
     return (reserveData, baseCurrencyInfo);
   }
+
+  function getReserveBaseData(ILendingPoolAddressesProvider provider, address reserve)
+    public
+    view
+    returns (AggregatedReserveData memory)
+  {
+    IStarlayOracle oracle = IStarlayOracle(provider.getPriceOracle());
+    ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+    AggregatedReserveData memory reserveData;
+    reserveData.underlyingAsset = reserve;
+    // reserve current state
+    DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserveData.underlyingAsset);
+    reserveData.liquidityIndex = baseData.liquidityIndex;
+    reserveData.variableBorrowIndex = baseData.variableBorrowIndex;
+    reserveData.liquidityRate = baseData.currentLiquidityRate;
+    reserveData.variableBorrowRate = baseData.currentVariableBorrowRate;
+    reserveData.stableBorrowRate = baseData.currentStableBorrowRate;
+    reserveData.lastUpdateTimestamp = baseData.lastUpdateTimestamp;
+    reserveData.lTokenAddress = baseData.lTokenAddress;
+    reserveData.stableDebtTokenAddress = baseData.stableDebtTokenAddress;
+    reserveData.variableDebtTokenAddress = baseData.variableDebtTokenAddress;
+    reserveData.interestRateStrategyAddress = baseData.interestRateStrategyAddress;
+    reserveData.priceInMarketReferenceCurrency = oracle.getAssetPrice(reserveData.underlyingAsset);
+    return reserveData;
+  }
+  function getReserveTokensData(ILendingPoolAddressesProvider provider, address reserve)
+    public
+    view
+    returns (AggregatedReserveData memory)
+  {
+    ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+    AggregatedReserveData memory reserveData;
+    reserveData.underlyingAsset = reserve;
+    // reserve current state
+    DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserveData.underlyingAsset);
+    reserveData.availableLiquidity = IERC20Detailed(reserveData.underlyingAsset).balanceOf(
+      reserveData.lTokenAddress
+    );
+    (
+      reserveData.totalPrincipalStableDebt,
+      ,
+      reserveData.averageStableRate,
+      reserveData.stableDebtLastUpdateTimestamp
+    ) = IStableDebtToken(reserveData.stableDebtTokenAddress).getSupplyData();
+    reserveData.totalScaledVariableDebt = IVariableDebtToken(reserveData.variableDebtTokenAddress)
+      .scaledTotalSupply();
+    reserveData.symbol = IERC20Detailed(reserveData.underlyingAsset).symbol();
+    return reserveData;
+  }
+  function getParamsMemory(ILendingPoolAddressesProvider provider, address reserve)
+    public
+    view
+    returns (AggregatedReserveData memory)
+  {
+    ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+    AggregatedReserveData memory reserveData;
+    reserveData.underlyingAsset = reserve;
+    // reserve current state
+    DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserveData.underlyingAsset);
+    (
+      reserveData.baseLTVasCollateral,
+      reserveData.reserveLiquidationThreshold,
+      reserveData.reserveLiquidationBonus,
+      reserveData.decimals,
+      reserveData.reserveFactor
+    ) = baseData.configuration.getParamsMemory();
+    return reserveData;
+  }
+  function getFlagsMemory(ILendingPoolAddressesProvider provider, address reserve)
+    public
+    view
+    returns (AggregatedReserveData memory)
+  {
+    ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+    AggregatedReserveData memory reserveData;
+    reserveData.underlyingAsset = reserve;
+    // reserve current state
+    DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserveData.underlyingAsset);
+    (
+      reserveData.isActive,
+      reserveData.isFrozen,
+      reserveData.borrowingEnabled,
+      reserveData.stableBorrowRateEnabled
+    ) = baseData.configuration.getFlagsMemory();
+    return reserveData;
+  }
 }
