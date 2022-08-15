@@ -68,7 +68,10 @@ export const advanceTimeAndBlock = async function (forwardTime: number) {
   await DRE.ethers.provider.send('evm_mine', []);
 };
 
-export const waitForTx = async (tx: ContractTransaction) => await tx.wait(1);
+export const waitForTx = async (tx: ContractTransaction) => {
+  console.log(`\ntx: ${tx.hash}`);
+  return await tx.wait(1);
+};
 
 export const filterMapBy = (raw: { [key: string]: any }, fn: (key: string) => boolean) =>
   Object.keys(raw)
