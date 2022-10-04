@@ -57,19 +57,19 @@ const SYMBOLS = {
 };
 
 const getReserveAssetAddresss = (network: eNetwork) => ({
-  NativeUSDT: marketConfigs.StarlayConfig.ReserveAssets[network][SYMBOLS.NativeUSDT],
+  NativeUSDT: marketConfigs.StarlayConfig.ReserveAssets[network]['NativeUSDT'],
 });
 
 // 1: deploy new assets
-task('external:deploy-ausd:deploy-new-asset').setAction(async ({ verify }, localBRE) => {
+task('external:deploy-usdt:deploy-new-asset').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
 
-  await DRE.run('external:deploy-new-asset', { symbol: SYMBOLS.NativeUSDT, pool: 'Starlay' });
+  await DRE.run('external:deploy-new-asset', { symbol: 'NativeUSDT', pool: 'Starlay' });
 });
 // 2: initialize & configure
-task('external:deploy-ausd:init-and-configure').setAction(async ({ verify }, localBRE) => {
+task('external:deploy-usdt:init-and-configure').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
@@ -126,7 +126,7 @@ task('external:deploy-ausd:init-and-configure').setAction(async ({ verify }, loc
   );
 });
 // 3: setup oracles for new assets
-task('external:deploy-ausd:setup-oracles').setAction(async ({ verify }, localBRE) => {
+task('external:deploy-usdt:setup-oracles').setAction(async ({ verify }, localBRE) => {
   if (!(SUPPORTED_NETWORK as ReadonlyArray<string>).includes(localBRE.network.name))
     throw new Error(`Support only ${SUPPORTED_NETWORK} ...`);
   setDRE(localBRE);
