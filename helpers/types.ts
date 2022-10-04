@@ -239,6 +239,7 @@ export const TokenContractId = [
   'BNB',
   'DOT',
   'AUSD',
+  'NativeUSDT',
 ] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
