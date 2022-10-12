@@ -37,6 +37,8 @@ export const strategyUSDT: IReserveParams = {
   reserveFactor: '1000',
 };
 
+export const strategyNativeUSDT = strategyUSDT;
+
 export const strategyDAI: IReserveParams = {
   strategy: rateStrategyStable,
   baseLTVAsCollateral: '8000',
