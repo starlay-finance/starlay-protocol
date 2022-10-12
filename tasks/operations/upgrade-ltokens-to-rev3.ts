@@ -99,9 +99,9 @@ const upgradeLTokenWithDeployedLTokenRev3 = async (
 //// main
 const PARAMS_TO_UPGRADE = {
   target: {
-    symbol: "AUSD",
-    asset: "0xfFFFFfFF00000000000000010000000000000001",
-    ltoken: "0x4aaD525895373ad3D8C4aF4743723436312F30e7",
+    symbol: "NativeUSDT",
+    asset: "0xfFFfffFF000000000000000000000001000007C0",
+    ltoken: "0x659110D07923e2C3fCB9d3C9E66B0a1605e7ce71",
   },
   newLtokenImpl: ""
 }
