@@ -103,7 +103,7 @@ const PARAMS_TO_UPGRADE = {
     asset: "0xfFFfffFF000000000000000000000001000007C0",
     ltoken: "0x659110D07923e2C3fCB9d3C9E66B0a1605e7ce71",
   },
-  newLtokenImpl: ""
+  newLtokenImpl: "0x892DEF735c209b191Ac914e5a4286629FcBF9082"
 }
 task(
   'upgrade-ltoken-to-rev3-by-deployed-ltokens',
