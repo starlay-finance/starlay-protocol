@@ -118,8 +118,8 @@ export const rateStrategyAUSD: IInterestRateStrategyParams = {
   stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
 };
 
-export const rateStrategyNASTR: IInterestRateStrategyParams = {
-  name: 'rateStrategyNASTR',
+export const rateStrategynASTR: IInterestRateStrategyParams = {
+  name: 'rateStrategynASTR',
   optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
   variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),

@@ -11,7 +11,7 @@ import {
   rateStrategyWETH,
   rateStrategyWSDN,
   rateStrategyAUSD,
-  rateStrategyNASTR,
+  rateStrategynASTR,
 } from './rateStrategies';
 
 export const strategyUSDC: IReserveParams = {
@@ -174,8 +174,8 @@ export const strategyAUSD: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyNASTR: IReserveParams = {
-  strategy: rateStrategyNASTR,
+export const strategynASTR: IReserveParams = {
+  strategy: rateStrategynASTR,
   baseLTVAsCollateral: '3000',
   liquidationThreshold: '5500',
   liquidationBonus: '11500',

@@ -14,7 +14,7 @@ import {
   strategyWBTC,
   strategyWETH,
   strategyWSDN,
-  strategyNASTR,
+  strategynASTR,
 } from './reservesConfigs';
 
 // ----------------
@@ -39,7 +39,7 @@ export const StarlayConfig: IStarlayConfiguration = {
     BNB: strategyBNB,
     DOT: strategyDOT,
     AUSD: strategyAUSD,
-    nASTR: strategyNASTR,
+    nASTR: strategynASTR,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
