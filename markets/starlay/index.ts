@@ -14,6 +14,7 @@ import {
   strategyWBTC,
   strategyWETH,
   strategyWSDN,
+  strategyNASTR,
 } from './reservesConfigs';
 
 // ----------------
@@ -38,6 +39,7 @@ export const StarlayConfig: IStarlayConfiguration = {
     BNB: strategyBNB,
     DOT: strategyDOT,
     AUSD: strategyAUSD,
+    nASTR: strategyNASTR,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -91,6 +93,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       DOT: '0xffffffffffffffffffffffffffffffffffffffff',
       AUSD: '0xfFFFFfFF00000000000000010000000000000001',
       NativeUSDT: '0xfFFfffFF000000000000000000000001000007C0',
+      nASTR: '0xE511ED88575C57767BAfb72BfD10775413E3F2b0',
     },
   },
 };

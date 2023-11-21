@@ -197,6 +197,7 @@ export interface iAssetBase<T> {
   BNB: T;
   DOT: T;
   AUSD: T;
+  nASTR: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
@@ -218,6 +219,7 @@ export type iStarlayPoolAssets<T> = Pick<
   | 'BNB'
   | 'DOT'
   | 'AUSD'
+  | 'nASTR'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
@@ -240,6 +242,7 @@ export const TokenContractId = [
   'DOT',
   'AUSD',
   'NativeUSDT',
+  'nASTR',
 ] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
