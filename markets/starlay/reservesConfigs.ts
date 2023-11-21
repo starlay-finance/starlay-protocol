@@ -179,7 +179,7 @@ export const strategyNASTR: IReserveParams = {
   baseLTVAsCollateral: '3000',
   liquidationThreshold: '5500',
   liquidationBonus: '11500',
-  borrowingEnabled: true,
+  borrowingEnabled: false,
   stableBorrowRateEnabled: false,
   reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
