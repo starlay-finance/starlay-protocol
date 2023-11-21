@@ -35,7 +35,7 @@ const astar: Addresses = {
   StarlayProtocolDataProvider: '0x5BF9B2644E273D92ff1C31A83476314c95953133',
   LTokensAndRatesHelper: '0x4B1CA893a27964F985213AEF2b520523929a69e9',
   StarlayFallbackOracle: '0x35E6D71FeA378B60b3A5Afc91eA7F520F937833c',
-  PriceAggregatorAdapterDiaImpl: '0x91907f43f8b349a2d5fB5B609852E4858a1c61cf',
+  PriceAggregatorAdapterDiaImpl: '0x043C93fF4d52B2F76811852644549553A00309a8',
   IncentiveController: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
 };
 const shiden: Addresses = {
