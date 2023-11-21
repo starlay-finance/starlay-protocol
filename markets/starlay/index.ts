@@ -61,6 +61,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       DOT: '',
       AUSD: '',
       NativeUSDT: '',
+      nASTR: '',
     },
     [eAstarNetwork.shiden]: {
       WASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -77,6 +78,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       DOT: '0x1135874985e7F1342bCa07201B102eFc1292b6d9',
       AUSD: '',
       NativeUSDT: '',
+      nASTR: '',
     },
     [eAstarNetwork.astar]: {
       WASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',

@@ -48,7 +48,7 @@ export const INITIAL_PRICES = {
   DOT: oneUsd.multipliedBy('9.45363275').toFixed(),
   AUSD: oneUsd.toFixed(),
   NativeUSDT: oneUsd.toFixed(),
-  nASTR: oneUsd.multipliedBy('0.13272916').toFixed(),
+  nASTR: oneUsd.multipliedBy('0.06606488').toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {

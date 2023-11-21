@@ -181,7 +181,7 @@ export const strategyNASTR: IReserveParams = {
   liquidationBonus: '11000',
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
-  reserveDecimals: '12',
+  reserveDecimals: '18',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };
