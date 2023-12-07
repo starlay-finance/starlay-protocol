@@ -1,6 +1,6 @@
 // @ts-ignore
 import { HardhatNetworkForkingUserConfig } from 'hardhat/types';
-import { eAstarNetwork, eEthereumNetwork, iParamsPerNetwork } from './helpers/types';
+import { eAcalaNetwork, eAstarNetwork, eEthereumNetwork, iParamsPerNetwork } from './helpers/types';
 
 require('dotenv').config();
 
@@ -47,6 +47,10 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : ONFINALITY_KEY
     ? `https://astar.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
     : 'https://rpc.astar.network:8545',
+  [eAcalaNetwork.acala]: ONFINALITY_KEY
+    ? `https://acala-polkadot.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
+    : 'wss://eth-rpc-acala.aca-api.network',
+  [eAcalaNetwork.acala_testnet]: 'https://eth-rpc-acala-testnet.aca-staging.network',
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
@@ -57,6 +61,8 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eAstarNetwork.shibuya]: 3 * GWEI,
   [eAstarNetwork.shiden]: 1 * GWEI,
   [eAstarNetwork.astar]: 1 * GWEI,
+  [eAcalaNetwork.acala]: 65 * GWEI,
+  [eAcalaNetwork.acala_testnet]: 65 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
@@ -67,4 +73,6 @@ export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eAstarNetwork.shibuya]: undefined,
   [eAstarNetwork.shiden]: undefined,
   [eAstarNetwork.astar]: undefined,
+  [eAcalaNetwork.acala]: undefined,
+  [eAcalaNetwork.acala_testnet]: undefined,
 };

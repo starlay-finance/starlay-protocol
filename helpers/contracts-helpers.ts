@@ -12,17 +12,19 @@ import { verifyEtherscanContract } from './etherscan-verification';
 import { DRE, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import {
+  eAcalaNetwork,
   eAstarNetwork,
   eContractid,
   eEthereumNetwork,
   eNetwork,
+  iAcalaParamsPerNetwork,
   iAstarParamsPerNetwork,
   iEthereumParamsPerNetwork,
   iParamsPerNetwork,
   iParamsPerPool,
   StarlayPools,
   tEthereumAddress,
-  tStringTokenSmallUnits
+  tStringTokenSmallUnits,
 } from './types';
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
@@ -140,6 +142,8 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
   const { coverage, buidlerevm, tenderly } = param as iEthereumParamsPerNetwork<T>;
   const { shibuya, shiden, astar } = param as iAstarParamsPerNetwork<T>;
+  const { acala, acala_testnet } = param as iAcalaParamsPerNetwork<T>;
+
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
   }
@@ -159,6 +163,10 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return shiden;
     case eAstarNetwork.astar:
       return astar;
+    case eAcalaNetwork.acala:
+      return acala;
+    case eAcalaNetwork.acala_testnet:
+      return acala_testnet;
   }
 };
 

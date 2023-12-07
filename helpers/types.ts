@@ -4,7 +4,7 @@ export interface SymbolMap<T> {
   [symbol: string]: T;
 }
 
-export type eNetwork = eEthereumNetwork | eAstarNetwork;
+export type eNetwork = eEthereumNetwork | eAstarNetwork | eAcalaNetwork;
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
@@ -17,6 +17,11 @@ export enum eAstarNetwork {
   astar = 'astar',
   shiden = 'shiden',
   shibuya = 'shibuya',
+}
+
+export enum eAcalaNetwork {
+  acala = 'acala',
+  acala_testnet = 'acala_testnet',
 }
 
 export enum StarlayPools {
@@ -279,7 +284,10 @@ export interface IMarketRates {
   borrowRate: string;
 }
 
-export type iParamsPerNetwork<T> = iEthereumParamsPerNetwork<T> | iAstarParamsPerNetwork<T>;
+export type iParamsPerNetwork<T> =
+  | iEthereumParamsPerNetwork<T>
+  | iAstarParamsPerNetwork<T>
+  | iAcalaParamsPerNetwork<T>;
 
 export interface iParamsPerNetworkAll<T> extends iEthereumParamsPerNetwork<T> {}
 
@@ -295,6 +303,12 @@ export interface iAstarParamsPerNetwork<T> {
   [eAstarNetwork.shiden]: T;
   [eAstarNetwork.shibuya]: T;
 }
+
+export interface iAcalaParamsPerNetwork<T> {
+  [eAcalaNetwork.acala]: T;
+  [eAcalaNetwork.acala_testnet]: T;
+}
+
 export interface iParamsPerPool<T> {
   [StarlayPools.proto]: T;
 }

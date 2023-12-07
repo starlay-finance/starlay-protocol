@@ -10,7 +10,7 @@ import 'solidity-coverage';
 import 'temp-hardhat-etherscan';
 import { buildForkConfig, NETWORKS_DEFAULT_GAS, NETWORKS_RPC_URL } from './helper-hardhat-config';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
-import { eAstarNetwork, eEthereumNetwork, eNetwork } from './helpers/types';
+import { eAcalaNetwork, eAstarNetwork, eEthereumNetwork, eNetwork } from './helpers/types';
 // @ts-ignore
 import { accounts } from './test-wallets.js';
 
@@ -97,6 +97,8 @@ const buidlerConfig: HardhatUserConfig = {
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
     shiden: getCommonNetworkConfig(eAstarNetwork.shiden, 336),
     astar: getCommonNetworkConfig(eAstarNetwork.astar, 592),
+    acala: getCommonNetworkConfig(eAcalaNetwork.acala, 787),
+    acala_testnet: getCommonNetworkConfig(eAcalaNetwork.acala_testnet, 597),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
