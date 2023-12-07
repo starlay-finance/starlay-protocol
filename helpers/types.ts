@@ -74,6 +74,7 @@ export enum eContractid {
   LendingPoolConfiguratorImpl = 'LendingPoolConfiguratorImpl',
   LendingPoolCollateralManagerImpl = 'LendingPoolCollateralManagerImpl',
   PriceAggregatorAdapterDiaImpl = 'PriceAggregatorAdapterDiaImpl',
+  PriceAggregatorAdapterAcalaImpl = 'PriceAggregatorAdapterAcalaImpl',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
   StakeUIHelper = 'StakeUIHelper',
 }
@@ -188,64 +189,22 @@ export interface iAssetCommon<T> {
   [key: string]: T;
 }
 export interface iAssetBase<T> {
-  WETH: T;
   USDC: T;
-  USDT: T;
-  LAY: T;
-  WBTC: T;
-  USD: T;
-  WASTR: T;
-  WSDN: T;
-  DAI: T;
-  BUSD: T;
-  MATIC: T;
-  BNB: T;
   DOT: T;
-  AUSD: T;
+  LDOT: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iStarlayPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  | 'USDC'
-  | 'USDT'
-  | 'LAY'
-  | 'WBTC'
-  | 'WETH'
-  | 'WASTR'
-  | 'WSDN'
-  | 'DAI'
-  | 'BUSD'
-  | 'MATIC'
-  | 'BNB'
-  | 'DOT'
-  | 'AUSD'
->;
+export type iStarlayPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'USDC' | 'DOT' | 'LDOT'>;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iStarlayPoolAssets<T>;
 
 export type iStarlayPoolTokens<T> = Omit<iStarlayPoolAssets<T>, 'ETH'>;
 
-export const TokenContractId = [
-  'LAY',
-  'WETH',
-  'USDC',
-  'USDT',
-  'WBTC',
-  'USD',
-  'WASTR',
-  'WSDN',
-  'BUSD',
-  'DAI',
-  'MATIC',
-  'BNB',
-  'DOT',
-  'AUSD',
-  'NativeUSDT',
-] as const;
+export const TokenContractId = ['USDC', 'DOT', 'LDOT'] as const;
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
   lTokenImpl: eContractid;
@@ -387,6 +346,7 @@ export interface IBaseConfiguration {
   OracleQuoteCurrency: string;
   OracleQuoteUnit: string;
   StakedLay: iParamsPerNetwork<tEthereumAddress>;
+  AcalaOracleAddress: iParamsPerNetwork<tEthereumAddress>;
 }
 
 export interface ICommonConfiguration extends IBaseConfiguration {

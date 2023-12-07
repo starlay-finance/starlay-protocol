@@ -8,7 +8,8 @@ import {
 } from '../../helpers/configuration';
 import {
   deployLendingRateOracle,
-  deployPriceAggregatorDiaImpl,
+  // deployPriceAggregatorDiaImpl,
+  deployPriceAggregatorAcalaImpl,
   deployStarlayFallbackOracle,
   deployStarlayOracle,
 } from '../../helpers/contracts-deployments';
@@ -16,7 +17,7 @@ import {
   getFirstSigner,
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
-  getPriceAggregator,
+  // getPriceAggregator,
   getStarlayFallbackOracle,
   getStarlayOracle,
 } from '../../helpers/contracts-getters';
@@ -24,8 +25,13 @@ import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { eNetwork, ICommonConfiguration, SymbolMap } from '../../helpers/types';
-import { LendingRateOracle, StarlayFallbackOracle, StarlayOracle } from '../../types';
-import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
+import {
+  LendingRateOracle,
+  PriceAggregatorAdapterAcalaImpl,
+  StarlayFallbackOracle,
+  StarlayOracle,
+} from '../../types';
+// import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -39,39 +45,42 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         ProtocolGlobalParams: { UsdAddress },
         ReserveAssets,
         FallbackOracle,
-        DIAAggregator,
-        DIAAggregatorAddress,
-        OracleQuoteCurrency,
+        // DIAAggregator,
+        // DIAAggregatorAddress,
+        AcalaOracleAddress,
+        // OracleQuoteCurrency,
       } = poolConfig as ICommonConfiguration;
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
       const starlayOracleAddress = getParamPerNetwork(poolConfig.StarlayOracle, network);
-      const priceAggregatorAddress = getParamPerNetwork(poolConfig.PriceAggregator, network);
+      // const priceAggregatorAddress = getParamPerNetwork(poolConfig.PriceAggregator, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = getParamPerNetwork(ReserveAssets, network);
-      const feedTokens = getParamPerNetwork(DIAAggregator, network);
-      const diaAggregatorAddress = getParamPerNetwork(DIAAggregatorAddress, network);
+      // const feedTokens = getParamPerNetwork(DIAAggregator, network);
+      // const diaAggregatorAddress = getParamPerNetwork(DIAAggregatorAddress, network);
+      const acalaOracleAddress = getParamPerNetwork(AcalaOracleAddress, network);
       const tokensToWatch: SymbolMap<string> = {
         ...reserveAssets,
         USD: UsdAddress,
       };
 
-      let priceAggregatorAdapter: PriceAggregatorAdapterDiaImpl;
+      let priceAggregatorAdapter: PriceAggregatorAdapterAcalaImpl;
       let starlayOracle: StarlayOracle;
       let lendingRateOracle: LendingRateOracle;
       let fallbackOracle: StarlayFallbackOracle;
 
-      priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
-        ? await getPriceAggregator(priceAggregatorAddress)
-        : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
-      await waitForTx(
-        await priceAggregatorAdapter.setAssetSources(
-          Object.values(feedTokens), // address
-          Object.keys(feedTokens) // symbol
-        )
-      );
+      // priceAggregatorAdapter = notFalsyOrZeroAddress(priceAggregatorAddress)
+      //   ? await getPriceAggregator(priceAggregatorAddress)
+      //   : await deployPriceAggregatorDiaImpl([diaAggregatorAddress, OracleQuoteCurrency]);
+      // await waitForTx(
+      //   await priceAggregatorAdapter.setAssetSources(
+      //     Object.values(feedTokens), // address
+      //     Object.keys(feedTokens) // symbol
+      //   )
+      // );
+      priceAggregatorAdapter = await deployPriceAggregatorAcalaImpl([acalaOracleAddress]);
 
       // deploy fallbackOracle
       if (notFalsyOrZeroAddress(fallbackOracleAddress)) {

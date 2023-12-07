@@ -117,3 +117,37 @@ export const rateStrategyAUSD: IInterestRateStrategyParams = {
   stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
   stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
 };
+
+/// Acala Config
+// DOT
+export const rateStrategyAcalaDOT: IInterestRateStrategyParams = {
+  name: 'rateStrategyAcalaDOT',
+  optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
+};
+
+// LDOT
+export const rateStrategyAcalaLDOT: IInterestRateStrategyParams = {
+  name: 'rateStrategyAcalaLDOT',
+  optimalUtilizationRate: new BigNumber(0.55).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.07).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
+};
+
+// USDCet
+export const rateStrategyAcalaUSDCet: IInterestRateStrategyParams = {
+  name: 'rateStrategyAcalaUSDCet',
+  optimalUtilizationRate: new BigNumber(0.9).multipliedBy(oneRay).toFixed(),
+  baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
+  variableRateSlope1: new BigNumber(0.04).multipliedBy(oneRay).toFixed(),
+  variableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
+  stableRateSlope1: new BigNumber(0.1).multipliedBy(oneRay).toFixed(),
+  stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
+};

@@ -44,6 +44,7 @@ import { MintableERC20 } from '../types/MintableERC20';
 import { StableAndVariableTokensHelperFactory } from '../types/StableAndVariableTokensHelperFactory';
 import { WETH9Mocked } from '../types/WETH9Mocked';
 import { PriceAggregatorAdapterDiaImplFactory } from './../types/PriceAggregatorAdapterDiaImplFactory';
+import { PriceAggregatorAdapterAcalaImplFactory } from './../types/PriceAggregatorAdapterAcalaImplFactory';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
@@ -443,12 +444,13 @@ export const deployGenericLTokenRev2Impl = async (verify: boolean) =>
 export const deployGenericLTokenRev2ImplWithSigner = async (verify: boolean, signer: Signer) =>
   withSaveAndVerify(await new LTokenRev2Factory(signer).deploy(), eContractid.LToken, [], verify);
 
-export const deployGenericLTokenRev3Impl = async (verify: boolean) => withSaveAndVerify(
-  await new LTokenRev3Factory(await getFirstSigner()).deploy(),
-  eContractid.LToken,
-  [],
-  verify
-);
+export const deployGenericLTokenRev3Impl = async (verify: boolean) =>
+  withSaveAndVerify(
+    await new LTokenRev3Factory(await getFirstSigner()).deploy(),
+    eContractid.LToken,
+    [],
+    verify
+  );
 
 export const deployGenericLTokenRev3ImplWithSigner = async (verify: boolean, signer: Signer) =>
   withSaveAndVerify(await new LTokenRev3Factory(signer).deploy(), eContractid.LToken, [], verify);
@@ -499,11 +501,11 @@ export const deployAllMockTokens = async (verify?: boolean) => {
   const protoConfigData = getReservesConfigByPool(StarlayPools.proto);
 
   for (const tokenSymbol of Object.values(TokenContractId)) {
-    if (tokenSymbol === 'WASTR') {
-      tokens[tokenSymbol] = await deployWETHMocked();
-      await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
-      continue;
-    }
+    // if (tokenSymbol === 'WASTR') {
+    //   tokens[tokenSymbol] = await deployWETHMocked();
+    //   await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
+    //   continue;
+    // }
     let decimals = '18';
 
     let configData = (<any>protoConfigData)[tokenSymbol];
@@ -701,6 +703,14 @@ export const deployPriceAggregatorDiaImpl = async (args: [string, string], verif
   withSaveAndVerify(
     await new PriceAggregatorAdapterDiaImplFactory(await getFirstSigner()).deploy(args[0], args[1]),
     eContractid.PriceAggregatorAdapterDiaImpl,
+    args,
+    verify
+  );
+
+export const deployPriceAggregatorAcalaImpl = async (args: [string], verify?: boolean) =>
+  withSaveAndVerify(
+    await new PriceAggregatorAdapterAcalaImplFactory(await getFirstSigner()).deploy(args[0]),
+    eContractid.PriceAggregatorAdapterAcalaImpl,
     args,
     verify
   );

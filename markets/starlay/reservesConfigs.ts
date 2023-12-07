@@ -11,6 +11,9 @@ import {
   rateStrategyWETH,
   rateStrategyWSDN,
   rateStrategyAUSD,
+  rateStrategyAcalaDOT,
+  rateStrategyAcalaLDOT,
+  rateStrategyAcalaUSDCet,
 } from './rateStrategies';
 
 export const strategyUSDC: IReserveParams = {
@@ -171,4 +174,40 @@ export const strategyAUSD: IReserveParams = {
   reserveDecimals: '12',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
+};
+
+export const strategyAcalaDOT: IReserveParams = {
+  strategy: rateStrategyAcalaDOT,
+  baseLTVAsCollateral: '6000',
+  liquidationThreshold: '6500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '10',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyAcalaLDOT: IReserveParams = {
+  strategy: rateStrategyAcalaLDOT,
+  baseLTVAsCollateral: '5000',
+  liquidationThreshold: '5500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '10',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyAcalaUSDCet: IReserveParams = {
+  strategy: rateStrategyAcalaUSDCet,
+  baseLTVAsCollateral: '7000',
+  liquidationThreshold: '7500',
+  liquidationBonus: '10500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '6',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '1000',
 };
