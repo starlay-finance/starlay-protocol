@@ -4,7 +4,7 @@ import {
   oneUsd,
   ZERO_ADDRESS,
 } from '../../helpers/constants';
-import { eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
+import { eAcalaNetwork, eEthereumNetwork, ICommonConfiguration } from '../../helpers/types';
 import { eAstarNetwork } from './../../helpers/types';
 
 // ----------------
@@ -32,10 +32,12 @@ export const CommonsConfig: ICommonConfiguration = {
   // ----------------
   // COMMON PROTOCOL PARAMS ACROSS POOLS AND NETWORKS
   // ----------------
-
   Mocks: {
     AllAssetsInitialPrices: {
-      ...MOCK_PRICE_AGGREGATORS_PRICES,
+      // ...MOCK_PRICE_AGGREGATORS_PRICES,
+      DOT: '0',
+      LDOT: '0',
+      USDC: '0',
     },
   },
   LendingRateOracleRatesCommon: {
@@ -70,7 +72,6 @@ export const CommonsConfig: ICommonConfiguration = {
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
   // ----------------
-
   // If PoolAdmin/emergencyAdmin is set, will take priority over PoolAdminIndex/emergencyAdminIndex
   PoolAdmin: {
     [eEthereumNetwork.buidlerevm]: undefined,
@@ -328,5 +329,9 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65',
     [eAstarNetwork.astar]: '0x6FD65f71B3FB5Aa9d794f010AFc65F174012994F',
+  },
+  AcalaOracleAddress: {
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
 };

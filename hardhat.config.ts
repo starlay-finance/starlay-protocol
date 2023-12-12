@@ -98,7 +98,7 @@ const buidlerConfig: HardhatUserConfig = {
     shiden: getCommonNetworkConfig(eAstarNetwork.shiden, 336),
     astar: getCommonNetworkConfig(eAstarNetwork.astar, 592),
     acala: getCommonNetworkConfig(eAcalaNetwork.acala, 787),
-    acala_testnet: getCommonNetworkConfig(eAcalaNetwork.acala_testnet, 597),
+    mandala: getCommonNetworkConfig(eAcalaNetwork.mandala, 595),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,

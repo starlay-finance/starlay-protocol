@@ -125,7 +125,7 @@ export const StarlayConfig: IStarlayConfiguration = {
       LDOT: '0x0000000000000000000100000000000000000003',
       USDC: '0x07df96d1341a7d16ba1ad431e2c847d978bc2bce',
     },
-    [eAcalaNetwork.acala_testnet]: {
+    [eAcalaNetwork.mandala]: {
       DOT: '',
       LDOT: '',
       USDC: '',

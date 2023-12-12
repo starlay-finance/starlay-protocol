@@ -21,7 +21,7 @@ export enum eAstarNetwork {
 
 export enum eAcalaNetwork {
   acala = 'acala',
-  acala_testnet = 'acala_testnet',
+  mandala = 'mandala',
 }
 
 export enum StarlayPools {
@@ -265,7 +265,7 @@ export interface iAstarParamsPerNetwork<T> {
 
 export interface iAcalaParamsPerNetwork<T> {
   [eAcalaNetwork.acala]: T;
-  [eAcalaNetwork.acala_testnet]: T;
+  [eAcalaNetwork.mandala]: T;
 }
 
 export interface iParamsPerPool<T> {
