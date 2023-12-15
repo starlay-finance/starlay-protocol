@@ -106,3 +106,33 @@ task(
   await priceOracleDiaImpl.setAssetSources([reserveAssetAddressBUSD], ['BUSD']);
   await priceOracleDiaImpl.setAssetSources([reserveAssetAddressDAI], ['DAI']);
 });
+
+task('external:configure-busd-config', 'Update configuration for BUSD for freezing').setAction(
+  async ({ verify }, localBRE) => {
+    const network = <eNetwork>localBRE.network.name;
+    const pool = ConfigNames.Starlay;
+    setDRE(localBRE);
+    const busd = 'BUSD';
+    const poolConfig = loadPoolConfig(pool);
+
+    const { ReservesConfig } = poolConfig as ICommonConfiguration;
+    const reserveAssetAddressBUSD =
+      marketConfigs.StarlayConfig.ReserveAssets[localBRE.network.name][busd];
+    const addressProvider = await getLendingPoolAddressesProvider(
+      LENDING_POOL_ADDRESS_PROVIDER[network]
+    );
+
+    const admin = await addressProvider.getPoolAdmin();
+
+    const testHelpers = await getStarlayProtocolDataProvider(DATA_PROVIDER[network]);
+    console.log('*** configure reserves ***');
+    await configureReservesByHelper(
+      ReservesConfig,
+      {
+        BUSD: reserveAssetAddressBUSD,
+      },
+      testHelpers,
+      admin
+    );
+  }
+);
