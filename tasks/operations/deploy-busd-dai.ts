@@ -9,6 +9,7 @@ import * as marketConfigs from '../../markets/starlay';
 import { MOCK_PRICE_AGGREGATORS_PRICES } from '../../helpers/constants';
 import {
   getLendingPoolAddressesProvider,
+  getLendingPoolConfiguratorProxy,
   getPriceAggregator as getPriceAggregatorAdapterDiaImpl,
   getStarlayFallbackOracle,
   getStarlayProtocolDataProvider,
@@ -121,6 +122,12 @@ task('external:configure-busd-config', 'Update configuration for BUSD for freezi
     const addressProvider = await getLendingPoolAddressesProvider(
       LENDING_POOL_ADDRESS_PROVIDER[network]
     );
+
+    const lendingPoolConfiguratorProxy = await getLendingPoolConfiguratorProxy(
+      await addressProvider.getLendingPoolConfigurator()
+    );
+
+    await lendingPoolConfiguratorProxy.freezeReserve(reserveAssetAddressBUSD);
 
     const admin = await addressProvider.getPoolAdmin();
 
