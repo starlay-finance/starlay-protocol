@@ -3,7 +3,7 @@ import { exit } from 'process';
 import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
 import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
 import {
-  authorizeWETHGateway,
+  // authorizeWETHGateway,
   deployLendingPoolCollateralManager,
   deployMockStarlayIncentivesController,
   deployUiIncentiveDataProviderV2,
@@ -13,7 +13,7 @@ import {
 import {
   getLendingPoolAddressesProvider,
   getStarlayProtocolDataProvider,
-  getWETHGateway,
+  // getWETHGateway,
 } from '../../helpers/contracts-getters';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
@@ -112,14 +112,14 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
       const uiIncentiveDataProvider = await deployUiIncentiveDataProviderV2();
       console.log('UiIncentiveDataProvider deployed at:', uiIncentiveDataProvider.address);
 
-      const lendingPoolAddress = await addressesProvider.getLendingPool();
+      // const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-      let gateWay = getParamPerNetwork(WethGateway, network);
-      if (!notFalsyOrZeroAddress(gateWay)) {
-        gateWay = (await getWETHGateway()).address;
-      }
-      console.log('GATEWAY', gateWay);
-      await authorizeWETHGateway(gateWay, lendingPoolAddress);
+      // let gateWay = getParamPerNetwork(WethGateway, network);
+      // if (!notFalsyOrZeroAddress(gateWay)) {
+      //   gateWay = (await getWETHGateway()).address;
+      // }
+      // console.log('GATEWAY', gateWay);
+      // await authorizeWETHGateway(gateWay, lendingPoolAddress);
     } catch (err) {
       console.error(err);
       exit(1);
