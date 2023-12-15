@@ -41,31 +41,40 @@ export const CommonsConfig: ICommonConfiguration = {
     },
   },
   LendingRateOracleRatesCommon: {
-    WETH: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
+    // WETH: {
+    //   borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    // },
+    // USDC: {
+    //   borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+    // },
+    // USDT: {
+    //   borrowRate: oneRay.multipliedBy(0.035).toFixed(),
+    // },
+    // LAY: {
+    //   borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    // },
+    // WBTC: {
+    //   borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    // },
+    // WASTR: {
+    //   borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    // },
+    // WSDN: {
+    //   borrowRate: oneRay.multipliedBy(0.03).toFixed(),
+    // },
+    // DAI: {
+    //   borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+    // },
+    // BUSD: {
+    //   borrowRate: oneRay.multipliedBy(0.039).toFixed(),
+    // },
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    USDT: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
-    LAY: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    WBTC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    WASTR: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    WSDN: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    DAI: {
+    DOT: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    BUSD: {
+    LDOT: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
   },
@@ -81,6 +90,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: undefined,
     [eAstarNetwork.shiden]: undefined,
     [eAstarNetwork.astar]: '0xC0f10705a3DEfBd24D88D9E6dff78F2fe480Eac8',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '0x00708c63307a3b9c7C1A97f7fD8079AD796098F0',
   },
   PoolAdminIndex: 0,
   EmergencyAdmin: {
@@ -91,6 +102,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: undefined,
     [eAstarNetwork.shiden]: undefined,
     [eAstarNetwork.astar]: '0xC21cf9841ffca269e2fe90ABe2227DA2C1B353BC',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '0x00708c63307a3b9c7C1A97f7fD8079AD796098F0',
   },
   EmergencyAdminIndex: 1,
   ProviderRegistry: {
@@ -101,6 +114,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '0x9d5782EBe1eBc7037F8027fFeA61e8B8C2F57964',
     [eAstarNetwork.astar]: '0xF6206297b6857779443eF7Eca4a3cFFb1660F952',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   ProviderRegistryOwner: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -110,6 +125,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   LendingRateOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -119,6 +136,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   LendingPoolCollateralManager: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -128,6 +147,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   LendingPoolConfigurator: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -137,6 +158,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '0xec97a2E3DEa2b0C58006964dcEB379b3B94Bd2c0', // LendingPoolConfiguratorImpl
     [eAstarNetwork.astar]: '', // LendingPoolConfiguratorImpl
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   LendingPool: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -146,6 +169,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '0x2547ED579aac7f8974925541FD1F6c8BD85F1Ca1',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   WethGateway: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -155,6 +180,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   TokenDistributor: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -164,6 +191,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   DIAAggregatorAddress: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -173,6 +202,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0x1232acd632dd75f874e357c77295da3f5cd7733e',
     [eAstarNetwork.shiden]: '0xb727CD54C33095111eDb4082B4d5c857f99F19Ec',
     [eAstarNetwork.astar]: '0x35490A8AC7cD0Df5C4d7Ab4243A6B517133BcDB1',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   PriceAggregator: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -182,6 +213,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   StarlayOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -191,6 +224,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0x7eCdDacFb4B0dCbD4Eb974934d3EDA29a9A50518',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   FallbackOracle: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -200,6 +235,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0x0417750Cba71Bc894d31CF7071a1214c612106F2',
     [eAstarNetwork.shiden]: '0x9FBAfb936E1553F174f9375aFcdaa3B446a945Cf',
     [eAstarNetwork.astar]: '0x35E6D71FeA378B60b3A5Afc91eA7F520F937833c',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   ChainlinkAggregator: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -209,6 +246,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: {},
     [eAstarNetwork.shiden]: {},
     [eAstarNetwork.astar]: {},
+    [eAcalaNetwork.acala]: {},
+    [eAcalaNetwork.mandala]: {},
   },
   DIAAggregator: {
     // key: without 'w' to call function of DIA e.g WSDN->SDN
@@ -262,6 +301,16 @@ export const CommonsConfig: ICommonConfiguration = {
       DOT: '0xffffffffffffffffffffffffffffffffffffffff',
       AUSD: '0xfFFFFfFF00000000000000010000000000000001',
     },
+    [eAcalaNetwork.acala]: {
+      USDC: '0x07DF96D1341A7d16Ba1AD431E2c847d978BC2bCe',
+      DOT: '0x0000000000000000000100000000000000000002',
+      LDOT: '0x0000000000000000000100000000000000000003',
+    },
+    [eAcalaNetwork.mandala]: {
+      USDC: '',
+      DOT: '0x0000000000000000000100000000000000000002',
+      LDOT: '0x0000000000000000000100000000000000000003',
+    },
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
@@ -271,6 +320,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: {},
     [eAstarNetwork.shiden]: {},
     [eAstarNetwork.astar]: {},
+    [eAcalaNetwork.acala]: {},
+    [eAcalaNetwork.mandala]: {},
   },
   ReservesConfig: {},
   LTokenDomainSeparator: {
@@ -284,6 +335,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   WETH: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -293,6 +346,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '',
     [eAstarNetwork.shiden]: '',
     [eAstarNetwork.astar]: '',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   WrappedNativeToken: {
     [eEthereumNetwork.buidlerevm]: '',
@@ -302,6 +357,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
     [eAstarNetwork.shiden]: '0x44a26AE046a01d99eBAbecc24B4d61B388656871', //WASTR
     [eAstarNetwork.astar]: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720', //WASTR
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   ReserveFactorTreasuryAddress: {
     [eEthereumNetwork.buidlerevm]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
@@ -311,6 +368,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: '0xCdfc500F7f0FCe1278aECb0340b523cD55b3EBbb',
     [eAstarNetwork.astar]: '0xa3c143bf757C0D538143A4757032E64Aed239df0',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   IncentivesController: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
@@ -320,6 +379,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: '0xdAA12ca33c3f7aEd6B3483ffF61B53D1D1cB8aA2',
     [eAstarNetwork.shiden]: '0xD9F3bbC743b7AF7E1108653Cd90E483C03D6D699',
     [eAstarNetwork.astar]: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   StakedLay: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,
@@ -329,6 +390,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65',
     [eAstarNetwork.astar]: '0x6FD65f71B3FB5Aa9d794f010AFc65F174012994F',
+    [eAcalaNetwork.acala]: '',
+    [eAcalaNetwork.mandala]: '',
   },
   AcalaOracleAddress: {
     [eAcalaNetwork.acala]: '',

@@ -5,6 +5,7 @@ import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
 import {
   authorizeWETHGateway,
   deployLendingPoolCollateralManager,
+  deployMockStarlayIncentivesController,
   deployUiIncentiveDataProviderV2,
   deployUiPoolDataProviderV2,
   deployWalletBalancerProvider,
@@ -36,11 +37,11 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         ReservesConfig,
         LendingPoolCollateralManager,
         WethGateway,
-        IncentivesController,
       } = poolConfig as ICommonConfiguration;
 
-      const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
-      const incentivesController = await getParamPerNetwork(IncentivesController, network);
+      const reserveAssets = getParamPerNetwork(ReserveAssets, network);
+
+      const incentivesController = (await deployMockStarlayIncentivesController(verify)).address;
       const addressesProvider = await getLendingPoolAddressesProvider();
 
       const testHelpers = await getStarlayProtocolDataProvider();

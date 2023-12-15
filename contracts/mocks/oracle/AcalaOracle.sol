@@ -7,11 +7,9 @@ import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
 contract PriceOracle is IAcalaOracle, Ownable {
   mapping(address => uint256) private prices;
 
-  constructor() {}
-
   function setPrice(address token, uint256 price) external onlyOwner {
     prices[token] = price;
   }
 
-  function getPrice(address token) external view returns (uint256) {}
+  function getPrice(address token) external view override returns (uint256) {}
 }

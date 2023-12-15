@@ -77,6 +77,7 @@ export enum eContractid {
   PriceAggregatorAdapterAcalaImpl = 'PriceAggregatorAdapterAcalaImpl',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
   StakeUIHelper = 'StakeUIHelper',
+  MockStarlayIncentivesController = 'MockStarlayIncentivesController',
 }
 
 /*

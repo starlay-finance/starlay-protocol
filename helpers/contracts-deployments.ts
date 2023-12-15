@@ -22,6 +22,8 @@ import {
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
   MockStableDebtTokenFactory,
+  MockStarlayIncentivesController,
+  MockStarlayIncentivesControllerFactory,
   MockVariableDebtTokenFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
@@ -712,6 +714,14 @@ export const deployPriceAggregatorAcalaImpl = async (args: [string], verify?: bo
     await new PriceAggregatorAdapterAcalaImplFactory(await getFirstSigner()).deploy(args[0]),
     eContractid.PriceAggregatorAdapterAcalaImpl,
     args,
+    verify
+  );
+
+export const deployMockStarlayIncentivesController = async (verify?: boolean) =>
+  withSaveAndVerify(
+    await new MockStarlayIncentivesControllerFactory(await getFirstSigner()).deploy(),
+    eContractid.MockStarlayIncentivesController,
+    [],
     verify
   );
 
