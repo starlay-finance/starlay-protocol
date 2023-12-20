@@ -35,9 +35,10 @@ export const CommonsConfig: ICommonConfiguration = {
   Mocks: {
     AllAssetsInitialPrices: {
       // ...MOCK_PRICE_AGGREGATORS_PRICES,
-      DOT: '0',
-      LDOT: '0',
-      USDC: '0',
+      DOT: '6739000000000000000',
+      LDOT: '932074778139721001',
+      USDC: '1000000000000000000',
+      USD: '1000000000000000000',
     },
   },
   LendingRateOracleRatesCommon: {
@@ -394,7 +395,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAcalaNetwork.mandala]: '',
   },
   AcalaOracleAddress: {
-    [eAcalaNetwork.acala]: '',
-    [eAcalaNetwork.mandala]: '',
+    [eAcalaNetwork.acala]: '0x0000000000000000000000000000000000000801',
+    [eAcalaNetwork.mandala]: '0x0000000000000000000000000000000000000801',
   },
 };

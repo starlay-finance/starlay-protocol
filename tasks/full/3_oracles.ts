@@ -91,6 +91,14 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
           await (await getFirstSigner()).getAddress()
         ).toLocaleLowerCase();
         await fallbackOracle.authorizeSybil(currentSignerAddress);
+
+        let assets: string[] = [];
+        let prices: string[] = [];
+        Object.keys(poolConfig.ReserveAssets[network]).map((key: string) => {
+          assets.push(poolConfig.ReserveAssets[network][key]);
+          prices.push(poolConfig.Mocks.AllAssetsInitialPrices[key]);
+        });
+        await fallbackOracle.submitPrices(assets, prices);
       }
 
       if (notFalsyOrZeroAddress(starlayOracleAddress)) {
