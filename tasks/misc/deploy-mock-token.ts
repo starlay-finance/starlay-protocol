@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { deployMintableERC20 } from '../../helpers/contracts-deployments';
-import { registerContractInJsonDb } from '../../helpers/contracts-helpers';
+import { registerContractInJsonDb, verifyContract } from '../../helpers/contracts-helpers';
 import { TokenContractId } from '../../helpers/types';
 import { BigNumber } from 'ethers';
 import { getFirstSigner } from '../../helpers/contracts-getters';
@@ -16,7 +16,7 @@ const deployMockTokenAndRecordJson = async ({
   symbol: string;
   decimals: string;
 }) => {
-  const instance = await deployMintableERC20([name, symbol, decimals], false);
+  const instance = await deployMintableERC20([name, symbol, decimals], true);
   await registerContractInJsonDb(key.toUpperCase(), instance);
   return instance;
 };
@@ -54,6 +54,8 @@ const deployMockTokenAndRecordJson = async ({
 task('dev:deploy-mock-token:usdc', 'dev:deploy-mock-token:usdc').setAction(async ({}, localBRE) => {
   await localBRE.run('set-DRE');
   const signer = await getFirstSigner();
+  const balance = await signer.getBalance();
+  console.log('balance=>', balance.toString());
 
   const token = await deployMockTokenAndRecordJson({
     key: 'USDC',

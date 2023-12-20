@@ -61,8 +61,8 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eAstarNetwork.shibuya]: 3 * GWEI,
   [eAstarNetwork.shiden]: 1 * GWEI,
   [eAstarNetwork.astar]: 1 * GWEI,
-  [eAcalaNetwork.acala]: 65 * GWEI,
-  [eAcalaNetwork.mandala]: 65 * GWEI,
+  [eAcalaNetwork.acala]: 100 * GWEI,
+  [eAcalaNetwork.mandala]: 100 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {

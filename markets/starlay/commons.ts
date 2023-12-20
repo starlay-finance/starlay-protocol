@@ -23,7 +23,7 @@ export const CommonsConfig: ICommonConfiguration = {
   ProtocolGlobalParams: {
     TokenDistributorPercentageBase: '10000',
     MockUsdPriceInWei: '5848466240000000',
-    UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
+    UsdAddress: '0xA666dD28059deF0B45505c1f1a5f49fAd2e03c11',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
     StarlayReferral: '0',

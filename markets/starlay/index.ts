@@ -128,7 +128,7 @@ export const StarlayConfig: IStarlayConfiguration = {
     [eAcalaNetwork.mandala]: {
       DOT: '0x0000000000000000000100000000000000000002',
       LDOT: '0x0000000000000000000100000000000000000003',
-      USDC: '',
+      USDC: '0xA666dD28059deF0B45505c1f1a5f49fAd2e03c11',
     },
   },
 };

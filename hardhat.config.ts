@@ -1,13 +1,13 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import '@tenderly/hardhat-tenderly';
+import '@nomiclabs/hardhat-etherscan';
 import fs from 'fs';
 import 'hardhat-gas-reporter';
 import 'hardhat-typechain';
 import { HardhatUserConfig } from 'hardhat/types';
 import path from 'path';
 import 'solidity-coverage';
-import 'temp-hardhat-etherscan';
 import { buildForkConfig, NETWORKS_DEFAULT_GAS, NETWORKS_RPC_URL } from './helper-hardhat-config';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
 import { eAcalaNetwork, eAstarNetwork, eEthereumNetwork, eNetwork } from './helpers/types';
@@ -51,9 +51,9 @@ require(`${path.join(__dirname, 'tasks/misc')}/set-bre.ts`);
 const getCommonNetworkConfig = (networkName: eNetwork, networkId: number) => ({
   url: NETWORKS_RPC_URL[networkName],
   hardfork: HARDFORK,
-  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-  gasMultiplier: DEFAULT_GAS_MUL,
-  gasPrice: NETWORKS_DEFAULT_GAS[networkName],
+  // blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
+  // gasMultiplier: DEFAULT_GAS_MUL,
+  // gasPrice: NETWORKS_DEFAULT_GAS[networkName],
   chainId: networkId,
   accounts: {
     mnemonic: MNEMONIC,
@@ -75,9 +75,27 @@ const buidlerConfig: HardhatUserConfig = {
     outDir: 'types',
     target: 'ethers-v5',
   },
-  // etherscan: {
-  //   apiKey: ETHERSCAN_KEY,
-  // },
+  etherscan: {
+    apiKey: ETHERSCAN_KEY,
+    customChains: [
+      {
+        network: 'mandala',
+        chainId: 595,
+        urls: {
+          apiURL: 'https://blockscout.mandala.aca-staging.network/api',
+          browserURL: 'https://blockscout.mandala.aca-staging.network',
+        },
+      },
+      {
+        network: 'acala',
+        chainId: 787,
+        urls: {
+          apiURL: 'https://blockscout.acala.network/api',
+          browserURL: 'https://blockscout.acala.network',
+        },
+      },
+    ],
+  },
   mocha: {
     timeout: 0,
   },
