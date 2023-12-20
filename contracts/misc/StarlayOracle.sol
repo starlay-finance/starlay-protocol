@@ -19,9 +19,11 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
   event BaseCurrencySet(address indexed baseCurrency, uint256 baseCurrencyUnit);
   event AssetSourceUpdated(address indexed priceAggregator);
   event FallbackOracleUpdated(address indexed fallbackOracle);
+  event OracleSwitched(bool useFallbackOracle);
 
   IPriceOracleGetter private _fallbackOracle;
   IPriceAggregatorAdapter private _adapter;
+  bool private _useFallbackOracle;
   address public immutable BASE_CURRENCY;
   uint256 public immutable BASE_CURRENCY_UNIT;
 
@@ -42,6 +44,10 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
+  }
+
+  function setUseFallbackOracle(bool useFallbackOracle) external onlyOwner {
+    _setUseFallbackOracle(useFallbackOracle);
   }
 
   function setPriceAggregator(address priceAggregator) external onlyOwner {
@@ -65,6 +71,11 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
   function _setPriceAggregatorAdapter(address priceAggregatorAdapter) internal {
     _adapter = IPriceAggregatorAdapter(priceAggregatorAdapter);
     emit AssetSourceUpdated(priceAggregatorAdapter);
+  }
+
+  function _setUseFallbackOracle(bool useFallbackOracle) internal {
+    _useFallbackOracle = useFallbackOracle;
+    emit OracleSwitched(useFallbackOracle);
   }
 
   /// @notice Gets an asset price by address
