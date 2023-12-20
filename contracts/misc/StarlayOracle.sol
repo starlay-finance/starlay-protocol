@@ -84,12 +84,11 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
     if (asset == BASE_CURRENCY) {
       return BASE_CURRENCY_UNIT;
     } else {
-      int256 price = _adapter.currentPrice(asset);
-      if (price > 0) {
-        return uint256(price);
-      } else {
+      if (_useFallbackOracle) {
         return _fallbackOracle.getAssetPrice(asset);
       }
+      int256 price = _adapter.currentPrice(asset);
+      return uint256(price);
     }
   }
 
@@ -107,5 +106,9 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
   /// @return address The addres of the fallback oracle
   function getFallbackOracle() external view returns (address) {
     return address(_fallbackOracle);
+  }
+
+  function useFallbackOracle() external view returns (bool) {
+    return _useFallbackOracle;
   }
 }

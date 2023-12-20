@@ -32,4 +32,13 @@ contract PriceAggregatorAdapterAcalaImpl is IPriceAggregatorAdapter, Ownable {
     uint256 price = _acala_oracle.getPrice(asset);
     return int256(price);
   }
+
+  function currentPrices(address[] memory assets) external view returns (int256[] memory) {
+    int256[] memory prices = new int256[](assets.length);
+    for (uint256 i = 0; i < assets.length; i++) {
+      uint256 price = _acala_oracle.getPrice(assets[i]);
+      prices[i] = int256(price);
+    }
+    return prices;
+  }
 }
