@@ -63,8 +63,6 @@ const getCommonNetworkConfig = (networkName: eNetwork, networkId: number) => ({
   },
 });
 
-let forkMode;
-
 const buidlerConfig: HardhatUserConfig = {
   solidity: {
     version: '0.6.12',

@@ -14,6 +14,8 @@
     "hardhat:shibuya": "hardhat --network shibuya",
     "hardhat:shiden": "hardhat --network shiden",
     "hardhat:astar": "hardhat --network astar",
+    "hardhat:acala": "hardhat --network acala",
+    "hardhat:mandala": "hardhat --network mandala",
     "compile": "SKIP_LOAD=true hardhat compile",
     "console:fork": "FORK=main hardhat console",
     "test": "npm run compile && TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test-suites/test-starlay/*.spec.ts",
