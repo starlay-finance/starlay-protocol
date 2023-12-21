@@ -7,11 +7,16 @@ import {
   getInterestRateStrategy,
   getLendingPoolAddressesProvider,
   getLToken,
+  getMockStarlayIncentivesController,
   getProxy,
   getStableDebtToken,
   getVariableDebtToken,
 } from '../../helpers/contracts-getters';
-import { getParamPerNetwork, verifyContract } from '../../helpers/contracts-helpers';
+import {
+  getContractAddressWithJsonFallback,
+  getParamPerNetwork,
+  verifyContract,
+} from '../../helpers/contracts-helpers';
 import { eContractid, eNetwork, ICommonConfiguration, IReserveParams } from '../../helpers/types';
 import { LendingPoolConfiguratorFactory, LendingPoolFactory } from '../../types';
 
@@ -23,6 +28,16 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
     const poolConfig = loadPoolConfig(pool);
     const { ReserveAssets, ReservesConfig } = poolConfig as ICommonConfiguration;
     const treasuryAddress = await getTreasuryAddress(poolConfig);
+
+    const incentivesController = await getContractAddressWithJsonFallback(
+      eContractid.MockStarlayIncentivesController,
+      ConfigNames.Starlay
+    );
+    await verifyContract(
+      eContractid.MockStarlayIncentivesController,
+      await getMockStarlayIncentivesController(incentivesController),
+      []
+    );
 
     const addressesProvider = await getLendingPoolAddressesProvider();
     const lendingPoolProxy = LendingPoolFactory.connect(

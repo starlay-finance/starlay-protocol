@@ -26,6 +26,7 @@ import {
   tEthereumAddress,
   tStringTokenSmallUnits,
 } from './types';
+import { getAcalaEVM } from './init-helpers';
 
 export type MockTokenMap = { [symbol: string]: MintableERC20 };
 
@@ -108,6 +109,7 @@ export const withSaveAndVerify = async <ContractType extends Contract>(
   if (verify) {
     await verifyContract(id, instance, args);
   }
+  await publishAcalaContract(id, instance.address);
   return instance;
 };
 
@@ -328,7 +330,6 @@ export const getContractAddressWithJsonFallback = async (
 ): Promise<tEthereumAddress> => {
   const poolConfig = loadPoolConfig(pool);
   const network = <eNetwork>DRE.network.name;
-  const db = getDb();
 
   const contractAtMarketConfig = getOptionalParamAddressPerNetwork(poolConfig[id], network);
   if (notFalsyOrZeroAddress(contractAtMarketConfig)) {
@@ -340,4 +341,29 @@ export const getContractAddressWithJsonFallback = async (
     return contractAtDb.address as tEthereumAddress;
   }
   throw Error(`Missing contract address ${id} at Market config and JSON local db`);
+};
+
+export const getContractAddressWithJsonFallbackOptional = async (
+  id: string,
+  pool: ConfigNames
+): Promise<tEthereumAddress | undefined> => {
+  const poolConfig = loadPoolConfig(pool);
+  const network = <eNetwork>DRE.network.name;
+
+  const contractAtMarketConfig = getOptionalParamAddressPerNetwork(poolConfig[id], network);
+  if (notFalsyOrZeroAddress(contractAtMarketConfig)) {
+    return contractAtMarketConfig;
+  }
+
+  const contractAtDb = await getDb().get(`${id}.${DRE.network.name}`).value();
+  if (contractAtDb?.address) {
+    return contractAtDb.address as tEthereumAddress;
+  }
+  return undefined;
+};
+
+export const publishAcalaContract = async (id: string, address: string) => {
+  const acalaEVM = await getAcalaEVM();
+  console.log(`Publishing contract ${id} ...`);
+  await waitForTx(await acalaEVM.publishContract(address));
 };

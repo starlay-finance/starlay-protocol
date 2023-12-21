@@ -43,6 +43,12 @@ task('starlay:astar', 'Deploy Starlay astar enviroment')
 
       console.log('8. Veryfing lTokens and debtTokens');
       await DRE.run('verify:tokens', { pool: POOL_NAME });
+
+      console.log('9. Veryfing Oracles');
+      await DRE.run('verify:oracle', { pool: POOL_NAME });
+
+      console.log('10. Veryfing Miscs');
+      await DRE.run('verify:misc', { pool: POOL_NAME });
     }
 
     if (usingTenderly()) {

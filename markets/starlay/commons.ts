@@ -92,7 +92,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shiden]: undefined,
     [eAstarNetwork.astar]: '0xC0f10705a3DEfBd24D88D9E6dff78F2fe480Eac8',
     [eAcalaNetwork.acala]: '',
-    [eAcalaNetwork.mandala]: '0x00708c63307a3b9c7C1A97f7fD8079AD796098F0',
+    [eAcalaNetwork.mandala]: '0x56557F80158188Ada9f665C217BC6e5Bc97AC738',
   },
   PoolAdminIndex: 0,
   EmergencyAdmin: {
@@ -104,7 +104,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shiden]: undefined,
     [eAstarNetwork.astar]: '0xC21cf9841ffca269e2fe90ABe2227DA2C1B353BC',
     [eAcalaNetwork.acala]: '',
-    [eAcalaNetwork.mandala]: '0x00708c63307a3b9c7C1A97f7fD8079AD796098F0',
+    [eAcalaNetwork.mandala]: '0x56557F80158188Ada9f665C217BC6e5Bc97AC738',
   },
   EmergencyAdminIndex: 1,
   ProviderRegistry: {
@@ -308,7 +308,7 @@ export const CommonsConfig: ICommonConfiguration = {
       LDOT: '0x0000000000000000000100000000000000000003',
     },
     [eAcalaNetwork.mandala]: {
-      USDC: '',
+      USDC: '0xA666dD28059deF0B45505c1f1a5f49fAd2e03c11',
       DOT: '0x0000000000000000000100000000000000000002',
       LDOT: '0x0000000000000000000100000000000000000003',
     },
@@ -370,7 +370,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eAstarNetwork.shiden]: '0xCdfc500F7f0FCe1278aECb0340b523cD55b3EBbb',
     [eAstarNetwork.astar]: '0xa3c143bf757C0D538143A4757032E64Aed239df0',
     [eAcalaNetwork.acala]: '',
-    [eAcalaNetwork.mandala]: '',
+    [eAcalaNetwork.mandala]: '0x00708c63307a3b9c7C1A97f7fD8079AD796098F0',
   },
   IncentivesController: {
     [eEthereumNetwork.buidlerevm]: ZERO_ADDRESS,

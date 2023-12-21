@@ -14,7 +14,7 @@ const FORK_BLOCK_NUMBER = process.env.FORK_BLOCK_NUMBER
   ? parseInt(process.env.FORK_BLOCK_NUMBER)
   : 0;
 
-const GWEI = 1000 * 1000 * 1000;
+export const GWEI = 1000 * 1000 * 1000;
 
 export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined => {
   let forkMode;

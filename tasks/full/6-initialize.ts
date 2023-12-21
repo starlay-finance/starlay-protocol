@@ -15,10 +15,14 @@ import {
   getStarlayProtocolDataProvider,
   // getWETHGateway,
 } from '../../helpers/contracts-getters';
-import { getParamPerNetwork } from '../../helpers/contracts-helpers';
+import {
+  getContractAddressWithJsonFallback,
+  getContractAddressWithJsonFallbackOptional,
+  getParamPerNetwork,
+} from '../../helpers/contracts-helpers';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
-import { eNetwork, ICommonConfiguration } from '../../helpers/types';
+import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
 
 task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -41,7 +45,14 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       const reserveAssets = getParamPerNetwork(ReserveAssets, network);
 
-      const incentivesController = (await deployMockStarlayIncentivesController(verify)).address;
+      let incentivesController = await getContractAddressWithJsonFallbackOptional(
+        eContractid.MockStarlayIncentivesController,
+        ConfigNames.Starlay
+      );
+      if (!notFalsyOrZeroAddress(incentivesController)) {
+        incentivesController = (await deployMockStarlayIncentivesController(verify)).address;
+      }
+
       const addressesProvider = await getLendingPoolAddressesProvider();
 
       const testHelpers = await getStarlayProtocolDataProvider();
@@ -64,10 +75,11 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         SymbolPrefix,
         admin,
         treasuryAddress,
-        incentivesController,
+        incentivesController || '',
         pool,
         verify
       );
+      // return;
       await configureReservesByHelper(ReservesConfig, reserveAssets, testHelpers, admin);
 
       let collateralManagerAddress = await getParamPerNetwork(

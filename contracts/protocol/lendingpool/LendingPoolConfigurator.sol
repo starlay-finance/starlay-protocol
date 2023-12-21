@@ -3,12 +3,8 @@ pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
-import {
-  VersionedInitializable
-} from '../libraries/starlay-upgradeability/VersionedInitializable.sol';
-import {
-  InitializableImmutableAdminUpgradeabilityProxy
-} from '../libraries/starlay-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol';
+import {VersionedInitializable} from '../libraries/starlay-upgradeability/VersionedInitializable.sol';
+import {InitializableImmutableAdminUpgradeabilityProxy} from '../libraries/starlay-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol';
 import {ReserveConfiguration} from '../libraries/configuration/ReserveConfiguration.sol';
 import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
@@ -35,12 +31,12 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
   ILendingPoolAddressesProvider internal addressesProvider;
   ILendingPool internal pool;
 
-  modifier onlyPoolAdmin {
+  modifier onlyPoolAdmin() {
     require(addressesProvider.getPoolAdmin() == msg.sender, Errors.CALLER_NOT_POOL_ADMIN);
     _;
   }
 
-  modifier onlyEmergencyAdmin {
+  modifier onlyEmergencyAdmin() {
     require(
       addressesProvider.getEmergencyAdmin() == msg.sender,
       Errors.LPC_CALLER_NOT_EMERGENCY_ADMIN
@@ -69,53 +65,51 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
     }
   }
 
+  function initReserve(InitReserveInput calldata input) external onlyPoolAdmin {
+    _initReserve(pool, input);
+  }
+
   function _initReserve(ILendingPool pool, InitReserveInput calldata input) internal {
-    address lTokenProxyAddress =
-      _initTokenWithProxy(
-        input.lTokenImpl,
-        abi.encodeWithSelector(
-          IInitializableLToken.initialize.selector,
-          pool,
-          input.treasury,
-          input.underlyingAsset,
-          IStarlayIncentivesController(input.incentivesController),
-          input.underlyingAssetDecimals,
-          input.lTokenName,
-          input.lTokenSymbol,
-          input.params
-        )
-      );
-
-    address stableDebtTokenProxyAddress =
-      _initTokenWithProxy(
-        input.stableDebtTokenImpl,
-        abi.encodeWithSelector(
-          IInitializableDebtToken.initialize.selector,
-          pool,
-          input.underlyingAsset,
-          IStarlayIncentivesController(input.incentivesController),
-          input.underlyingAssetDecimals,
-          input.stableDebtTokenName,
-          input.stableDebtTokenSymbol,
-          input.params
-        )
-      );
-
-    address variableDebtTokenProxyAddress =
-      _initTokenWithProxy(
-        input.variableDebtTokenImpl,
-        abi.encodeWithSelector(
-          IInitializableDebtToken.initialize.selector,
-          pool,
-          input.underlyingAsset,
-          IStarlayIncentivesController(input.incentivesController),
-          input.underlyingAssetDecimals,
-          input.variableDebtTokenName,
-          input.variableDebtTokenSymbol,
-          input.params
-        )
-      );
-
+    address lTokenProxyAddress = _initTokenWithProxy(
+      input.lTokenImpl,
+      abi.encodeWithSelector(
+        IInitializableLToken.initialize.selector,
+        pool,
+        input.treasury,
+        input.underlyingAsset,
+        IStarlayIncentivesController(input.incentivesController),
+        input.underlyingAssetDecimals,
+        input.lTokenName,
+        input.lTokenSymbol,
+        input.params
+      )
+    );
+    address stableDebtTokenProxyAddress = _initTokenWithProxy(
+      input.stableDebtTokenImpl,
+      abi.encodeWithSelector(
+        IInitializableDebtToken.initialize.selector,
+        pool,
+        input.underlyingAsset,
+        IStarlayIncentivesController(input.incentivesController),
+        input.underlyingAssetDecimals,
+        input.stableDebtTokenName,
+        input.stableDebtTokenSymbol,
+        input.params
+      )
+    );
+    address variableDebtTokenProxyAddress = _initTokenWithProxy(
+      input.variableDebtTokenImpl,
+      abi.encodeWithSelector(
+        IInitializableDebtToken.initialize.selector,
+        pool,
+        input.underlyingAsset,
+        IStarlayIncentivesController(input.incentivesController),
+        input.underlyingAssetDecimals,
+        input.variableDebtTokenName,
+        input.variableDebtTokenSymbol,
+        input.params
+      )
+    );
     pool.initReserve(
       input.underlyingAsset,
       lTokenProxyAddress,
@@ -123,17 +117,13 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
       variableDebtTokenProxyAddress,
       input.interestRateStrategyAddress
     );
-
-    DataTypes.ReserveConfigurationMap memory currentConfig =
-      pool.getConfiguration(input.underlyingAsset);
-
+    DataTypes.ReserveConfigurationMap memory currentConfig = pool.getConfiguration(
+      input.underlyingAsset
+    );
     currentConfig.setDecimals(input.underlyingAssetDecimals);
-
     currentConfig.setActive(true);
     currentConfig.setFrozen(false);
-
     pool.setConfiguration(input.underlyingAsset, currentConfig.data);
-
     emit ReserveInitialized(
       input.underlyingAsset,
       lTokenProxyAddress,
@@ -153,18 +143,17 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
 
     (, , , uint256 decimals, ) = cachedPool.getConfiguration(input.asset).getParamsMemory();
 
-    bytes memory encodedCall =
-      abi.encodeWithSelector(
-        IInitializableLToken.initialize.selector,
-        cachedPool,
-        input.treasury,
-        input.asset,
-        input.incentivesController,
-        decimals,
-        input.name,
-        input.symbol,
-        input.params
-      );
+    bytes memory encodedCall = abi.encodeWithSelector(
+      IInitializableLToken.initialize.selector,
+      cachedPool,
+      input.treasury,
+      input.asset,
+      input.incentivesController,
+      decimals,
+      input.name,
+      input.symbol,
+      input.params
+    );
 
     _upgradeTokenImplementation(reserveData.lTokenAddress, input.implementation, encodedCall);
 
@@ -181,17 +170,16 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
 
     (, , , uint256 decimals, ) = cachedPool.getConfiguration(input.asset).getParamsMemory();
 
-    bytes memory encodedCall =
-      abi.encodeWithSelector(
-        IInitializableDebtToken.initialize.selector,
-        cachedPool,
-        input.asset,
-        input.incentivesController,
-        decimals,
-        input.name,
-        input.symbol,
-        input.params
-      );
+    bytes memory encodedCall = abi.encodeWithSelector(
+      IInitializableDebtToken.initialize.selector,
+      cachedPool,
+      input.asset,
+      input.incentivesController,
+      decimals,
+      input.name,
+      input.symbol,
+      input.params
+    );
 
     _upgradeTokenImplementation(
       reserveData.stableDebtTokenAddress,
@@ -216,17 +204,16 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
 
     (, , , uint256 decimals, ) = cachedPool.getConfiguration(input.asset).getParamsMemory();
 
-    bytes memory encodedCall =
-      abi.encodeWithSelector(
-        IInitializableDebtToken.initialize.selector,
-        cachedPool,
-        input.asset,
-        input.incentivesController,
-        decimals,
-        input.name,
-        input.symbol,
-        input.params
-      );
+    bytes memory encodedCall = abi.encodeWithSelector(
+      IInitializableDebtToken.initialize.selector,
+      cachedPool,
+      input.asset,
+      input.incentivesController,
+      decimals,
+      input.name,
+      input.symbol,
+      input.params
+    );
 
     _upgradeTokenImplementation(
       reserveData.variableDebtTokenAddress,
@@ -246,10 +233,10 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
    * @param asset The address of the underlying asset of the reserve
    * @param stableBorrowRateEnabled True if stable borrow rate needs to be enabled by default on this reserve
    **/
-  function enableBorrowingOnReserve(address asset, bool stableBorrowRateEnabled)
-    external
-    onlyPoolAdmin
-  {
+  function enableBorrowingOnReserve(
+    address asset,
+    bool stableBorrowRateEnabled
+  ) external onlyPoolAdmin {
     DataTypes.ReserveConfigurationMap memory currentConfig = pool.getConfiguration(asset);
 
     currentConfig.setBorrowingEnabled(true);
@@ -433,10 +420,10 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
    * @param asset The address of the underlying asset of the reserve
    * @param rateStrategyAddress The new address of the interest strategy contract
    **/
-  function setReserveInterestRateStrategyAddress(address asset, address rateStrategyAddress)
-    external
-    onlyPoolAdmin
-  {
+  function setReserveInterestRateStrategyAddress(
+    address asset,
+    address rateStrategyAddress
+  ) external onlyPoolAdmin {
     pool.setReserveInterestRateStrategyAddress(asset, rateStrategyAddress);
     emit ReserveInterestRateStrategyChanged(asset, rateStrategyAddress);
   }
@@ -449,12 +436,13 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
     pool.setPause(val);
   }
 
-  function _initTokenWithProxy(address implementation, bytes memory initParams)
-    internal
-    returns (address)
-  {
-    InitializableImmutableAdminUpgradeabilityProxy proxy =
-      new InitializableImmutableAdminUpgradeabilityProxy(address(this));
+  function _initTokenWithProxy(
+    address implementation,
+    bytes memory initParams
+  ) internal returns (address) {
+    InitializableImmutableAdminUpgradeabilityProxy proxy = new InitializableImmutableAdminUpgradeabilityProxy(
+        address(this)
+      );
 
     proxy.initialize(implementation, initParams);
 
@@ -466,8 +454,9 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
     address implementation,
     bytes memory initParams
   ) internal {
-    InitializableImmutableAdminUpgradeabilityProxy proxy =
-      InitializableImmutableAdminUpgradeabilityProxy(payable(proxyAddress));
+    InitializableImmutableAdminUpgradeabilityProxy proxy = InitializableImmutableAdminUpgradeabilityProxy(
+        payable(proxyAddress)
+      );
 
     proxy.upgradeToAndCall(implementation, initParams);
   }

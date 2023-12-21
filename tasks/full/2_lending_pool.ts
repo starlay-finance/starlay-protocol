@@ -16,6 +16,7 @@ import {
 import { getParamPerNetwork, insertContractAddressInDb } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { eContractid, eNetwork } from '../../helpers/types';
+import { getAcalaEVM } from '../../helpers/init-helpers';
 
 task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -26,6 +27,8 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
       const network = <eNetwork>DRE.network.name;
       const poolConfig = loadPoolConfig(pool);
       const addressesProvider = await getLendingPoolAddressesProvider();
+
+      const acalaEVM = await getAcalaEVM();
 
       const { LendingPool, LendingPoolConfigurator } = poolConfig;
 

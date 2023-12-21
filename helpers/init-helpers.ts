@@ -1,15 +1,20 @@
 import { BigNumberish } from 'ethers';
+import { EVM as EVM_ADDR } from '@acala-network/contracts/utils/Predeploy';
+import { EVM__factory } from '@acala-network/contracts/typechain';
 import { StarlayProtocolDataProvider } from '../types/StarlayProtocolDataProvider';
 import { ConfigNames } from './configuration';
 import { deployRateStrategy } from './contracts-deployments';
 import {
+  getFirstSigner,
   getLendingPoolAddressesProvider,
+  getLendingPoolConfiguratorImpl,
   getLendingPoolConfiguratorProxy,
   getLToken,
   getLTokensAndRatesHelper,
 } from './contracts-getters';
 import {
   getContractAddressWithJsonFallback,
+  getContractAddressWithJsonFallbackOptional,
   rawInsertContractAddressInDb,
 } from './contracts-helpers';
 import { chunk, getDb, notFalsyOrZeroAddress, waitForTx } from './misc-utils';
@@ -110,11 +115,20 @@ export const initReservesByHelper = async (
         stableRateSlope1,
         stableRateSlope2,
       ];
-      strategyAddresses[strategy.name] = await deployRateStrategy(
-        strategy.name,
-        rateStrategies[strategy.name],
-        verify
+
+      let strategyAddress = await getContractAddressWithJsonFallbackOptional(
+        eContractid.DefaultReserveInterestRateStrategy + '_' + strategy.name,
+        ConfigNames.Starlay
       );
+      if (!notFalsyOrZeroAddress(strategyAddress)) {
+        strategyAddress = await deployRateStrategy(
+          strategy.name,
+          rateStrategies[strategy.name],
+          verify
+        );
+      }
+
+      strategyAddresses[strategy.name] = strategyAddress || '';
 
       // This causes the last strategy to be printed twice, once under "DefaultReserveInterestRateStrategy"
       // and once under the actual `strategyASSET` key.
@@ -180,12 +194,27 @@ export const initReservesByHelper = async (
 
   console.log(`- Reserves initialization in ${chunkedInitInputParams.length} txs`);
   for (let chunkIndex = 0; chunkIndex < chunkedInitInputParams.length; chunkIndex++) {
-    const tx3 = await waitForTx(
-      await configurator.batchInitReserve(chunkedInitInputParams[chunkIndex])
-    );
-
-    console.log(`  - Reserve ready for: ${chunkedSymbols[chunkIndex].join(', ')}`);
-    console.log('    * gasUsed', tx3.gasUsed.toString());
+    // console.log(`- ChunkedInitInputParams ${chunkIndex}`, chunkedInitInputParams[chunkIndex][0]);
+    // const signer = await getFirstSigner();
+    // const gasPrice = await signer.getGasPrice();
+    // console.log('gasPrice =>', gasPrice.toString());
+    // const gasLimit = await configurator.estimateGas.initReserve(
+    //   chunkedInitInputParams[chunkIndex][0]
+    // );
+    // console.log('gasLimit =>', gasLimit.toString());
+    try {
+      const tx3 = await waitForTx(
+        // await configurator.batchInitReserve(chunkedInitInputParams[chunkIndex])
+        await configurator.batchInitReserve(chunkedInitInputParams[chunkIndex], {
+          // gasPrice,
+          // gasLimit,
+        })
+      );
+      console.log(`  - Reserve ready for: ${chunkedSymbols[chunkIndex].join(', ')}`);
+      console.log('    * gasUsed', tx3.gasUsed.toString());
+    } catch (error) {
+      throw error;
+    }
   }
 };
 
@@ -221,9 +250,11 @@ export const configureReservesByHelper = async (
   helpers: StarlayProtocolDataProvider,
   admin: tEthereumAddress,
   lendingPoolAddressesProviderAddress?: tEthereumAddress,
-  lTokensAndRatesHelperAddress?: tEthereumAddress,
+  lTokensAndRatesHelperAddress?: tEthereumAddress
 ) => {
-  const addressProvider = await getLendingPoolAddressesProvider(lendingPoolAddressesProviderAddress);
+  const addressProvider = await getLendingPoolAddressesProvider(
+    lendingPoolAddressesProviderAddress
+  );
   const ltokenAndRatesDeployer = await getLTokensAndRatesHelper(lTokensAndRatesHelperAddress);
   const tokens: string[] = [];
   const symbols: string[] = [];
@@ -322,4 +353,16 @@ const isErc20SymbolCorrect = async (token: tEthereumAddress, symbol: string) => 
   const erc20 = await getLToken(token); // using lToken for ERC20 interface
   const erc20Symbol = await erc20.symbol();
   return symbol === erc20Symbol;
+};
+
+export const getAcalaEVM = async () => {
+  const signer = await getFirstSigner();
+  const evm = EVM__factory.connect(EVM_ADDR, signer);
+  const developerStatus = evm.developerStatus(await signer.getAddress());
+  if (!developerStatus) {
+    console.log('Enabling developer status ...');
+    await (await evm.developerEnable()).wait();
+  }
+
+  return evm;
 };

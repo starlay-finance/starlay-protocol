@@ -14,7 +14,7 @@ import {
   getProxy,
   getStarlayProtocolDataProvider,
   getWalletProvider,
-  getWETHGateway,
+  // getWETHGateway,
 } from '../../helpers/contracts-getters';
 import { getParamPerNetwork, verifyContract } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -35,7 +35,7 @@ task('verify:general', 'Verify contracts at Etherscan')
       LendingPoolCollateralManager,
       LendingPoolConfigurator,
       LendingPool,
-      WethGateway,
+      // WethGateway,
     } = poolConfig as ICommonConfiguration;
     const treasuryAddress = await getTreasuryAddress(poolConfig);
 
@@ -80,10 +80,10 @@ task('verify:general', 'Verify contracts at Etherscan')
       const dataProvider = await getStarlayProtocolDataProvider();
       const walletProvider = await getWalletProvider();
 
-      const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
-      const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
-        ? await getWETHGateway(wethGatewayAddress)
-        : await getWETHGateway();
+      // const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
+      // const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
+      //   ? await getWETHGateway(wethGatewayAddress)
+      //   : await getWETHGateway();
 
       // Address Provider
       console.log('\n- Verifying address provider...\n');
@@ -124,10 +124,10 @@ task('verify:general', 'Verify contracts at Etherscan')
       await verifyContract(eContractid.WalletBalanceProvider, walletProvider, []);
 
       // WETHGateway
-      console.log('\n- Verifying  WETHGateway...\n');
-      await verifyContract(eContractid.WETHGateway, wethGateway, [
-        await getWrappedNativeTokenAddress(poolConfig),
-      ]);
+      // console.log('\n- Verifying  WETHGateway...\n');
+      // await verifyContract(eContractid.WETHGateway, wethGateway, [
+      //   await getWrappedNativeTokenAddress(poolConfig),
+      // ]);
     }
     // Lending Pool proxy
     console.log('\n- Verifying  Lending Pool Proxy...\n');

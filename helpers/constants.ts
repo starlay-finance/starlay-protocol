@@ -84,10 +84,14 @@ export const aggregatorProxy = {
   astar: '0x043C93fF4d52B2F76811852644549553A00309a8',
   shiden: '0xBE38fe6439269d18190024DA4f2Cfc35323A8384',
   shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
+  acala: '',
+  mandala: '',
 };
 
 export const baseTokenAddress = {
   astar: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
   shiden: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
   shibuya: '0x8Fd43fea01125EcA2bEb0bB03509946ECA99eEf9',
+  acala: '',
+  mandala: '0xA666dD28059deF0B45505c1f1a5f49fAd2e03c11',
 };

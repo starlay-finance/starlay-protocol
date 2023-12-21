@@ -14,7 +14,9 @@ import {
   MockFlashLoanReceiverFactory,
   MockLTokenFactory,
   MockStableDebtTokenFactory,
+  MockStarlayIncentivesControllerFactory,
   MockVariableDebtTokenFactory,
+  PriceAggregatorAdapterAcalaImplFactory,
   PriceAggregatorAdapterDiaImplFactory,
   PriceOracleFactory,
   ReserveLogicFactory,
@@ -24,6 +26,9 @@ import {
   StarlayFallbackOracleFactory,
   StarlayOracleFactory,
   StarlayProtocolDataProviderFactory,
+  UiIncentiveDataProviderV2Factory,
+  UiPoolDataProviderV2Factory,
+  ValidationLogicFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
   WETH9MockedFactory,
@@ -262,6 +267,15 @@ export const getGenericLogic = async (address?: tEthereumAddress) =>
     await getFirstSigner()
   );
 
+export const getValidationLogic = async (address?: tEthereumAddress) =>
+  await ValidationLogicFactory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.ValidationLogic}.${DRE.network.name}`).value()
+      ).address,
+    await getFirstSigner()
+  );
+
 export const getStableAndVariableTokensHelper = async (address?: tEthereumAddress) =>
   await StableAndVariableTokensHelperFactory.connect(
     address ||
@@ -402,6 +416,46 @@ export const getPriceAggregator = async (address?: tEthereumAddress) =>
         await getDb()
           .get(`${eContractid.PriceAggregatorAdapterDiaImpl}.${DRE.network.name}`)
           .value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getPriceAcalaAggregator = async (address?: tEthereumAddress) =>
+  await PriceAggregatorAdapterAcalaImplFactory.connect(
+    address ||
+      (
+        await getDb()
+          .get(`${eContractid.PriceAggregatorAdapterAcalaImpl}.${DRE.network.name}`)
+          .value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getMockStarlayIncentivesController = async (address?: tEthereumAddress) =>
+  await MockStarlayIncentivesControllerFactory.connect(
+    address ||
+      (
+        await getDb()
+          .get(`${eContractid.MockStarlayIncentivesController}.${DRE.network.name}`)
+          .value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getUiPoolDataProviderV2 = async (address?: tEthereumAddress) =>
+  await UiPoolDataProviderV2Factory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.UiPoolDataProviderV2}.${DRE.network.name}`).value()
+      ).address,
+    await getFirstSigner()
+  );
+
+export const getUiIncentiveDataProviderV2 = async (address?: tEthereumAddress) =>
+  await UiIncentiveDataProviderV2Factory.connect(
+    address ||
+      (
+        await getDb().get(`${eContractid.UiIncentiveDataProviderV2}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );

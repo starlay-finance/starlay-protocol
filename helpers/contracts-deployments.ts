@@ -338,11 +338,12 @@ export const deployMintableDelegationERC20 = async (
   );
 export const deployDefaultReserveInterestRateStrategy = async (
   args: [tEthereumAddress, string, string, string, string, string, string],
-  verify: boolean
+  verify: boolean,
+  strategy?: string
 ) =>
   withSaveAndVerify(
     await new DefaultReserveInterestRateStrategyFactory(await getFirstSigner()).deploy(...args),
-    eContractid.DefaultReserveInterestRateStrategy,
+    eContractid.DefaultReserveInterestRateStrategy + `${strategy ? '_' + strategy : ''}`,
     args,
     verify
   );
@@ -695,9 +696,7 @@ export const deployRateStrategy = async (
 ): Promise<tEthereumAddress> => {
   switch (strategyName) {
     default:
-      return await (
-        await deployDefaultReserveInterestRateStrategy(args, verify)
-      ).address;
+      return (await deployDefaultReserveInterestRateStrategy(args, verify, strategyName)).address;
   }
 };
 
