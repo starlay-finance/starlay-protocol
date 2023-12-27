@@ -176,8 +176,8 @@ export const strategyAUSD: IReserveParams = {
 
 export const strategynASTR: IReserveParams = {
   strategy: rateStrategynASTR,
-  baseLTVAsCollateral: '3000',
-  liquidationThreshold: '5500',
+  baseLTVAsCollateral: '2000',
+  liquidationThreshold: '2500',
   liquidationBonus: '11500',
   borrowingEnabled: false,
   stableBorrowRateEnabled: false,

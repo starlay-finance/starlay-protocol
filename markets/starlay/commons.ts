@@ -262,7 +262,7 @@ export const CommonsConfig: ICommonConfiguration = {
       BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
       DOT: '0xffffffffffffffffffffffffffffffffffffffff',
       AUSD: '0xfFFFFfFF00000000000000010000000000000001',
-      nASTR: '',
+      nASTR: '0xE511ED88575C57767BAfb72BfD10775413E3F2b0',
     },
   },
   ReserveAssets: {
