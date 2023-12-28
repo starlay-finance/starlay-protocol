@@ -56,7 +56,7 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eEthereumNetwork.tenderly]: 1 * GWEI,
   [eAstarNetwork.shibuya]: 3 * GWEI,
   [eAstarNetwork.shiden]: 1 * GWEI,
-  [eAstarNetwork.astar]: 1 * GWEI,
+  [eAstarNetwork.astar]: 6 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
