@@ -1,10 +1,5 @@
 import { task } from 'hardhat/config';
-import {
-  ConfigNames,
-  getTreasuryAddress,
-  getWrappedNativeTokenAddress,
-  loadPoolConfig,
-} from '../../helpers/configuration';
+import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
 import {
   getLendingPoolAddressesProvider,
   getLendingPoolAddressesProviderRegistry,
@@ -28,8 +23,6 @@ task('verify:general', 'Verify contracts at Etherscan')
     const network = localDRE.network.name as eNetwork;
     const poolConfig = loadPoolConfig(pool);
     const {
-      ReserveAssets,
-      ReservesConfig,
       ProviderRegistry,
       MarketId,
       LendingPoolCollateralManager,
