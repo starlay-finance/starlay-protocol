@@ -18,7 +18,10 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
 
   constructor() public {}
 
-  function getFullReservesIncentiveData(ILendingPoolAddressesProvider provider, address user)
+  function getFullReservesIncentiveData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  )
     external
     view
     override
@@ -27,24 +30,19 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
     return (_getReservesIncentivesData(provider), _getUserReservesIncentivesData(provider, user));
   }
 
-  function getReservesIncentivesData(ILendingPoolAddressesProvider provider)
-    external
-    view
-    override
-    returns (AggregatedReserveIncentiveData[] memory)
-  {
+  function getReservesIncentivesData(
+    ILendingPoolAddressesProvider provider
+  ) external view override returns (AggregatedReserveIncentiveData[] memory) {
     return _getReservesIncentivesData(provider);
   }
 
-  function _getReservesIncentivesData(ILendingPoolAddressesProvider provider)
-    private
-    view
-    returns (AggregatedReserveIncentiveData[] memory)
-  {
+  function _getReservesIncentivesData(
+    ILendingPoolAddressesProvider provider
+  ) private view returns (AggregatedReserveIncentiveData[] memory) {
     ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
     address[] memory reserves = lendingPool.getReservesList();
-    AggregatedReserveIncentiveData[] memory reservesIncentiveData =
-      new AggregatedReserveIncentiveData[](reserves.length);
+    AggregatedReserveIncentiveData[]
+      memory reservesIncentiveData = new AggregatedReserveIncentiveData[](reserves.length);
 
     for (uint256 i = 0; i < reserves.length; i++) {
       AggregatedReserveIncentiveData memory reserveIncentiveData = reservesIncentiveData[i];
@@ -71,12 +69,11 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.lTokenAddress,
               lRewardToken,
               address(lTokenIncentiveController),
-              IERC20Detailed(lRewardToken).decimals(),
+              // IERC20Detailed(lRewardToken).decimals(),
+              18,
               lTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 lEmissionPerSecond,
               uint256 lIncentivesLastUpdateTimestamp,
@@ -91,14 +88,13 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.lTokenAddress,
               lRewardToken,
               address(lTokenIncentiveController),
-              IERC20Detailed(lRewardToken).decimals(),
+              // IERC20Detailed(lRewardToken).decimals(),
+              18,
               lTokenIncentiveController.PRECISION()
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
 
@@ -120,12 +116,11 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.stableDebtTokenAddress,
               sdRewardToken,
               address(sdTokenIncentiveController),
-              IERC20Detailed(sdRewardToken).decimals(),
+              // IERC20Detailed(sdRewardToken).decimals(),
+              18,
               sdTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 sdEmissionPerSecond,
               uint256 sdIncentivesLastUpdateTimestamp,
@@ -140,14 +135,13 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.stableDebtTokenAddress,
               sdRewardToken,
               address(sdTokenIncentiveController),
-              IERC20Detailed(sdRewardToken).decimals(),
+              // IERC20Detailed(sdRewardToken).decimals(),
+              18,
               sdTokenIncentiveController.PRECISION()
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
 
@@ -170,12 +164,11 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.variableDebtTokenAddress,
               vdRewardToken,
               address(vdTokenIncentiveController),
-              IERC20Detailed(vdRewardToken).decimals(),
+              // IERC20Detailed(vdRewardToken).decimals(),
+              18,
               vdTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 vdEmissionPerSecond,
               uint256 vdIncentivesLastUpdateTimestamp,
@@ -190,39 +183,36 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               baseData.variableDebtTokenAddress,
               vdRewardToken,
               address(vdTokenIncentiveController),
-              IERC20Detailed(vdRewardToken).decimals(),
+              // IERC20Detailed(vdRewardToken).decimals(),
+              18,
               vdTokenIncentiveController.PRECISION()
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
     }
     return (reservesIncentiveData);
   }
 
-  function getUserReservesIncentivesData(ILendingPoolAddressesProvider provider, address user)
-    external
-    view
-    override
-    returns (UserReserveIncentiveData[] memory)
-  {
+  function getUserReservesIncentivesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  ) external view override returns (UserReserveIncentiveData[] memory) {
     return _getUserReservesIncentivesData(provider, user);
   }
 
-  function _getUserReservesIncentivesData(ILendingPoolAddressesProvider provider, address user)
-    private
-    view
-    returns (UserReserveIncentiveData[] memory)
-  {
+  function _getUserReservesIncentivesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  ) private view returns (UserReserveIncentiveData[] memory) {
     ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
     address[] memory reserves = lendingPool.getReservesList();
 
-    UserReserveIncentiveData[] memory userReservesIncentivesData =
-      new UserReserveIncentiveData[](user != address(0) ? reserves.length : 0);
+    UserReserveIncentiveData[] memory userReservesIncentivesData = new UserReserveIncentiveData[](
+      user != address(0) ? reserves.length : 0
+    );
 
     for (uint256 i = 0; i < reserves.length; i++) {
       DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserves[i]);
@@ -246,11 +236,10 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           lUserIncentiveData.tokenAddress = baseData.lTokenAddress;
           lUserIncentiveData.rewardTokenAddress = lRewardToken;
           lUserIncentiveData.incentiveControllerAddress = address(lTokenIncentiveController);
-          lUserIncentiveData.rewardTokenDecimals = IERC20Detailed(lRewardToken).decimals();
+          // lUserIncentiveData.rewardTokenDecimals = IERC20Detailed(lRewardToken).decimals();
+          lUserIncentiveData.rewardTokenDecimals = 18;
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].lTokenIncentivesUserData = lUserIncentiveData;
 
@@ -268,11 +257,10 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           vdUserIncentiveData.tokenAddress = baseData.variableDebtTokenAddress;
           vdUserIncentiveData.rewardTokenAddress = vdRewardToken;
           vdUserIncentiveData.incentiveControllerAddress = address(vdTokenIncentiveController);
-          vdUserIncentiveData.rewardTokenDecimals = IERC20Detailed(vdRewardToken).decimals();
+          // vdUserIncentiveData.rewardTokenDecimals = IERC20Detailed(vdRewardToken).decimals();
+          vdUserIncentiveData.rewardTokenDecimals = 18;
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].vdTokenIncentivesUserData = vdUserIncentiveData;
 
@@ -290,11 +278,10 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           sdUserIncentiveData.tokenAddress = baseData.stableDebtTokenAddress;
           sdUserIncentiveData.rewardTokenAddress = sdRewardToken;
           sdUserIncentiveData.incentiveControllerAddress = address(sdTokenIncentiveController);
-          sdUserIncentiveData.rewardTokenDecimals = IERC20Detailed(sdRewardToken).decimals();
+          // sdUserIncentiveData.rewardTokenDecimals = IERC20Detailed(sdRewardToken).decimals();
+          sdUserIncentiveData.rewardTokenDecimals = 18;
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].sdTokenIncentivesUserData = sdUserIncentiveData;
     }
