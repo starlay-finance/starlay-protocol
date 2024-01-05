@@ -85,7 +85,7 @@ export const aggregatorProxy = {
   shiden: '0xBE38fe6439269d18190024DA4f2Cfc35323A8384',
   shibuya: '0xA4865374f35536103e1671631996bbf4e92ba566',
   acala: '',
-  mandala: '',
+  mandala: '0x0493895d637A8500e3d7cB35AdabF57d32198ba8',
 };
 
 export const baseTokenAddress = {
