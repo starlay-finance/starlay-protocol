@@ -13,7 +13,7 @@ import {
   rateStrategyAUSD,
   rateStrategyAcalaDOT,
   rateStrategyAcalaLDOT,
-  rateStrategyAcalaUSDCet,
+  rateStrategyAcalaUSDC,
 } from './rateStrategies';
 
 export const strategyUSDC: IReserveParams = {
@@ -200,8 +200,8 @@ export const strategyAcalaLDOT: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyAcalaUSDCet: IReserveParams = {
-  strategy: rateStrategyAcalaUSDCet,
+export const strategyAcalaUSDC: IReserveParams = {
+  strategy: rateStrategyAcalaUSDC,
   baseLTVAsCollateral: '7000',
   liquidationThreshold: '7500',
   liquidationBonus: '10500',

@@ -141,9 +141,9 @@ export const rateStrategyAcalaLDOT: IInterestRateStrategyParams = {
   stableRateSlope2: new BigNumber(0.6).multipliedBy(oneRay).toFixed(),
 };
 
-// USDCet
-export const rateStrategyAcalaUSDCet: IInterestRateStrategyParams = {
-  name: 'rateStrategyAcalaUSDCet',
+// USDC
+export const rateStrategyAcalaUSDC: IInterestRateStrategyParams = {
+  name: 'rateStrategyAcalaUSDC',
   optimalUtilizationRate: new BigNumber(0.9).multipliedBy(oneRay).toFixed(),
   baseVariableBorrowRate: new BigNumber(0).multipliedBy(oneRay).toFixed(),
   variableRateSlope1: new BigNumber(0.04).multipliedBy(oneRay).toFixed(),

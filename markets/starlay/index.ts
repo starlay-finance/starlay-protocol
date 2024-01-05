@@ -21,7 +21,7 @@ import {
   // strategyWSDN,
   strategyAcalaDOT,
   strategyAcalaLDOT,
-  strategyAcalaUSDCet,
+  strategyAcalaUSDC,
 } from './reservesConfigs';
 
 // ----------------
@@ -110,7 +110,7 @@ export const StarlayConfig: IStarlayConfiguration = {
   ReservesConfig: {
     DOT: strategyAcalaDOT,
     LDOT: strategyAcalaLDOT,
-    USDC: strategyAcalaUSDCet,
+    USDC: strategyAcalaUSDC,
   },
   ReserveAssets: {
     [eEthereumNetwork.buidlerevm]: {},
