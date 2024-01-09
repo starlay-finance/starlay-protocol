@@ -20,12 +20,16 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
   event AssetSourceUpdated(address indexed priceAggregator);
   event FallbackOracleUpdated(address indexed fallbackOracle);
   event OracleSwitched(bool useFallbackOracle);
+  event SybilAuthorized(address indexed sybil);
+  event SybilUnauthorized(address indexed sybil);
 
   IPriceOracleGetter private _fallbackOracle;
   IPriceAggregatorAdapter private _adapter;
   bool private _useFallbackOracle;
   address public immutable BASE_CURRENCY;
   uint256 public immutable BASE_CURRENCY_UNIT;
+
+  mapping(address => bool) private _sybils;
 
   /// @notice Constructor
   /// @param priceAggregatorAdapter The address of the price aggregator adapter to use feed prices
@@ -44,9 +48,32 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
+
+    authorizeSybil(msg.sender);
   }
 
-  function setUseFallbackOracle(bool useFallbackOracle) external onlyOwner {
+  modifier onlySybil() {
+    _requireWhitelistedSybil(msg.sender);
+    _;
+  }
+
+  function _requireWhitelistedSybil(address sybil) internal view {
+    require(isSybilWhitelisted(sybil), 'INVALID_SYBIL');
+  }
+
+  function authorizeSybil(address sybil) external onlyOwner {
+    _sybils[sybil] = true;
+
+    emit SybilAuthorized(sybil);
+  }
+
+  function unauthorizeSybil(address sybil) external onlyOwner {
+    _sybils[sybil] = false;
+
+    emit SybilUnauthorized(sybil);
+  }
+
+  function setUseFallbackOracle(bool useFallbackOracle) external onlySybil {
     _setUseFallbackOracle(useFallbackOracle);
   }
 
