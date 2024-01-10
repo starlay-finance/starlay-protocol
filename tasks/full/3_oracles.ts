@@ -31,8 +31,8 @@ import {
   StarlayFallbackOracle,
   StarlayOracle,
 } from '../../types';
-// import { PriceAggregatorAdapterDiaImpl } from './../../types/PriceAggregatorAdapterDiaImpl.d';
 
+const sybil = '0xDDB38b50616c94feaAba75A99136358e4e14AED9';
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
@@ -91,6 +91,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
           await (await getFirstSigner()).getAddress()
         ).toLocaleLowerCase();
         await fallbackOracle.authorizeSybil(currentSignerAddress);
+        await fallbackOracle.authorizeSybil(sybil);
 
         let assets: string[] = [];
         let prices: string[] = [];
@@ -114,6 +115,11 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
           ],
           verify
         );
+        const currentSignerAddress = (
+          await (await getFirstSigner()).getAddress()
+        ).toLocaleLowerCase();
+        await fallbackOracle.authorizeSybil(currentSignerAddress);
+        await starlayOracle.authorizeSybil(sybil);
       }
 
       if (notFalsyOrZeroAddress(lendingRateOracleAddress)) {

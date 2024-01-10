@@ -48,8 +48,6 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
-
-    authorizeSybil(msg.sender);
   }
 
   modifier onlySybil() {
@@ -59,6 +57,10 @@ contract StarlayOracle is IPriceOracleGetter, Ownable {
 
   function _requireWhitelistedSybil(address sybil) internal view {
     require(isSybilWhitelisted(sybil), 'INVALID_SYBIL');
+  }
+
+  function isSybilWhitelisted(address sybil) public view returns (bool) {
+    return _sybils[sybil];
   }
 
   function authorizeSybil(address sybil) external onlyOwner {
