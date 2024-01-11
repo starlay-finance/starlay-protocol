@@ -320,6 +320,7 @@ export const verifyContract = async (
   if (usingTenderly()) {
     await verifyAtTenderly(id, instance);
   }
+  await publishAcalaContract(id, instance.address);
   await verifyEtherscanContract(instance.address, args);
   return instance;
 };
