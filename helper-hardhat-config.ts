@@ -49,7 +49,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : 'https://rpc.astar.network:8545',
   [eAcalaNetwork.acala]: ONFINALITY_KEY
     ? `https://acala-polkadot.api.onfinality.io/rpc?apikey=${ONFINALITY_KEY}`
-    : 'wss://eth-rpc-acala.aca-api.network',
+    : 'https://eth-rpc-acala.aca-api.network',
   [eAcalaNetwork.mandala]: 'https://eth-rpc-tc9.aca-staging.network',
 };
 

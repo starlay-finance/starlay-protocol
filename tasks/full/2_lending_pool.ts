@@ -28,8 +28,6 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
       const poolConfig = loadPoolConfig(pool);
       const addressesProvider = await getLendingPoolAddressesProvider();
 
-      const acalaEVM = await getAcalaEVM();
-
       const { LendingPool, LendingPoolConfigurator } = poolConfig;
 
       // Reuse/deploy lending pool implementation
