@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import { exit } from 'process';
 import { ConfigNames, getTreasuryAddress, loadPoolConfig } from '../../helpers/configuration';
-import { aggregatorProxy, baseTokenAddress } from '../../helpers/constants';
+import { baseTokenAddress } from '../../helpers/constants';
 import {
   // authorizeWETHGateway,
   deployLendingPoolCollateralManager,
@@ -12,6 +12,7 @@ import {
 } from '../../helpers/contracts-deployments';
 import {
   getLendingPoolAddressesProvider,
+  getPriceAcalaAggregator,
   getStarlayProtocolDataProvider,
   // getWETHGateway,
 } from '../../helpers/contracts-getters';
@@ -114,8 +115,9 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       await deployWalletBalancerProvider(verify);
 
+      const aggregatorProxyAddress = await getPriceAcalaAggregator();
       const uiPoolDataProvider = await deployUiPoolDataProviderV2(
-        aggregatorProxy[localBRE.network.name],
+        aggregatorProxyAddress.address,
         baseTokenAddress[localBRE.network.name],
         verify
       );

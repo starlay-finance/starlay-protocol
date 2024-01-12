@@ -118,7 +118,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         const currentSignerAddress = (
           await (await getFirstSigner()).getAddress()
         ).toLocaleLowerCase();
-        await fallbackOracle.authorizeSybil(currentSignerAddress);
+        await starlayOracle.authorizeSybil(currentSignerAddress);
         await starlayOracle.authorizeSybil(sybil);
       }
 
