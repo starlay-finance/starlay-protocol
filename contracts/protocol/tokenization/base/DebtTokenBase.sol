@@ -20,7 +20,7 @@ abstract contract DebtTokenBase is
   VersionedInitializable,
   ICreditDelegationToken
 {
-  mapping(address => mapping(address => uint256)) internal _borrowAllowances;
+  mapping(address => mapping(address => uint256)) public _borrowAllowances;
 
   /**
    * @dev Only lending pool can call functions marked by this modifier
