@@ -33,4 +33,23 @@ makeSuite('Variable debt token tests', (testEnv: TestEnv) => {
       CT_CALLER_MUST_BE_LENDING_POOL
     );
   });
+  it('delegation', async () => {
+    const { deployer, pool, dai, helpersContract } = testEnv;
+
+    const daiVariableDebtTokenAddress = (
+      await helpersContract.getReserveTokensAddresses(dai.address)
+    ).variableDebtTokenAddress;
+
+    const variableDebtContract = await getVariableDebtToken(daiVariableDebtTokenAddress);
+    await variableDebtContract.approveDelegation(
+      await (await getEthersSigners())[1].getAddress(),
+      '1'
+    );
+    const allowance = await variableDebtContract._borrowAllowances(
+      await (await getFirstSigner()).getAddress(),
+      await (await getEthersSigners())[1].getAddress()
+    );
+    await expect(allowance.toString()).to.be.equal('1');
+  });
+  
 });
