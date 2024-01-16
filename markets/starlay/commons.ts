@@ -230,6 +230,7 @@ export const CommonsConfig: ICommonConfiguration = {
       BNB: '',
       DOT: '',
       AUSD: '',
+      nASTR: '',
     },
     [eAstarNetwork.shiden]: {
       ASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -245,6 +246,7 @@ export const CommonsConfig: ICommonConfiguration = {
       BNB: '0x24A9c7137f82BC1E8b1d6b749b72C133f114Ef6b',
       DOT: '0x1135874985e7F1342bCa07201B102eFc1292b6d9',
       AUSD: '',
+      nASTR: '',
     },
     [eAstarNetwork.astar]: {
       ASTR: '0xAeaaf0e2c81Af264101B9129C00F4440cCF0F720',
@@ -260,6 +262,7 @@ export const CommonsConfig: ICommonConfiguration = {
       BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
       DOT: '0xffffffffffffffffffffffffffffffffffffffff',
       AUSD: '0xfFFFFfFF00000000000000010000000000000001',
+      nASTR: '0xE511ED88575C57767BAfb72BfD10775413E3F2b0',
     },
   },
   ReserveAssets: {
