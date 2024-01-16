@@ -185,7 +185,7 @@ export const strategyAcalaDOT: IReserveParams = {
   stableBorrowRateEnabled: false,
   reserveDecimals: '10',
   lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
+  reserveFactor: '0',
 };
 
 export const strategyAcalaLDOT: IReserveParams = {
@@ -197,7 +197,7 @@ export const strategyAcalaLDOT: IReserveParams = {
   stableBorrowRateEnabled: false,
   reserveDecimals: '10',
   lTokenImpl: eContractid.LToken,
-  reserveFactor: '2000',
+  reserveFactor: '0',
 };
 
 export const strategyAcalaUSDC: IReserveParams = {
@@ -209,5 +209,5 @@ export const strategyAcalaUSDC: IReserveParams = {
   stableBorrowRateEnabled: false,
   reserveDecimals: '6',
   lTokenImpl: eContractid.LToken,
-  reserveFactor: '1000',
+  reserveFactor: '0',
 };
