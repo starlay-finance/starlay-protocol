@@ -28,7 +28,7 @@ abstract contract Proxy {
    * It will return to the external caller whatever the implementation returns.
    * @param implementation Address to delegate.
    */
-  function _delegate(address implementation) internal {
+  function _delegate(address implementation) internal virtual {
     //solium-disable-next-line
     assembly {
       // Copy msg.data. We take full control of memory in this inline assembly
