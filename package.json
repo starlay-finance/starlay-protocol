@@ -111,7 +111,7 @@
     "hardhat": "^2.2.0",
     "hardhat-gas-reporter": "^1.0.0",
     "hardhat-typechain": "^0.3.3",
-    "husky": "^4.2.5",
+    "husky": "^8.0.3",
     "lowdb": "1.0.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
