@@ -11,6 +11,8 @@ import {
   rateStrategyWETH,
   rateStrategyWSDN,
   rateStrategyAUSD,
+  rateStrategynASTR,
+  rateStrategyvDOT,
 } from './rateStrategies';
 
 export const strategyUSDC: IReserveParams = {
@@ -169,6 +171,30 @@ export const strategyAUSD: IReserveParams = {
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
   reserveDecimals: '12',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategynASTR: IReserveParams = {
+  strategy: rateStrategynASTR,
+  baseLTVAsCollateral: '2000',
+  liquidationThreshold: '2500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  lTokenImpl: eContractid.LToken,
+  reserveFactor: '2000',
+};
+
+export const strategyvDOT: IReserveParams = {
+  strategy: rateStrategyvDOT,
+  baseLTVAsCollateral: '5000',
+  liquidationThreshold: '5500',
+  liquidationBonus: '11500',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '10',
   lTokenImpl: eContractid.LToken,
   reserveFactor: '2000',
 };

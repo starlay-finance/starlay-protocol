@@ -48,6 +48,8 @@ export const INITIAL_PRICES = {
   DOT: oneUsd.multipliedBy('9.45363275').toFixed(),
   AUSD: oneUsd.toFixed(),
   NativeUSDT: oneUsd.toFixed(),
+  nASTR: oneUsd.multipliedBy('0.06606488').toFixed(),
+  vDOT: oneUsd.multipliedBy('9.50').toFixed(),
 };
 
 export const MOCK_PRICE_AGGREGATORS_PRICES = {
@@ -67,6 +69,8 @@ export const MOCK_PRICE_AGGREGATORS_PRICES = {
   DOT: oneUsd.multipliedBy('9.45363275').toFixed(),
   AUSD: oneUsd.toFixed(),
   NativeUSDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
+  nASTR: oneEther.multipliedBy('0.003620948469').toFixed(),
+  vDOT: oneEther.multipliedBy('0.0037361712503').toFixed(),
 };
 
 export const ALL_ASSETS_PRICES_FOR_TESTING = {
