@@ -59,6 +59,7 @@
     "shibuya:deployUIProviderV2": "hardhat --network shibuya deploy-UiPoolDataProviderV2",
     "shiden:deployUIProviderV2": "hardhat --network shiden deploy-UiPoolDataProviderV2",
     "astar:deployUIProviderV2": "hardhat --network astar deploy-UiPoolDataProviderV2",
+    "astar:deployWalletBalanceProvider": "hardhat --network astar deploy-WalletBalanceProvider",
     "shibuya:deployUIIncentivesProviderV2": "hardhat --network shibuya deploy-UiIncentiveDataProviderV2",
     "shiden:deployUIIncentivesProviderV2": "hardhat --network shiden deploy-UiIncentiveDataProviderV2",
     "astar:deployUIIncentivesProviderV2": "hardhat --network astar deploy-UiIncentiveDataProviderV2",
